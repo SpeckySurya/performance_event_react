@@ -1,0 +1,65 @@
+.banner {
+  background-image: url("./../../assets/banner.png");
+  padding-top: 50px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 700px;
+  padding: 5%;
+}
+
+.banner img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.banner .left > * {
+  margin-top: 50px;
+}
+
+.banner .event-details {
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.banner .event-title {
+  font-size: 170%;
+  font-weight: 600;
+  width: 500px;
+}
+
+.banner .other-details > p {
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 5%;
+}
+
+.banner .other-details i {
+  color: #f37d47;
+  font-size: 40px;
+  margin-right: 15px;
+}
+
+.banner .live-streaming-txt span {
+  background-color: rgb(231, 65, 65);
+  padding: 10px 20px;
+  color: whitesmoke;
+  border-radius: 20px;
+}
+
+/* Speaker details  */
+
+.banner .speaker-details img {
+  width: 300px;
+}
+
+.banner .speaker-details {
+  flex-direction: column;
+}
+
+.banner .speaker-name {
+  font-size: 20px;
+  text-align: center;
+  font-weight: bolder;
+  width: 200px;
+}

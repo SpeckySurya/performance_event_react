@@ -1,0 +1,43 @@
+/* show-event.css */
+.show-event-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.show-event-container .event {
+  width: calc(50% - 20px);
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.show-event-container .event h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.show-event-container .event p {
+  margin: 5px 0;
+}
+
+.show-event-container .event a {
+  display: inline-block;
+  padding: 8px 16px;
+  margin-top: 10px;
+  background-color: #f37d47;
+  color: #fff;
+  text-decoration: none;
+  transition: 0.3s ease all;
+  border-radius: 5px;
+}
+
+.show-event-container .event a:hover {
+  background-color: #f55f19;
+}
+
+.show-event-container .event a:active {
+  background-color: #f55f19;
+}

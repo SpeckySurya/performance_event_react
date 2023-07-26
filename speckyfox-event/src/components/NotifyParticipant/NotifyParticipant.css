@@ -1,0 +1,85 @@
+/* notify-participant.css */
+.notify-participant-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.notify-participant-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.notify-participant-container .dropdown-container {
+  margin-bottom: 20px;
+}
+
+.notify-participant-container select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.notify-participant-container .selected-participants {
+  margin-bottom: 20px;
+}
+
+.notify-participant-container .selected-participants p {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.notify-participant-container .selected-participants ul {
+  list-style: none;
+  padding: 0;
+}
+
+.notify-participant-container .selected-participants li {
+  margin-bottom: 5px;
+}
+
+.notify-participant-container .selected-participants button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.notify-participant-container .selected-participants button:hover {
+  background-color: #0056b3;
+}
+
+.notify-participant-container .selected-participants button:active {
+  background-color: #004a99;
+}
+
+.notify-participant-container .notify-all button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #28a745;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.notify-participant-container .notify-all button:hover {
+  background-color: #218838;
+}
+
+.notify-participant-container .notify-all button:active {
+  background-color: #1e7e34;
+}
