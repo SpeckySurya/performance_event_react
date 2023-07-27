@@ -3,7 +3,6 @@
   padding-top: 50px;
   background-size: cover;
   background-repeat: no-repeat;
-  height: 700px;
   padding: 5%;
 }
 
@@ -17,6 +16,10 @@
   margin-top: 50px;
 }
 
+.banner .right > * {
+  margin-top: 50px;
+}
+
 .banner .event-details {
   flex-direction: column;
   justify-content: space-around;
@@ -24,8 +27,14 @@
 
 .banner .event-title {
   font-size: 170%;
+  margin-bottom: 30px;
+}
+
+.banner .event-title header {
+  font-size: 200%;
+  margin-bottom: 20px;
+  width: 50px;
   font-weight: 600;
-  width: 500px;
 }
 
 .banner .other-details > p {
@@ -40,17 +49,21 @@
   margin-right: 15px;
 }
 
-.banner .live-streaming-txt span {
+.banner .live-streaming-txt {
   background-color: rgb(231, 65, 65);
   padding: 10px 20px;
   color: whitesmoke;
   border-radius: 20px;
+  margin-top: 30px;
+  width: 50%;
+  text-align: center;
 }
 
 /* Speaker details  */
 
 .banner .speaker-details img {
   width: 300px;
+  margin: auto;
 }
 
 .banner .speaker-details {

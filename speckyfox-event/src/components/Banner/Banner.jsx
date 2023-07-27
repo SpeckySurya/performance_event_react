@@ -2,6 +2,7 @@ import React from "react";
 import banner from "./../../assets/banner.png";
 import speakerImg from "./../../assets/speaker-at-banner.png";
 import "./Banner.css";
+import "./BannerResponsive.css";
 import RegistrationForm from "../RegistrationForm/RegistrationForm";
 
 export const Banner = () => {
@@ -10,7 +11,10 @@ export const Banner = () => {
       <section className="left flex">
         <div className="event-details flex">
           <div className="event-title">
-            <p className="title">LIVE WEBINAR OVER PERFORMANCE TESTING</p>
+            <p className="title">
+              <header>LIVE WEBINAR</header>
+              <div>Stepping stones for performance testing</div>
+            </p>
           </div>
           <div className="other-details">
             <p className="date-container flex-aic">
@@ -34,9 +38,9 @@ export const Banner = () => {
               </div>
               <div className="location">Thailand</div>
             </p>
-          </div>
-          <div className="live-streaming-txt">
-            <span>Live Streaming</span>
+            <div className="live-streaming-txt">
+              <p>Live Streaming</p>
+            </div>
           </div>
         </div>
         <div className="speaker-details flex-jcc-aic">
