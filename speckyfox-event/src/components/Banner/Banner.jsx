@@ -1,19 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import banner from "./../../assets/banner.png";
 import speakerImg from "./../../assets/speaker-at-banner.png";
 import "./Banner.css";
-import "./BannerResponsive.css";
 import RegistrationForm from "../RegistrationForm/RegistrationForm";
+import dateFormatter, {
+  convertTo12HourFormat,
+} from "../../utils/DateFormatter";
 
-export const Banner = () => {
+export const Banner = (props) => {
+  const [formattedDate, setFormattedDate] = useState({});
+  const [formattedTime, setFormattedTime] = useState("");
+
+  useEffect(() => {
+    setFormattedDate(dateFormatter(props.event.date));
+    setFormattedTime(convertTo12HourFormat(props.event.time));
+  }, [props.event]);
+
   return (
     <div className="banner flex-jcsb">
       <section className="left flex">
         <div className="event-details flex">
           <div className="event-title">
             <p className="title">
-              <header>LIVE WEBINAR</header>
-              <div>Stepping stones for performance testing</div>
+              <header>{props.event.title}</header>
+              <div>{props.event.description}</div>
             </p>
           </div>
           <div className="other-details">
@@ -22,33 +32,49 @@ export const Banner = () => {
                 <i className="bx bx-calendar"></i>
               </div>
               <div className="date">
-                <div className="day">Friday</div>
-                <div className="full-date">08 June 2025</div>
+                <div className="day">{formattedDate.dayOfWeekName}</div>
+                <div className="full-date">
+                  {formattedDate.day} {formattedDate.monthName}{" "}
+                  {formattedDate.year}
+                </div>
               </div>
             </p>
             <p className="time-container flex-aic">
               <div className="icon">
                 <i className="bx bx-time-five bx-spin"></i>
               </div>
-              <div className="time">10.00 AM</div>
+              <div className="time">{formattedTime}</div>
             </p>
             <p className="location-container flex-aic">
               <div className="icon">
-                <i className="bx bxs-map"></i>
+                <i class="bx bx-broadcast"></i>
               </div>
-              <div className="location">Thailand</div>
+              <div className="location">Online</div>
+            </p>
+            <p className="location-container flex-aic">
+              <div className="icon">
+                <i class="bx bx-envelope"></i>
+              </div>
+              <div className="email">
+                <a
+                  className="no-anchor-style"
+                  href="mailto:sales@speckyfox.com"
+                >
+                  Any Queries
+                </a>
+              </div>
             </p>
             <div className="live-streaming-txt">
-              <p>Live Streaming</p>
+              <p>Live Webinar</p>
             </div>
           </div>
         </div>
-        <div className="speaker-details flex-jcc-aic">
+        <div className="speaker-details flex">
           <section className="speaker-img">
             <img src={speakerImg} alt="speaker image" />
           </section>
           <section className="speaker-name">
-            Abhishek Aggarwal
+            {props.event.speakerName} - {props.event.speakerDesignation}
             <br />( Speaker )
           </section>
         </div>

@@ -17,12 +17,15 @@ export const Header = () => {
         <div className="social-links">
           <ul>
             <li className="linkedin">
-              <a href="https://www.linkedin.com/company/speckyfox1/">
+              <a
+                target="_blank"
+                href="https://www.linkedin.com/company/speckyfox1/"
+              >
                 <i class="bx bxl-linkedin"></i>
               </a>
             </li>
-            <li className="https://www.speckyfox.com">
-              <a href="#">
+            <li className="website">
+              <a target="_blank" href="https://www.speckyfox.com">
                 <i class="bx bx-globe"></i>
               </a>
             </li>

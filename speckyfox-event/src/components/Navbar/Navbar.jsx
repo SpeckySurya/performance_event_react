@@ -14,10 +14,14 @@ const Navbar = () => {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <a href="#">About</a>
+          <a target="_blank" href="https://speckyfox.com/company">
+            About
+          </a>
         </li>
         <li>
-          <a href="#">Contact</a>
+          <a target="_blank" href="https://speckyfox.com/contact-us">
+            Contact
+          </a>
         </li>
       </ul>
     </nav>

@@ -1,0 +1,17 @@
+@media screen and (min-width: 640px) {
+  .registration-form {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .banner .speaker-details img {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .banner {
+    flex-wrap: wrap;
+  }
+}

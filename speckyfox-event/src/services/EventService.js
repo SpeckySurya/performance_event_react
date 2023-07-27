@@ -1,7 +1,7 @@
 import axios from "axios";
-
-class EventService {
-  getEvent() {
-    axios.get().then((response) => response.data);
+export default class EventService {
+  baseUrl = "http://34.218.92.121:8095";
+  getEvent(eventId) {
+    return axios.get(`${this.baseUrl}/events/${eventId}`);
   }
 }

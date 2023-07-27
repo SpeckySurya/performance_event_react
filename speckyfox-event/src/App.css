@@ -1,34 +1,29 @@
 .no-anchor-style {
   text-decoration: none;
-  color: rgb(159, 159, 159);
+  color: black;
 }
 
 .flex {
   display: flex;
-  flex-wrap: wrap;
 }
 
 .flex-jcc-aic {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
 }
 
 .flex-aic {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
 }
 
 .flex-jcsb {
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
 }
 
 .flex-a {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
 }

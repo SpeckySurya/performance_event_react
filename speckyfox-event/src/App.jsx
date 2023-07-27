@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import EventHomePage from "./pages/EventHomePage/EventHomePage";
 import ThankYouPage from "./pages/ThanksYouPage/ThankYouPage";
 import "./App.css";
+import "./responsive.css";
 import Login from "./pages/Login/Login";
 import { DashboardPage } from "./pages/DashboardPage/DashboardPage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";

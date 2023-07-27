@@ -13,11 +13,20 @@
 }
 
 .banner .left > * {
-  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .banner .right > * {
-  margin-top: 50px;
+  margin: 50px;
+}
+
+.banner .left {
+  margin: auto;
+  flex-wrap: wrap;
+}
+
+.banner .right {
+  margin: auto;
 }
 
 .banner .event-details {
@@ -68,6 +77,9 @@
 
 .banner .speaker-details {
   flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  margin: 0 auto;
 }
 
 .banner .speaker-name {

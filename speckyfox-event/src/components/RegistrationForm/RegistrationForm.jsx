@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./RegistrationForm.css"; // Import the CSS file
-import "./RegistrationFormResponsive.css"; // Import the CSS file
 import { useNavigate } from "react-router-dom";
 import RegistrationService from "../../services/RegistrationService";
 
