@@ -13,7 +13,7 @@ function App() {
   return (
     <Routes>
       <Route exact path="/" Component={HomePage} />
-      <Route exact path="/events" Component={EventPage} />
+      <Route path="/events" Component={EventPage} />
       <Route path="/thankyou" Component={ThankYouPage} />
       <Route path="/login" Component={Login} />
       <Route path="/dashboard" Component={DashboardPage} />

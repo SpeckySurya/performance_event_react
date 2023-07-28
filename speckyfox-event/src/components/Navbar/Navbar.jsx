@@ -14,6 +14,9 @@ const Navbar = () => {
           <Link to="/">Home</Link>
         </li>
         <li>
+          <Link to="/events">Events</Link>
+        </li>
+        <li>
           <a target="_blank" href="https://speckyfox.com/company">
             About
           </a>
