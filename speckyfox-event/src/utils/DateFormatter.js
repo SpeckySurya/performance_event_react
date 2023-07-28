@@ -26,9 +26,6 @@ export default function dateFormatter(dateString) {
     "December",
   ];
 
-  console.log(dateString);
-  console.log(date.getDate());
-
   return {
     dayOfWeekName: daysOfWeek[date.getDay()],
     day: date.getDate(),

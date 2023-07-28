@@ -3,18 +3,16 @@ import { About } from "../../components/About/About";
 import { Banner } from "../../components/Banner/Banner";
 import Footer from "../../components/Footer/Footer";
 import { Header } from "../../components/Header/Header";
-import "./EventHomePage.css";
+import "./HomePage.css";
 import EventService from "../../services/EventService";
 
-const EventHomePage = () => {
+const HomePage = () => {
   const eventId = 1;
   let [event, setEvent] = useState({});
-  let [eventDate, setEventDate] = useState({});
 
   useEffect(() => {
     let eventService = new EventService();
     eventService.getEvent(eventId).then((response) => setEvent(response.data));
-    setEventDate();
   }, []);
 
   return (
@@ -35,4 +33,4 @@ const EventHomePage = () => {
   );
 };
 
-export default EventHomePage;
+export default HomePage;

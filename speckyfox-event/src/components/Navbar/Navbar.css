@@ -4,7 +4,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 7px;
   box-shadow: 2px 5px 8px rgba(0, 0, 0, 0.03);
   z-index: 1;
 }

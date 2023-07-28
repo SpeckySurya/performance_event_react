@@ -4,4 +4,7 @@ export default class EventService {
   getEvent(eventId) {
     return axios.get(`${this.baseUrl}/app/event/1`);
   }
+  getAllEvents() {
+    return axios.get(`${this.baseUrl}/app/getAllEvents`);
+  }
 }
