@@ -1,17 +1,19 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import EventHomePage from "./pages/EventHomePage/EventHomePage";
+import HomePage from "./pages/HomePage/HomePage";
 import ThankYouPage from "./pages/ThanksYouPage/ThankYouPage";
 import "./App.css";
 import "./responsive.css";
 import Login from "./pages/Login/Login";
 import { DashboardPage } from "./pages/DashboardPage/DashboardPage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
+import EventPage from "./pages/EventPage/EventPage";
 
 function App() {
   return (
     <Routes>
-      <Route exact path="/" Component={EventHomePage} />
+      <Route exact path="/" Component={HomePage} />
+      <Route exact path="/events" Component={EventPage} />
       <Route path="/thankyou" Component={ThankYouPage} />
       <Route path="/login" Component={Login} />
       <Route path="/dashboard" Component={DashboardPage} />
