@@ -6,14 +6,6 @@ export const Header = () => {
   return (
     <div className="header-container">
       <div className="header-top">
-        <div className="contacts">
-          <div className="email">
-            <a className="no-anchor-style" href="mailto:sales@speckyfox.com">
-              sales@speckyfox.com
-            </a>
-          </div>
-          <div className="mobile">+911204699495</div>
-        </div>
         <div className="social-links">
           <ul>
             <li className="linkedin">

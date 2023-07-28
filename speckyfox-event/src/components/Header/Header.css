@@ -4,7 +4,7 @@
 
 .header-top {
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   background-color: rgb(243, 243, 243);
   padding: 15px 60px;
   color: rgb(159, 159, 159);

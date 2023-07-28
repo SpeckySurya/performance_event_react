@@ -1,11 +1,12 @@
 .registration-form {
   padding: 30px;
-  border: 1px solid #ccc;
+  border: 2px solid #fff;
   border-radius: 4px;
   background-color: #3c78d8;
   color: white;
   margin: auto;
   max-width: 400px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .form-group {

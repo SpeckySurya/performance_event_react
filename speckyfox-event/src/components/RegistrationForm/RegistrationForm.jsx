@@ -35,7 +35,9 @@ const RegistrationForm = () => {
     let obj = new RegistrationService();
     obj
       .saveUser(formData)
-      .then((response) => navigate("/thankyou"))
+      .then((response) =>
+        response.status == 200 ? navigate("/thankyou") : navigate("/error")
+      )
       .catch((error) => navigate("/error"));
   };
 
@@ -96,6 +98,8 @@ const RegistrationForm = () => {
           name="mobileNumber"
           value={formData.phone}
           onChange={handleChange}
+          minLength={10}
+          maxLength={13}
           required
         />
       </div>
