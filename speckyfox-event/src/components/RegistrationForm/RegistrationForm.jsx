@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./RegistrationForm.css"; // Import the CSS file
 import { useNavigate } from "react-router-dom";
 import RegistrationService from "../../services/RegistrationService";
+import { Stack } from "@mui/material";
 
 const RegistrationForm = () => {
   // State to store form data
@@ -16,6 +17,8 @@ const RegistrationForm = () => {
     anyPtToolUsed: false,
     eventId: 1,
   });
+
+  const [responseMsg, sertResponseMsg] = useState("");
 
   const navigate = useNavigate();
 
@@ -35,10 +38,16 @@ const RegistrationForm = () => {
     let obj = new RegistrationService();
     obj
       .saveUser(formData)
-      .then((response) =>
-        response.status == 200 ? navigate("/thankyou") : navigate("/error")
-      )
-      .catch((error) => navigate("/error"));
+      .then((response) => {
+        if (response.status == 200) {
+          navigate("/thankyou");
+        } else {
+          console.log(response.data);
+        }
+      })
+      .catch((error) => {
+        navigate("/error", { state: error.response.data.message });
+      });
   };
 
   return (
@@ -117,25 +126,29 @@ const RegistrationForm = () => {
       </div>
 
       <div className="form-group">
-        <label>Do you need any help in Performance Testing?</label>
-        <input
-          type="checkbox"
-          name="ptNeeded"
-          checked={formData.needHelp}
-          onChange={handleChange}
-        />
+        <Stack direction={"row"}>
+          <input
+            type="checkbox"
+            name="ptNeeded"
+            checked={formData.needHelp}
+            onChange={handleChange}
+          />
+          <label>Do you need any help in Performance Testing?</label>
+        </Stack>
       </div>
 
       <div className="form-group">
-        <label>
-          Have you used any tool or did Performance Testing in the past?
-        </label>
-        <input
-          type="checkbox"
-          name="anyPtToolUsed"
-          checked={formData.usedTool}
-          onChange={handleChange}
-        />
+        <Stack direction={"row"}>
+          <input
+            type="checkbox"
+            name="anyPtToolUsed"
+            checked={formData.usedTool}
+            onChange={handleChange}
+          />
+          <label>
+            Have you used any tool or did Performance Testing in the past?
+          </label>
+        </Stack>
       </div>
 
       <button type="submit">Register</button>

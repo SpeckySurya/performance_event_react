@@ -3,6 +3,10 @@
   color: black;
 }
 
+.display-none {
+  display: none;
+}
+
 .flex {
   display: flex;
 }

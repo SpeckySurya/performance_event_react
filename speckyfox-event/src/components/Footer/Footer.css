@@ -1,6 +1,6 @@
 .footer {
   width: 100%;
-  background-color: rgb(86, 86, 86);
+  background-color: #333333;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,4 +9,5 @@
   position: static;
   padding: 1%;
   text-align: center;
+  color: rgb(219, 219, 219);
 }

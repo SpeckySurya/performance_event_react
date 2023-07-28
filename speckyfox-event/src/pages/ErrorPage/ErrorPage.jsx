@@ -1,8 +1,10 @@
 import { Typography, Button, Box, Stack } from "@mui/material";
 import "./ErrorPage.css";
 import Thanksimg from "../../assets/Thanksimg.jpg";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 export default function ErrorPage() {
+  const location = useLocation();
+  const data = location.state;
   return (
     <div className="tahnkyoucartctr">
       <Typography
@@ -25,7 +27,9 @@ export default function ErrorPage() {
         line-height="1.6"
         margin="31px auto 0"
       >
-        Something wrong in our end
+        {data != undefined || data != null
+          ? data
+          : "Something wrong in our end"}
       </Typography>
       <Typography textAlign={"center"}>
         <Button

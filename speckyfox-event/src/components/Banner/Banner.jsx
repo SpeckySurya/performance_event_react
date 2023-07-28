@@ -74,7 +74,9 @@ export const Banner = (props) => {
             <img src={speakerImg} alt="speaker image" />
           </section>
           <section className="speaker-name">
-            {props.event.speakerName} - {props.event.speakerDesignation}
+            <p style={{ whiteSpace: "nowrap" }}>
+              {props.event.speakerName} - {props.event.speakerDesignation}
+            </p>
             <br />( Speaker )
           </section>
         </div>
