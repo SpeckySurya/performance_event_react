@@ -40,7 +40,11 @@ function Readmore() {
           new heights.
         </p>
       </div>
-      <label htmlFor="check" style={{ display: "flex", alignItems: "center" }}>
+      <label
+        className="read-more-label"
+        htmlFor="check"
+        style={{ display: "flex", alignItems: "center" }}
+      >
         <p className="more">Read More...</p>
       </label>
     </div>

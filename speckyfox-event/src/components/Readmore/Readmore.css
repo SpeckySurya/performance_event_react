@@ -19,13 +19,14 @@
   /* transition: 5s linear; */
   transition: width 2s, height 4s;
 }
-.read-more-label {
+.more {
   display: inline-block;
   margin-top: 15px;
 
   text-decoration: underline;
   cursor: pointer;
   font-weight: 600;
+  color: #e97b21;
 }
 #check:checked ~ .content {
   display: block;
