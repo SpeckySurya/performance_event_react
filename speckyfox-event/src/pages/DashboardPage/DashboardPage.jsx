@@ -1,13 +1,21 @@
-import React, { useState } from "react";
-import { Header } from "../../components/Header/Header";
-import Navbar from "../../components/Navbar/Navbar";
+import React, { useEffect, useState } from "react";
 import EventForm from "../../components/EventForm/EventForm";
 import "./DashboardPage.css";
 import NotifyParticipant from "../../components/NotifyParticipant/NotifyParticipant";
 import ShowEvent from "../../components/ShowEvent/ShowEvent";
+import AdminHeader from "../../components/AdminHeader/AdminHeader";
+import { Box, Stack } from "@mui/material";
+import EventCard from "../../components/EventCard/EventCard";
+import EventService from "../../services/EventService";
 
 export const DashboardPage = () => {
   const [selected, setSelected] = useState("create");
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    const eventService = new EventService();
+    eventService.getAllEvents().then((response) => setEvents(response.data));
+  }, []);
 
   function handleSidebar(data) {
     setSelected(data);
@@ -18,9 +26,9 @@ export const DashboardPage = () => {
       case "create":
         return <EventForm />;
       case "show":
-        return <ShowEvent />;
+        return <EventCard events={events} />;
       case "notify":
-        return <NotifyParticipant />;
+        return <NotifyParticipant events={events} />;
       default:
         return null;
     }
@@ -28,17 +36,10 @@ export const DashboardPage = () => {
 
   return (
     <>
-      <Navbar />
-      <div className="dashboard-body flex">
-        <div className="sidebar">
-          <ul>
-            <li onClick={() => handleSidebar("create")}>Create Event</li>
-            <li onClick={() => handleSidebar("show")}>Show Events</li>
-            <li onClick={() => handleSidebar("notify")}>Notify</li>
-          </ul>
-        </div>
-        <div className="sidebar-content">{menuComponentFinder()}</div>
-      </div>
+      <AdminHeader handleSidebar={handleSidebar} />
+      <Box padding={5}>
+        <Box margin={"auto"}>{menuComponentFinder()}</Box>
+      </Box>
     </>
   );
 };

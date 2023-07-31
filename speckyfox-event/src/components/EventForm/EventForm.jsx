@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./EventForm.css";
+import EventService from "../../services/EventService";
 
 const EventForm = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ const EventForm = () => {
     meetingUrl: "",
     location: "",
   });
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -20,8 +22,18 @@ const EventForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Form data submitted:", formData);
-    // Replace the console.log with your API call to submit the data to the server
+    const request = new FormData();
+    request.append("speakerPhoto", selectedFile);
+    Object.entries(formData).forEach(([key, val]) => {
+      request.append(key, val);
+    });
+    const eventService = new EventService();
+    eventService.saveEvent(request);
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
   };
 
   return (
@@ -89,6 +101,16 @@ const EventForm = () => {
             placeholder="Speaker Designation"
             value={formData.speakerDesignation}
             onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="speakerDesignation">Speaker Photo</label>
+          <input
+            type="file"
+            id="speakerPhoto"
+            name="speakerPhoto"
+            placeholder="Speaker Photo"
+            onChange={handleFileChange}
           />
         </div>
         <div className="form-group">

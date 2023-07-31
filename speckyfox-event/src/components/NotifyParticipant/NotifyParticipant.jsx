@@ -1,94 +1,130 @@
-import React, { useState } from "react";
-import "./NotifyParticipant.css";
-
-let participants = [];
-
-const events = ["Event 1", "Event 2"];
+import React, { useEffect, useState } from "react";
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Checkbox,
+  Button,
+  Box,
+  Typography,
+} from "@mui/material";
+import EventService from "../../services/EventService";
 
 const NotifyParticipant = () => {
-  const [selectedParticipants, setSelectedParticipants] = useState([]);
-  const [selectedEvent, setSelectedEvent] = useState([]);
-  const [notifyAll, setNotifyAll] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState("");
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [selectAll, setSelectAll] = useState(true);
+  const [events, setEvents] = useState([]);
 
-  const handleEventSelect = (event) => {
-    setSelectedEvent(event);
-    return [
-      "Participant 1",
-      "Participant 2",
-      "Participant 3",
-      "Participant 4",
-      // Add more participants as needed
-    ];
-  };
+  useEffect(() => {
+    const eventService = new EventService();
+    eventService.getAllEvents().then((response) => setEvents(response.data));
+  }, []);
 
-  const handleParticipantSelect = (event) => {
-    const selectedParticipant = event.target.value;
-    setSelectedParticipants((prevSelectedParticipants) =>
-      prevSelectedParticipants.includes(selectedParticipant)
-        ? prevSelectedParticipants.filter(
-            (participant) => participant !== selectedParticipant
-          )
-        : [...prevSelectedParticipants, selectedParticipant]
+  const handleEventChange = (e) => {
+    const eventId = e.target.value;
+    setSelectedEvent(eventId);
+    const obj = events.filter((event) => event.id === eventId)[0];
+    const userList = obj.users.map(
+      (user) => `${user.firstName} ${user.lastName}`
     );
+    setSelectedUsers(userList);
   };
 
-  const handleNotifyClick = () => {
-    // Replace this with your notify logic for selected participants
-    console.log("Notifying selected participants:", selectedParticipants);
+  const handleUserSelectAll = () => {
+    if (selectAll) {
+      setSelectedUsers([]);
+    } else {
+      const obj = events.filter((event) => event.id === selectedEvent)[0];
+      const userList = obj.users.map(
+        (user) => `${user.firstName} ${user.lastName}`
+      );
+      setSelectedUsers(userList);
+    }
+    setSelectAll(!selectAll);
   };
 
-  const handleNotifyAllClick = () => {
-    // Replace this with your notify logic for all participants
-    console.log("Notifying all participants");
-    setNotifyAll(true);
+  const setUsersUsingEvent = (events) => {};
+
+  const handleNotify = () => {
+    const eventService = new EventService();
+    eventService
+      .notifyUsers(selectedEvent)
+      .then((response) => {
+        if (response.data) {
+          alert("User Registered !");
+        } else {
+          alert("Something wrong in our end.");
+        }
+      })
+      .catch((error) => {
+        alert("Something wrong in our end.");
+      });
   };
 
   return (
-    <div className="notify-participant-container">
-      <h2>Notify Participants</h2>
-      <div className="dropdown-container">
-        <select onChange={handleEventSelect} value="">
-          <option value="" disabled hidden>
-            Select Event
-          </option>
-          {events.map((event, index) => (
-            <option key={index} value={event}>
-              {event}
-            </option>
+    <Box p={3} maxWidth={600} margin="auto">
+      <Typography variant="h5" py={2}>
+        Notify Participants
+      </Typography>
+      <FormControl fullWidth>
+        <InputLabel id="select-event-label">Select Event</InputLabel>
+        <Select
+          labelId="select-event-label"
+          label="Select Event"
+          value={selectedEvent}
+          onChange={handleEventChange}
+        >
+          {events.map((event) => (
+            <MenuItem key={event.id} value={event.id}>
+              {event.title}
+            </MenuItem>
           ))}
-        </select>
-      </div>
-      <div className="dropdown-container">
-        <select onChange={handleParticipantSelect} value="">
-          <option value="" disabled hidden>
-            Select Participant
-          </option>
-          {participants.map((participant, index) => (
-            <option key={index} value={participant}>
-              {participant}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className="selected-participants">
-        {selectedParticipants.length > 0 ? (
-          <>
-            <p>Selected Participants:</p>
-            <ul>
-              {selectedParticipants.map((participant, index) => (
-                <li key={index}>{participant}</li>
-              ))}
-            </ul>
-            <button onClick={handleNotifyClick}>Notify</button>
-          </>
+        </Select>
+      </FormControl>
+      <Box textAlign={"end"}>
+        <Button
+          variant="contained"
+          onClick={handleUserSelectAll}
+          sx={{ ml: 2, mt: 3 }}
+        >
+          {selectAll ? "Deselect All" : "Select All"}
+        </Button>
+        <Button
+          sx={{ ml: 2, mt: 3 }}
+          variant="contained"
+          color="primary"
+          onClick={() => handleNotify()}
+        >
+          Notify
+        </Button>
+      </Box>
+      <Box mt={3}>
+        {selectedUsers.length === 0 ? (
+          <Typography>No participants belong to the selected event.</Typography>
         ) : (
-          <p>No participants selected.</p>
+          <Box maxHeight={300} overflow={"scroll"}>
+            {selectedUsers.map((user) => (
+              <Box key={user.id} display="flex" alignItems="center" mb={1}>
+                <Checkbox
+                  checked={selectedUsers.includes(user)}
+                  onChange={() => {
+                    setSelectedUsers((prevUsers) =>
+                      prevUsers.includes(user)
+                        ? prevUsers.filter((u) => u !== user)
+                        : [...prevUsers, user]
+                    );
+                  }}
+                  sx={{ mr: 1 }}
+                />
+                <Typography>{user}</Typography>
+              </Box>
+            ))}
+          </Box>
         )}
-      </div>
-      <div className="notify-all">
-        <button onClick={handleNotifyAllClick}>Notify All</button>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

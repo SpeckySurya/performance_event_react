@@ -1,4 +1,6 @@
 import axios from "axios";
+import headers from "../utils/Header";
+
 export default class EventService {
   baseUrl = "http://34.218.92.121:8095";
   getEvent(eventId) {
@@ -6,5 +8,15 @@ export default class EventService {
   }
   getAllEvents() {
     return axios.get(`${this.baseUrl}/app/getAllEvents`);
+  }
+  notifyUsers(eventId) {
+    return axios.get(`${this.baseUrl}/admin/send-event-reminder/${eventId}`, {
+      headers,
+    });
+  }
+  saveEvent(event) {
+    return axios.post(`${this.baseUrl}/admin/save-event`, event, {
+      headers,
+    });
   }
 }

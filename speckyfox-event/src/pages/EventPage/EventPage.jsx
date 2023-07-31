@@ -5,7 +5,7 @@ import EventService from "../../services/EventService";
 import Footer from "../../components/Footer/Footer";
 
 const EventPage = () => {
-  let [events, setEvents] = useState([]);
+  const [events, setEvents] = useState([]);
 
   useEffect(() => {
     const eventService = new EventService();
