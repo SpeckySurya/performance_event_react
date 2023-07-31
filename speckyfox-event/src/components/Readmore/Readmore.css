@@ -1,0 +1,42 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.container {
+  background-color: transparent;
+  padding: 20px;
+  margin: 0 auto;
+  box-sizing: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+.container p {
+  line-height: 1.4;
+  text-align: justify;
+  margin: 10px;
+}
+#check {
+  display: none;
+  margin: 20px;
+}
+
+.content {
+  display: none;
+  /* transition: 5s linear; */
+  transition: width 2s, height 4s;
+}
+label {
+  display: inline-block;
+  margin-top: 15px;
+
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 600;
+}
+#check:checked ~ .content {
+  display: block;
+}
+
+#check:checked ~ .more {
+  color: blue;
+  font-weight: 700;
+}
