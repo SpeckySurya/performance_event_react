@@ -4,7 +4,7 @@ import speaker from "./../../assets/speaker.png";
 
 export const About = () => {
   return (
-    <div>
+    <div className="aboutpage-container">
       <div className="about-header">ABOUT SPEAKER</div>
       <div className="top">
         <div className="speaker-photo">
