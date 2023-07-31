@@ -1,4 +1,5 @@
 import React from "react";
+import Readmore from "../Readmore/Readmore";
 import "./About.css";
 import speaker from "./../../assets/speaker.png";
 
@@ -15,7 +16,7 @@ export const About = () => {
           <strong className="botmphoto">Abhishek Aggarwal...</strong>
         </div>
         <div className="about-body">
-          <p>
+          {/* <p>
             Meet Abhishek Aggarwal, Co-Founder at SpeckyFox, a dynamic and
             accomplished professional with a wealth of experience in the IT
             industry. With an impressive 11-year tenure, Abhishek has honed his
@@ -42,7 +43,8 @@ export const About = () => {
             growth and market presence. By combining his technical acumen with a
             flair for marketing, Abhishek is poised to propel SpeckyFox
             Technologies to new heights.
-          </p>
+          </p> */}
+          <Readmore />
         </div>
       </div>
     </div>

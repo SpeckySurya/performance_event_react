@@ -53,6 +53,29 @@
   padding: 5%;
 }
 
+#module {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+#module #collapseExample.collapse:not(.show) {
+  display: block;
+  height: 3rem;
+  overflow: hidden;
+}
+
+#module #collapseExample.collapsing {
+  height: 3rem;
+}
+
+#module a.collapsed::after {
+  content: "+ Show More";
+}
+
+#module a:not(.collapsed)::after {
+  content: "- Show Less";
+}
+
 @media screen and (max-width: 600px) {
   .top {
     display: flex;
@@ -75,5 +98,14 @@
     z-index: 1;
     height: 250px;
     width: 250px;
+  }
+  .about-body {
+    width: 100%;
+    margin: auto;
+    text-align: justify;
+    line-height: 1.6;
+    padding: 5%;
+    font-size: 1.125rem;
+    font-weight: 200;
   }
 }
