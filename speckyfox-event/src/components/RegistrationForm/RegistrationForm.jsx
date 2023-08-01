@@ -169,9 +169,8 @@ const RegistrationForm = () => {
         </Stack>
       </div>
       <span className="msg">
-        <p className="note">Note : </p>
-        <p className="notemsg">
-          All ( <span className="marks">*</span> ) field should be required
+        <p className="note">
+          Note : All <span className="marks"> * </span> field should be required
         </p>
       </span>
       <button type="submit">Register</button>

@@ -47,13 +47,6 @@ function Readmore() {
 
         <label htmlFor="check" className="less">
           <p>Read Less...</p>
-          <label
-            className="read-more-label"
-            htmlFor="check"
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            <p className="more">Read More...</p>
-          </label>
         </label>
       </div>
     </>
