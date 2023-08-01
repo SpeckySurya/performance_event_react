@@ -10,9 +10,9 @@ export const About = () => {
       <div className="top">
         <div className="speaker-photo">
           <div className="backshape"></div>
-
-          <img className="imgcircle" src={speaker} alt="speaker photo" />
-
+          <div className="imgcirclediv">
+            <img className="imgcircle" src={speaker} alt="speaker photo" />
+          </div>
           <strong className="botmphoto">Abhishek Aggarwal...</strong>
         </div>
         <div className="about-body">

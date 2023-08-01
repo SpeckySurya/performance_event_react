@@ -75,6 +75,9 @@
 #module a:not(.collapsed)::after {
   content: "- Show Less";
 }
+.imgcirclediv {
+  border-radius: 50%;
+}
 
 @media screen and (max-width: 600px) {
   .top {

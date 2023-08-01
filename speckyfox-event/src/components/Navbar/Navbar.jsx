@@ -3,6 +3,7 @@ import logo from "./../../assets/logo.png";
 import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { styled } from "@mui/material";
+import { BsFacebook, BsYoutube, BsTwitter, BsInstagram } from "react-icons/bs";
 
 const Navbar = () => {
   function handleHamburgerClick() {
@@ -61,19 +62,26 @@ const Navbar = () => {
         </div>
         <ul className="nav-links">
           <li>
-            <CustomLink to="/">Home</CustomLink>
+            <CustomLink to="/">
+              <BsFacebook />
+            </CustomLink>
           </li>
           <li>
-            <CustomLink to="/events">Events</CustomLink>
+            <a
+              target="_blank"
+              href="https://www.youtube.com/@speckyfoxtechnologiesindia4213"
+            >
+              <BsYoutube />
+            </a>
           </li>
           <li>
-            <a target="_blank" href="https://speckyfox.com/company">
-              About
+            <a target="_blank" href="https://twitter.com/SpeckyFox">
+              <BsTwitter />
             </a>
           </li>
           <li>
             <a target="_blank" href="https://speckyfox.com/contact-us">
-              Contact
+              <BsInstagram />
             </a>
           </li>
         </ul>

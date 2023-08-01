@@ -15,9 +15,8 @@
 }
 
 .content {
+  visibility: hidden;
   display: none;
-  /* transition: 5s linear; */
-  transition: width 2s, height 4s;
 }
 .read-more-label {
   display: inline-block;
@@ -27,11 +26,31 @@
   cursor: pointer;
   font-weight: 600;
 }
+
+.less {
+  display: none;
+  /* transition: max-height 2s ease; */
+  overflow: hidden;
+  max-height: 100px;
+}
 #check:checked ~ .content {
+  visibility: visible;
+  opacity: 1;
+  transition: 2s linear;
   display: block;
 }
 
 #check:checked ~ .more {
-  color: blue;
-  font-weight: 700;
+  display: none;
+}
+#check:checked ~ .less {
+  display: block;
+}
+
+.less p {
+  color: #ec6e07;
+}
+
+.more P {
+  color: #ec6e07;
 }

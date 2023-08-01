@@ -39,13 +39,16 @@
   text-decoration: none;
   transition: color 0.3s ease;
 }
+.nav-links li {
+  font-size: x-large;
+}
 
 .nav-links li a:hover {
   color: #f8a63e;
 }
 
 .nav-hamburger {
-  font-size: 30px;
+  font-size: 50px;
   margin: 0 30px;
   display: none;
 }

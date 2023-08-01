@@ -1,5 +1,5 @@
 import "./Readmore.css";
-import { useState, useEffect } from "react";
+
 function Readmore() {
   //   const [check, setcheck] = useState(false);
 
@@ -15,7 +15,7 @@ function Readmore() {
         skills while collaborating with a diverse range of clients, spanning
         from small and mid-size businesses to Fortune 500 companies.{" "}
       </p>
-      <div className="content">
+      <div className="content" style={{ transition: "2s linear" }}>
         <p>
           As a versatile individual, Abhishek effortlessly wears multiple hats
           and has proved himself in various roles throughout his career. With a
@@ -40,8 +40,12 @@ function Readmore() {
           new heights.
         </p>
       </div>
-      <label htmlFor="check" style={{ display: "flex", alignItems: "center" }}>
-        <p className="more">Read More...</p>
+      <label htmlFor="check" className="more">
+        <p>Read More...</p>
+      </label>
+
+      <label htmlFor="check" className="less">
+        <p>Read Less...</p>
       </label>
     </div>
   );

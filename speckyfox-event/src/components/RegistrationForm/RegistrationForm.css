@@ -9,8 +9,25 @@
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
+.mark {
+  padding: 0px 3px;
+  color: orange;
+
+  font-size: 20px;
+}
+.marks {
+  color: orange;
+
+  font-size: 20px;
+}
 .form-group {
   margin-bottom: 15px;
+}
+.msg {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
 }
 
 .form-group label {
