@@ -24,11 +24,14 @@ const EventForm = () => {
     event.preventDefault();
     const request = new FormData();
     request.append("speakerPhoto", selectedFile);
+    request.append("active", false);
     Object.entries(formData).forEach(([key, val]) => {
       request.append(key, val);
     });
     const eventService = new EventService();
-    eventService.saveEvent(request);
+    eventService.saveEvent(request).then((response) => {
+      console.log(response.data);
+    });
   };
 
   const handleFileChange = (event) => {

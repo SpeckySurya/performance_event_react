@@ -54,3 +54,8 @@
 .login-container button:active {
   background-color: #f55f19;
 }
+
+.mandatory-field {
+  color: crimson;
+  margin: 0 5px;
+}

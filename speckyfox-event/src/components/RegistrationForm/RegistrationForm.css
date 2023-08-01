@@ -15,8 +15,6 @@
 .mark {
   padding: 0px 3px;
   color: orange;
-
-  font-size: 20px;
 }
 .marks {
   color: orange;
@@ -44,7 +42,7 @@
 }
 
 .form-group input[type="text"],
-.form-group input[type="tel"],
+.form-group input[type="number"],
 .form-group input[type="email"],
 .form-group input[type="checkbox"] {
   width: 100%;

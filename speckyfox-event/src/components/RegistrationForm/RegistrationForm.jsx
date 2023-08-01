@@ -112,9 +112,10 @@ const RegistrationForm = () => {
           Phone<span className="mark">*</span>
         </label>
         <input
-          type="tel"
+          type="number"
           id="mobileNumber"
           name="mobileNumber"
+          pattern="[0-9]{5}[-][0-9]{7}[-][0-9]{1}"
           value={formData.phone}
           onChange={handleChange}
           minLength={10}
@@ -130,6 +131,7 @@ const RegistrationForm = () => {
         <input
           type="email"
           id="email"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
           name="email"
           value={formData.email}
           onChange={handleChange}
@@ -167,9 +169,8 @@ const RegistrationForm = () => {
         </Stack>
       </div>
       <span className="msg">
-        <p className="note">Note : </p>
-        <p className="notemsg">
-          All ( <span className="marks">*</span> ) field should be required
+        <p className="note">
+          Note : All <span className="marks"> * </span> field should be required
         </p>
       </span>
       <button type="submit">Register</button>

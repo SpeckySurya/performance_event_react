@@ -21,8 +21,6 @@
 .more {
   display: inline-block;
   margin-top: 15px;
-
-  text-decoration: underline;
   cursor: pointer;
   font-weight: 600;
   color: #e97b21;
@@ -30,6 +28,8 @@
 
 .less {
   display: none;
+  font-weight: 600;
+  cursor: pointer;
   /* transition: max-height 2s ease; */
   overflow: hidden;
   max-height: 100px;

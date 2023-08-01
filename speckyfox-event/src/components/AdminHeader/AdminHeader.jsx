@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -16,9 +16,13 @@ import HomeIcon from "@mui/icons-material/Home";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import { useNavigate } from "react-router-dom";
+import MyContext from "../../context";
 
 const AdminHeader = (props) => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const { sharedState, setSharedState } = useContext(MyContext);
 
   const toggleDrawer = (isOpen) => (event) => {
     if (
@@ -32,12 +36,17 @@ const AdminHeader = (props) => {
   };
 
   const handleLogout = () => {
-    console.log("Logged out!");
+    sessionStorage.clear();
+    if (sharedState.admin) {
+      const newState = delete sharedState.amdin;
+      setSharedState(newState);
+    }
+    navigate("/");
   };
 
   const menuItems = [
     {
-      text: "Home",
+      text: "Show Events",
       icon: <HomeIcon />,
       onClick: () => props.handleSidebar("show"),
     },
