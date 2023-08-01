@@ -20,9 +20,15 @@
   .banner .speaker-details img {
     width: 70%;
   }
+  .banner .left {
+    flex-wrap: wrap;
+  }
 }
 
 @media screen and (max-width: 1000px) {
+  /* .banner .left {
+    flex-wrap: wrap;
+  } */
   .banner {
     flex-wrap: wrap;
   }

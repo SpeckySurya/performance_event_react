@@ -53,7 +53,9 @@ const RegistrationForm = () => {
   return (
     <form className="registration-form" onSubmit={handleSubmit}>
       <div className="form-group">
-        <label htmlFor="firstName">First Name</label>
+        <label htmlFor="firstName">
+          First Name<span className="mark">*</span>
+        </label>
         <input
           type="text"
           id="firstName"
@@ -64,7 +66,9 @@ const RegistrationForm = () => {
         />
       </div>
       <div className="form-group">
-        <label htmlFor="lastName">Last Name</label>
+        <label htmlFor="lastName">
+          Last Name<span className="mark">*</span>
+        </label>
         <input
           type="text"
           id="lastName"
@@ -76,7 +80,9 @@ const RegistrationForm = () => {
       </div>
 
       <div className="form-group">
-        <label htmlFor="companyName">Company</label>
+        <label htmlFor="companyName">
+          Company<span className="mark">*</span>
+        </label>
         <input
           type="text"
           id="companyName"
@@ -88,7 +94,9 @@ const RegistrationForm = () => {
       </div>
 
       <div className="form-group">
-        <label htmlFor="designation">Designation</label>
+        <label htmlFor="designation">
+          Designation<span className="mark">*</span>
+        </label>
         <input
           type="text"
           id="designation"
@@ -100,7 +108,9 @@ const RegistrationForm = () => {
       </div>
 
       <div className="form-group">
-        <label htmlFor="mobileNumber">Phone</label>
+        <label htmlFor="mobileNumber">
+          Phone<span className="mark">*</span>
+        </label>
         <input
           type="number"
           id="mobileNumber"
@@ -115,7 +125,9 @@ const RegistrationForm = () => {
       </div>
 
       <div className="form-group">
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email">
+          Email<span className="mark">*</span>
+        </label>
         <input
           type="email"
           id="email"
@@ -135,7 +147,10 @@ const RegistrationForm = () => {
             checked={formData.needHelp}
             onChange={handleChange}
           />
-          <label>Do you need any help in Performance Testing?</label>
+          <label>
+            Do you need any help in Performance Testing?
+            <span className="marks">*</span>
+          </label>
         </Stack>
       </div>
 
@@ -149,10 +164,16 @@ const RegistrationForm = () => {
           />
           <label>
             Have you used any tool or did Performance Testing in the past?
+            <span className="marks">*</span>
           </label>
         </Stack>
       </div>
-
+      <span className="msg">
+        <p className="note">Note : </p>
+        <p className="notemsg">
+          All ( <span className="marks">*</span> ) field should be required
+        </p>
+      </span>
       <button type="submit">Register</button>
     </form>
   );

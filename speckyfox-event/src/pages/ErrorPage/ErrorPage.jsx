@@ -1,6 +1,7 @@
 import { Typography, Button, Box, Stack } from "@mui/material";
 import "./ErrorPage.css";
 import Thanksimg from "../../assets/Thanksimg.jpg";
+import err from "../../assets/errr.jpg";
 import { Link, useLocation } from "react-router-dom";
 export default function ErrorPage() {
   const location = useLocation();
@@ -12,7 +13,7 @@ export default function ErrorPage() {
         fontSize={"3rem"}
         fontWeight="600"
         fontFamily="Barlow"
-        color="#82A7F7"
+        color="brown"
         paddingTop="25px"
         align="center"
       >
@@ -41,16 +42,23 @@ export default function ErrorPage() {
             alignSelf: "center",
             margin: " 52px auto 0",
             padding: "20px 77px",
-            backgroundColor: "#fb6f6e",
+            backgroundColor: "darkorange",
           }}
         >
-          <Link style={{ color: "white", textDecoration: "none" }} to="/">
+          <Link
+            style={{
+              color: "white",
+
+              textDecoration: "none",
+            }}
+            to="/"
+          >
             Go To HomePage
           </Link>
         </Button>
       </Typography>
       <Stack direction={"row"} alignItems={"center"} justifyContent={"center"}>
-        <img src={Thanksimg} alt="error" width="720px" height="331px" />
+        <img src={err} alt="error" width="30%" height="30%" />
       </Stack>
     </div>
   );

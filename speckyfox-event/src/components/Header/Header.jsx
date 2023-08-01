@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../Navbar/Navbar";
 import "./Header.css";
+import { MdOutlinePermPhoneMsg } from "react-icons/md";
 
 export const Header = () => {
   return (
@@ -9,11 +10,10 @@ export const Header = () => {
         <div className="social-links">
           <ul>
             <li className="linkedin">
-              <a
-                target="_blank"
-                href="https://www.linkedin.com/company/speckyfox1/"
-              >
-                <i class="bx bxl-linkedin"></i>
+              <a target="_blank" href="https://speckyfox.com/contact-us">
+                <i class="bx bbxl-linkedin">
+                  <MdOutlinePermPhoneMsg />
+                </i>
               </a>
             </li>
             <li className="website">
