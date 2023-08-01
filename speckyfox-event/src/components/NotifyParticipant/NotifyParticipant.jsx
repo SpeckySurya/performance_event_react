@@ -53,7 +53,7 @@ const NotifyParticipant = () => {
       .notifyUsers(selectedEvent)
       .then((response) => {
         if (response.data) {
-          alert("User Registered !");
+          alert("Reminder email sent !");
         } else {
           alert("Something wrong in our end.");
         }

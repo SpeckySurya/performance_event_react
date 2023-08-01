@@ -1,40 +1,6 @@
 import React from "react";
 import "./ShowEvent.css";
 
-const eventsData = [
-  {
-    title: "Event 1",
-    description: "Description of Event 1",
-    date: "2023-07-26T07:45:29.088Z",
-    time: "2023-07-26T07:45:29.088Z",
-    speakerName: "Speaker 1",
-    speakerDesignation: "Speaker Designation 1",
-    meetingUrl: "https://example.com/meeting1",
-    location: "Event Location 1",
-  },
-  {
-    title: "Event 1",
-    description: "Description of Event 1",
-    date: "2023-07-26T07:45:29.088Z",
-    time: "2023-07-26T07:45:29.088Z",
-    speakerName: "Speaker 1",
-    speakerDesignation: "Speaker Designation 1",
-    meetingUrl: "https://example.com/meeting1",
-    location: "Event Location 1",
-  },
-  {
-    title: "Event 1",
-    description: "Description of Event 1",
-    date: "2023-07-26T07:45:29.088Z",
-    time: "2023-07-26T07:45:29.088Z",
-    speakerName: "Speaker 1",
-    speakerDesignation: "Speaker Designation 1",
-    meetingUrl: "https://example.com/meeting1",
-    location: "Event Location 1",
-  },
-  // Add more events here...
-];
-
 const ShowEvent = () => {
   return (
     <div className="show-event-container">
