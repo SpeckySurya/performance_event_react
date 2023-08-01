@@ -55,13 +55,17 @@
 
 .mob-navbar {
   z-index: 10;
+
   width: 50%;
   height: 40vh;
   border-radius: 12px;
   padding: 20px;
   display: none;
+  right: 17px;
+  top: 63px;
   font-size: 22px;
   position: absolute;
+
   background-color: #333333;
   transition: all ease 0.2s;
 }

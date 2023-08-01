@@ -22,7 +22,7 @@
 
 .banner .left {
   margin: auto;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
 }
 
 .banner .right {

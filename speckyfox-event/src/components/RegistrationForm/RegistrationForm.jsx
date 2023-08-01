@@ -162,12 +162,15 @@ const RegistrationForm = () => {
           />
           <label>
             Have you used any tool or did Performance Testing in the past?
-            <span className="mark">*</span>
+            <span className="marks">*</span>
           </label>
         </Stack>
       </div>
       <span className="msg">
-        All (<span className="marks">*</span>) field should be required
+        <p className="note">Note : </p>
+        <p className="notemsg">
+          All ( <span className="marks">*</span> ) field should be required
+        </p>
       </span>
       <button type="submit">Register</button>
     </form>

@@ -8,7 +8,10 @@
   max-width: 450px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
-
+.note {
+  margin-right: 2px;
+  font-size: x-small;
+}
 .mark {
   padding: 0px 3px;
   color: orange;
@@ -24,12 +27,15 @@
   margin-bottom: 15px;
 }
 .msg {
-  align-items: center;
   display: flex;
-  justify-content: center;
   margin-bottom: 5px;
 }
-
+.note {
+  margin-top: 6px;
+}
+.notemsg {
+  margin-left: 5px;
+}
 .form-group label {
   display: block;
   padding: 5px 0;
@@ -65,4 +71,15 @@
 
 button:hover {
   background-color: #f7542b;
+}
+@media screen and (max-width: 992px) {
+  .msg {
+    display: block;
+  }
+  /* .note {
+    margin-top: 6px;
+  }
+  .notemsg {
+    margin-left: 5px;
+  } */
 }

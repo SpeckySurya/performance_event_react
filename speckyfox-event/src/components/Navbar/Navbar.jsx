@@ -3,7 +3,7 @@ import logo from "./../../assets/logo.png";
 import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { styled } from "@mui/material";
-import { BsFacebook, BsYoutube, BsTwitter, BsInstagram } from "react-icons/bs";
+import { BsFacebook, BsYoutube, BsTwitter, BsLinkedin } from "react-icons/bs";
 
 const Navbar = () => {
   function handleHamburgerClick() {
@@ -28,27 +28,32 @@ const Navbar = () => {
       <nav className="mob-navbar" style={{ left: "calc(-60%)" }}>
         <ul className="mob-nav-links">
           <li>
-            <CustomLink to="/">Home</CustomLink>
-          </li>
-          <li>
-            <CustomLink to="/events">Events</CustomLink>
-          </li>
-          <li>
             <a
               className="no-anchor-style"
-              target="_blank"
-              href="https://speckyfox.com/company"
+              href="https://www.linkedin.com/company/speckyfox1/mycompany/"
             >
-              About
+              LinkedIn
+            </a>
+          </li>
+          <li>
+            <a className="no-anchor-style" href="https://twitter.com/SpeckyFox">
+              Twiter
             </a>
           </li>
           <li>
             <a
               className="no-anchor-style"
-              target="_blank"
-              href="https://speckyfox.com/contact-us"
+              href="https://www.facebook.com/SpeckyFox/"
             >
-              Contact
+              Facebook
+            </a>
+          </li>
+          <li>
+            <a
+              className="no-anchor-style"
+              href="https://www.youtube.com/@speckyfoxtechnologiesindia4213"
+            >
+              Youtube
             </a>
           </li>
         </ul>
@@ -62,16 +67,11 @@ const Navbar = () => {
         </div>
         <ul className="nav-links">
           <li>
-            <CustomLink to="/">
-              <BsFacebook />
-            </CustomLink>
-          </li>
-          <li>
             <a
               target="_blank"
-              href="https://www.youtube.com/@speckyfoxtechnologiesindia4213"
+              href="https://www.linkedin.com/company/speckyfox1/mycompany/"
             >
-              <BsYoutube />
+              <BsLinkedin />
             </a>
           </li>
           <li>
@@ -80,8 +80,16 @@ const Navbar = () => {
             </a>
           </li>
           <li>
-            <a target="_blank" href="https://speckyfox.com/contact-us">
-              <BsInstagram />
+            <a target="_blank" href="https://www.facebook.com/SpeckyFox/">
+              <BsFacebook />
+            </a>
+          </li>
+          <li>
+            <a
+              target="_blank"
+              href="https://www.youtube.com/@speckyfoxtechnologiesindia4213"
+            >
+              <BsYoutube />
             </a>
           </li>
         </ul>

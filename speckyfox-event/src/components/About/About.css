@@ -16,7 +16,7 @@
   margin: auto;
   text-align: justify;
   line-height: 1.6;
-  padding: 5%;
+  padding: 10px 50px;
   font-size: 1.125rem;
   font-weight: 200;
 }
@@ -107,8 +107,20 @@
     margin: auto;
     text-align: justify;
     line-height: 1.6;
-    padding: 5%;
+
     font-size: 1.125rem;
     font-weight: 200;
+  }
+}
+@media screen and (max-width: 36px) {
+  .backshape {
+    height: 250px;
+    width: 250px;
+    color: #ec6e07;
+
+    background-color: #ec6e07;
+    border-radius: 50%;
+    position: absolute;
+    z-index: -1;
   }
 }
