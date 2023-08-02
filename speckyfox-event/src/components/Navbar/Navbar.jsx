@@ -30,19 +30,25 @@ const Navbar = () => {
           <li>
             <a
               className="no-anchor-style"
+              target="_blank"
               href="https://www.linkedin.com/company/speckyfox1/mycompany/"
             >
               LinkedIn
             </a>
           </li>
           <li>
-            <a className="no-anchor-style" href="https://twitter.com/SpeckyFox">
+            <a
+              className="no-anchor-style"
+              target="_blank"
+              href="https://twitter.com/SpeckyFox"
+            >
               Twiter
             </a>
           </li>
           <li>
             <a
               className="no-anchor-style"
+              target="_blank"
               href="https://www.facebook.com/SpeckyFox/"
             >
               Facebook
@@ -51,6 +57,7 @@ const Navbar = () => {
           <li>
             <a
               className="no-anchor-style"
+              target="_blank"
               href="https://www.youtube.com/@speckyfoxtechnologiesindia4213"
             >
               Youtube
