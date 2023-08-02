@@ -32,6 +32,7 @@ const Navbar = () => {
           <li>
             <a
               className="no-anchor-style"
+              target="_blank"
               href="https://www.linkedin.com/company/speckyfox1/mycompany/"
             >
               LinkedIn

@@ -33,6 +33,7 @@
 }
 .notemsg {
   margin-left: 5px;
+  font-size: small;
 }
 .form-group label {
   display: block;

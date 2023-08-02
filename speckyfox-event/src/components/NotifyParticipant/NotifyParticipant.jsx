@@ -10,17 +10,22 @@ import {
   Typography,
 } from "@mui/material";
 import EventService from "../../services/EventService";
+import { event } from "jquery";
 
 const NotifyParticipant = () => {
   const [selectedEvent, setSelectedEvent] = useState("");
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [selectAll, setSelectAll] = useState(true);
   const [events, setEvents] = useState([]);
+  const [btnDisabled, setBtnDisabled] = useState(true);
 
   useEffect(() => {
     const eventService = new EventService();
     eventService.getAllEvents().then((response) => setEvents(response.data));
-  }, []);
+    events[selectedEvent - 1]?.users?.length > 0
+      ? setBtnDisabled(false)
+      : setBtnDisabled(true);
+  }, [selectedEvent]);
 
   const handleEventChange = (e) => {
     const eventId = e.target.value;
@@ -83,9 +88,13 @@ const NotifyParticipant = () => {
           ))}
         </Select>
       </FormControl>
+
       <Box textAlign={"end"}>
         <Button
-          variant="contained"
+          // variant={btnDisabled}
+          variant={btnDisabled ? "outlined" : "contained"}
+          //  variant="contained"
+          disabled={btnDisabled ? true : false}
           onClick={handleUserSelectAll}
           sx={{ ml: 2, mt: 3 }}
         >
@@ -93,8 +102,8 @@ const NotifyParticipant = () => {
         </Button>
         <Button
           sx={{ ml: 2, mt: 3 }}
-          variant="contained"
-          color="primary"
+          variant={btnDisabled ? "outlined" : "contained"}
+          disabled={btnDisabled ? true : false}
           onClick={() => handleNotify()}
         >
           Notify
@@ -105,8 +114,8 @@ const NotifyParticipant = () => {
           <Typography>No participants belong to the selected event.</Typography>
         ) : (
           <Box maxHeight={300} overflow={"scroll"}>
-            {selectedUsers.map((user) => (
-              <Box key={user.id} display="flex" alignItems="center" mb={1}>
+            {selectedUsers.map((user, index) => (
+              <Box key={index} display="flex" alignItems="center" mb={1}>
                 <Checkbox
                   checked={selectedUsers.includes(user)}
                   onChange={() => {
