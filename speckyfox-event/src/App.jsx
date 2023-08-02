@@ -11,7 +11,9 @@ import { DashboardPage } from "./pages/DashboardPage/DashboardPage";
 import MyContext from "./context";
 
 function App() {
-  const [sharedState, setSharedState] = useState({ admin: false });
+  const [sharedState, setSharedState] = useState({
+    admin: false,
+  });
   return (
     <MyContext.Provider value={{ sharedState, setSharedState }}>
       <Routes>

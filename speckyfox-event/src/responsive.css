@@ -39,6 +39,21 @@
 
   .about-body {
     width: 100%;
+    padding: 10px 20px;
+  }
+
+  .backshape {
+    height: 200px;
+    width: 200px;
+  }
+
+  .imgcirclediv {
+    height: 250px;
+    width: 250px;
+  }
+
+  .banner .right > * {
+    margin: 20px 10px;
   }
 }
 

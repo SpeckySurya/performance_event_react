@@ -21,13 +21,13 @@ export const Banner = (props) => {
       <section className="left flex">
         <div className="event-details flex">
           <div className="event-title">
-            <p className="title">
+            <div className="title">
               <header>{props.event.title}</header>
               <div>{props.event.description}</div>
-            </p>
+            </div>
           </div>
           <div className="other-details">
-            <p className="date-container flex-aic">
+            <div className="date-container flex-aic">
               <div className="icon">
                 <i className="bx bx-calendar"></i>
               </div>
@@ -38,20 +38,20 @@ export const Banner = (props) => {
                   {formattedDate.year}
                 </div>
               </div>
-            </p>
-            <p className="time-container flex-aic">
+            </div>
+            <div className="time-container flex-aic">
               <div className="icon">
                 <i className="bx bx-time-five bx-spin"></i>
               </div>
               <div className="time">{formattedTime}</div>
-            </p>
-            <p className="location-container flex-aic">
+            </div>
+            <div className="location-container flex-aic">
               <div className="icon">
                 <i class="bx bx-broadcast"></i>
               </div>
               <div className="location">Online</div>
-            </p>
-            <p className="location-container flex-aic">
+            </div>
+            <div className="location-container flex-aic">
               <div className="icon">
                 <i class="bx bx-envelope"></i>
               </div>
@@ -63,7 +63,7 @@ export const Banner = (props) => {
                   Any Queries
                 </a>
               </div>
-            </p>
+            </div>
             <div className="live-streaming-txt">
               <p>Live Webinar</p>
             </div>
@@ -74,9 +74,9 @@ export const Banner = (props) => {
             <img src={speakerImg} alt="speaker image" />
           </section>
           <section className="speaker-name">
-            <p style={{ whiteSpace: "nowrap" }}>
+            <div style={{ whiteSpace: "nowrap" }}>
               {props.event.speakerName} - {props.event.speakerDesignation}
-            </p>
+            </div>
             <p>( Speaker )</p>
           </section>
         </div>
