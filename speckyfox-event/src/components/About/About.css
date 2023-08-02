@@ -32,8 +32,7 @@
 .backshape {
   height: 350px;
   width: 350px;
-  color: #ec6e07;
-  background-color: #ec6e07;
+  background-color: #ff9430;
   border-radius: 50%;
   position: absolute;
   z-index: -1;

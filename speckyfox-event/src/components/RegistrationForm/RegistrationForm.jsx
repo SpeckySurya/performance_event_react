@@ -148,10 +148,7 @@ const RegistrationForm = () => {
             checked={formData.needHelp}
             onChange={handleChange}
           />
-          <label>
-            Do you need any help in Performance Testing?
-            <span className="marks">*</span>
-          </label>
+          <label>Do you need any help in Performance Testing?</label>
         </Stack>
       </div>
 
@@ -165,7 +162,6 @@ const RegistrationForm = () => {
           />
           <label>
             Have you used any tool or did Performance Testing in the past?
-            <span className="marks">*</span>
           </label>
         </Stack>
       </div>
