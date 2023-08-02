@@ -4,6 +4,8 @@ import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { styled } from "@mui/material";
 import { BsFacebook, BsYoutube, BsTwitter, BsLinkedin } from "react-icons/bs";
+import { BiSolidContact } from "react-icons/bi";
+import { FaGlobeAmericas } from "react-icons/fa";
 
 const Navbar = () => {
   function handleHamburgerClick() {
@@ -36,13 +38,18 @@ const Navbar = () => {
             </a>
           </li>
           <li>
-            <a className="no-anchor-style" href="https://twitter.com/SpeckyFox">
+            <a
+              className="no-anchor-style"
+              target="_blank"
+              href="https://twitter.com/SpeckyFox"
+            >
               Twiter
             </a>
           </li>
           <li>
             <a
               className="no-anchor-style"
+              target="_blank"
               href="https://www.facebook.com/SpeckyFox/"
             >
               Facebook
@@ -51,9 +58,28 @@ const Navbar = () => {
           <li>
             <a
               className="no-anchor-style"
+              target="_blank"
               href="https://www.youtube.com/@speckyfoxtechnologiesindia4213"
             >
               Youtube
+            </a>
+          </li>
+          <li className="website">
+            <a
+              className="no-anchor-style"
+              target="_blank"
+              href="https://www.speckyfox.com"
+            >
+              Website
+            </a>
+          </li>
+          <li className="contact">
+            <a
+              className="no-anchor-style"
+              target="_blank"
+              href="https://speckyfox.com/contact-us"
+            >
+              Contact
             </a>
           </li>
         </ul>
@@ -63,7 +89,7 @@ const Navbar = () => {
           <img src={logo} />
         </div>
         <div className="nav-hamburger" onClick={handleHamburgerClick}>
-          <i class="bx bx-menu"></i>
+          <i className="bx bx-menu"></i>
         </div>
         <ul className="nav-links">
           <li>
@@ -90,6 +116,18 @@ const Navbar = () => {
               href="https://www.youtube.com/@speckyfoxtechnologiesindia4213"
             >
               <BsYoutube />
+            </a>
+          </li>
+          <li className="website">
+            <a target="_blank" href="https://www.speckyfox.com">
+              <i class="bx bx-globe"></i>
+              {/* <FaGlobeAmericas /> */}
+            </a>
+          </li>
+          <li className="linkedin">
+            <a target="_blank" href="https://speckyfox.com/contact-us">
+              <i className="bx bbxl-linkedin">{/* <BiSolidContact /> */}</i>
+              <i class="bx bxs-phone"></i>
             </a>
           </li>
         </ul>

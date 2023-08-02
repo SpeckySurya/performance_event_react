@@ -2,19 +2,20 @@ import React, { useEffect, useState } from "react";
 import EventForm from "../../components/EventForm/EventForm";
 import "./DashboardPage.css";
 import NotifyParticipant from "../../components/NotifyParticipant/NotifyParticipant";
-import ShowEvent from "../../components/ShowEvent/ShowEvent";
 import AdminHeader from "../../components/AdminHeader/AdminHeader";
 import { Box, Stack } from "@mui/material";
 import EventCard from "../../components/EventCard/EventCard";
 import EventService from "../../services/EventService";
 
 export const DashboardPage = () => {
-  const [selected, setSelected] = useState("create");
+  const [selected, setSelected] = useState("show");
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
     const eventService = new EventService();
-    eventService.getAllEvents().then((response) => setEvents(response.data));
+    eventService.getAllEvents().then((response) => {
+      setEvents(response.data);
+    });
   }, []);
 
   function handleSidebar(data) {

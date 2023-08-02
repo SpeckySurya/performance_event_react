@@ -9,7 +9,9 @@ const EventPage = () => {
 
   useEffect(() => {
     const eventService = new EventService();
-    eventService.getAllEvents().then((response) => setEvents(response.data));
+    eventService
+      .getAllActiveEvents()
+      .then((response) => setEvents(response.data));
   }, []);
   return (
     <div>

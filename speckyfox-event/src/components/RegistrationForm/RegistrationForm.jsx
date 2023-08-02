@@ -52,6 +52,7 @@ const RegistrationForm = () => {
 
   return (
     <form className="registration-form" onSubmit={handleSubmit}>
+      <div className="form-header-reg">Event Registration</div>
       <div className="form-group">
         <label htmlFor="firstName">
           First Name<span className="mark">*</span>
@@ -173,7 +174,7 @@ const RegistrationForm = () => {
           Note : All <span className="marks"> * </span> field should be required
         </p>
       </span>
-      <button type="submit">Register</button>
+      <button type="submit">Submit</button>
     </form>
   );
 };

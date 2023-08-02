@@ -42,3 +42,14 @@ export function convertTo12HourFormat(timeString = "") {
 
   return `${hours12}:${minutes12} ${period}`;
 }
+
+export function toDDMMYYYY(dateInput) {
+  const selectedDate = new Date(dateInput);
+  if (!isNaN(selectedDate)) {
+    const day = String(selectedDate.getDate()).padStart(2, "0");
+    const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
+    const year = selectedDate.getFullYear();
+    const formattedDate = `${day}-${month}-${year}`;
+    return formattedDate;
+  }
+}

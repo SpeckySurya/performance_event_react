@@ -77,7 +77,7 @@ export const Banner = (props) => {
             <p style={{ whiteSpace: "nowrap" }}>
               {props.event.speakerName} - {props.event.speakerDesignation}
             </p>
-            <br />( Speaker )
+            <p>( Speaker )</p>
           </section>
         </div>
       </section>

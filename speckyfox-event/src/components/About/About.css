@@ -25,32 +25,34 @@
   margin: auto;
   display: flex;
   justify-content: center;
+  align-items: center;
   font-size: larger;
   padding: 10px;
 }
 .backshape {
-  height: 400px;
-  width: 400px;
+  height: 350px;
+  width: 350px;
   color: #ec6e07;
-
   background-color: #ec6e07;
   border-radius: 50%;
   position: absolute;
   z-index: -1;
-  margin-left: 6%;
+  margin-left: 10%;
 }
 .imgcircle {
-  padding: 0px;
+  width: 100%;
+}
+.imgcirclediv {
+  background-size: contain;
+  width: 400px;
+  height: 400px;
+  margin-top: 50px;
   border-radius: 50%;
-  z-index: 1;
-  height: 350px;
-  width: 350px;
-  margin-left: 10%;
-  margin-top: 10%;
-  margin-bottom: 5%;
+  overflow: hidden;
 }
 .speaker-photo {
   padding: 5%;
+  margin: 0 5%;
 }
 
 #module {
@@ -74,9 +76,6 @@
 
 #module a:not(.collapsed)::after {
   content: "- Show Less";
-}
-.imgcirclediv {
-  border-radius: 50%;
 }
 
 @media screen and (max-width: 600px) {

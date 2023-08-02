@@ -15,15 +15,15 @@ function App() {
   return (
     <MyContext.Provider value={{ sharedState, setSharedState }}>
       <Routes>
-        <Route exact path="/" Component={HomePage} />
-        <Route path="/events" Component={EventPage} />
-        <Route path="/thankyou" Component={ThankYouPage} />
-        <Route path="/login" Component={Login} />
+        <Route exact path="/" element={<HomePage />} />
+        <Route path="/events" element={<EventPage />} />
+        <Route path="/thankyou" element={<ThankYouPage />} />
+        <Route path="/login" element={<Login />} />
         <Route
           path="/dashboard"
-          Component={sharedState.admin ? DashboardPage : Login}
+          element={sharedState.admin ? <DashboardPage /> : <Login />}
         />
-        <Route path="/error" Component={ErrorPage} />
+        <Route path="/error" element={<ErrorPage />} />
       </Routes>
     </MyContext.Provider>
   );

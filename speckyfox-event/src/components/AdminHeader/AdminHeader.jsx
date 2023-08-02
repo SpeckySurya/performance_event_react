@@ -80,7 +80,7 @@ const AdminHeader = (props) => {
 
   return (
     <div>
-      <AppBar position="static" sx={{ bgcolor: "#322653" }}>
+      <AppBar position="fixed" sx={{ zIndex: 5, bgcolor: "#322653" }}>
         <Toolbar>
           <IconButton
             edge="start"

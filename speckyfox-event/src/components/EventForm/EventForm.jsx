@@ -1,37 +1,60 @@
 import React, { useState } from "react";
 import "./EventForm.css";
 import EventService from "../../services/EventService";
+import { logDOM } from "@testing-library/react";
+import { Alert, Box } from "@mui/material";
+import { error } from "jquery";
+import { toDDMMYYYY } from "../../utils/DateFormatter";
+
+const formDataDefault = {
+  title: "",
+  description: "",
+  date: "",
+  time: "",
+  speakerName: "",
+  speakerDesignation: "",
+  meetingUrl: "",
+  location: "",
+};
 
 const EventForm = () => {
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    date: "",
-    time: "",
-    speakerName: "",
-    speakerDesignation: "",
-    meetingUrl: "",
-    location: "",
-  });
+  const [formData, setFormData] = useState(formDataDefault);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    let { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleDateChange = (event) => {
+    const value = toDDMMYYYY(event.target.value);
+    setFormData({ ...formData, [event.target.name]: value });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const request = new FormData();
-    request.append("speakerPhoto", selectedFile);
+    request.append("profilePicture", selectedFile);
     request.append("active", false);
     Object.entries(formData).forEach(([key, val]) => {
       request.append(key, val);
     });
+    request.append("date", toDDMMYYYY(formData.date));
     const eventService = new EventService();
-    eventService.saveEvent(request).then((response) => {
-      console.log(response.data);
-    });
+    eventService
+      .saveEvent(request)
+      .then((response) => {
+        setIsAlertVisible(true);
+        setFormData(formDataDefault);
+      })
+      .catch((error) => {
+        alert("Something went wrong :" + error);
+      });
+  };
+
+  const handleAlertClose = () => {
+    setIsAlertVisible(false);
   };
 
   const handleFileChange = (event) => {
@@ -70,8 +93,8 @@ const EventForm = () => {
             type="date"
             id="date"
             name="date"
-            value={formData.date}
-            onChange={handleChange}
+            onChange={handleDateChange}
+            data-date-format="YYYY MM DD"
           />
         </div>
         <div className="form-group">
@@ -80,6 +103,7 @@ const EventForm = () => {
             type="time"
             id="time"
             name="time"
+            step={1}
             value={formData.time}
             onChange={handleChange}
           />
@@ -111,7 +135,7 @@ const EventForm = () => {
           <input
             type="file"
             id="speakerPhoto"
-            name="speakerPhoto"
+            name="profilePicture"
             placeholder="Speaker Photo"
             onChange={handleFileChange}
           />
@@ -140,6 +164,17 @@ const EventForm = () => {
         </div>
         <button type="submit">Create Event</button>
       </form>
+      <Box py={2}>
+        {isAlertVisible && (
+          <Alert
+            onClose={() => {
+              handleAlertClose();
+            }}
+          >
+            Event created successfully !
+          </Alert>
+        )}
+      </Box>
     </div>
   );
 };
