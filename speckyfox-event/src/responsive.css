@@ -8,12 +8,16 @@
   .banner .speaker-details img {
     width: 70%;
   }
+}
+
+@media screen and (max-width: 950px) {
   .banner .left {
     flex-wrap: wrap;
+    max-width: 100%;
   }
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1200px) {
   .banner {
     flex-wrap: wrap;
   }

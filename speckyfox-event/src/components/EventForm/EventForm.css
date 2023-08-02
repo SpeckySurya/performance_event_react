@@ -27,7 +27,8 @@
 }
 
 .event-form-container .form-group input,
-.event-form-container .form-group textarea {
+.event-form-container .form-group textarea,
+.event-form-container #active {
   width: 100%;
   padding: 10px;
   font-size: 16px;

@@ -23,7 +23,13 @@ export const Banner = (props) => {
           <div className="event-title">
             <div className="title">
               <header>{props.event.title}</header>
-              <div>{props.event.description}</div>
+              <div>
+                <ul className="agenda-list">
+                  {props.event.description.split(",").map((e) => (
+                    <li>{e}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
           <div className="other-details">
@@ -75,8 +81,9 @@ export const Banner = (props) => {
           </section>
           <section className="speaker-name">
             <div style={{ whiteSpace: "nowrap" }}>
-              {props.event.speakerName} - {props.event.speakerDesignation}
+              {props.event.speakerName}
             </div>
+            <div>{props.event.speakerDesignation}</div>
             <p>( Speaker )</p>
           </section>
         </div>

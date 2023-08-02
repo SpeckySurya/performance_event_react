@@ -15,6 +15,7 @@ const formDataDefault = {
   speakerDesignation: "",
   meetingUrl: "",
   location: "",
+  active: "",
 };
 
 const EventForm = () => {
@@ -36,7 +37,6 @@ const EventForm = () => {
     event.preventDefault();
     const request = new FormData();
     request.append("profilePicture", selectedFile);
-    request.append("active", false);
     Object.entries(formData).forEach(([key, val]) => {
       request.append(key, val);
     });
@@ -161,6 +161,15 @@ const EventForm = () => {
             value={formData.location}
             onChange={handleChange}
           />
+        </div>
+        <div className="form-group">
+          <label htmlFor="active">Active</label>
+          <select name="active" id="active" onChange={handleChange}>
+            <option selected value={"false"}>
+              False
+            </option>
+            <option value={"true"}>True</option>
+          </select>
         </div>
         <button type="submit">Create Event</button>
       </form>

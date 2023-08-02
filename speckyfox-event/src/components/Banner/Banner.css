@@ -21,7 +21,7 @@
 }
 
 .banner .left {
-  margin: auto;
+  max-width: 60%;
   /* flex-wrap: wrap; */
 }
 
@@ -31,7 +31,12 @@
 
 .banner .event-details {
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
+}
+
+.agenda-list {
+  font-size: 15px;
+  margin: 5%;
 }
 
 .banner .event-title {
@@ -42,7 +47,6 @@
 .banner .event-title header {
   font-size: 190%;
   margin-bottom: 20px;
-  width: 50px;
   font-weight: 600;
 }
 
