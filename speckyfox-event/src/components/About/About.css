@@ -36,7 +36,7 @@
   border-radius: 50%;
   position: absolute;
   z-index: -1;
-  margin-left: 10%;
+  margin-left: 20%;
 }
 .imgcircle {
   width: 100%;
@@ -50,6 +50,7 @@
   overflow: hidden;
 }
 .speaker-photo {
+  position: relative;
   padding: 5%;
   margin: 0 5%;
 }
@@ -75,50 +76,4 @@
 
 #module a:not(.collapsed)::after {
   content: "- Show Less";
-}
-
-@media screen and (max-width: 600px) {
-  .top {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-  }
-  .backshape {
-    height: 300px;
-    width: 300px;
-    color: #ec6e07;
-
-    background-color: #ec6e07;
-    border-radius: 50%;
-    position: absolute;
-    z-index: -1;
-  }
-  .imgcircle {
-    padding: 0px;
-    border-radius: 50%;
-    z-index: 1;
-    height: 250px;
-    width: 250px;
-  }
-  .about-body {
-    width: 100%;
-    margin: auto;
-    text-align: justify;
-    line-height: 1.6;
-
-    font-size: 1.125rem;
-    font-weight: 200;
-  }
-}
-@media screen and (max-width: 36px) {
-  .backshape {
-    height: 250px;
-    width: 250px;
-    color: #ec6e07;
-
-    background-color: #ec6e07;
-    border-radius: 50%;
-    position: absolute;
-    z-index: -1;
-  }
 }
