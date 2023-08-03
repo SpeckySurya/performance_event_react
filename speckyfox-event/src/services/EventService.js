@@ -15,9 +15,10 @@ export default class EventService {
     return axios.get(`${this.baseUrl}/admin/event-list`, withAuth());
   }
   notifyUsers(eventId) {
-    return axios.get(`${this.baseUrl}/admin/send-event-reminder/${eventId}`, {
-      headers: basicHeader(),
-    });
+    return axios.get(
+      `${this.baseUrl}/admin/send-event-reminder/${eventId}`,
+      withAuth()
+    );
   }
   saveEvent(event) {
     const headers = multipartAuth();

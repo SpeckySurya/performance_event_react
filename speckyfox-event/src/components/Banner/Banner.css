@@ -34,9 +34,23 @@
   justify-content: space-evenly;
 }
 
+.event-timing > div {
+  font-size: 20px;
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 5%;
+}
+
 .agenda-list {
   font-size: 15px;
+  list-style-type: none;
   margin: 5%;
+}
+
+.agenda-icon {
+  color: #f37d47;
+  height: 100%;
+  margin: auto 5px;
 }
 
 .banner .event-title {
@@ -48,12 +62,6 @@
   font-size: 190%;
   margin-bottom: 20px;
   font-weight: 600;
-}
-
-.banner .other-details > p {
-  font-size: 24px;
-  font-weight: 600;
-  margin-top: 5%;
 }
 
 .banner .other-details i {
@@ -68,7 +76,6 @@
   color: whitesmoke;
   border-radius: 20px;
   margin-top: 30px;
-  width: 50%;
   text-align: center;
   white-space: nowrap;
 }
@@ -84,7 +91,7 @@
   flex-direction: column;
   justify-content: end;
   align-items: center;
-  margin: 0 auto;
+  margin: 5vh auto;
 }
 
 .banner .speaker-name {
