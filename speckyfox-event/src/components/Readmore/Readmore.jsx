@@ -13,18 +13,18 @@ function Readmore() {
         accomplished professional with a wealth of experience in the IT
         industry. With an impressive 11-year tenure, Abhishek has honed his
         skills while collaborating with a diverse range of clients, spanning
-        from small and mid-size businesses to Fortune 500 companies.{" "}
+        from small and mid-size businesses to Fortune 500 companies. As a
+        versatile individual, Abhishek effortlessly wears multiple hats and has
+        proved himself in various roles throughout his career. With a penchant
+        for excellence, Abhishek has specialized in Performance Engineering,
+        leveraging his technical expertise to optimize systems and processes,
+        ensuring seamless and efficient operations for his clients.
       </p>
       <div className="content" style={{ transition: "2s linear" }}>
         <p>
-          As a versatile individual, Abhishek effortlessly wears multiple hats
-          and has proved himself in various roles throughout his career. With a
-          penchant for excellence, Abhishek has specialized in Performance
-          Engineering, leveraging his technical expertise to optimize systems
-          and processes, ensuring seamless and efficient operations for his
-          clients. His ability to lead and inspire has allowed him to manage
-          delivery teams with aplomb, always ensuring that projects are executed
-          with precision and within set timelines. Intriguingly, Abhishek has an
+          His ability to lead and inspire has allowed him to manage delivery
+          teams with aplomb, always ensuring that projects are executed with
+          precision and within set timelines. Intriguingly, Abhishek has an
           innate talent for navigating the intricacies of pre-sales, showcasing
           his prowess in convincing clients of the value and efficacy of the
           services offered by his company, SpeckyFox Technologies. His

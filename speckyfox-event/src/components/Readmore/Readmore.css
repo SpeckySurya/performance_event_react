@@ -55,3 +55,5 @@
 .more P {
   color: #ec6e07;
 }
+@media screen and (max-width: 800px) {
+}
