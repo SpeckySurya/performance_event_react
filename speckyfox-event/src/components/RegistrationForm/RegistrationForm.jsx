@@ -34,7 +34,6 @@ const RegistrationForm = () => {
   // Handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formData);
     let obj = new RegistrationService();
     obj
       .saveUser(formData)

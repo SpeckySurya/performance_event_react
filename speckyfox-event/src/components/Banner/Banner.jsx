@@ -25,12 +25,18 @@ export const Banner = (props) => {
               <header>{props.event.title}</header>
               <div>
                 <ul className="agenda-list">
-                  {props.event.description.split(",").map((e) => (
-                    <li style={{ display: "flex" }}>
-                      <i class="bx bx-target-lock agenda-icon"></i>
-                      <span>{e}</span>
-                    </li>
-                  ))}
+                  {props.event.description.split(",").length < 2
+                    ? props.event.description.split(",").map((e) => (
+                        <li>
+                          <span>{e}</span>
+                        </li>
+                      ))
+                    : props.event.description.split(",").map((e) => (
+                        <li>
+                          <i class="bx bx-target-lock agenda-icon"></i>
+                          <span>{e}</span>
+                        </li>
+                      ))}
                 </ul>
               </div>
             </div>
