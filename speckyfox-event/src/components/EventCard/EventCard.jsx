@@ -10,7 +10,12 @@ import {
   Typography,
   Button,
   styled,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
 } from "@mui/material";
+import { TbTargetArrow } from "react-icons/tb";
 import banner from "./../../assets/card-bg.png";
 import dateFormatter, {
   convertTo12HourFormat,
@@ -56,7 +61,27 @@ const EventCard = (props) => {
                 <Typography gutterBottom variant="h4" fontWeight={600}>
                   {event.title}
                 </Typography>
-                <Typography marginBottom={3}>{event.description}</Typography>
+                <Typography fontWeight={600} py={1}>
+                  Agenda -
+                </Typography>
+                <Box fontSize={"5px"} marginBottom={3}>
+                  {
+                    <ul className="agenda-list">
+                      {event.description.split(",").length < 2
+                        ? event.description.split(",").map((e) => (
+                            <li>
+                              <span>{e}</span>
+                            </li>
+                          ))
+                        : event.description.split(",").map((e) => (
+                            <li style={{ fontSize: "10px" }}>
+                              <TbTargetArrow className="agenda-icon" />
+                              <span>{e}</span>
+                            </li>
+                          ))}
+                    </ul>
+                  }
+                </Box>
                 <Box sx={{ mt: "auto" }}>
                   <Stack direction="row" alignItems="center">
                     <Typography color="#f37d47" marginX={1} fontSize={18}>

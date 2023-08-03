@@ -86,9 +86,9 @@ const Navbar = () => {
         </ul>
       </nav>
       <nav className="navbar">
-        <div className="logo">
+        <Link to="/" className="logo">
           <img src={logo} />
-        </div>
+        </Link>
         <div className="nav-hamburger" onClick={handleHamburgerClick}>
           <i className="bx bx-menu"></i>
         </div>
