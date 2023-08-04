@@ -86,9 +86,9 @@ const Navbar = () => {
         </ul>
       </nav>
       <nav className="navbar">
-        <Link to="/" className="logo">
+        <div className="logo">
           <img src={logo} />
-        </Link>
+        </div>
         <div className="nav-hamburger" onClick={handleHamburgerClick}>
           <i className="bx bx-menu"></i>
         </div>
@@ -101,16 +101,19 @@ const Navbar = () => {
               <BsLinkedin />
             </a>
           </li>
+
           <li>
             <a target="_blank" href="https://twitter.com/SpeckyFox">
               <BsTwitter />
             </a>
           </li>
+
           <li>
             <a target="_blank" href="https://www.facebook.com/SpeckyFox/">
               <BsFacebook />
             </a>
           </li>
+
           <li>
             <a
               target="_blank"
@@ -119,12 +122,14 @@ const Navbar = () => {
               <BsYoutube />
             </a>
           </li>
+
           <li className="website">
             <a target="_blank" href="https://www.speckyfox.com">
               <i class="bx bx-globe"></i>
               {/* <FaGlobeAmericas /> */}
             </a>
           </li>
+
           <li className="linkedin">
             <a target="_blank" href="https://speckyfox.com/contact-us">
               <i className="bx bbxl-linkedin">{/* <BiSolidContact /> */}</i>

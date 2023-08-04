@@ -42,7 +42,13 @@ const EventCard = (props) => {
 
   return (
     <div className="event-card-container">
-      <Box display="flex" justifyContent={"center"} flexWrap="wrap" padding={3}>
+      <Box
+        display="flex"
+        justifyContent={"center"}
+        flexWrap="wrap"
+        float={"left"}
+        padding={3}
+      >
         {props.events.map((event) => {
           const formattedDate = dateFormatter(event.date);
           const formattedTime = convertTo12HourFormat(event.time);
