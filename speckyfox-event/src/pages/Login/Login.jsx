@@ -3,28 +3,30 @@ import "./login.css";
 import { useNavigate } from "react-router-dom";
 import LoginService from "./../../services/LoginService";
 import MyContext from "../../context";
+import { CircularProgress } from "@mui/material";
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { setSharedState } = useContext(MyContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setLoading(true);
     const loginService = new LoginService();
     loginService
       .adminLogin(formData)
       .then((response) => {
         setSharedState({ admin: true });
+        setLoading(false);
         navigate("/dashboard");
       })
       .catch((error) => {
-        console.log(error);
-        // navigate("/error");
+        navigate("/error");
       });
   };
 
@@ -65,7 +67,9 @@ const Login = () => {
             required
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" className="flex-jcc-aic">
+          {loading ? <CircularProgress size={20} color={"error"} /> : "Login"}
+        </button>
       </form>
     </div>
   );

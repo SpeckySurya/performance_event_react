@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import "./EventForm.css";
 import EventService from "../../services/EventService";
 import { logDOM } from "@testing-library/react";
-import { Alert, Box } from "@mui/material";
+import { Alert, Box, CircularProgress } from "@mui/material";
 import { error } from "jquery";
 import { toDDMMYYYY } from "../../utils/DateFormatter";
+import Duration from "../Duration/Duration";
 
 const formDataDefault = {
   title: "",
@@ -15,13 +16,15 @@ const formDataDefault = {
   speakerDesignation: "",
   meetingUrl: "",
   location: "",
-  active: "",
+  active: false,
 };
 
 const EventForm = () => {
   const [formData, setFormData] = useState(formDataDefault);
   const [selectedFile, setSelectedFile] = useState(null);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [duration, setDuration] = useState({ hours: 0, minutes: 0 });
 
   const handleChange = (event) => {
     let { name, value } = event.target;
@@ -35,17 +38,23 @@ const EventForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setLoading(true);
     const request = new FormData();
     request.append("profilePicture", selectedFile);
     Object.entries(formData).forEach(([key, val]) => {
       request.append(key, val);
     });
+    request.append("duration", `${duration.hours}:${duration.minutes}`);
     request.append("date", toDDMMYYYY(formData.date));
+    for (const entry of request.entries()) {
+      console.log(entry[0], entry[1]);
+    }
     const eventService = new EventService();
     eventService
       .saveEvent(request)
       .then((response) => {
         setIsAlertVisible(true);
+        setLoading(false);
         setFormData(formDataDefault);
       })
       .catch((error) => {
@@ -108,6 +117,7 @@ const EventForm = () => {
             onChange={handleChange}
           />
         </div>
+        <Duration duration={duration} setDuration={setDuration} />
         <div className="form-group">
           <label htmlFor="speakerName">Speaker Name</label>
           <input
@@ -171,7 +181,13 @@ const EventForm = () => {
             <option value={"true"}>True</option>
           </select>
         </div>
-        <button type="submit">Create Event</button>
+        <button type="submit" className="flex-jcc-aic">
+          {loading ? (
+            <CircularProgress size={20} color={"error"} />
+          ) : (
+            "Create Event"
+          )}
+        </button>
       </form>
       <Box py={2}>
         {isAlertVisible && (

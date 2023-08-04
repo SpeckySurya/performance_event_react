@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./RegistrationForm.css"; // Import the CSS file
 import { useNavigate } from "react-router-dom";
 import RegistrationService from "../../services/RegistrationService";
-import { Stack } from "@mui/material";
+import { CircularProgress, LinearProgress, Stack } from "@mui/material";
 
 const RegistrationForm = () => {
   // State to store form data
@@ -17,8 +17,7 @@ const RegistrationForm = () => {
     anyPtToolUsed: false,
     eventId: 1,
   });
-
-  const [responseMsg, sertResponseMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -31,14 +30,32 @@ const RegistrationForm = () => {
     }));
   };
 
+  const handlePhoneChange = (e) => {
+    const { name, value } = e.target;
+    if (`${value}`.length > 12) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: prevFormData.mobileNumber,
+      }));
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
+    }
+    console.log(formData);
+  };
+
   // Handle form submission
   const handleSubmit = (event) => {
+    setLoading(true);
     event.preventDefault();
     let obj = new RegistrationService();
     obj
       .saveUser(formData)
       .then((response) => {
         if (response.status == 200) {
+          console.log(response.data);
           navigate("/thankyou");
         } else {
           console.log(response.data);
@@ -112,14 +129,11 @@ const RegistrationForm = () => {
           Phone<span className="mark">*</span>
         </label>
         <input
-          type="number"
           id="mobileNumber"
           name="mobileNumber"
-          pattern="[0-9]{5}[-][0-9]{7}[-][0-9]{1}"
-          value={formData.phone}
-          onChange={handleChange}
-          minLength={10}
-          maxLength={13}
+          value={formData.mobileNumber}
+          onChange={handlePhoneChange}
+          type="number"
           required
         />
       </div>
@@ -131,7 +145,6 @@ const RegistrationForm = () => {
         <input
           type="email"
           id="email"
-          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
           name="email"
           value={formData.email}
           onChange={handleChange}
@@ -169,7 +182,13 @@ const RegistrationForm = () => {
           Note : All <span className="marks"> * </span> field should be required
         </p>
       </span>
-      <button type="submit">Submit</button>
+      <button type="submit" className="flex-jcc-aic">
+        {loading ? (
+          <CircularProgress size={24.5} style={{ color: "white" }} />
+        ) : (
+          "Submit"
+        )}
+      </button>
     </form>
   );
 };
