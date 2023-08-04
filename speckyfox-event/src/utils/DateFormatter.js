@@ -37,7 +37,10 @@ export default function dateFormatter(dateString) {
 export function convertTo12HourFormat(timeString = "") {
   const [hours, minutes, seconds] = timeString.split(":").map(Number);
   const period = hours >= 12 ? "PM" : "AM";
-  const hours12 = hours % 12;
+  let hours12 = hours % 12;
+  if (hours12 === 0) {
+    hours12 = 12;
+  }
   const minutes12 = minutes < 10 ? `0${minutes}` : minutes;
 
   return `${hours12}:${minutes12} ${period}`;
