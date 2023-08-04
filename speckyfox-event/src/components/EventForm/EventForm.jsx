@@ -16,7 +16,7 @@ const formDataDefault = {
   speakerDesignation: "",
   meetingUrl: "",
   location: "",
-  active: "",
+  active: false,
 };
 
 const EventForm = () => {
@@ -44,7 +44,11 @@ const EventForm = () => {
     Object.entries(formData).forEach(([key, val]) => {
       request.append(key, val);
     });
+    request.append("duration", `${duration.hours}:${duration.minutes}`);
     request.append("date", toDDMMYYYY(formData.date));
+    for (const entry of request.entries()) {
+      console.log(entry[0], entry[1]);
+    }
     const eventService = new EventService();
     eventService
       .saveEvent(request)
