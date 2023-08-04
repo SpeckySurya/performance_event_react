@@ -1,3 +1,5 @@
 .event-card-container {
-  margin: auto;
+  float: left;
+  margin-left: 10%;
+  margin-right: 10%;
 }

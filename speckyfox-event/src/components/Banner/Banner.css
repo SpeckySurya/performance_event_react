@@ -40,7 +40,9 @@
   font-weight: 600;
   margin-top: 5%;
 }
-
+.event-timing {
+  margin-top: -100px;
+}
 .agenda-list {
   font-size: 15px;
   list-style-type: none;
@@ -101,8 +103,18 @@
   width: 200px;
 }
 
+@media screen and (max-width: 1000px) {
+  .event-timing {
+    margin-top: none;
+  }
+}
+@media screen and (max-width: 640px) {
+  .event-timing {
+    margin-top: 10%;
+  }
+}
 @media screen and (max-width: 360px) {
-  .banner .event-title header {
-    font-size: 150%;
+  .title {
+    font-size: large;
   }
 }
