@@ -10,10 +10,6 @@ import {
   Typography,
   Button,
   styled,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
 } from "@mui/material";
 import { TbTargetArrow } from "react-icons/tb";
 import banner from "./../../assets/card-bg.png";
