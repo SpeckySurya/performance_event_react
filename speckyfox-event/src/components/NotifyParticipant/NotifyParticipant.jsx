@@ -8,6 +8,8 @@ import {
   Button,
   Box,
   Typography,
+  CircularProgress,
+  Alert,
 } from "@mui/material";
 import EventService from "../../services/EventService";
 import { event } from "jquery";
@@ -18,6 +20,8 @@ const NotifyParticipant = () => {
   const [selectAll, setSelectAll] = useState(true);
   const [events, setEvents] = useState([]);
   const [btnDisabled, setBtnDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
 
   useEffect(() => {
     const eventService = new EventService();
@@ -50,18 +54,18 @@ const NotifyParticipant = () => {
     setSelectAll(!selectAll);
   };
 
-  const setUsersUsingEvent = (events) => {};
+  const handleAlertClose = () => {
+    setIsAlertVisible(false);
+  };
 
   const handleNotify = () => {
+    setLoading(true);
     const eventService = new EventService();
     eventService
       .notifyUsers(selectedEvent)
       .then((response) => {
-        if (response.data) {
-          alert("Reminder email sent !");
-        } else {
-          alert("Something wrong in our end.");
-        }
+        setLoading(false);
+        setIsAlertVisible(true);
       })
       .catch((error) => {
         alert("Something wrong in our end.");
@@ -106,7 +110,11 @@ const NotifyParticipant = () => {
           disabled={btnDisabled ? true : false}
           onClick={() => handleNotify()}
         >
-          Notify
+          {loading ? (
+            <CircularProgress style={{ color: "whitesmoke" }} size={24.5} />
+          ) : (
+            "Notify"
+          )}
         </Button>
       </Box>
       <Box mt={3}>
@@ -133,6 +141,16 @@ const NotifyParticipant = () => {
           </Box>
         )}
       </Box>
+      {isAlertVisible && (
+        <Alert
+          style={{ margin: "5px 0" }}
+          onClose={() => {
+            handleAlertClose();
+          }}
+        >
+          Notified !
+        </Alert>
+      )}
     </Box>
   );
 };

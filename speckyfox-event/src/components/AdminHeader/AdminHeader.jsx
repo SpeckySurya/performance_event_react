@@ -48,17 +48,26 @@ const AdminHeader = (props) => {
     {
       text: "Show Events",
       icon: <HomeIcon />,
-      onClick: () => props.handleSidebar("show"),
+      onClick: () => {
+        props.handleSidebar("show");
+        setOpen(false);
+      },
     },
     {
       text: "Create Event",
       icon: <AddCircleIcon />,
-      onClick: () => props.handleSidebar("create"),
+      onClick: () => {
+        props.handleSidebar("create");
+        setOpen(false);
+      },
     },
     {
       text: "Notify User",
       icon: <NotificationsIcon />,
-      onClick: () => props.handleSidebar("notify"),
+      onClick: () => {
+        props.handleSidebar("notify");
+        setOpen(false);
+      },
     },
     { text: "Logout", icon: <ExitToAppIcon />, onClick: handleLogout },
   ];

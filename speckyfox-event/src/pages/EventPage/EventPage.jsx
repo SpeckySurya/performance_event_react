@@ -3,17 +3,22 @@ import EventCard from "../../components/EventCard/EventCard";
 import { Header } from "../../components/Header/Header";
 import EventService from "../../services/EventService";
 import Footer from "../../components/Footer/Footer";
+import { LinearProgress } from "@mui/material";
 
 const EventPage = () => {
   const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const eventService = new EventService();
-    eventService
-      .getAllActiveEvents()
-      .then((response) => setEvents(response.data));
+    eventService.getAllActiveEvents().then((response) => {
+      setLoading(false);
+      setEvents(response.data);
+    });
   }, []);
-  return (
+  return loading ? (
+    <LinearProgress color="error" />
+  ) : (
     <div>
       <Header />
       <EventCard events={events} />

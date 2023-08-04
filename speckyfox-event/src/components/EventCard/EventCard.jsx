@@ -69,12 +69,12 @@ const EventCard = (props) => {
                     <ul className="agenda-list">
                       {event.description.split(",").length < 2
                         ? event.description.split(",").map((e) => (
-                            <li>
+                            <li key={e.id}>
                               <span>{e}</span>
                             </li>
                           ))
                         : event.description.split(",").map((e) => (
-                            <li style={{ fontSize: "10px" }}>
+                            <li key={e.id} style={{ fontSize: "10px" }}>
                               <TbTargetArrow className="agenda-icon" />
                               <span>{e}</span>
                             </li>
