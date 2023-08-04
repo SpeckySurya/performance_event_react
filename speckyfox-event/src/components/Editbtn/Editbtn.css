@@ -1,0 +1,45 @@
+.container {
+  display: grid;
+  place-items: center;
+  top: -4px;
+  position: absolute;
+  right: 6px;
+}
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: white;
+  margin-top: 4px;
+}
+.group-menu {
+  cursor: pointer;
+  margin-top: 10px;
+}
+.style {
+  width: 200px;
+  height: 150px;
+  background-color: black;
+  margin-top: 5px;
+  margin-left: -180px;
+  border-radius: 10px;
+}
+.frame1 {
+  visibility: hidden;
+  margin-top: 10px;
+  padding: 10px;
+}
+.frame1 .info {
+  font-size: large;
+  cursor: pointer;
+  color: white;
+  border-bottom: 1px solid white;
+}
+.frame1 .info:hover {
+  background-color: #363333;
+}
+.editbtn {
+  width: 100%;
+  border-radius: 10px;
+  height: 50%;
+}

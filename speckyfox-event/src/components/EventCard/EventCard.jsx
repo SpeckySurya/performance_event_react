@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Editbtn from "../Editbtn/Editbtn";
 import "./EventCard.css";
 import {
   Box,
@@ -48,6 +49,7 @@ const EventCard = (props) => {
         {props.events.map((event) => {
           const formattedDate = dateFormatter(event.date);
           const formattedTime = convertTo12HourFormat(event.time);
+
           return (
             <Card
               key={event.id}
@@ -59,6 +61,17 @@ const EventCard = (props) => {
                 image={banner}
                 alt="Event Banner"
               />
+              <Editbtn />
+              {/* <div className="container">
+                <div className="group-menu" onClick={fun()}>
+                  <div className="dot"></div>
+                  <div className="dot"></div>
+                  <div className="dot"></div>
+                </div>
+
+                <div className="frame1" id="frame1"></div>
+              </div> */}
+
               <CardContent sx={{ flex: "1 0 auto" }}>
                 <Typography gutterBottom variant="h4" fontWeight={600}>
                   {event.title}

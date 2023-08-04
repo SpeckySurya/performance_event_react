@@ -9,6 +9,7 @@ import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import EventPage from "./pages/EventPage/EventPage";
 import { DashboardPage } from "./pages/DashboardPage/DashboardPage";
 import MyContext from "./context";
+import Editbtn from "./components/Editbtn/Editbtn";
 
 function App() {
   const [sharedState, setSharedState] = useState({
