@@ -49,7 +49,7 @@ export default function Editbtn(props) {
         PaperProps={{
           style: {
             maxHeight: ITEM_HEIGHT * 4.5,
-            width: "15ch",
+            width: "35ch",
             margin: "5px",
           },
         }}
