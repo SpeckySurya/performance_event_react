@@ -15,9 +15,21 @@ export default function Editbtn(props) {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = (event) => {
-    props.setEventEditing(true);
-    props.setEditEvent(props.event);
     setAnchorEl(null);
+  };
+
+  const handleItemClick = (option) => {
+    switch (option) {
+      case "Edit": {
+        props.setEventEditing(true);
+        props.setEditEvent(props.event);
+        break;
+      }
+      case "Delete": {
+        alert("Do you really want to delete");
+        break;
+      }
+    }
   };
 
   return (
@@ -58,7 +70,7 @@ export default function Editbtn(props) {
           <MenuItem
             key={option}
             selected={option === "Pyxis"}
-            onClick={handleClose}
+            onClick={() => handleItemClick(option)}
           >
             {option}
           </MenuItem>

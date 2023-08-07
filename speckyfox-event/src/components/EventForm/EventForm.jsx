@@ -36,11 +36,10 @@ const EventForm = (props) => {
     });
     request.append("duration", `${duration.hours}:${duration.minutes}`);
     request.append("date", toDDMMYYYY(formData.date));
-    for (const entry of request.entries()) {
-      console.log(entry[0], entry[1]);
-    }
+    // for (const entry of request.entries()) {
+    //   console.log(entry[0], entry[1]);
+    // }
     const eventService = new EventService();
-    return;
     eventService
       .saveEvent(request)
       .then((response) => {
