@@ -1,6 +1,7 @@
 import { Button } from "bootstrap";
 import "./Editbtn.css";
-function Editbtn() {
+import EventService from "../../services/EventService";
+function Editbtn(props) {
   function fun1() {
     document.getElementById("frame1").classList.add("style");
     document.getElementById("frame1").style.visibility = "visible";
@@ -9,6 +10,17 @@ function Editbtn() {
     document.getElementById("frame1").classList.remove("style");
     document.getElementById("frame1").style.visibility = "hidden";
   }
+
+  function handleDelete() {
+    const eventService = new EventService();
+    eventService.deleteEvent(props.eventId);
+  }
+
+  function handleEdit() {
+    props.setEventEditing(true);
+    props.setEditEvent(props.event);
+  }
+
   return (
     <>
       <div className="container">
@@ -19,10 +31,14 @@ function Editbtn() {
         </div>
         <div className="frame1" id="frame1">
           <div className="info">
-            <button className="editbtn">Edit</button>
+            <button className="editbtn" onClick={() => handleEdit()}>
+              Edit
+            </button>
           </div>
           <div className="info">
-            <button className="editbtn">Delete</button>
+            <button className="editbtn" onClick={() => handleDelete()}>
+              Delete
+            </button>
           </div>
           <div className="info">
             <button className="editbtn">Active</button>

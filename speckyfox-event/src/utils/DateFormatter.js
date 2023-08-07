@@ -29,6 +29,7 @@ export default function dateFormatter(dateString) {
   return {
     dayOfWeekName: daysOfWeek[date.getDay()],
     day: date.getDate(),
+    month: date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth(),
     monthName: months[date.getMonth()],
     year: date.getFullYear(),
   };

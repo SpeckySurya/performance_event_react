@@ -5,7 +5,7 @@ function Readmore() {
 
   //   useEffect(() => {}, []);
   return (
-    <div className="container">
+    <div className="textcontainer">
       <input type="checkbox" id="check" />
       <p>
         {" "}

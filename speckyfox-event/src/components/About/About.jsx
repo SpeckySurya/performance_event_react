@@ -11,7 +11,11 @@ export const About = () => {
         <div className="speaker-photo">
           <div className="backshape"></div>
           <div className="imgcirclediv">
-            <img className="imgcircle" src={speaker} alt="speaker photo" />
+            <img
+              className="imgcircle"
+              src="https://peroformenceeventbucket.s3.amazonaws.com/speaker.png"
+              alt="speaker photo"
+            />
           </div>
           <strong className="botmphoto">Abhishek Aggarwal</strong>
         </div>

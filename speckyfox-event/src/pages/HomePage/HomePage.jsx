@@ -5,9 +5,7 @@ import Footer from "../../components/Footer/Footer";
 import { Header } from "../../components/Header/Header";
 import "./HomePage.css";
 import EventService from "../../services/EventService";
-import { CircularProgress, LinearProgress, Stack } from "@mui/material";
-import Loading from "../../components/Loading/Loading";
-import { error } from "jquery";
+import { LinearProgress } from "@mui/material";
 
 const HomePage = () => {
   const eventId = 1;
@@ -18,6 +16,7 @@ const HomePage = () => {
     let eventService = new EventService();
     eventService.getEvent(eventId).then((response) => {
       setEvent(response.data);
+      console.log(response.data);
       setLoading(false);
     });
   }, []);

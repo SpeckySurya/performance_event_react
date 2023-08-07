@@ -7,6 +7,20 @@ import { Box, Stack } from "@mui/material";
 import EventCard from "../../components/EventCard/EventCard";
 import EventService from "../../services/EventService";
 
+const formDataDefault = {
+  title: "",
+  description: "",
+  date: "",
+  time: "",
+  speakerName: "",
+  speakerDesignation: "",
+  meetingUrl: "",
+  location: "",
+  active: false,
+};
+
+const eventDuration = { hours: 0, minutes: 15 };
+
 export const DashboardPage = () => {
   const [selected, setSelected] = useState("show");
   const [events, setEvents] = useState([]);
@@ -25,7 +39,13 @@ export const DashboardPage = () => {
   function menuComponentFinder() {
     switch (selected) {
       case "create":
-        return <EventForm />;
+        return (
+          <EventForm
+            formDataDefault={formDataDefault}
+            eventDuration={eventDuration}
+            formTitle="Create an Event"
+          />
+        );
       case "show":
         return <EventCard events={events} />;
       case "notify":

@@ -1,30 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./EventForm.css";
 import EventService from "../../services/EventService";
-import { logDOM } from "@testing-library/react";
 import { Alert, Box, CircularProgress } from "@mui/material";
-import { error } from "jquery";
 import { toDDMMYYYY } from "../../utils/DateFormatter";
 import Duration from "../Duration/Duration";
 
-const formDataDefault = {
-  title: "",
-  description: "",
-  date: "",
-  time: "",
-  speakerName: "",
-  speakerDesignation: "",
-  meetingUrl: "",
-  location: "",
-  active: false,
-};
-
-const EventForm = () => {
-  const [formData, setFormData] = useState(formDataDefault);
+const EventForm = (props) => {
+  const [formData, setFormData] = useState(props.formDataDefault);
   const [selectedFile, setSelectedFile] = useState(null);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [duration, setDuration] = useState({ hours: 0, minutes: 0 });
+  const [duration, setDuration] = useState(props.eventDuration);
+
+  useEffect(() => {
+    console.log(formData);
+  }, []);
 
   const handleChange = (event) => {
     let { name, value } = event.target;
@@ -50,6 +40,7 @@ const EventForm = () => {
       console.log(entry[0], entry[1]);
     }
     const eventService = new EventService();
+    return;
     eventService
       .saveEvent(request)
       .then((response) => {
@@ -73,7 +64,7 @@ const EventForm = () => {
 
   return (
     <div className="event-form-container">
-      <h1>Create an Event</h1>
+      <h1>{props.formTitle}</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="title">Title</label>
@@ -102,8 +93,8 @@ const EventForm = () => {
             type="date"
             id="date"
             name="date"
+            value={formData.date}
             onChange={handleDateChange}
-            data-date-format="YYYY MM DD"
           />
         </div>
         <div className="form-group">

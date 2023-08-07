@@ -1,4 +1,10 @@
-import { Box, Stack } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+} from "@mui/material";
 import React, { useState } from "react";
 
 const Duration = (props) => {
@@ -12,20 +18,42 @@ const Duration = (props) => {
 
   return (
     <div className="form-group">
-      <Stack>
-        <label htmlFor="duration">Duration</label>
-        <Box id="duration" className="flex">
-          <select name="hours" id="hours" onChange={handleChange}>
+      <label htmlFor="duration">Duration</label>
+      <Stack spacing={1} direction={"row"} alignItems={"center"}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Hours</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            name="hours"
+            id="hours"
+            value={props.duration.hours}
+            label="Hours"
+            onChange={handleChange}
+          >
             {hours.map((e) => (
-              <option key={e}>{e}</option>
+              <MenuItem key={e} value={e}>
+                {e}
+              </MenuItem>
             ))}
-          </select>
-          <select name="minutes" id="minutes" onChange={handleChange}>
+          </Select>
+        </FormControl>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Minutes</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            name="minutes"
+            id="minutes"
+            value={props.duration.minutes}
+            label="Minutes"
+            onChange={handleChange}
+          >
             {minutes.map((e) => (
-              <option key={e}>{e}</option>
+              <MenuItem key={e} value={e}>
+                {e}
+              </MenuItem>
             ))}
-          </select>
-        </Box>
+          </Select>
+        </FormControl>
       </Stack>
     </div>
   );

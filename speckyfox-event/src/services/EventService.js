@@ -24,4 +24,11 @@ export default class EventService {
     const headers = multipartAuth();
     return axios.post(`${this.baseUrl}/admin/save-event`, event, headers);
   }
+  deleteEvent(evendId) {
+    const headers = withAuth();
+    return axios.delete(
+      `${this.baseUrl}/admin/deleteEvent/${evendId}`,
+      headers
+    );
+  }
 }
