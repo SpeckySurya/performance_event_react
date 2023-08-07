@@ -35,11 +35,13 @@ export default function Editbtn(props) {
   return (
     <div>
       <IconButton
-        style={{
+        sx={{
           color: "white",
           top: "-167px",
-          right: "-2px",
-          font: "50px",
+          float: "right",
+          "& svg": {
+            fontSize: "35px",
+          },
         }}
         aria-label="more"
         id="long-button"
@@ -51,6 +53,11 @@ export default function Editbtn(props) {
         <MoreVertIcon />
       </IconButton>
       <Menu
+        sx={{
+          "& .MuiPaper-root": {
+            translate: "-80% 0",
+          },
+        }}
         id="long-menu"
         MenuListProps={{
           "aria-labelledby": "long-button",
@@ -61,7 +68,7 @@ export default function Editbtn(props) {
         PaperProps={{
           style: {
             maxHeight: ITEM_HEIGHT * 4.5,
-            width: "35ch",
+            width: "12ch",
             margin: "5px",
           },
         }}
