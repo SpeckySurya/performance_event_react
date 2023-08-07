@@ -21,7 +21,7 @@ const EventPage = () => {
   ) : (
     <div>
       <Header />
-      <EventCard events={events} />
+      <EventCard events={events} isEventPage={true} />
       <Footer />
     </div>
   );

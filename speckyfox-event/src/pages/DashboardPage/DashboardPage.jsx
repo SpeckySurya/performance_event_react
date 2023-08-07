@@ -47,7 +47,7 @@ export const DashboardPage = () => {
           />
         );
       case "show":
-        return <EventCard events={events} />;
+        return <EventCard events={events} isEventPage={false} />;
       case "notify":
         return <NotifyParticipant events={events} />;
       default:

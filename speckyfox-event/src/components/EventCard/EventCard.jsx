@@ -56,7 +56,6 @@ const EventCard = (props) => {
           {props.events.map((event) => {
             const formattedDate = dateFormatter(event.date);
             const formattedTime = convertTo12HourFormat(event.time);
-
             return (
               <Card
                 key={event.id}
@@ -73,11 +72,8 @@ const EventCard = (props) => {
                   image={banner}
                   alt="Event Banner"
                 />
-                <Editbtn
-                  event={event}
-                  setEditEvent={setEditEvent}
-                  setEventEditing={setEventEditing}
-                />
+                {!props.isEventPage && <Editbtn className="editbtn" />}
+
                 <CardContent sx={{ flex: "1 0 auto" }}>
                   <Typography gutterBottom variant="h4" fontWeight={600}>
                     {event.title}
@@ -129,17 +125,19 @@ const EventCard = (props) => {
                     </Stack>
                   </Box>
                 </CardContent>
-                <CardActions>
-                  <BootstrapButton
-                    sx={{
-                      position: "absolute",
-                      bottom: "2%",
-                      right: "calc(50% - 50px)",
-                    }}
-                  >
-                    <CustomLink to="/">Register</CustomLink>
-                  </BootstrapButton>
-                </CardActions>
+                {props.isEventPage && (
+                  <CardActions>
+                    <BootstrapButton
+                      sx={{
+                        position: "absolute",
+                        bottom: "2%",
+                        right: "calc(50% - 50px)",
+                      }}
+                    >
+                      <CustomLink to="/">Register</CustomLink>
+                    </BootstrapButton>
+                  </CardActions>
+                )}
               </Card>
             );
           })}
