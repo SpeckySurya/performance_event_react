@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Editbtn from "../Editbtn/Editbtn";
 import "./EventCard.css";
 import {
   Box,
@@ -19,6 +18,7 @@ import dateFormatter, {
 } from "../../utils/DateFormatter";
 import { Link } from "react-router-dom";
 import UpdateEvent from "../UpdateEvent/UpdateEvent";
+import Editbtn from "../Editbtn/Editbtn";
 
 const EventCard = (props) => {
   const [eventEditing, setEventEditing] = useState(false);
@@ -72,7 +72,13 @@ const EventCard = (props) => {
                   image={banner}
                   alt="Event Banner"
                 />
-                {!props.isEventPage && <Editbtn className="editbtn" />}
+                {!props.isEventPage && (
+                  <Editbtn
+                    event={event}
+                    setEditEvent={setEditEvent}
+                    setEventEditing={setEventEditing}
+                  />
+                )}
 
                 <CardContent sx={{ flex: "1 0 auto" }}>
                   <Typography gutterBottom variant="h4" fontWeight={600}>

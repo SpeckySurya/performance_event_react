@@ -8,13 +8,15 @@ const options = ["Edit", "Delete", "Active"];
 
 const ITEM_HEIGHT = 40;
 
-export default function LongMenu() {
+export default function Editbtn(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleClose = (event) => {
+    props.setEventEditing(true);
+    props.setEditEvent(props.event);
     setAnchorEl(null);
   };
 
