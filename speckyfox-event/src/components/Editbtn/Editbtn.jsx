@@ -1,40 +1,67 @@
-import { Button } from "bootstrap";
-import "./Editbtn.css";
-function Editbtn() {
-  function fun1() {
-    document.getElementById("frame1").classList.add("style");
-    document.getElementById("frame1").style.visibility = "visible";
-  }
-  function remove() {
-    document.getElementById("frame1").classList.remove("style");
-    document.getElementById("frame1").style.visibility = "hidden";
-  }
+import * as React from "react";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+
+const options = ["Edit", "Delete", "Active"];
+
+const ITEM_HEIGHT = 40;
+
+export default function LongMenu() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
-    <>
-      <div className="container">
-        <div className="group-menu" onClick={fun1}>
-          <div className="dot"></div>
-          <div className="dot"></div>
-          <div className="dot"></div>
-        </div>
-        <div className="frame1" id="frame1">
-          <div className="info">
-            <button className="editbtn">Edit</button>
-          </div>
-          <div className="info">
-            <button className="editbtn">Delete</button>
-          </div>
-          <div className="info">
-            <button className="editbtn">Active</button>
-          </div>
-          <div className="info">
-            <button className="editbtn" onClick={remove}>
-              Exit
-            </button>
-          </div>
-        </div>
-      </div>
-    </>
+    <div>
+      <IconButton
+        style={{
+          color: "white",
+          top: "-167px",
+          right: "-2px",
+          font: "50px",
+        }}
+        aria-label="more"
+        id="long-button"
+        aria-controls={open ? "long-menu" : undefined}
+        aria-expanded={open ? "true" : undefined}
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        <MoreVertIcon />
+      </IconButton>
+      <Menu
+        id="long-menu"
+        MenuListProps={{
+          "aria-labelledby": "long-button",
+        }}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          style: {
+            maxHeight: ITEM_HEIGHT * 4.5,
+            width: "15ch",
+            margin: "5px",
+          },
+        }}
+      >
+        {options.map((option) => (
+          <MenuItem
+            key={option}
+            selected={option === "Pyxis"}
+            onClick={handleClose}
+          >
+            {option}
+          </MenuItem>
+        ))}
+      </Menu>
+    </div>
   );
 }
-export default Editbtn;

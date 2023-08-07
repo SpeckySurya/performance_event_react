@@ -65,7 +65,7 @@ const EventCard = (props) => {
                 image={banner}
                 alt="Event Banner"
               />
-              <Editbtn />
+              {!props.isEventPage && <Editbtn className="editbtn" />}
               {/* <div className="container">
                 <div className="group-menu" onClick={fun()}>
                   <div className="dot"></div>
@@ -127,17 +127,19 @@ const EventCard = (props) => {
                   </Stack>
                 </Box>
               </CardContent>
-              <CardActions>
-                <BootstrapButton
-                  sx={{
-                    position: "absolute",
-                    bottom: "2%",
-                    right: "calc(50% - 50px)",
-                  }}
-                >
-                  <CustomLink to="/">Register</CustomLink>
-                </BootstrapButton>
-              </CardActions>
+              {props.isEventPage && (
+                <CardActions>
+                  <BootstrapButton
+                    sx={{
+                      position: "absolute",
+                      bottom: "2%",
+                      right: "calc(50% - 50px)",
+                    }}
+                  >
+                    <CustomLink to="/">Register</CustomLink>
+                  </BootstrapButton>
+                </CardActions>
+              )}
             </Card>
           );
         })}

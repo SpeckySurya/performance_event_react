@@ -1,10 +1,10 @@
-.container {
+.textcontainer {
   background-color: transparent;
   padding: 20px;
   margin: 0 auto;
   box-sizing: 0 0 5px rgba(0, 0, 0, 0.5);
 }
-.container p {
+.textcontainer p {
   line-height: 1.4;
   text-align: justify;
   margin: 10px;
