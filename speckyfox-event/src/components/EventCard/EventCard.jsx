@@ -140,7 +140,7 @@ const EventCard = (props) => {
                         right: "calc(50% - 50px)",
                       }}
                     >
-                      <CustomLink to="/">Register</CustomLink>
+                      <CustomLink to={`/${event.id}`}>Register</CustomLink>
                     </BootstrapButton>
                   </CardActions>
                 )}

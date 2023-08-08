@@ -18,10 +18,10 @@ export const About = (props) => {
               alt="speaker photo"
             />
           </div>
-          <strong className="botmphoto">Abhishek Aggarwal</strong>
+          <strong className="botmphoto">{props.event.speakerName}</strong>
         </div>
         <div className="about-body">
-          <Readmore />
+          <Readmore event={props.event} />
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import "./Readmore.css";
 
-function Readmore() {
+function Readmore(props) {
   //   const [check, setcheck] = useState(false);
 
   //   useEffect(() => {}, []);
@@ -9,16 +9,17 @@ function Readmore() {
       <input type="checkbox" id="check" />
       <p>
         {" "}
-        Meet Abhishek Aggarwal, Co-Founder at SpeckyFox, a dynamic and
-        accomplished professional with a wealth of experience in the IT
-        industry. With an impressive 11-year tenure, Abhishek has honed his
-        skills while collaborating with a diverse range of clients, spanning
-        from small and mid-size businesses to Fortune 500 companies. As a
-        versatile individual, Abhishek effortlessly wears multiple hats and has
-        proved himself in various roles throughout his career. With a penchant
-        for excellence, Abhishek has specialized in Performance Engineering,
-        leveraging his technical expertise to optimize systems and processes,
-        ensuring seamless and efficient operations for his clients.
+        Meet {props.event.speakerName}, {props.event.speakerDesignation} at
+        SpeckyFox, a dynamic and accomplished professional with a wealth of
+        experience in the IT industry. With an impressive 11-year tenure,
+        Abhishek has honed his skills while collaborating with a diverse range
+        of clients, spanning from small and mid-size businesses to Fortune 500
+        companies. As a versatile individual, Abhishek effortlessly wears
+        multiple hats and has proved himself in various roles throughout his
+        career. With a penchant for excellence, Abhishek has specialized in
+        Performance Engineering, leveraging his technical expertise to optimize
+        systems and processes, ensuring seamless and efficient operations for
+        his clients.
       </p>
       <div className="content" style={{ transition: "2s linear" }}>
         <p>
