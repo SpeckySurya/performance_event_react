@@ -9,6 +9,7 @@ import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import EventPage from "./pages/EventPage/EventPage";
 import { DashboardPage } from "./pages/DashboardPage/DashboardPage";
 import MyContext from "./context";
+import PageNotFound from "./pages/PageNotFound/PageNotFound";
 
 function App() {
   const [sharedState, setSharedState] = useState({
@@ -17,8 +18,8 @@ function App() {
   return (
     <MyContext.Provider value={{ sharedState, setSharedState }}>
       <Routes>
-        <Route exact path="/" element={<HomePage />} />
-        <Route path="/events" element={<EventPage />} />
+        <Route exact path="/" element={<EventPage />} />
+        <Route path="/:param" element={<HomePage />} />
         <Route path="/thankyou" element={<ThankYouPage />} />
         <Route path="/login" element={<Login />} />
         <Route
@@ -26,6 +27,7 @@ function App() {
           element={sharedState.admin ? <DashboardPage /> : <Login />}
         />
         <Route path="/error" element={<ErrorPage />} />
+        <Route path="/pagenotfound" element={<PageNotFound />} />
       </Routes>
     </MyContext.Provider>
   );

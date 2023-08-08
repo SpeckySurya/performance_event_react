@@ -6,19 +6,29 @@ import { Header } from "../../components/Header/Header";
 import "./HomePage.css";
 import EventService from "../../services/EventService";
 import { LinearProgress } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
 
 const HomePage = () => {
   const eventId = 1;
   const [event, setEvent] = useState({});
   const [loading, setLoading] = useState(true);
+  const { param } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (isNaN(param) && isNaN(parseFloat(param))) {
+      navigate("/pagenotfound");
+    }
     let eventService = new EventService();
-    eventService.getEvent(eventId).then((response) => {
-      setEvent(response.data);
-      console.log(response.data);
-      setLoading(false);
-    });
+    eventService
+      .getEvent(param)
+      .then((response) => {
+        setEvent(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        navigate("/pagenotfound");
+      });
   }, []);
 
   return loading ? (
