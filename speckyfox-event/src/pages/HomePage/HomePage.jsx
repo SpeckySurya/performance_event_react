@@ -32,7 +32,7 @@ const HomePage = () => {
         <Banner event={event}></Banner>
       </div>
       <div className="about-speaker-div">
-        <About />
+        <About event={event} />
       </div>
       <div className="footer-div">
         <Footer />

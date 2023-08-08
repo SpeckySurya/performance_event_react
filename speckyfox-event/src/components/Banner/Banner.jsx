@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import banner from "./../../assets/banner.png";
-import speakerImg from "./../../assets/speaker-at-banner.png";
+
+import speacker from "../../assets/speaker.png";
+import speaker from "./../../assets/speaker-at-banner.png";
 import "./Banner.css";
 import RegistrationForm from "../RegistrationForm/RegistrationForm";
 import dateFormatter, {
@@ -59,13 +60,13 @@ export const Banner = (props) => {
                 <div className="icon">
                   <i className="bx bx-time-five bx-spin"></i>
                 </div>
-                <div className="time">{formattedTime}</div>
+                <div className="time">12:00 pm to 1:30 pm(IST)</div>
               </div>
               <div className="location-container flex-aic">
                 <div className="icon">
                   <i class="bx bx-broadcast"></i>
                 </div>
-                <div className="location">Online</div>
+                <div className="location">{props.event.location}</div>
               </div>
               <div className="location-container flex-aic">
                 <div className="icon">
@@ -76,7 +77,7 @@ export const Banner = (props) => {
                     className="no-anchor-style"
                     href="mailto:sales@speckyfox.com"
                   >
-                    Any Queries
+                    sales@speckyfox.com
                   </a>
                 </div>
               </div>
@@ -86,7 +87,7 @@ export const Banner = (props) => {
             </div>
             <div className="speaker-details flex">
               <section className="speaker-img">
-                <img src={speakerImg} alt="speaker image" />
+                <img src={props.event.profilePicture} alt="speaker image" />
               </section>
               <section className="speaker-name">
                 <div style={{ whiteSpace: "nowrap" }}>

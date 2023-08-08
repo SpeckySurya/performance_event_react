@@ -46,7 +46,7 @@
 .agenda-list {
   font-size: 15px;
   list-style-type: none;
-  margin: 5%;
+  margin: 0px;
 }
 
 .agenda-icon {
@@ -54,14 +54,18 @@
   height: 100%;
   margin: auto 5px;
 }
-
+.banner .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .banner .event-title {
   font-size: 170%;
   /* margin-bottom: 30px; */
 }
 
 .banner .event-title header {
-  font-size: 190%;
+  font-size: 140%;
   margin-bottom: 20px;
   font-weight: 600;
 }
@@ -87,6 +91,11 @@
 .banner .speaker-details img {
   width: 300px;
   margin: auto;
+}
+.speaker-img {
+  border-radius: 50%;
+  overflow: hidden;
+  border: 20px solid #ff9430;
 }
 
 .banner .speaker-details {

@@ -29,6 +29,7 @@
 .event-form-container .form-group input,
 .event-form-container .form-group textarea,
 .event-form-container #active,
+.event-form-container #activeHomePage,
 .event-form-container #hours,
 .event-form-container #minutes {
   width: 100%;

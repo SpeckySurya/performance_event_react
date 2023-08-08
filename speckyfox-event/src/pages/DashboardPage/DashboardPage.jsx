@@ -12,11 +12,11 @@ const formDataDefault = {
   description: "",
   date: "",
   time: "",
-  speakerName: "",
-  speakerDesignation: "",
+  eventBanner: "",
   meetingUrl: "",
   location: "",
   active: false,
+  activeHomePage: false,
 };
 
 const eventDuration = { hours: 0, minutes: 15 };

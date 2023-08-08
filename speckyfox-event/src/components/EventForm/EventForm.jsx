@@ -40,6 +40,7 @@ const EventForm = (props) => {
     //   console.log(entry[0], entry[1]);
     // }
     const eventService = new EventService();
+    return;
     eventService
       .saveEvent(request)
       .then((response) => {
@@ -108,38 +109,7 @@ const EventForm = (props) => {
           />
         </div>
         <Duration duration={duration} setDuration={setDuration} />
-        <div className="form-group">
-          <label htmlFor="speakerName">Speaker Name</label>
-          <input
-            type="text"
-            id="speakerName"
-            name="speakerName"
-            placeholder="Speaker Name"
-            value={formData.speakerName}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="speakerDesignation">Speaker Designation</label>
-          <input
-            type="text"
-            id="speakerDesignation"
-            name="speakerDesignation"
-            placeholder="Speaker Designation"
-            value={formData.speakerDesignation}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="speakerDesignation">Speaker Photo</label>
-          <input
-            type="file"
-            id="speakerPhoto"
-            name="profilePicture"
-            placeholder="Speaker Photo"
-            onChange={handleFileChange}
-          />
-        </div>
+
         <div className="form-group">
           <label htmlFor="meetingUrl">Meeting URL</label>
           <input
@@ -171,6 +141,45 @@ const EventForm = (props) => {
             <option value={"true"}>True</option>
           </select>
         </div>
+
+        <div className="form-group">
+          <label htmlFor="activeHomePage">
+            Active Registration for Homepage
+          </label>
+          <select
+            name="activeHomePage"
+            id="activeHomePage"
+            onChange={handleChange}
+          >
+            <option selected value={"false"}>
+              False
+            </option>
+            <option value={"true"}>True</option>
+          </select>
+        </div>
+
+        {/* <div className="form-group">
+          <label htmlFor="eventBanner">Event Banner</label>
+          <input
+            type="file"
+            id="eventBanner"
+            name="eventBanner"
+            placeholder="Event - Banner"
+            value={formData.eventBanner}
+            onChange={handleChange}
+          />
+        </div> */}
+        <div className="form-group">
+          <label htmlFor="speakerDesignation">Speaker Photo</label>
+          <input
+            type="file"
+            id="speakerBanner"
+            name="profilePicture"
+            placeholder="Speaker Banner"
+            onChange={handleFileChange}
+          />
+        </div>
+
         <button type="submit" className="flex-jcc-aic">
           {loading ? (
             <CircularProgress size={20} color={"error"} />

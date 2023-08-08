@@ -3,7 +3,7 @@ import Readmore from "../Readmore/Readmore";
 import "./About.css";
 import speaker from "./../../assets/speaker.png";
 
-export const About = () => {
+export const About = (props) => {
   return (
     <div className="aboutpage-container">
       <div className="about-header">ABOUT SPEAKER</div>
@@ -13,7 +13,8 @@ export const About = () => {
           <div className="imgcirclediv">
             <img
               className="imgcircle"
-              src="https://peroformenceeventbucket.s3.amazonaws.com/speaker.png"
+              // src="https://peroformenceeventbucket.s3.amazonaws.com/speaker.png"
+              src={props.event.profilePicture}
               alt="speaker photo"
             />
           </div>
