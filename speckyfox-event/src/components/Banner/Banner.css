@@ -42,7 +42,7 @@
   margin-top: 5%;
 }
 .event-timing {
-  margin-top: -15%;
+  min-width: 60%;
 }
 .agenda-list {
   font-size: 16px;
@@ -110,6 +110,7 @@
   border-radius: 50%;
   overflow: hidden;
   border: 10px solid #ff9430;
+  margin-top: 20px;
 }
 /* 
 .speaker-img img {
@@ -120,7 +121,7 @@
   flex-direction: column;
   justify-content: end;
   align-items: center;
-  margin: 5vh auto;
+  margin: 0 auto;
 }
 
 .banner .speaker-name {
