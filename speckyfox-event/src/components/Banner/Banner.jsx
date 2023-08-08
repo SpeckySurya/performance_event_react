@@ -61,7 +61,7 @@ export const Banner = (props) => {
                 <div className="icon">
                   <i className="bx bx-time-five bx-spin"></i>
                 </div>
-                <div className="time">12:00 pm to 1:30 pm(IST)</div>
+                <div className="time">12:00 pm to 1:30 pm (IST)</div>
               </div>
               <div className="location-container flex-aic">
                 <div className="icon">

@@ -3,7 +3,7 @@
   padding-top: 50px;
   background-size: cover;
   background-repeat: no-repeat;
-  padding: 5%;
+  padding: 3% 5%;
 }
 
 .banner img {
@@ -103,12 +103,11 @@
 /* Speaker details  */
 
 .banner .speaker-details img {
-  width: 200px;
+  width: 180px;
   margin: auto;
 }
 .speaker-img {
   border-radius: 50%;
-
   overflow: hidden;
   border: 10px solid #ff9430;
 }
@@ -125,10 +124,10 @@
 }
 
 .banner .speaker-name {
-  font-size: 10px;
+  font-size: 14px;
   text-align: center;
   font-weight: bolder;
-  width: 200px;
+  width: 180px;
 }
 
 @media screen and (max-width: 1000px) {
