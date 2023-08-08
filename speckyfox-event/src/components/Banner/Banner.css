@@ -27,7 +27,7 @@
 }
 
 .banner .right {
-  /* margin: auto; */
+  margin: auto;
 }
 
 .banner .event-details {
@@ -42,7 +42,7 @@
   margin-top: 5%;
 }
 .event-timing {
-  margin-top: -5%;
+  margin-top: -15%;
 }
 .agenda-list {
   font-size: 16px;
@@ -136,7 +136,7 @@
     margin-top: none;
   }
 }
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 540px) {
   .event-timing {
     margin-top: 10%;
   }
