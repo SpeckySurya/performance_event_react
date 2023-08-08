@@ -45,14 +45,14 @@
   margin-top: -5%;
 }
 .agenda-list {
-  font-size: 15px;
+  font-size: 16px;
   list-style-type: none;
   margin: 0px;
 }
 .date {
   display: flex;
   justify-content: space-between;
-  font-size: 15px;
+  font-size: 17px;
 }
 .agenda-icon {
   color: #f37d47;
@@ -65,13 +65,13 @@
   align-items: center;
 }
 .location {
-  font-size: 15px;
+  font-size: 17px;
 }
 .time {
-  font-size: 15px;
+  font-size: 17px;
 }
 .email {
-  font-size: 15px;
+  font-size: 17px;
 }
 .banner .event-title {
   font-size: 170%;
@@ -103,7 +103,7 @@
 /* Speaker details  */
 
 .banner .speaker-details img {
-  width: 100px;
+  width: 200px;
   margin: auto;
 }
 .speaker-img {
