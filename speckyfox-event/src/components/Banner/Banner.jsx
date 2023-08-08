@@ -49,11 +49,12 @@ export const Banner = (props) => {
                   <i className="bx bx-calendar"></i>
                 </div>
                 <div className="date">
-                  <div className="day">{formattedDate.dayOfWeekName}</div>
                   <div className="full-date">
                     {formattedDate.day} {formattedDate.monthName}{" "}
                     {formattedDate.year}
                   </div>
+                  &nbsp;
+                  <div className="day">({formattedDate.dayOfWeekName})</div>
                 </div>
               </div>
               <div className="time-container flex-aic">
@@ -81,9 +82,9 @@ export const Banner = (props) => {
                   </a>
                 </div>
               </div>
-              <section className="live-streaming-txt">
+              {/* <section className="live-streaming-txt">
                 <p>Live Webinar</p>
-              </section>
+              </section> */}
             </div>
             <div className="speaker-details flex">
               <section className="speaker-img">

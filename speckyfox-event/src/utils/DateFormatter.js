@@ -19,7 +19,7 @@ export default function dateFormatter(dateString) {
     "May",
     "June",
     "July",
-    "August",
+    "Aug",
     "September",
     "October",
     "November",

@@ -51,6 +51,16 @@ const RegistrationForm = () => {
     setLoading(true);
     event.preventDefault();
     let obj = new RegistrationService();
+
+    let firstName = formData.name;
+    let lastName = "";
+    if (formData.name.trim().includes(" ")) {
+      firstName = formData.name.substring(0, formData.name.indexOf(" "));
+      lastName = formData.name.substring(formData.name.indexOf(" ") + 1);
+    }
+    formData.firstName = firstName;
+    formData.lastName = lastName;
+
     obj
       .saveUser(formData)
       .then((response) => {
@@ -70,19 +80,19 @@ const RegistrationForm = () => {
     <form className="registration-form" onSubmit={handleSubmit}>
       <div className="form-header-reg">Event Registration</div>
       <div className="form-group">
-        <label htmlFor="firstName">
-          First Name<span className="mark">*</span>
+        <label htmlFor="name">
+          Name<span className="mark">*</span>
         </label>
         <input
           type="text"
-          id="firstName"
-          name="firstName"
+          id="name"
+          name="name"
           value={formData.name}
           onChange={handleChange}
           required
         />
       </div>
-      <div className="form-group">
+      {/* <div className="form-group">
         <label htmlFor="lastName">
           Last Name<span className="mark">*</span>
         </label>
@@ -94,7 +104,7 @@ const RegistrationForm = () => {
           onChange={handleChange}
           required
         />
-      </div>
+      </div> */}
 
       <div className="form-group">
         <label htmlFor="companyName">
