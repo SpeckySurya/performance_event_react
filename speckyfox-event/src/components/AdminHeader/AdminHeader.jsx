@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
+import AssuredWorkloadOutlinedIcon from "@mui/icons-material/AssuredWorkloadOutlined";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -61,6 +62,16 @@ const AdminHeader = (props) => {
         setOpen(false);
       },
     },
+
+    {
+      text: "Home Configration",
+      icon: <AssuredWorkloadOutlinedIcon />,
+      onClick: () => {
+        props.handleSidebar("homeConfig");
+        setOpen(false);
+      },
+    },
+
     {
       text: "Notify User",
       icon: <NotificationsIcon />,

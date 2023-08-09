@@ -12,10 +12,6 @@ const EventForm = (props) => {
   const [loading, setLoading] = useState(false);
   const [duration, setDuration] = useState(props.eventDuration);
 
-  useEffect(() => {
-    console.log(formData);
-  }, []);
-
   const handleChange = (event) => {
     let { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -40,7 +36,7 @@ const EventForm = (props) => {
     //   console.log(entry[0], entry[1]);
     // }
     const eventService = new EventService();
-    return;
+
     eventService
       .saveEvent(request)
       .then((response) => {

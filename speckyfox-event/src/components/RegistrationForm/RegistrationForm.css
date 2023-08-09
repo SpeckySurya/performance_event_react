@@ -44,9 +44,9 @@
   font-size: 12px;
 }
 
-.form-group input[type="text"],
-.form-group input[type="number"],
-.form-group input[type="email"],
+.registration-form .form-group input[type="text"],
+.registration-form .form-group input[type="number"],
+.registration-form .form-group input[type="email"],
 .form-group input[type="checkbox"] {
   width: 100%;
   padding: 4px;
@@ -73,7 +73,7 @@
   height: 26px;
 }
 
-button:hover {
+.registration-form button:hover {
   background-color: #f7542b;
 }
 @media screen and (max-width: 992px) {
