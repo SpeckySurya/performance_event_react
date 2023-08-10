@@ -6,6 +6,7 @@ import AdminHeader from "../../components/AdminHeader/AdminHeader";
 import { Box, Stack } from "@mui/material";
 import EventCard from "../../components/EventCard/EventCard";
 import EventService from "../../services/EventService";
+import HomePageConfiguration from "../../components/HomePageConfiguration/HomePageConfiguration";
 
 const formDataDefault = {
   title: "",
@@ -48,6 +49,8 @@ export const DashboardPage = () => {
         );
       case "show":
         return <EventCard events={events} isEventPage={false} />;
+      case "homeConfig":
+        return <HomePageConfiguration />;
       case "notify":
         return <NotifyParticipant events={events} />;
       default:

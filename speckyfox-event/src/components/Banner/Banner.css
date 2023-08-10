@@ -3,7 +3,7 @@
   padding-top: 50px;
   background-size: cover;
   background-repeat: no-repeat;
-  padding: 3% 5%;
+  padding: 5%;
 }
 
 .banner img {
@@ -19,6 +19,7 @@
 
 .banner .right > * {
   margin: 0px 50px;
+  margin: auto;
 }
 
 .banner .left {
@@ -103,11 +104,12 @@
 /* Speaker details  */
 
 .banner .speaker-details img {
-  width: 180px;
+  width: 200px;
   margin: auto;
 }
 .speaker-img {
   border-radius: 50%;
+
   overflow: hidden;
   border: 10px solid #ff9430;
   margin-top: 20px;
@@ -125,10 +127,10 @@
 }
 
 .banner .speaker-name {
-  font-size: 14px;
+  font-size: 10px;
   text-align: center;
   font-weight: bolder;
-  width: 180px;
+  width: 200px;
 }
 
 @media screen and (max-width: 1000px) {

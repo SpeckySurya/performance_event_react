@@ -10,6 +10,7 @@ import EventPage from "./pages/EventPage/EventPage";
 import { DashboardPage } from "./pages/DashboardPage/DashboardPage";
 import MyContext from "./context";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
+import HomePageConfiguration from "./components/HomePageConfiguration/HomePageConfiguration";
 
 function App() {
   const [sharedState, setSharedState] = useState({
