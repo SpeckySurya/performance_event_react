@@ -16,6 +16,8 @@ import HomeIcon from "@mui/icons-material/Home";
 import AssuredWorkloadOutlinedIcon from "@mui/icons-material/AssuredWorkloadOutlined";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
+
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { useNavigate } from "react-router-dom";
 import MyContext from "../../context";
@@ -68,6 +70,15 @@ const AdminHeader = (props) => {
       icon: <AssuredWorkloadOutlinedIcon />,
       onClick: () => {
         props.handleSidebar("homeConfig");
+        setOpen(false);
+      },
+    },
+
+    {
+      text: "Manage Speaker",
+      icon: <PeopleAltOutlinedIcon />,
+      onClick: () => {
+        props.handleSidebar("manageSpeaker");
         setOpen(false);
       },
     },

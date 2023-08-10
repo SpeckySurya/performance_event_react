@@ -7,6 +7,7 @@ import { Box, Stack } from "@mui/material";
 import EventCard from "../../components/EventCard/EventCard";
 import EventService from "../../services/EventService";
 import HomePageConfiguration from "../../components/HomePageConfiguration/HomePageConfiguration";
+import ManageSpeaker from "../../components/ManageSpeaker/ManageSpeaker";
 
 const formDataDefault = {
   title: "",
@@ -51,6 +52,8 @@ export const DashboardPage = () => {
         return <EventCard events={events} isEventPage={false} />;
       case "homeConfig":
         return <HomePageConfiguration />;
+      case "manageSpeaker":
+        return <ManageSpeaker />;
       case "notify":
         return <NotifyParticipant events={events} />;
       default:
