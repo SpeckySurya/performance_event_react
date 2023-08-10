@@ -12,10 +12,12 @@ import {
   Divider,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import HomeIcon from "@mui/icons-material/Home";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AssuredWorkloadOutlinedIcon from "@mui/icons-material/AssuredWorkloadOutlined";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+
+import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
+
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -50,7 +52,7 @@ const AdminHeader = (props) => {
   const menuItems = [
     {
       text: "Show Events",
-      icon: <HomeIcon />,
+      icon: <HomeOutlinedIcon />,
       onClick: () => {
         props.handleSidebar("show");
         setOpen(false);
@@ -58,7 +60,7 @@ const AdminHeader = (props) => {
     },
     {
       text: "Create Event",
-      icon: <AddCircleIcon />,
+      icon: <AddCircleOutlineOutlinedIcon />,
       onClick: () => {
         props.handleSidebar("create");
         setOpen(false);
@@ -85,7 +87,7 @@ const AdminHeader = (props) => {
 
     {
       text: "Notify User",
-      icon: <NotificationsIcon />,
+      icon: <NotificationsActiveOutlinedIcon />,
       onClick: () => {
         props.handleSidebar("notify");
         setOpen(false);

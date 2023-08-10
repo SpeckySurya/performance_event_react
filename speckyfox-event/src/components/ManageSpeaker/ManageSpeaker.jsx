@@ -59,11 +59,12 @@ function ManageSpeaker(props) {
             <form onSubmit={handleSubmit}>
               <Grid container spacing={1}>
                 <Grid xs={12} sm={12} item>
+                  <InputLabel>Speaker Name</InputLabel>
                   <TextField
                     type="text"
                     name="SpeakerName"
                     id="SpeakerName"
-                    label="Speaker Name"
+                    // label="Speaker Name"
                     placeholder="Enter Speaker Name"
                     variant="outlined"
                     value={values.SpeakerName}
@@ -77,11 +78,12 @@ function ManageSpeaker(props) {
                 </Grid>
 
                 <Grid xs={12} sm={12} item>
+                  <InputLabel>Speaker Designation</InputLabel>
                   <TextField
                     type="text"
                     name="SpeakerDesignation"
                     id="SpeakerDesignation"
-                    label="Speaker Designation"
+                    // label="Speaker Designation"
                     placeholder="Enter Speaker Designation"
                     variant="outlined"
                     value={values.SpeakerDesignation}
@@ -97,11 +99,12 @@ function ManageSpeaker(props) {
                 </Grid>
 
                 <Grid xs={12} sm={12} item>
+                  <InputLabel>About Speaker</InputLabel>
                   <TextField
                     type="text"
                     name="AboutSpeaker"
                     id="AboutSpeaker"
-                    label="About Speaker"
+                    // label="About Speaker"
                     placeholder="Enter Speaker Details"
                     variant="outlined"
                     value={values.AboutSpeaker}
@@ -114,11 +117,12 @@ function ManageSpeaker(props) {
                   ) : null}
                 </Grid>
                 <Grid xs={12} sm={12} item>
+                  <InputLabel>Speaker Email</InputLabel>
                   <TextField
                     type="text"
                     name="SpeakerEmail"
                     id="SpeakerEmail"
-                    label="Speaker Email"
+                    // label="Speaker Email"
                     placeholder="Enter Speaker Email"
                     variant="outlined"
                     value={values.SpeakerEmail}
@@ -149,11 +153,12 @@ function ManageSpeaker(props) {
                 </Grid>
 
                 <Grid xs={12} sm={12} item>
+                  <InputLabel>LinkedIn url</InputLabel>
                   <TextField
                     type="text"
                     name="Speaker LinkedInurl"
                     id="SpeakerLinkedInurl"
-                    label="LinkedIn url"
+                    // label="LinkedIn url"
                     placeholder="Upload LinkedIn url"
                     variant="outlined"
                     fullWidth
@@ -169,9 +174,10 @@ function ManageSpeaker(props) {
                   ) : null}
                 </Grid>
                 <Grid xs={12} sm={12} item>
+                  <InputLabel>Twiter url</InputLabel>
                   <TextField
                     type="text"
-                    label="Twiter url"
+                    // label="Twiter url"
                     name="SpeakerTwiternurl"
                     id="SpeakerTwiternurl"
                     placeholder="Upload Twiter url"
@@ -189,11 +195,12 @@ function ManageSpeaker(props) {
                 </Grid>
 
                 <Grid xs={12} sm={12} item>
+                  <InputLabel>Youtube url</InputLabel>
                   <TextField
                     type="text"
                     name="SpeakerYoutubeurl"
                     id="SpeakerYoutubeurl"
-                    label="Youtube url"
+                    // label="Youtube url"
                     placeholder="Upload Youtube url"
                     variant="outlined"
                     value={values.SpeakerYoutubeurl}

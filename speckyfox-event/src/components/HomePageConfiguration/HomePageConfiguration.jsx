@@ -90,11 +90,12 @@ function HomePageConfiguration(props) {
                   ) : null}
                 </Grid>
                 <Grid xs={12} sm={12} item>
+                  <InputLabel>LinkedIn url</InputLabel>
                   <TextField
                     type="text"
                     name="LinkedInurl"
                     id="LinkedInurl"
-                    label="LinkedIn url"
+                    // label="LinkedIn url"
                     placeholder="Upload LinkedIn url"
                     variant="outlined"
                     fullWidth
@@ -108,9 +109,10 @@ function HomePageConfiguration(props) {
                   ) : null}
                 </Grid>
                 <Grid xs={12} sm={12} item>
+                  <InputLabel>Twiter url</InputLabel>
                   <TextField
                     type="text"
-                    label="Twiter url"
+                    // label="Twiter url"
                     name="Twiternurl"
                     id="Twiternurl"
                     placeholder="Upload Twiter url"
@@ -125,9 +127,10 @@ function HomePageConfiguration(props) {
                   ) : null}
                 </Grid>
                 <Grid xs={12} sm={12} item>
+                  <InputLabel>Facebook url</InputLabel>
                   <TextField
                     type="text"
-                    label="Facebook url"
+                    // label="Facebook url"
                     name="Facebookurl"
                     id="Facebookurl"
                     placeholder="Upload Facebook url"
@@ -142,11 +145,12 @@ function HomePageConfiguration(props) {
                   ) : null}
                 </Grid>
                 <Grid xs={12} sm={12} item>
+                  <InputLabel>Website url</InputLabel>
                   <TextField
                     type="text"
                     name="Websiteurl"
                     id="Websiteurl"
-                    label="Website url"
+                    // label="Website url"
                     placeholder="Upload Website url"
                     variant="outlined"
                     value={values.Websiteurl}
@@ -159,11 +163,12 @@ function HomePageConfiguration(props) {
                   ) : null}
                 </Grid>
                 <Grid xs={12} sm={12} item>
+                  <InputLabel>Contect url</InputLabel>
                   <TextField
                     type="text"
                     name="Contenturl"
                     id="Contenturl"
-                    label="content url"
+                    // label="content url"
                     placeholder="Upload content url"
                     variant="outlined"
                     value={values.Contenturl}
@@ -176,11 +181,12 @@ function HomePageConfiguration(props) {
                   ) : null}
                 </Grid>
                 <Grid xs={12} sm={12} item>
+                  <InputLabel>Youtube url</InputLabel>
                   <TextField
                     type="text"
                     name="Youtubeurl"
                     id="Youtubeurl"
-                    label="Youtube url"
+                    // label="Youtube url"
                     placeholder="Upload Youtube url"
                     variant="outlined"
                     value={values.Youtubeurl}
@@ -193,12 +199,13 @@ function HomePageConfiguration(props) {
                   ) : null}
                 </Grid>
                 <Grid xs={12} sm={12} item>
+                  <InputLabel>Footer Text</InputLabel>
                   <TextField
                     type="text"
                     name="FooterText"
                     id="FooterText"
                     s
-                    label="Footer Text"
+                    // label="Footer Text"
                     placeholder="Upload Footer Text url"
                     variant="outlined"
                     value={values.FooterText}
