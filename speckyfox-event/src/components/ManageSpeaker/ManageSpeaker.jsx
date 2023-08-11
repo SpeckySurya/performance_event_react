@@ -98,7 +98,7 @@ function ManageSpeaker(props) {
                 <Grid xs={12} sm={12} item>
                   <InputLabel>About Speaker</InputLabel>
                   <TextField
-                    type="text"
+                    type="text-area"
                     name="AboutSpeaker"
                     id="AboutSpeaker"
                     // label="About Speaker"
