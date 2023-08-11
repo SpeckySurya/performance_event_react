@@ -15,19 +15,15 @@ import MenuIcon from "@mui/icons-material/Menu";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AssuredWorkloadOutlinedIcon from "@mui/icons-material/AssuredWorkloadOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
-
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
-
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { useNavigate } from "react-router-dom";
-import MyContext from "../../context";
 
 const AdminHeader = (props) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const { sharedState, setSharedState } = useContext(MyContext);
 
   const toggleDrawer = (isOpen) => (event) => {
     if (
@@ -41,11 +37,7 @@ const AdminHeader = (props) => {
   };
 
   const handleLogout = () => {
-    sessionStorage.clear();
-    if (sharedState.admin) {
-      const newState = delete sharedState.amdin;
-      setSharedState(newState);
-    }
+    sessionStorage.removeItem("token");
     navigate("/");
   };
 
@@ -90,6 +82,14 @@ const AdminHeader = (props) => {
       icon: <NotificationsActiveOutlinedIcon />,
       onClick: () => {
         props.handleSidebar("notify");
+        setOpen(false);
+      },
+    },
+    {
+      text: "Manage User",
+      icon: <ManageAccountsIcon />,
+      onClick: () => {
+        props.handleSidebar("manageUser");
         setOpen(false);
       },
     },

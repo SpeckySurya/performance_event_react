@@ -24,10 +24,7 @@ function App() {
         <Route path="/:param" element={<HomePage />} />
         <Route path="/thankyou" element={<ThankYouPage />} />
         <Route path="/login" element={<Login />} />
-        <Route
-          path="/dashboard"
-          element={sharedState.admin ? <DashboardPage /> : <Login />}
-        />
+        <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/error" element={<ErrorPage />} />
         <Route path="/pagenotfound" element={<PageNotFound />} />
       </Routes>

@@ -3,6 +3,7 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import EventService from "../../services/EventService";
 
 const options = ["Edit", "Delete", "Active"];
 
@@ -26,7 +27,23 @@ export default function Editbtn(props) {
         break;
       }
       case "Delete": {
-        alert("Do you really want to delete");
+        alert("Do you really want to delete " + props.event.id);
+        const choice = prompt("Do you really want to delete");
+        if (choice) {
+          const eventService = new EventService();
+          eventService
+            .deleteEvent(props.event.id)
+            .then((response) => {
+              if (response) {
+                alert(props.event.title + " deleted succesfully !");
+              } else {
+                alert("Something went wrong !");
+              }
+            })
+            .catch((error) => {
+              alert(error);
+            });
+        }
         break;
       }
     }
