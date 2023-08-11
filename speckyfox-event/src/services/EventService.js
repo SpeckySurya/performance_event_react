@@ -2,7 +2,7 @@ import axios from "axios";
 import basicHeader, { multipartAuth, withAuth } from "../utils/Header";
 
 export default class EventService {
-  baseUrl = "http://34.218.92.121:8095";
+  baseUrl = "http://34.218.92.121:8096";
   getEvent(eventId) {
     return axios.get(`${this.baseUrl}/app/event/${eventId}`);
   }
@@ -12,12 +12,15 @@ export default class EventService {
     });
   }
   getAllEvents() {
-    return axios.get(`${this.baseUrl}/admin/event-list`, withAuth());
+    return axios.get(
+      `${this.baseUrl}/admin/event-list`,
+      withAuth(localStorage.getItem("token"))
+    );
   }
   notifyUsers(eventId) {
     return axios.get(
       `${this.baseUrl}/admin/send-event-reminder/${eventId}`,
-      withAuth()
+      withAuth(sessionStorage.getItem("token"))
     );
   }
   saveEvent(event) {

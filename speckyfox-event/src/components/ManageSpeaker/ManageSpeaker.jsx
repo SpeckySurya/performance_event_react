@@ -14,14 +14,12 @@ import { ManageSpeakerValidation } from "../../schemas/ManageSpeakerValidation";
 
 const initialValues = {
   SpeakerTwiternurl: "",
-
   SpeakerName: "",
   SpeakerDesignation: "",
   SpeakerLinkedInurl: "",
   AboutSpeaker: "",
   SpeakerEmail: "",
   SpeakerPhoto: "",
-
   SpeakerYoutubeurl: "",
 };
 function ManageSpeaker(props) {
@@ -30,7 +28,6 @@ function ManageSpeaker(props) {
       initialValues: initialValues,
       validationSchema: ManageSpeakerValidation,
       onSubmit: (values) => {
-        console.log("values ourab", values);
         const request = new FormData();
         for (let entry in initialValues) {
           console.log(entry);
@@ -156,7 +153,7 @@ function ManageSpeaker(props) {
                   <InputLabel>LinkedIn url</InputLabel>
                   <TextField
                     type="text"
-                    name="Speaker LinkedInurl"
+                    name="SpeakerLinkedInurl"
                     id="SpeakerLinkedInurl"
                     // label="LinkedIn url"
                     placeholder="Upload LinkedIn url"

@@ -8,29 +8,41 @@ import EventCard from "../../components/EventCard/EventCard";
 import EventService from "../../services/EventService";
 import HomePageConfiguration from "../../components/HomePageConfiguration/HomePageConfiguration";
 import ManageSpeaker from "../../components/ManageSpeaker/ManageSpeaker";
+import ManageUser from "../../components/ManageUser/ManageUser";
+import { useNavigate } from "react-router-dom";
+import SpeakerService from "../../services/SpeakerService";
 
 const formDataDefault = {
   title: "",
   description: "",
-  date: "",
   time: "",
-  eventBanner: "",
   meetingUrl: "",
   location: "",
   active: false,
   activeHomePage: false,
+  contactTo: "",
+  speakerId: 0,
 };
 
-const eventDuration = { hours: 0, minutes: 15 };
+const eventDuration = { hours: 0, minutes: 0 };
 
 export const DashboardPage = () => {
   const [selected, setSelected] = useState("show");
   const [events, setEvents] = useState([]);
+  const [speakers, setSpeakers] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (sessionStorage.getItem("token") === null) {
+      navigate("/login");
+    }
     const eventService = new EventService();
     eventService.getAllEvents().then((response) => {
       setEvents(response.data);
+    });
+    const speakerService = new SpeakerService();
+    speakerService.getAllSpeakers().then((response) => {
+      setSpeakers(response.data);
     });
   }, []);
 
@@ -45,6 +57,7 @@ export const DashboardPage = () => {
           <EventForm
             formDataDefault={formDataDefault}
             eventDuration={eventDuration}
+            speakers={speakers}
             formTitle="Create an Event"
           />
         );
@@ -56,6 +69,8 @@ export const DashboardPage = () => {
         return <ManageSpeaker />;
       case "notify":
         return <NotifyParticipant events={events} />;
+      case "manageUser":
+        return <ManageUser events={events} />;
       default:
         return null;
     }

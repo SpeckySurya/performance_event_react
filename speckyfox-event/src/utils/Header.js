@@ -5,28 +5,22 @@ function basicHeader() {
   return headers;
 }
 
-function withAuth() {
+function withAuth(token) {
   return {
-    auth: {
-      username: "admin",
-      password: "dev@123",
-    },
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
+      Authorization: `Bearer ${token}`,
     },
   };
 }
 
-function multipartAuth() {
+function multipartAuth(token) {
   return {
-    auth: {
-      username: "admin",
-      password: "dev@123",
-    },
     headers: {
       "Content-Type": "multipart/form-data",
       "Access-Control-Allow-Origin": "*",
+      Authorization: `Bearer ${token}`,
     },
   };
 }

@@ -29,6 +29,7 @@ const Duration = (props) => {
             value={props.duration.hours}
             label="Hours"
             onChange={handleChange}
+            required
           >
             {hours.map((e) => (
               <MenuItem key={e} value={e}>
@@ -46,6 +47,7 @@ const Duration = (props) => {
             value={props.duration.minutes}
             label="Minutes"
             onChange={handleChange}
+            required
           >
             {minutes.map((e) => (
               <MenuItem key={e} value={e}>

@@ -1,8 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./login.css";
 import { useNavigate } from "react-router-dom";
 import LoginService from "./../../services/LoginService";
-import MyContext from "../../context";
 import { CircularProgress } from "@mui/material";
 
 const Login = () => {
@@ -12,7 +11,12 @@ const Login = () => {
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { setSharedState } = useContext(MyContext);
+
+  useEffect(() => {
+    if (sessionStorage.getItem("token") !== null) {
+      navigate("/dashboard");
+    }
+  });
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -21,7 +25,7 @@ const Login = () => {
     loginService
       .adminLogin(formData)
       .then((response) => {
-        setSharedState({ admin: true });
+        sessionStorage.setItem("token", response.data.token);
         setLoading(false);
         navigate("/dashboard");
       })

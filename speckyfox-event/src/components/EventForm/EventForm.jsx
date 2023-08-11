@@ -5,6 +5,17 @@ import { Alert, Box, CircularProgress } from "@mui/material";
 import { toDDMMYYYY } from "../../utils/DateFormatter";
 import Duration from "../Duration/Duration";
 
+const speakerList = [
+  {
+    id: 1,
+    speakerName: "Abhishek Aggarwal",
+  },
+  {
+    id: 2,
+    speakerName: "Surya Srivastav",
+  },
+];
+
 const EventForm = (props) => {
   const [formData, setFormData] = useState(props.formDataDefault);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -26,17 +37,18 @@ const EventForm = (props) => {
     event.preventDefault();
     setLoading(true);
     const request = new FormData();
-    request.append("profilePicture", selectedFile);
+    request.append("eventBanner", selectedFile);
     Object.entries(formData).forEach(([key, val]) => {
       request.append(key, val);
     });
     request.append("duration", `${duration.hours}:${duration.minutes}`);
     request.append("date", toDDMMYYYY(formData.date));
-    // for (const entry of request.entries()) {
-    //   console.log(entry[0], entry[1]);
-    // }
+    for (const entry of request.entries()) {
+      console.log(entry[0], entry[1]);
+    }
     const eventService = new EventService();
-
+    console.log(props.speakers);
+    return;
     eventService
       .saveEvent(request)
       .then((response) => {
@@ -71,6 +83,7 @@ const EventForm = (props) => {
             placeholder="Event Title"
             value={formData.title}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="form-group">
@@ -81,6 +94,7 @@ const EventForm = (props) => {
             placeholder="Event Description"
             value={formData.description}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="form-group">
@@ -89,8 +103,8 @@ const EventForm = (props) => {
             type="date"
             id="date"
             name="date"
-            value={formData.date}
             onChange={handleDateChange}
+            required
           />
         </div>
         <div className="form-group">
@@ -102,6 +116,7 @@ const EventForm = (props) => {
             step={1}
             value={formData.time}
             onChange={handleChange}
+            required
           />
         </div>
         <Duration duration={duration} setDuration={setDuration} />
@@ -126,18 +141,18 @@ const EventForm = (props) => {
             placeholder="Event Location"
             value={formData.location}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="form-group">
           <label htmlFor="active">Active</label>
-          <select name="active" id="active" onChange={handleChange}>
+          <select name="active" id="active" onChange={handleChange} required>
             <option selected value={"false"}>
               False
             </option>
             <option value={"true"}>True</option>
           </select>
         </div>
-
         <div className="form-group">
           <label htmlFor="activeHomePage">
             Active Registration for Homepage
@@ -146,6 +161,7 @@ const EventForm = (props) => {
             name="activeHomePage"
             id="activeHomePage"
             onChange={handleChange}
+            required
           >
             <option selected value={"false"}>
               False
@@ -154,28 +170,46 @@ const EventForm = (props) => {
           </select>
         </div>
 
-        {/* <div className="form-group">
+        <div className="form-group">
           <label htmlFor="eventBanner">Event Banner</label>
           <input
             type="file"
             id="eventBanner"
             name="eventBanner"
-            placeholder="Event - Banner"
-            value={formData.eventBanner}
-            onChange={handleChange}
-          />
-        </div> */}
-        <div className="form-group">
-          <label htmlFor="speakerDesignation">Speaker Photo</label>
-          <input
-            type="file"
-            id="speakerBanner"
-            name="profilePicture"
-            placeholder="Speaker Banner"
+            placeholder="Event Banner"
             onChange={handleFileChange}
+            required
           />
         </div>
-
+        <div className="form-group">
+          <label htmlFor="speakerId">Speaker</label>
+          <select
+            name="speakerId"
+            id="speakerId"
+            onChange={handleChange}
+            required
+          >
+            <option selected value="" disabled>
+              Speaker name
+            </option>
+            {speakerList.map((speaker) => (
+              <option key={speaker.id} value={speaker.id}>
+                {speaker.speakerName}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="contactTo">Contact</label>
+          <input
+            id="contactTo"
+            name="contactTo"
+            placeholder="Contact To"
+            value={formData.contactTo}
+            onChange={handleChange}
+            required
+          />
+        </div>
         <button type="submit" className="flex-jcc-aic">
           {loading ? (
             <CircularProgress size={20} color={"error"} />
