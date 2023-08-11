@@ -1,5 +1,5 @@
 import "./VideoCart.css";
-import * as React from "react";
+
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -9,16 +9,16 @@ import Typography from "@mui/material/Typography";
 import img from "../../assets/card-bg.png";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
-import Testvideo from "../../assets/TextVideo.mp4";
+import TextVideo from "../../assets/TextVideo.mp4";
 
 export default function VideoCart() {
   return (
     <div className="VideoCartContainer">
       <Card sx={{ maxWidth: 435, margin: 5 }}>
         <CardMedia
-          sx={{ height: 340, widows: "100%" }}
+          sx={{ widows: "100%" }}
           component="video"
-          src={Testvideo} // Replace with your video URL
+          src={TextVideo} // Replace with your video URL
           controls
           autoPlay
           loop
@@ -45,7 +45,16 @@ export default function VideoCart() {
       </Card>
 
       <Card sx={{ maxWidth: 435, margin: 5 }}>
-        <CardMedia sx={{ height: 340 }} image={img} title="green iguana" />
+        <CardMedia
+          sx={{ widows: "100%" }}
+          component="video"
+          src={TextVideo} // Replace with your video URL
+          controls
+          autoPlay
+          loop
+          //  image={img}
+          title="green iguana"
+        />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             Speckyfox Saminar 1
@@ -56,8 +65,12 @@ export default function VideoCart() {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Share</Button>
-          <Button size="small">Learn More</Button>
+          <Button size="small">
+            <FavoriteBorderOutlinedIcon />
+          </Button>
+          <Button size="medium">
+            <ShareOutlinedIcon />
+          </Button>
         </CardActions>
       </Card>
     </div>
