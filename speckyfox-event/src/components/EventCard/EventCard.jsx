@@ -33,6 +33,8 @@ const EventCard = (props) => {
     },
   });
 
+  console.log(props.events);
+
   const CustomLink = styled(Link)(({ theme }) => ({
     color: "#ffffff",
     textDecoration: "none",
@@ -126,7 +128,7 @@ const EventCard = (props) => {
                         <i className="bx bx-microphone"></i>
                       </Typography>
                       <Typography>
-                        {event.speakerName}, {event.speakerDesignation}
+                        {event.speaker.name}, {event.speaker.designation}
                       </Typography>
                     </Stack>
                   </Box>

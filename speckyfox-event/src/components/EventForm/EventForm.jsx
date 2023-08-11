@@ -5,17 +5,6 @@ import { Alert, Box, CircularProgress } from "@mui/material";
 import { toDDMMYYYY } from "../../utils/DateFormatter";
 import Duration from "../Duration/Duration";
 
-const speakerList = [
-  {
-    id: 1,
-    speakerName: "Abhishek Aggarwal",
-  },
-  {
-    id: 2,
-    speakerName: "Surya Srivastav",
-  },
-];
-
 const EventForm = (props) => {
   const [formData, setFormData] = useState(props.formDataDefault);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -42,19 +31,17 @@ const EventForm = (props) => {
       request.append(key, val);
     });
     request.append("duration", `${duration.hours}:${duration.minutes}`);
-    request.append("date", toDDMMYYYY(formData.date));
+    // request.append("date", toDDMMYYYY(formData.date));
     for (const entry of request.entries()) {
       console.log(entry[0], entry[1]);
     }
     const eventService = new EventService();
-    console.log(props.speakers);
-    return;
     eventService
       .saveEvent(request)
       .then((response) => {
         setIsAlertVisible(true);
         setLoading(false);
-        setFormData(formDataDefault);
+        setFormData(props.formDataDefault);
       })
       .catch((error) => {
         alert("Something went wrong :" + error);
@@ -192,9 +179,9 @@ const EventForm = (props) => {
             <option selected value="" disabled>
               Speaker name
             </option>
-            {speakerList.map((speaker) => (
+            {props.speakers.map((speaker) => (
               <option key={speaker.id} value={speaker.id}>
-                {speaker.speakerName}
+                {speaker.name}
               </option>
             ))}
           </select>

@@ -62,6 +62,11 @@ export const DashboardPage = () => {
           />
         );
       case "show":
+        events.map((event) => {
+          event["speaker"] = speakers.find(
+            (speaker) => speaker.id === event.id
+          );
+        });
         return <EventCard events={events} isEventPage={false} />;
       case "homeConfig":
         return <HomePageConfiguration />;

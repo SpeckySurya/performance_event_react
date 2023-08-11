@@ -11,31 +11,52 @@ import { useFormik } from "formik";
 import "./HomePageConfiguration.css";
 
 import { HomePageConfigationSchema } from "../../schemas/Homepagevalidation";
+import { useState } from "react";
+import HomepageService from "../../services/HomepageService";
 
 const initialValues = {
-  LinkedInurl: "",
-  Twiternurl: "",
-  Facebookurl: "",
-  Websiteurl: "",
-  Contenturl: "",
-  Youtubeurl: "",
-  FooterText: "",
-  UploadBanner: "",
-  UploadLogo: "",
+  linkedinUrl: "",
+  twitterUrl: "",
+  facebookUrl: "",
+  websiteUrl: "",
+  contactUrl: "",
+  youtubeUrl: "",
+  footerText: "",
 };
 function HomePageConfiguration(props) {
+  const [banner, setBanner] = useState(null);
+  const [logo, setLogo] = useState(null);
+  const handleBannerChange = (event) => {
+    const file = event.target.files[0];
+    setBanner(file);
+  };
+  const handleLogoChange = (event) => {
+    const file = event.target.files[0];
+    setLogo(file);
+  };
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useFormik({
       initialValues: initialValues,
       validationSchema: HomePageConfigationSchema,
       onSubmit: (values) => {
-        console.log("values ourab", values);
         const request = new FormData();
         for (let entry in initialValues) {
-          console.log(entry);
-          console.log(values[entry]);
           request.append(entry, values[entry]);
         }
+        request.append("banner", banner);
+        request.append("logo", logo);
+        for (const entry of request.entries()) {
+          console.log(entry[0], entry[1]);
+        }
+        const homepageService = new HomepageService();
+        homepageService
+          .saveHomepageDetails(request)
+          .then((response) => {
+            alert("Homepage details saved");
+          })
+          .catch((error) => {
+            alert(error);
+          });
       },
     });
 
@@ -61,51 +82,43 @@ function HomePageConfiguration(props) {
                   <InputLabel>Upload Logo</InputLabel>
                   <TextField
                     type="file"
-                    name="UploadLogo"
-                    id="UploadLogo"
+                    name="logo"
+                    id="logo"
                     variant="outlined"
-                    value={values.UploadLogo}
-                    onChange={handleChange}
+                    onChange={handleLogoChange}
                     onBlur={handleBlur}
                     fullWidth
                   />
-                  {errors.UploadLogo && touched.UploadLogo ? (
-                    <p className="configationformerro">{errors.UploadLogo}</p>
-                  ) : null}
                 </Grid>
                 <Grid xs={12} sm={12} item>
                   <InputLabel>Upload Banner</InputLabel>
                   <TextField
                     type="file"
-                    name="UploadBanner"
-                    id="UploadBanner"
+                    name="banner"
+                    id="banner"
                     variant="outlined"
-                    value={values.UploadBanner}
-                    onChange={handleChange}
+                    onChange={handleBannerChange}
                     onBlur={handleBlur}
                     fullWidth
-                  />{" "}
-                  {errors.UploadBanner && touched.UploadBanner ? (
-                    <p className="configationformerro">{errors.UploadBanner}</p>
-                  ) : null}
+                  />
                 </Grid>
                 <Grid xs={12} sm={12} item>
                   <InputLabel>LinkedIn url</InputLabel>
                   <TextField
                     type="text"
-                    name="LinkedInurl"
-                    id="LinkedInurl"
+                    name="linkedinUrl"
+                    id="linkedinUrl"
                     // label="LinkedIn url"
                     placeholder="Upload LinkedIn url"
                     variant="outlined"
                     fullWidth
-                    value={values.LinkedInurl}
+                    value={values.linkedinUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
 
-                  {errors.LinkedInurl && touched.LinkedInurl ? (
-                    <p className="configationformerro">{errors.LinkedInurl}</p>
+                  {errors.linkedinUrl && touched.linkedinUrl ? (
+                    <p className="configationformerro">{errors.linkedinUrl}</p>
                   ) : null}
                 </Grid>
                 <Grid xs={12} sm={12} item>
@@ -113,17 +126,17 @@ function HomePageConfiguration(props) {
                   <TextField
                     type="text"
                     // label="Twiter url"
-                    name="Twiternurl"
-                    id="Twiternurl"
+                    name="twitterUrl"
+                    id="twitterUrl"
                     placeholder="Upload Twiter url"
                     variant="outlined"
                     fullWidth
-                    value={values.Twiternurl}
+                    value={values.twitterUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
-                  {errors.Twiternurl && touched.Twiternurl ? (
-                    <p className="configationformerro">{errors.Twiternurl}</p>
+                  {errors.twitterUrl && touched.twitterUrl ? (
+                    <p className="configationformerro">{errors.twitterUrl}</p>
                   ) : null}
                 </Grid>
                 <Grid xs={12} sm={12} item>
@@ -131,90 +144,90 @@ function HomePageConfiguration(props) {
                   <TextField
                     type="text"
                     // label="Facebook url"
-                    name="Facebookurl"
-                    id="Facebookurl"
+                    name="facebookUrl"
+                    id="facebookUrl"
                     placeholder="Upload Facebook url"
                     variant="outlined"
-                    value={values.Facebookurl}
+                    value={values.facebookUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
                   />
-                  {errors.Facebookurl && touched.Facebookurl ? (
-                    <p className="configationformerro">{errors.Facebookurl}</p>
+                  {errors.facebookUrl && touched.facebookUrl ? (
+                    <p className="configationformerro">{errors.facebookUrl}</p>
                   ) : null}
                 </Grid>
                 <Grid xs={12} sm={12} item>
                   <InputLabel>Website url</InputLabel>
                   <TextField
                     type="text"
-                    name="Websiteurl"
-                    id="Websiteurl"
+                    name="websiteUrl"
+                    id="websiteUrl"
                     // label="Website url"
                     placeholder="Upload Website url"
                     variant="outlined"
-                    value={values.Websiteurl}
+                    value={values.websiteUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
                   />
-                  {errors.Websiteurl && touched.Websiteurl ? (
-                    <p className="configationformerro">{errors.Websiteurl}</p>
+                  {errors.websiteUrl && touched.websiteUrl ? (
+                    <p className="configationformerro">{errors.websiteUrl}</p>
                   ) : null}
                 </Grid>
                 <Grid xs={12} sm={12} item>
-                  <InputLabel>Contect url</InputLabel>
+                  <InputLabel>Contact url</InputLabel>
                   <TextField
                     type="text"
-                    name="Contenturl"
-                    id="Contenturl"
+                    name="contactUrl"
+                    id="contactUrl"
                     // label="content url"
                     placeholder="Upload content url"
                     variant="outlined"
-                    value={values.Contenturl}
+                    value={values.contactUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
                   />
-                  {errors.Contenturl && touched.Contenturl ? (
-                    <p className="configationformerro">{errors.Contenturl}</p>
+                  {errors.contactUrl && touched.contactUrl ? (
+                    <p className="configationformerro">{errors.contactUrl}</p>
                   ) : null}
                 </Grid>
                 <Grid xs={12} sm={12} item>
                   <InputLabel>Youtube url</InputLabel>
                   <TextField
                     type="text"
-                    name="Youtubeurl"
-                    id="Youtubeurl"
+                    name="youtubeUrl"
+                    id="youtubeUrl"
                     // label="Youtube url"
                     placeholder="Upload Youtube url"
                     variant="outlined"
-                    value={values.Youtubeurl}
+                    value={values.youtubeUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
                   />
-                  {errors.Youtubeurl && touched.Youtubeurl ? (
-                    <p className="configationformerro">{errors.Youtubeurl}</p>
+                  {errors.youtubeUrl && touched.youtubeUrl ? (
+                    <p className="configationformerro">{errors.youtubeUrl}</p>
                   ) : null}
                 </Grid>
                 <Grid xs={12} sm={12} item>
                   <InputLabel>Footer Text</InputLabel>
                   <TextField
                     type="text"
-                    name="FooterText"
-                    id="FooterText"
+                    name="footerText"
+                    id="footerText"
                     s
                     // label="Footer Text"
                     placeholder="Upload Footer Text url"
                     variant="outlined"
-                    value={values.FooterText}
+                    value={values.footerText}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
                   />
-                  {errors.FooterText && touched.FooterText ? (
-                    <p className="configationformerro">{errors.FooterText}</p>
+                  {errors.footerText && touched.footerText ? (
+                    <p className="configationformerro">{errors.footerText}</p>
                   ) : null}
                 </Grid>
 

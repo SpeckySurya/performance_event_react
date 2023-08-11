@@ -1,29 +1,30 @@
-function basicHeader() {
-  const headers = {
-    "Content-Type": "application/json",
-  };
-  return headers;
-}
+export default class Header {
+  token = sessionStorage.getItem("token");
 
-function withAuth(token) {
-  return {
-    headers: {
+  basicHeader() {
+    const headers = {
       "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      Authorization: `Bearer ${token}`,
-    },
-  };
-}
+    };
+    return headers;
+  }
 
-function multipartAuth(token) {
-  return {
-    headers: {
-      "Content-Type": "multipart/form-data",
-      "Access-Control-Allow-Origin": "*",
-      Authorization: `Bearer ${token}`,
-    },
-  };
-}
+  withAuth() {
+    return {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${this.token}`,
+      },
+    };
+  }
 
-export default basicHeader;
-export { withAuth, multipartAuth };
+  multipartAuth() {
+    return {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${this.token}`,
+      },
+    };
+  }
+}
