@@ -56,7 +56,8 @@
 .mob-navbar {
   z-index: 10;
   width: 30%;
-  height: 40vh;
+  line-height: 2;
+  height: auto;
   border-radius: 12px;
   padding: 20px;
   display: none;
