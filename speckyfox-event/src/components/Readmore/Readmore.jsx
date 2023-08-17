@@ -1,12 +1,16 @@
 import { useEffect } from "react";
+import { useState } from "react";
 import "./Readmore.css";
 
 function Readmore(props) {
-  //   const [check, setcheck] = useState(false);
+  const [check, setcheck] = useState(false);
 
   useEffect(() => {
     console.log(props.speaker);
   }, [props.speaker]);
+  function funreadmoreorless() {
+    setcheck(!check);
+  }
   return (
     <div className="textcontainer">
       <input type="checkbox" id="check" />
@@ -18,15 +22,15 @@ function Readmore(props) {
       <div className="content" style={{ transition: "2s linear" }}>
         <p>{props.speaker?.aboutSpeaker?.substring(101)}</p>
       </div>
-      {props.speaker?.aboutSpeaker?.length <= 100 ? null : (
+      {props.speaker?.aboutSpeaker?.length <= 200 ? null : (
         <div>
-          <label htmlFor="check" className="more">
-            <p>Read More...</p>
+          <label htmlFor="check" onClick={funreadmoreorless} className="more">
+            {check ? <p>Read More...</p> : <p>Read Less...</p>}
           </label>
 
-          <label htmlFor="check" className="less">
+          {/* <label htmlFor="check" className="less">
             <p>Read Less...</p>
-          </label>
+          </label> */}
         </div>
       )}
     </div>
