@@ -3,7 +3,7 @@ import { useState } from "react";
 import "./Readmore.css";
 
 function Readmore(props) {
-  const [check, setcheck] = useState(false);
+  const [check, setcheck] = useState(true);
 
   useEffect(() => {
     console.log(props.speaker);
