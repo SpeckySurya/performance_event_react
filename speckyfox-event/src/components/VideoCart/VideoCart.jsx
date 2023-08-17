@@ -14,14 +14,12 @@ import TextVideo from "../../assets/TextVideo.mp4";
 export default function VideoCart() {
   return (
     <div className="VideoCartContainer">
-      <Card sx={{ maxWidth: 435, margin: 5 }}>
+      <Card sx={{ maxWidth: 400, margin: 5 }}>
         <CardMedia
           sx={{ widows: "100%" }}
           component="video"
           src={TextVideo} // Replace with your video URL
           controls
-          autoPlay
-          loop
           //  image={img}
           title="green iguana"
         />
@@ -34,24 +32,14 @@ export default function VideoCart() {
             species, ranging across all continents except Antarctica
           </Typography>
         </CardContent>
-        <CardActions>
-          <Button size="small">
-            <FavoriteBorderOutlinedIcon />
-          </Button>
-          <Button size="medium">
-            <ShareOutlinedIcon />
-          </Button>
-        </CardActions>
       </Card>
 
-      <Card sx={{ maxWidth: 435, margin: 5 }}>
+      <Card sx={{ maxWidth: 400, margin: 5 }}>
         <CardMedia
           sx={{ widows: "100%" }}
           component="video"
           src={TextVideo} // Replace with your video URL
           controls
-          autoPlay
-          loop
           //  image={img}
           title="green iguana"
         />
@@ -64,14 +52,6 @@ export default function VideoCart() {
             species, ranging across all continents except Antarctica
           </Typography>
         </CardContent>
-        <CardActions>
-          <Button size="small">
-            <FavoriteBorderOutlinedIcon />
-          </Button>
-          <Button size="medium">
-            <ShareOutlinedIcon />
-          </Button>
-        </CardActions>
       </Card>
     </div>
   );
