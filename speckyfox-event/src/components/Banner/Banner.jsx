@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
-
-import speacker from "../../assets/speaker.png";
-import speaker from "./../../assets/speaker-at-banner.png";
 import "./Banner.css";
 import RegistrationForm from "../RegistrationForm/RegistrationForm";
 import dateFormatter, {
   convertTo12HourFormat,
 } from "../../utils/DateFormatter";
-import SpeakerService from "../../services/SpeakerService";
-import { event } from "jquery";
 
 export const Banner = (props) => {
   const [formattedDate, setFormattedDate] = useState({});
@@ -19,8 +14,17 @@ export const Banner = (props) => {
     setFormattedTime(convertTo12HourFormat(props.event.time));
   }, [props.event]);
 
+  console.log(props.event.eventBanner);
+
   return (
-    <div className="banner flex-jcsb">
+    <div
+      className="banner flex-jcsb"
+      style={{
+        backgroundImage: `url(
+          https://peroformenceeventbucket.s3.amazonaws.com/dominik-schroder-FIKD9t5_5zQ-unsplash.jpg
+        )`,
+      }}
+    >
       <section className="left flex">
         <div className="event-details flex">
           <div className="event-title">
