@@ -23,24 +23,30 @@ const NotifyParticipant = () => {
   const [loading, setLoading] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
 
+  console.log(selectedEvent);
+
   useEffect(() => {
     const eventService = new EventService();
     eventService.getAllEvents().then((response) => {
       setEvents(response.data);
     });
-    events[selectedEvent - 1]?.users?.length > 0
-      ? setBtnDisabled(false)
-      : setBtnDisabled(true);
   }, [selectedEvent]);
 
   const handleEventChange = (e) => {
     const eventId = e.target.value;
+    if (eventId === -1) {
+      setSelectedEvent(eventId);
+      setSelectedUsers([]);
+      setBtnDisabled(true);
+      return;
+    }
     setSelectedEvent(eventId);
     const obj = events.filter((event) => event.events.id === eventId)[0];
-    const userList = obj.users.map(
+    const userList = obj.events.users.map(
       (user) => `${user.firstName} ${user.lastName}`
     );
     setSelectedUsers(userList);
+    setBtnDisabled(false);
   };
 
   const handleUserSelectAll = () => {
@@ -89,6 +95,9 @@ const NotifyParticipant = () => {
           value={selectedEvent}
           onChange={handleEventChange}
         >
+          <MenuItem value={-1}>
+            <Typography fontStyle={"italic"}>None</Typography>
+          </MenuItem>
           {events.map((event) => (
             <MenuItem key={event.events.id} value={event.events.id}>
               {event.events.title}
@@ -102,7 +111,7 @@ const NotifyParticipant = () => {
           // variant={btnDisabled}
           variant={btnDisabled ? "outlined" : "contained"}
           //  variant="contained"
-          disabled={btnDisabled ? true : false}
+          disabled={btnDisabled}
           onClick={handleUserSelectAll}
           sx={{ ml: 2, mt: 3 }}
         >
@@ -111,7 +120,7 @@ const NotifyParticipant = () => {
         <Button
           sx={{ ml: 2, mt: 3 }}
           variant={btnDisabled ? "outlined" : "contained"}
-          disabled={btnDisabled ? true : false}
+          disabled={btnDisabled}
           onClick={() => handleNotify()}
         >
           {loading ? (

@@ -11,6 +11,7 @@ import ManageSpeaker from "../../components/ManageSpeaker/ManageSpeaker";
 import ManageUser from "../../components/ManageUser/ManageUser";
 import { useNavigate } from "react-router-dom";
 import SpeakerService from "../../services/SpeakerService";
+import ShowSpeaker from "../../components/ShowSpeaker/ShowSpeaker";
 
 const formDataDefault = {
   title: "",
@@ -76,6 +77,8 @@ export const DashboardPage = () => {
         return <NotifyParticipant events={events} />;
       case "manageUser":
         return <ManageUser events={events} />;
+      case "showSpeaker":
+        return <ShowSpeaker />;
       default:
         return null;
     }

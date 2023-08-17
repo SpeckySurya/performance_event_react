@@ -2,7 +2,7 @@ import axios from "axios";
 import Header from "../utils/Header";
 
 export default class EventService {
-  baseUrl = "https://eventbackend.speckyfox.com";
+  baseUrl = "http://34.218.92.121:8096";
   headers = new Header();
 
   getEvent(eventId) {
