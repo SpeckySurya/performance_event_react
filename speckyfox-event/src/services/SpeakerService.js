@@ -2,7 +2,7 @@ import axios from "axios";
 import Header from "../utils/Header";
 
 export default class SpeakerService {
-  baseUrl = "http://34.218.92.121:8096";
+  baseUrl = "https://eventbackend.speckyfox.com";
   headers = new Header();
   getSpeakerByEventId(eventId) {
     return axios.get(
