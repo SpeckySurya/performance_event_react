@@ -25,7 +25,9 @@ const NotifyParticipant = () => {
 
   useEffect(() => {
     const eventService = new EventService();
-    eventService.getAllEvents().then((response) => setEvents(response.data));
+    eventService.getAllEvents().then((response) => {
+      setEvents(response.data);
+    });
     events[selectedEvent - 1]?.users?.length > 0
       ? setBtnDisabled(false)
       : setBtnDisabled(true);
@@ -34,7 +36,7 @@ const NotifyParticipant = () => {
   const handleEventChange = (e) => {
     const eventId = e.target.value;
     setSelectedEvent(eventId);
-    const obj = events.filter((event) => event.id === eventId)[0];
+    const obj = events.filter((event) => event.events.id === eventId)[0];
     const userList = obj.users.map(
       (user) => `${user.firstName} ${user.lastName}`
     );
@@ -45,7 +47,9 @@ const NotifyParticipant = () => {
     if (selectAll) {
       setSelectedUsers([]);
     } else {
-      const obj = events.filter((event) => event.id === selectedEvent)[0];
+      const obj = events.filter(
+        (event) => event.events.id === selectedEvent
+      )[0];
       const userList = obj.users.map(
         (user) => `${user.firstName} ${user.lastName}`
       );
@@ -86,8 +90,8 @@ const NotifyParticipant = () => {
           onChange={handleEventChange}
         >
           {events.map((event) => (
-            <MenuItem key={event.id} value={event.id}>
-              {event.title}
+            <MenuItem key={event.events.id} value={event.events.id}>
+              {event.events.title}
             </MenuItem>
           ))}
         </Select>

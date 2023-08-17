@@ -22,20 +22,8 @@ const ManageUser = ({ events }) => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Simulated data, replace this with your data fetching logic
-  //   const usersByEvent = {
-  //     1: [
-  //       ,
-  //       { id: 2, name: "User 2", email: "user2@example.com" },
-  //       // ...other users
-  //     ],
-  //     2: [
-  //       // Users for event 2
-  //     ],
-  //   };
-
   const usersByEvent = (event) => {
-    return event.users.map((user) => {
+    return event.events.users.map((user) => {
       console.log(user);
       let obj = {};
       obj["id"] = user.id;
@@ -78,8 +66,8 @@ const ManageUser = ({ events }) => {
             <em>None</em>
           </MenuItem>
           {events.map((event) => (
-            <MenuItem key={event.id} value={event}>
-              {event.title}
+            <MenuItem key={event.events.id} value={event}>
+              {event.events.title}
             </MenuItem>
           ))}
         </Select>

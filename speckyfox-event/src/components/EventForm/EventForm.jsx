@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./EventForm.css";
 import EventService from "../../services/EventService";
-import { Alert, Box, CircularProgress } from "@mui/material";
+import { Alert, Box, CircularProgress, Typography } from "@mui/material";
 import { toDDMMYYYY } from "../../utils/DateFormatter";
 import Duration from "../Duration/Duration";
 
@@ -167,6 +167,7 @@ const EventForm = (props) => {
             onChange={handleFileChange}
             required
           />
+          <Typography fontSize={10}>Max file size : 2 MB</Typography>
         </div>
         <div className="form-group">
           <label htmlFor="speakerId">Speaker</label>

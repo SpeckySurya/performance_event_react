@@ -7,6 +7,8 @@ import RegistrationForm from "../RegistrationForm/RegistrationForm";
 import dateFormatter, {
   convertTo12HourFormat,
 } from "../../utils/DateFormatter";
+import SpeakerService from "../../services/SpeakerService";
+import { event } from "jquery";
 
 export const Banner = (props) => {
   const [formattedDate, setFormattedDate] = useState({});
@@ -78,7 +80,7 @@ export const Banner = (props) => {
                     className="no-anchor-style"
                     href="mailto:sales@speckyfox.com"
                   >
-                    sales@speckyfox.com
+                    {props.event.contactTo}
                   </a>
                 </div>
               </div>
@@ -88,13 +90,11 @@ export const Banner = (props) => {
             </div>
             <div className="speaker-details flex">
               <section className="speaker-img">
-                <img src={props.event.profilePicture} alt="speaker image" />
+                <img src={props.speaker.picture} alt="speaker image" />
               </section>
               <section className="speaker-name">
-                <div style={{ whiteSpace: "nowrap" }}>
-                  {props.event.speakerName}
-                </div>
-                <div>{props.event.speakerDesignation}</div>
+                <div style={{ whiteSpace: "nowrap" }}>{props.speaker.name}</div>
+                <div>{props.speaker.designation}</div>
                 <p>( Speaker )</p>
               </section>
             </div>

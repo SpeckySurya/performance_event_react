@@ -27,15 +27,15 @@ export default function Editbtn(props) {
         break;
       }
       case "Delete": {
-        alert("Do you really want to delete " + props.event.id);
+        alert("Do you really want to delete " + props.event.events.id);
         const choice = prompt("Do you really want to delete");
         if (choice) {
           const eventService = new EventService();
           eventService
-            .deleteEvent(props.event.id)
+            .deleteEvent(props.event.events.id)
             .then((response) => {
               if (response) {
-                alert(props.event.title + " deleted succesfully !");
+                alert(props.event.events.title + " deleted succesfully !");
               } else {
                 alert("Something went wrong !");
               }

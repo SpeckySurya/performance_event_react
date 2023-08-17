@@ -1,7 +1,6 @@
 import React from "react";
 import Readmore from "../Readmore/Readmore";
 import "./About.css";
-import speaker from "./../../assets/speaker.png";
 
 export const About = (props) => {
   return (
@@ -13,15 +12,13 @@ export const About = (props) => {
           <div className="imgcirclediv">
             <img
               className="imgcircle"
-              // src="https://peroformenceeventbucket.s3.amazonaws.com/speaker.png"
-              src={props.event.profilePicture}
+              src={props.speaker.picture}
               alt="speaker photo"
             />
           </div>
-          <strong className="botmphoto">{props.event.speakerName}</strong>
         </div>
         <div className="about-body">
-          <Readmore event={props.event} />
+          <Readmore speaker={props.speaker} />
         </div>
       </div>
     </div>

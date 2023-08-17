@@ -3,7 +3,7 @@ export const ManageSpeakerValidation = Yup.object({
   name: Yup.string().min(4).max(15).required("Please enter Speaker Name"),
   designation: Yup.string()
     .min(4)
-    .max(15)
+    .max(50)
     .required("Please enter Speaker Designation"),
   aboutSpeaker: Yup.string()
     .min(4)

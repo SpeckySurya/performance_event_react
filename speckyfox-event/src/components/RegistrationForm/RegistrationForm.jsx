@@ -189,7 +189,7 @@ const RegistrationForm = () => {
       </div>
       <span className="msg">
         <p className="note">
-          Note : All <span className="marks"> * </span> field should be required
+          Note : All <span className="marks"> * </span> field are required
         </p>
       </span>
       <button type="submit" className="flex-jcc-aic">
