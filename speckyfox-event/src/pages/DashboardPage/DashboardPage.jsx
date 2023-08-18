@@ -11,6 +11,7 @@ import ManageSpeaker from "../../components/ManageSpeaker/ManageSpeaker";
 import ManageUser from "../../components/ManageUser/ManageUser";
 import { useNavigate } from "react-router-dom";
 import SpeakerService from "../../services/SpeakerService";
+import ShowSpeaker from "../../components/ShowSpeaker/ShowSpeaker";
 
 const formDataDefault = {
   title: "",
@@ -22,9 +23,8 @@ const formDataDefault = {
   activeHomePage: false,
   contactTo: "",
   speakerId: 0,
+  duration: { hours: 0, minutes: 0 },
 };
-
-const eventDuration = { hours: 0, minutes: 0 };
 
 export const DashboardPage = () => {
   const [selected, setSelected] = useState("show");
@@ -56,7 +56,6 @@ export const DashboardPage = () => {
         return (
           <EventForm
             formDataDefault={formDataDefault}
-            eventDuration={eventDuration}
             speakers={speakers}
             formTitle="Create an Event"
           />
@@ -76,6 +75,8 @@ export const DashboardPage = () => {
         return <NotifyParticipant events={events} />;
       case "manageUser":
         return <ManageUser events={events} />;
+      case "showSpeaker":
+        return <ShowSpeaker />;
       default:
         return null;
     }

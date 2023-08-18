@@ -41,9 +41,9 @@ function ManageSpeaker(props) {
           request.append(entry, values[entry]);
         }
         request.append("picture", selectedFile);
-        for (let item of request.entries()) {
-          console.log(item[0], item[1]);
-        }
+        // for (let item of request.entries()) {
+        //   console.log(item[0], item[1]);
+        // }
         const speakerService = new SpeakerService();
         speakerService
           .saveSpeaker(request)

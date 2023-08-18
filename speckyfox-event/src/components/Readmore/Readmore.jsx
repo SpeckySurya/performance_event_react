@@ -5,9 +5,7 @@ import "./Readmore.css";
 function Readmore(props) {
   const [check, setcheck] = useState(true);
 
-  useEffect(() => {
-    console.log(props.speaker);
-  }, [props.speaker]);
+  useEffect(() => {}, [props.speaker]);
   function funreadmoreorless() {
     setcheck(!check);
   }

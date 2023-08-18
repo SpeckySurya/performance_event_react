@@ -34,9 +34,7 @@ const EventCard = (props) => {
     },
   });
 
-  useEffect(() => {
-    console.log(props.events);
-  }, [props.events]);
+  useEffect(() => {}, [props.events]);
 
   const CustomLink = styled(Link)(({ theme }) => ({
     color: "#ffffff",
@@ -61,6 +59,7 @@ const EventCard = (props) => {
           {props.events.map((event) => {
             const formattedDate = dateFormatter(event.events.date);
             const formattedTime = convertTo12HourFormat(event.events.time);
+
             return (
               <Card
                 key={event.id}

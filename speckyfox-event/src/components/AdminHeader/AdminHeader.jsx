@@ -67,7 +67,14 @@ const AdminHeader = (props) => {
         setOpen(false);
       },
     },
-
+    {
+      text: "Show Speaker",
+      icon: <PeopleAltOutlinedIcon />,
+      onClick: () => {
+        props.handleSidebar("showSpeaker");
+        setOpen(false);
+      },
+    },
     {
       text: "Manage Speaker",
       icon: <PeopleAltOutlinedIcon />,

@@ -43,7 +43,6 @@ const RegistrationForm = () => {
         [name]: value,
       }));
     }
-    console.log(formData);
   };
 
   // Handle form submission
@@ -65,10 +64,10 @@ const RegistrationForm = () => {
       .saveUser(formData)
       .then((response) => {
         if (response.status == 200) {
-          console.log(response.data);
+          // console.log(response.data);
           navigate("/thankyou");
         } else {
-          console.log(response.data);
+          // console.log(response.data);
         }
       })
       .catch((error) => {

@@ -14,7 +14,7 @@ const EventPage = () => {
     const eventService = new EventService();
     eventService.getAllActiveEvents().then((response) => {
       setLoading(false);
-      console.log(response.data);
+      // console.log(response.data);
       setEvents(response.data);
     });
   }, []);

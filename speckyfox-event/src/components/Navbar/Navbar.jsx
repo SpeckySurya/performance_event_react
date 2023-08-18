@@ -6,6 +6,7 @@ import { styled } from "@mui/material";
 import { BsFacebook, BsYoutube, BsTwitter, BsLinkedin } from "react-icons/bs";
 import { BiSolidContact } from "react-icons/bi";
 import { FaGlobeAmericas } from "react-icons/fa";
+import { useState } from "react";
 
 const Navbar = () => {
   function handleHamburgerClick() {
@@ -125,7 +126,7 @@ const Navbar = () => {
 
           <li className="website">
             <a target="_blank" href="https://www.speckyfox.com">
-              <i class="bx bx-globe"></i>
+              <i className="bx bx-globe"></i>
               {/* <FaGlobeAmericas /> */}
             </a>
           </li>
@@ -133,7 +134,7 @@ const Navbar = () => {
           <li className="linkedin">
             <a target="_blank" href="https://speckyfox.com/contact-us">
               <i className="bx bbxl-linkedin">{/* <BiSolidContact /> */}</i>
-              <i class="bx bxs-phone"></i>
+              <i className="bx bxs-phone"></i>
             </a>
           </li>
         </ul>

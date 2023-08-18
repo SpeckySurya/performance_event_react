@@ -2,7 +2,7 @@ import axios from "axios";
 import Header from "../utils/Header";
 
 export default class EventService {
-  baseUrl = "https://eventbackend.speckyfox.com";
+  baseUrl = "http://34.218.92.121:8096";
   headers = new Header();
 
   getEvent(eventId) {
@@ -28,6 +28,14 @@ export default class EventService {
   saveEvent(event) {
     const headers = this.headers.multipartAuth();
     return axios.post(`${this.baseUrl}/admin/save-event`, event, headers);
+  }
+  updateEvent(eventId, event) {
+    const headers = this.headers.multipartAuth();
+    return axios.put(
+      `${this.baseUrl}/admin/update-event/${eventId}`,
+      event,
+      headers
+    );
   }
   deleteEvent(evendId) {
     const headers = this.headers.withAuth();

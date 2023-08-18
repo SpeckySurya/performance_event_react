@@ -36,7 +36,7 @@ export const Banner = (props) => {
                       ))
                     : props.event.description.split(",").map((e) => (
                         <li>
-                          <i class="bx bx-target-lock agenda-icon"></i>
+                          <i className="bx bx-target-lock agenda-icon"></i>
                           <span>{e}</span>
                         </li>
                       ))}
@@ -67,13 +67,13 @@ export const Banner = (props) => {
               </div>
               <div className="location-container flex-aic">
                 <div className="icon">
-                  <i class="bx bx-broadcast"></i>
+                  <i className="bx bx-broadcast"></i>
                 </div>
                 <div className="location">{props.event.location}</div>
               </div>
               <div className="location-container flex-aic">
                 <div className="icon">
-                  <i class="bx bx-envelope"></i>
+                  <i className="bx bx-envelope"></i>
                 </div>
                 <div className="email">
                   <a

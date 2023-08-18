@@ -2,7 +2,7 @@ import axios from "axios";
 import Header from "../utils/Header";
 
 export default class SpeakerService {
-  baseUrl = "https://eventbackend.speckyfox.com";
+  baseUrl = "http://34.218.92.121:8096";
   headers = new Header();
   getSpeakerByEventId(eventId) {
     return axios.get(
@@ -13,6 +13,12 @@ export default class SpeakerService {
   getAllSpeakers() {
     return axios.get(
       `${this.baseUrl}/admin/speaker/getAll`,
+      this.headers.withAuth()
+    );
+  }
+  deleteSpeaker(speakerId) {
+    return axios.delete(
+      `${this.baseUrl}/admin/speaker/${speakerId}`,
       this.headers.withAuth()
     );
   }
