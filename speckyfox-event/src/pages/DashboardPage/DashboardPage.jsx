@@ -56,7 +56,6 @@ export const DashboardPage = () => {
         return (
           <EventForm
             formDataDefault={formDataDefault}
-            eventDuration={eventDuration}
             speakers={speakers}
             formTitle="Create an Event"
           />
