@@ -29,6 +29,14 @@ export default class EventService {
     const headers = this.headers.multipartAuth();
     return axios.post(`${this.baseUrl}/admin/save-event`, event, headers);
   }
+  updateEvent(eventId, event) {
+    const headers = this.headers.multipartAuth();
+    return axios.put(
+      `${this.baseUrl}/admin/update-event/${eventId}`,
+      event,
+      headers
+    );
+  }
   deleteEvent(evendId) {
     const headers = this.headers.withAuth();
     return axios.delete(

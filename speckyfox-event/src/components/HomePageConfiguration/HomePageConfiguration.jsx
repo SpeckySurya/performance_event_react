@@ -12,7 +12,7 @@ import "./HomePageConfiguration.css";
 
 import { HomePageConfigationSchema } from "../../schemas/Homepagevalidation";
 import { useState } from "react";
-import HomepageService from "../../services/HomepageService";
+import HomeConfigService from "../../services/HomeConfigService";
 
 const initialValues = {
   linkedinUrl: "",
@@ -48,9 +48,9 @@ function HomePageConfiguration(props) {
         for (const entry of request.entries()) {
           console.log(entry[0], entry[1]);
         }
-        const homepageService = new HomepageService();
-        homepageService
-          .saveHomepageDetails(request)
+        const homeConfigService = new HomeConfigService();
+        homeConfigService
+          .saveHomeConfig(request)
           .then((response) => {
             alert("Homepage details saved");
           })

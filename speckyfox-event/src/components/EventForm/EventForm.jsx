@@ -10,7 +10,9 @@ const EventForm = (props) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [duration, setDuration] = useState(props.eventDuration);
+  const [duration, setDuration] = useState(props.formDataDefault.duration);
+
+  console.log(props.formDataDefault, props.eventDuration);
 
   const handleChange = (event) => {
     let { name, value } = event.target;
@@ -23,6 +25,8 @@ const EventForm = (props) => {
   };
 
   const handleSubmit = (event) => {
+    console.log(props.formDataDefault);
+    console.log(formData);
     event.preventDefault();
     setLoading(true);
     const request = new FormData();
@@ -30,22 +34,39 @@ const EventForm = (props) => {
     Object.entries(formData).forEach(([key, val]) => {
       request.append(key, val);
     });
-    request.append("duration", `${duration.hours}:${duration.minutes}`);
+    request.delete("duration");
+    request.append(
+      "duration",
+      `${formData.duration.hours}:${formData.duration.minutes}`
+    );
     // request.append("date", toDDMMYYYY(formData.date));
     for (const entry of request.entries()) {
       console.log(entry[0], entry[1]);
     }
     const eventService = new EventService();
-    eventService
-      .saveEvent(request)
-      .then((response) => {
-        setIsAlertVisible(true);
-        setLoading(false);
-        setFormData(props.formDataDefault);
-      })
-      .catch((error) => {
-        alert("Something went wrong :" + error);
-      });
+    if (props.formTitle === "Update") {
+      eventService
+        .updateEvent(formData.eventId, request)
+        .then((response) => {
+          setIsAlertVisible(true);
+          setLoading(false);
+          setFormData(props.formDataDefault);
+        })
+        .catch((error) => {
+          alert("Something went wrong :" + error);
+        });
+    } else {
+      eventService
+        .saveEvent(request)
+        .then((response) => {
+          setIsAlertVisible(true);
+          setLoading(false);
+          setFormData(props.formDataDefault);
+        })
+        .catch((error) => {
+          alert("Something went wrong :" + error);
+        });
+    }
   };
 
   const handleAlertClose = () => {
@@ -59,7 +80,7 @@ const EventForm = (props) => {
 
   return (
     <div className="event-form-container">
-      <h1>{props.formTitle}</h1>
+      <h1>{props.formTitle} an Event</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="title">Title</label>
