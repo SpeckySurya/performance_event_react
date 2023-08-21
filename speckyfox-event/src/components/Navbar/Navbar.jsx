@@ -1,11 +1,9 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import logo from "./../../assets/logo.png";
 import "./Navbar.css";
-import { Link, useNavigate } from "react-router-dom";
-import { styled } from "@mui/material";
+
 import { BsFacebook, BsYoutube, BsTwitter, BsLinkedin } from "react-icons/bs";
-import { BiSolidContact } from "react-icons/bi";
-import { FaGlobeAmericas } from "react-icons/fa";
+
 import { useState } from "react";
 import { useEffect } from "react";
 const Navbar = () => {
@@ -26,14 +24,6 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  const CustomLink = styled(Link)(({ theme }) => ({
-    color: "#ffffff",
-    textDecoration: "none",
-    "&:hover": {
-      textDecoration: "none",
-    },
-  }));
 
   return (
     <div className="nav-container" ref={menuRef}>
@@ -144,7 +134,7 @@ const Navbar = () => {
 
           <li className="website">
             <a target="_blank" href="https://www.speckyfox.com">
-              <i class="bx bx-globe"></i>
+              <i className="bx bx-globe"></i>
               {/* <FaGlobeAmericas /> */}
             </a>
           </li>
@@ -152,7 +142,7 @@ const Navbar = () => {
           <li className="linkedin">
             <a target="_blank" href="https://speckyfox.com/contact-us">
               <i className="bx bbxl-linkedin">{/* <BiSolidContact /> */}</i>
-              <i class="bx bxs-phone"></i>
+              <i className="bx bxs-phone"></i>
             </a>
           </li>
         </ul>

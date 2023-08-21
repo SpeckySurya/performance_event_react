@@ -29,13 +29,13 @@ export const Banner = (props) => {
               <div>
                 <ul className="agenda-list">
                   {props.event.description.split(",").length < 2
-                    ? props.event.description.split(",").map((e) => (
-                        <li>
+                    ? props.event.description.split(",").map((e, k1) => (
+                        <li key={k1}>
                           <span>{e}</span>
                         </li>
                       ))
-                    : props.event.description.split(",").map((e) => (
-                        <li>
+                    : props.event.description.split(",").map((e, k2) => (
+                        <li key={k2}>
                           <i className="bx bx-target-lock agenda-icon"></i>
                           <span>{e}</span>
                         </li>
