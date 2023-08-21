@@ -21,7 +21,7 @@ export const Banner = (props) => {
       className="banner flex-jcsb"
       style={{
         backgroundImage: `url(
-          https://peroformenceeventbucket.s3.amazonaws.com/dominik-schroder-FIKD9t5_5zQ-unsplash.jpg
+          ${props.event.eventBanner}
         )`,
       }}
     >

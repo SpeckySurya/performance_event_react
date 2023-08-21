@@ -18,7 +18,7 @@ const initialValues = {
   twitterUrl: "",
   name: "",
   designation: "",
-  linkedinUrl: "",
+  linkdinUrl: "",
   aboutSpeaker: "",
   email: "",
   youtubeUrl: "",
@@ -170,19 +170,19 @@ function ManageSpeaker(props) {
                   <InputLabel>LinkedIn url</InputLabel>
                   <TextField
                     type="text"
-                    name="linkedinUrl"
-                    id="linkedinUrl"
+                    name="linkdinUrl"
+                    id="linkdinUrl"
                     // label="LinkedIn url"
                     placeholder="Upload LinkedIn url"
                     variant="outlined"
                     fullWidth
-                    value={values.linkedinUrl}
+                    value={values.linkdinUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
 
-                  {errors.linkedinUrl && touched.linkedinUrl ? (
-                    <p className="configationformerro">{errors.linkedinUrl}</p>
+                  {errors.linkdinUrl && touched.linkdinUrl ? (
+                    <p className="configationformerro">{errors.linkdinUrl}</p>
                   ) : null}
                 </Grid>
                 <Grid xs={12} sm={12} item>

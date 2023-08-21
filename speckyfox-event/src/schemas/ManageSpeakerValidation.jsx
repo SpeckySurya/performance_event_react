@@ -11,7 +11,7 @@ export const ManageSpeakerValidation = Yup.object({
     .required("Write something About speaker"),
   email: Yup.string().email().required("Please Enter Speaker Email"),
 
-  linkedinUrl: Yup.string().url().required("Please enter LinkedIn url"),
+  linkdinUrl: Yup.string().url().required("Please enter LinkedIn url"),
   twitterUrl: Yup.string().url().required("Please enter Twiter url"),
   youtubeUrl: Yup.string().url().required("Please enter Youtube url"),
 

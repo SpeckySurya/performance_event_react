@@ -60,7 +60,7 @@ const AdminHeader = (props) => {
     },
 
     {
-      text: "Home Configration",
+      text: "Home Configuration",
       icon: <AssuredWorkloadOutlinedIcon />,
       onClick: () => {
         props.handleSidebar("homeConfig");
@@ -85,7 +85,7 @@ const AdminHeader = (props) => {
     },
 
     {
-      text: "Notify User",
+      text: "Notify Participant",
       icon: <NotificationsActiveOutlinedIcon />,
       onClick: () => {
         props.handleSidebar("notify");
@@ -93,7 +93,7 @@ const AdminHeader = (props) => {
       },
     },
     {
-      text: "Manage User",
+      text: "View Participant",
       icon: <ManageAccountsIcon />,
       onClick: () => {
         props.handleSidebar("manageUser");

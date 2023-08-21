@@ -73,7 +73,7 @@ const ManageUser = ({ events }) => {
         </Select>
       </FormControl>
       <TextField
-        label="Search User"
+        label="Search Participant"
         variant="outlined"
         size="small"
         sx={{ margin: "10px 10px 10px 0" }}

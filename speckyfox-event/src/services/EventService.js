@@ -1,9 +1,10 @@
 import axios from "axios";
 import Header from "../utils/Header";
+import serviceUrl from "../utils/Constant";
 
 export default class EventService {
-  baseUrl = "http://34.218.92.121:8096";
   headers = new Header();
+  baseUrl = serviceUrl();
 
   getEvent(eventId) {
     return axios.get(`${this.baseUrl}/app/event/${eventId}`);

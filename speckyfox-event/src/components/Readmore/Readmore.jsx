@@ -19,18 +19,14 @@ function Readmore(props) {
           ? props.speaker?.aboutSpeaker
           : props.speaker?.aboutSpeaker?.substring(0, 101)}
       </p>
-      <div className="content" style={{ transition: "2s linear" }}>
+      <div className="content">
         <p>{props.speaker?.aboutSpeaker?.substring(101)}</p>
       </div>
-      {props.speaker?.aboutSpeaker?.length <= 200 ? null : (
+      {props.speaker?.aboutSpeaker?.length <= 100 ? null : (
         <div>
           <label htmlFor="check" onClick={funreadmoreorless} className="more">
             {check ? <p>Read More...</p> : <p>Read Less...</p>}
           </label>
-
-          {/* <label htmlFor="check" className="less">
-            <p>Read Less...</p>
-          </label> */}
         </div>
       )}
     </div>

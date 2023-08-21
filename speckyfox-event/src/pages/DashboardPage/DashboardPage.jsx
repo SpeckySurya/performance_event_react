@@ -57,7 +57,7 @@ export const DashboardPage = () => {
           <EventForm
             formDataDefault={formDataDefault}
             speakers={speakers}
-            formTitle="Create an Event"
+            formTitle="Create"
           />
         );
       case "show":

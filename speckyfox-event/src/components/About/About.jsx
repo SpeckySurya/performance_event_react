@@ -17,8 +17,9 @@ export const About = (props) => {
             />
           </div>
         </div>
-        <div className="about-body">
-          <Readmore speaker={props.speaker} />
+        <div className="about-body" style={{ fontSize: "15px" }}>
+          {props.speaker?.aboutSpeaker}
+          {/* <Readmore speaker={props.speaker} /> */}
         </div>
       </div>
     </div>
