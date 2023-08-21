@@ -24,7 +24,6 @@ const ManageUser = ({ events }) => {
 
   const usersByEvent = (event) => {
     return event.events.users.map((user) => {
-      console.log(user);
       let obj = {};
       obj["id"] = user.id;
       obj["name"] = user.firstName;

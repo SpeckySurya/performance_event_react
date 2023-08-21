@@ -10,8 +10,6 @@ import EventPage from "./pages/EventPage/EventPage";
 import { DashboardPage } from "./pages/DashboardPage/DashboardPage";
 import MyContext from "./context";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
-import VideoCart from "./components/VideoCart/VideoCart";
-import Togglebtn from "./components/Togglebtn/Togglebtn";
 
 function App() {
   const [sharedState, setSharedState] = useState({

@@ -41,9 +41,7 @@ function ManageSpeaker(props) {
           request.append(entry, values[entry]);
         }
         request.append("picture", selectedFile);
-        for (let item of request.entries()) {
-          console.log(item[0], item[1]);
-        }
+
         const speakerService = new SpeakerService();
         speakerService
           .saveSpeaker(request)
@@ -80,7 +78,6 @@ function ManageSpeaker(props) {
                     type="text"
                     name="name"
                     id="name"
-                    // label="Speaker Name"
                     placeholder="Enter Speaker Name"
                     variant="outlined"
                     value={values.name}
@@ -99,7 +96,6 @@ function ManageSpeaker(props) {
                     type="text"
                     name="designation"
                     id="designation"
-                    // label="Speaker Designation"
                     placeholder="Enter Speaker Designation"
                     variant="outlined"
                     value={values.designation}
@@ -118,7 +114,6 @@ function ManageSpeaker(props) {
                     type="text-area"
                     name="aboutSpeaker"
                     id="aboutSpeaker"
-                    // label="About Speaker"
                     placeholder="Enter Speaker Details"
                     variant="outlined"
                     value={values.aboutSpeaker}
@@ -136,7 +131,6 @@ function ManageSpeaker(props) {
                     type="text"
                     name="email"
                     id="email"
-                    // label="Speaker Email"
                     placeholder="Enter Speaker Email"
                     variant="outlined"
                     value={values.email}
@@ -172,7 +166,6 @@ function ManageSpeaker(props) {
                     type="text"
                     name="linkedinUrl"
                     id="linkedinUrl"
-                    // label="LinkedIn url"
                     placeholder="Upload LinkedIn url"
                     variant="outlined"
                     fullWidth
@@ -189,7 +182,6 @@ function ManageSpeaker(props) {
                   <InputLabel>Twiter url</InputLabel>
                   <TextField
                     type="text"
-                    // label="Twiter url"
                     name="twitterUrl"
                     id="twitterUrl"
                     placeholder="Upload Twiter url"
@@ -210,7 +202,6 @@ function ManageSpeaker(props) {
                     type="text"
                     name="youtubeUrl"
                     id="youtubeUrl"
-                    // label="Youtube url"
                     placeholder="Upload Youtube url"
                     variant="outlined"
                     value={values.youtubeUrl}
@@ -238,7 +229,6 @@ function ManageSpeaker(props) {
           </CardContent>
         </Card>
       </Box>
-      {/* <Footer /> */}
     </>
   );
 }

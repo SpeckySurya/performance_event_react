@@ -5,7 +5,6 @@
     margin-left: 10px;
   }
 }
-
 @media screen and (max-width: 950px) {
 }
 
@@ -22,7 +21,6 @@
   .banner .other-details {
     justify-content: start;
     flex-wrap: wrap;
-    /* max-width: 100%; */
   }
 
   .nav-hamburger {

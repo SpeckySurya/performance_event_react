@@ -12,7 +12,6 @@ import {
   Alert,
 } from "@mui/material";
 import EventService from "../../services/EventService";
-import { event } from "jquery";
 
 const NotifyParticipant = () => {
   const [selectedEvent, setSelectedEvent] = useState("");
@@ -22,8 +21,6 @@ const NotifyParticipant = () => {
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
-
-  console.log(selectedEvent);
 
   useEffect(() => {
     const eventService = new EventService();
@@ -108,9 +105,7 @@ const NotifyParticipant = () => {
 
       <Box textAlign={"end"}>
         <Button
-          // variant={btnDisabled}
           variant={btnDisabled ? "outlined" : "contained"}
-          //  variant="contained"
           disabled={btnDisabled}
           onClick={handleUserSelectAll}
           sx={{ ml: 2, mt: 3 }}

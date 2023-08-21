@@ -34,9 +34,7 @@ const EventCard = (props) => {
     },
   });
 
-  useEffect(() => {
-    console.log(props.events);
-  }, [props.events]);
+  useEffect(() => {}, [props.events]);
 
   const CustomLink = styled(Link)(({ theme }) => ({
     color: "#ffffff",
@@ -58,12 +56,13 @@ const EventCard = (props) => {
           float={"left"}
           padding={3}
         >
-          {props.events.map((event) => {
+          {props.events.map((event, k5) => {
             const formattedDate = dateFormatter(event.events.date);
             const formattedTime = convertTo12HourFormat(event.events.time);
+
             return (
               <Card
-                key={event.id}
+                key={k5}
                 sx={{
                   paddingBottom: 5,
                   width: 380,
@@ -96,13 +95,13 @@ const EventCard = (props) => {
                     {
                       <ul className="agenda-list">
                         {event.events.description.split(",").length < 2
-                          ? event.events.description.split(",").map((e) => (
-                              <li key={e.id}>
+                          ? event.events.description.split(",").map((e, k3) => (
+                              <li key={k3}>
                                 <span>{e}</span>
                               </li>
                             ))
-                          : event.events.description.split(",").map((e) => (
-                              <li key={e.id} style={{ fontSize: "10px" }}>
+                          : event.events.description.split(",").map((e, k4) => (
+                              <li key={k4} style={{ fontSize: "10px" }}>
                                 <TbTargetArrow className="agenda-icon" />
                                 <span>{e}</span>
                               </li>
