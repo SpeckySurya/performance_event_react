@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import speacker from "../../assets/speaker.png";
-import speaker from "./../../assets/speaker-at-banner.png";
 import "./Banner.css";
 import RegistrationForm from "../RegistrationForm/RegistrationForm";
 import dateFormatter, {
   convertTo12HourFormat,
 } from "../../utils/DateFormatter";
-import SpeakerService from "../../services/SpeakerService";
-import { event } from "jquery";
 
 export const Banner = (props) => {
   const [formattedDate, setFormattedDate] = useState({});
@@ -84,9 +80,6 @@ export const Banner = (props) => {
                   </a>
                 </div>
               </div>
-              {/* <section className="live-streaming-txt">
-                <p>Live Webinar</p>
-              </section> */}
             </div>
             <div className="speaker-details flex">
               <section className="speaker-img">
