@@ -45,9 +45,7 @@ function HomePageConfiguration(props) {
         }
         request.append("banner", banner);
         request.append("logo", logo);
-        // for (const entry of request.entries()) {
-        //   console.log(entry[0], entry[1]);
-        // }
+
         const homeConfigService = new HomeConfigService();
         homeConfigService
           .saveHomeConfig(request)
@@ -108,7 +106,6 @@ function HomePageConfiguration(props) {
                     type="text"
                     name="linkedinUrl"
                     id="linkedinUrl"
-                    // label="LinkedIn url"
                     placeholder="Upload LinkedIn url"
                     variant="outlined"
                     fullWidth
@@ -125,7 +122,6 @@ function HomePageConfiguration(props) {
                   <InputLabel>Twiter url</InputLabel>
                   <TextField
                     type="text"
-                    // label="Twiter url"
                     name="twitterUrl"
                     id="twitterUrl"
                     placeholder="Upload Twiter url"
@@ -143,7 +139,6 @@ function HomePageConfiguration(props) {
                   <InputLabel>Facebook url</InputLabel>
                   <TextField
                     type="text"
-                    // label="Facebook url"
                     name="facebookUrl"
                     id="facebookUrl"
                     placeholder="Upload Facebook url"
@@ -163,7 +158,6 @@ function HomePageConfiguration(props) {
                     type="text"
                     name="websiteUrl"
                     id="websiteUrl"
-                    // label="Website url"
                     placeholder="Upload Website url"
                     variant="outlined"
                     value={values.websiteUrl}
@@ -181,7 +175,6 @@ function HomePageConfiguration(props) {
                     type="text"
                     name="contactUrl"
                     id="contactUrl"
-                    // label="content url"
                     placeholder="Upload content url"
                     variant="outlined"
                     value={values.contactUrl}
@@ -199,7 +192,6 @@ function HomePageConfiguration(props) {
                     type="text"
                     name="youtubeUrl"
                     id="youtubeUrl"
-                    // label="Youtube url"
                     placeholder="Upload Youtube url"
                     variant="outlined"
                     value={values.youtubeUrl}
@@ -218,7 +210,6 @@ function HomePageConfiguration(props) {
                     name="footerText"
                     id="footerText"
                     s
-                    // label="Footer Text"
                     placeholder="Upload Footer Text url"
                     variant="outlined"
                     value={values.footerText}
@@ -246,7 +237,6 @@ function HomePageConfiguration(props) {
           </CardContent>
         </Card>
       </Box>
-      {/* <Footer /> */}
     </>
   );
 }
