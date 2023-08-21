@@ -20,8 +20,6 @@ const UpdateEvent = (props) => {
     });
   }, []);
 
-  console.log(props.event);
-
   function getEventData() {
     return {
       eventId: props.event.events.id,
@@ -50,7 +48,7 @@ const UpdateEvent = (props) => {
     <div className="update-event-container">
       <div className="back-btn-div">
         <i
-          class="bx bx-arrow-back back-btn"
+          className="bx bx-arrow-back back-btn"
           onClick={() => handleBackButton()}
         ></i>
       </div>

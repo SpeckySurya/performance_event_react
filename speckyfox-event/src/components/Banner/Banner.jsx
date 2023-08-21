@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import "./Banner.css";
 import RegistrationForm from "../RegistrationForm/RegistrationForm";
 import dateFormatter, {
@@ -14,17 +15,8 @@ export const Banner = (props) => {
     setFormattedTime(convertTo12HourFormat(props.event.time));
   }, [props.event]);
 
-  console.log(props.event.eventBanner);
-
   return (
-    <div
-      className="banner flex-jcsb"
-      style={{
-        backgroundImage: `url(
-          ${props.event.eventBanner}
-        )`,
-      }}
-    >
+    <div className="banner flex-jcsb">
       <section className="left flex">
         <div className="event-details flex">
           <div className="event-title">
@@ -33,14 +25,14 @@ export const Banner = (props) => {
               <div>
                 <ul className="agenda-list">
                   {props.event.description.split(",").length < 2
-                    ? props.event.description.split(",").map((e) => (
-                        <li>
+                    ? props.event.description.split(",").map((e, k1) => (
+                        <li key={k1}>
                           <span>{e}</span>
                         </li>
                       ))
-                    : props.event.description.split(",").map((e) => (
-                        <li>
-                          <i class="bx bx-target-lock agenda-icon"></i>
+                    : props.event.description.split(",").map((e, k2) => (
+                        <li key={k2}>
+                          <i className="bx bx-target-lock agenda-icon"></i>
                           <span>{e}</span>
                         </li>
                       ))}
@@ -71,13 +63,13 @@ export const Banner = (props) => {
               </div>
               <div className="location-container flex-aic">
                 <div className="icon">
-                  <i class="bx bx-broadcast"></i>
+                  <i className="bx bx-broadcast"></i>
                 </div>
                 <div className="location">{props.event.location}</div>
               </div>
               <div className="location-container flex-aic">
                 <div className="icon">
-                  <i class="bx bx-envelope"></i>
+                  <i className="bx bx-envelope"></i>
                 </div>
                 <div className="email">
                   <a
@@ -88,9 +80,6 @@ export const Banner = (props) => {
                   </a>
                 </div>
               </div>
-              {/* <section className="live-streaming-txt">
-                <p>Live Webinar</p>
-              </section> */}
             </div>
             <div className="speaker-details flex">
               <section className="speaker-img">

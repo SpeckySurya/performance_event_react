@@ -12,8 +12,6 @@ const EventForm = (props) => {
   const [loading, setLoading] = useState(false);
   const [duration, setDuration] = useState(props.formDataDefault.duration);
 
-  console.log(props.formDataDefault, props.eventDuration);
-
   const handleChange = (event) => {
     let { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -25,8 +23,6 @@ const EventForm = (props) => {
   };
 
   const handleSubmit = (event) => {
-    console.log(props.formDataDefault);
-    console.log(formData);
     event.preventDefault();
     setLoading(true);
     const request = new FormData();
@@ -39,10 +35,7 @@ const EventForm = (props) => {
       "duration",
       `${formData.duration.hours}:${formData.duration.minutes}`
     );
-    // request.append("date", toDDMMYYYY(formData.date));
-    for (const entry of request.entries()) {
-      console.log(entry[0], entry[1]);
-    }
+
     const eventService = new EventService();
     if (props.formTitle === "Update") {
       eventService

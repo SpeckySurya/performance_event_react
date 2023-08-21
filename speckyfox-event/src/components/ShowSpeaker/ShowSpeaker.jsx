@@ -18,7 +18,6 @@ const ShowSpeaker = () => {
   useEffect(() => {
     speakerService.getAllSpeakers().then((response) => {
       setSpeakers(response.data);
-      console.log(response.data);
     });
   }, []);
 
@@ -34,16 +33,14 @@ const ShowSpeaker = () => {
       });
   }
 
-  function onEdit() {
-    console.log("edited");
-  }
+  function onEdit() {}
 
   return (
-    <Stack marginTop={"10vh"} flexWrap={"wrap"} direction={"row"} spacing={5}>
+    <Stack marginTop={"20vh"} flexWrap={"wrap"} direction={"row"} spacing={5}>
       {speakers.map((speaker) => {
         return (
-          <Box marginBottom={3}>
-            <Card key={speaker.id} sx={{ width: 200 }}>
+          <Box marginBottom={20}>
+            <Card key={speaker.id} sx={{ width: 300 }}>
               <CardMedia
                 component="img"
                 height="140"

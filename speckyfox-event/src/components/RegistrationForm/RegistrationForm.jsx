@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import "./RegistrationForm.css"; // Import the CSS file
+import "./RegistrationForm.css";
 import { useNavigate } from "react-router-dom";
 import RegistrationService from "../../services/RegistrationService";
 import { CircularProgress, LinearProgress, Stack } from "@mui/material";
 
 const RegistrationForm = () => {
-  // State to store form data
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -43,10 +42,8 @@ const RegistrationForm = () => {
         [name]: value,
       }));
     }
-    console.log(formData);
   };
 
-  // Handle form submission
   const handleSubmit = (event) => {
     setLoading(true);
     event.preventDefault();
@@ -65,10 +62,7 @@ const RegistrationForm = () => {
       .saveUser(formData)
       .then((response) => {
         if (response.status == 200) {
-          console.log(response.data);
           navigate("/thankyou");
-        } else {
-          console.log(response.data);
         }
       })
       .catch((error) => {
@@ -92,19 +86,6 @@ const RegistrationForm = () => {
           required
         />
       </div>
-      {/* <div className="form-group">
-        <label htmlFor="lastName">
-          Last Name<span className="mark">*</span>
-        </label>
-        <input
-          type="text"
-          id="lastName"
-          name="lastName"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-      </div> */}
 
       <div className="form-group">
         <label htmlFor="companyName">

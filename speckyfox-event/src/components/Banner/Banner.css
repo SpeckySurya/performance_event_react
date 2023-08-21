@@ -1,5 +1,5 @@
 .banner {
-  background-image: url("https://peroformenceeventbucket.s3.amazonaws.com/dominik-schroder-FIKD9t5_5zQ-unsplash.jpg");
+  background-image: url("./../../assets/banner.png");
   padding-top: 50px;
   background-size: cover;
   background-repeat: no-repeat;
@@ -24,7 +24,6 @@
 
 .banner .left {
   max-width: 60%;
-  /* flex-wrap: wrap; */
 }
 
 .banner .right {
@@ -33,7 +32,6 @@
 
 .banner .event-details {
   flex-direction: column;
-  /* justify-content: space-evenly; */
 }
 
 .event-timing > div {
@@ -76,7 +74,6 @@
 }
 .banner .event-title {
   font-size: 170%;
-  /* margin-bottom: 30px; */
 }
 
 .banner .event-title header {
@@ -101,8 +98,6 @@
   white-space: nowrap;
 }
 
-/* Speaker details  */
-
 .banner .speaker-details img {
   width: 200px;
   margin: auto;
@@ -114,11 +109,7 @@
   border: 10px solid #ff9430;
   margin-top: 20px;
 }
-/* 
-.speaker-img img {
-  width: 100%;
-  height: 100%;
-} */
+
 .banner .speaker-details {
   flex-direction: column;
   justify-content: end;
