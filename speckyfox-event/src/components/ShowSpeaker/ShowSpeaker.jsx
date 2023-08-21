@@ -33,9 +33,7 @@ const ShowSpeaker = () => {
       });
   }
 
-  function onEdit() {
-    // console.log("edited");
-  }
+  function onEdit() {}
 
   return (
     <Stack marginTop={"20vh"} flexWrap={"wrap"} direction={"row"} spacing={5}>

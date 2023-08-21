@@ -14,6 +14,4 @@ export const ManageSpeakerValidation = Yup.object({
   linkedinUrl: Yup.string().url().required("Please enter LinkedIn url"),
   twitterUrl: Yup.string().url().required("Please enter Twiter url"),
   youtubeUrl: Yup.string().url().required("Please enter Youtube url"),
-
-  // UploadBanner: Yup.string().required(" Please Upload Banner"),
 });

@@ -20,8 +20,6 @@ const UpdateEvent = (props) => {
     });
   }, []);
 
-  // console.log(props.event);
-
   function getEventData() {
     return {
       eventId: props.event.events.id,

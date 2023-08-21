@@ -21,7 +21,6 @@
   .banner .other-details {
     justify-content: start;
     flex-wrap: wrap;
-    /* max-width: 100%; */
   }
 
   .nav-hamburger {

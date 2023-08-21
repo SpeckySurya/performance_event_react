@@ -14,19 +14,10 @@ const EventPage = () => {
     const eventService = new EventService();
     eventService.getAllActiveEvents().then((response) => {
       setLoading(false);
-      // console.log(response.data);
+
       setEvents(response.data);
     });
   }, []);
-
-  // function findSpeaker() {
-  //   events.map((event) => {
-  //     event["speaker"] = speakers.find((speaker) => speaker.id === event.id);
-  //   });
-  //   console.log(speakers);
-  //   console.log(events);
-  //   return events;
-  // }
 
   return loading ? (
     <LinearProgress color="error" />

@@ -4,7 +4,6 @@ const HamburgerMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
 
-  // Close the menu when clicking outside
   const handleClickOutside = (event) => {
     if (menuRef.current && !menuRef.current.contains(event.target)) {
       setMenuOpen(false);
@@ -12,9 +11,8 @@ const HamburgerMenu = () => {
   };
 
   useEffect(() => {
-    // Attach the event listener on mount
     document.addEventListener("mousedown", handleClickOutside);
-    // Detach the event listener on unmount
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -30,7 +28,6 @@ const HamburgerMenu = () => {
       </button>
       {menuOpen && (
         <div ref={menuRef} className="menu-content">
-          {/* Menu items */}
           <ul>
             <li>Home</li>
             <li>About</li>

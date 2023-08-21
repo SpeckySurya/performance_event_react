@@ -25,10 +25,6 @@ function Readmore(props) {
           <label htmlFor="check" onClick={funreadmoreorless} className="more">
             {check ? <p>Read More...</p> : <p>Read Less...</p>}
           </label>
-
-          {/* <label htmlFor="check" className="less">
-            <p>Read Less...</p>
-          </label> */}
         </div>
       )}
     </div>

@@ -81,12 +81,11 @@
   font-size: 22px;
   position: absolute;
   background-color: white;
-  /* background-color: #333333; */
+
   transition: all ease 0.2s;
 }
 
 .mob-navbar a {
-  /* color: white; */
   color: #333;
 }
 

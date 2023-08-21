@@ -135,13 +135,12 @@ const Navbar = () => {
           <li className="website">
             <a target="_blank" href="https://www.speckyfox.com">
               <i className="bx bx-globe"></i>
-              {/* <FaGlobeAmericas /> */}
             </a>
           </li>
 
           <li className="linkedin">
             <a target="_blank" href="https://speckyfox.com/contact-us">
-              <i className="bx bbxl-linkedin">{/* <BiSolidContact /> */}</i>
+              <i className="bx bbxl-linkedin"></i>
               <i className="bx bxs-phone"></i>
             </a>
           </li>
