@@ -38,6 +38,7 @@ function ManageSpeaker(props) {
       onSubmit: (values) => {
         const request = new FormData();
         for (let entry in initialValues) {
+          console.log(entry, values[entry]);
           request.append(entry, values[entry]);
         }
         request.append("picture", selectedFile);
@@ -69,7 +70,7 @@ function ManageSpeaker(props) {
           }}
         >
           <CardContent>
-            <h3 className="ManageSpeakerh3">Manage Speaker</h3>
+            <h3 className="ManageSpeakerh3">Create Speaker</h3>
             <form onSubmit={handleSubmit}>
               <Grid container spacing={1}>
                 <Grid xs={12} sm={12} item>
@@ -145,6 +146,9 @@ function ManageSpeaker(props) {
 
                 <Grid xs={12} sm={12} item>
                   <InputLabel>Upload Photo</InputLabel>
+                  <label className="msgforimage">
+                    Image size should be less then 2MB
+                  </label>
                   <TextField
                     type="file"
                     name="picture"
@@ -164,8 +168,8 @@ function ManageSpeaker(props) {
                   <InputLabel>LinkedIn url</InputLabel>
                   <TextField
                     type="text"
-                    name="linkedinUrl"
-                    id="linkedinUrl"
+                    name="linkdinUrl"
+                    id="linkdinUrl"
                     placeholder="Upload LinkedIn url"
                     variant="outlined"
                     fullWidth
