@@ -76,7 +76,7 @@ const AdminHeader = (props) => {
       },
     },
     {
-      text: "Manage Speaker",
+      text: "Create Speaker",
       icon: <PeopleAltOutlinedIcon />,
       onClick: () => {
         props.handleSidebar("manageSpeaker");

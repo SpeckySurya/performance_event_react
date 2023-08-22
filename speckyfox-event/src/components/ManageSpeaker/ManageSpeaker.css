@@ -3,6 +3,13 @@
   margin-bottom: 40px;
   font-size: 32px;
 }
+.msgforimage {
+  color: gray;
+  font-size: x-small;
+  font-weight: 300;
+  margin: 0px;
+  padding: 0px;
+}
 .configationformerro {
   color: rgb(236, 112, 112);
 }
