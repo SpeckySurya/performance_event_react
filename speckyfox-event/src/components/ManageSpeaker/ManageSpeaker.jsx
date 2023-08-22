@@ -164,8 +164,8 @@ function ManageSpeaker(props) {
                   <InputLabel>LinkedIn url</InputLabel>
                   <TextField
                     type="text"
-                    name="linkedinUrl"
-                    id="linkedinUrl"
+                    name="linkdinUrl"
+                    id="linkdinUrl"
                     placeholder="Upload LinkedIn url"
                     variant="outlined"
                     fullWidth

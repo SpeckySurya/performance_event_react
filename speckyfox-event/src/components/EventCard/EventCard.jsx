@@ -33,7 +33,6 @@ const EventCard = (props) => {
       backgroundColor: "#f7542b",
     },
   });
-
   useEffect(() => {}, [props.events]);
 
   const CustomLink = styled(Link)(({ theme }) => ({

@@ -6,11 +6,10 @@ import { BsFacebook, BsYoutube, BsTwitter, BsLinkedin } from "react-icons/bs";
 
 import { useState } from "react";
 import { useEffect } from "react";
-const Navbar = () => {
+const Navbar = ({ homeConfig }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
-
   const handleClickOutside = (event) => {
     if (menuRef.current && !menuRef.current.contains(event.target)) {
       setMenuOpen(false);
@@ -34,7 +33,7 @@ const Navbar = () => {
               <a
                 className="no-anchor-style"
                 target="_blank"
-                href="https://www.linkedin.com/company/speckyfox1/mycompany/"
+                href={homeConfig.linkdinUrl}
               >
                 LinkedIn
               </a>
@@ -43,7 +42,7 @@ const Navbar = () => {
               <a
                 className="no-anchor-style"
                 target="_blank"
-                href="https://twitter.com/SpeckyFox"
+                href={homeConfig.twitterUrl}
               >
                 Twiter
               </a>
@@ -52,7 +51,7 @@ const Navbar = () => {
               <a
                 className="no-anchor-style"
                 target="_blank"
-                href="https://www.facebook.com/SpeckyFox/"
+                href={homeConfig.facebookUrl}
               >
                 Facebook
               </a>
@@ -61,7 +60,7 @@ const Navbar = () => {
               <a
                 className="no-anchor-style"
                 target="_blank"
-                href="https://www.youtube.com/@speckyfoxtechnologiesindia4213"
+                href={homeConfig.youtubeUrl}
               >
                 Youtube
               </a>
@@ -70,7 +69,7 @@ const Navbar = () => {
               <a
                 className="no-anchor-style"
                 target="_blank"
-                href="https://www.speckyfox.com"
+                href={homeConfig.websiteUrl}
               >
                 Website
               </a>
@@ -79,7 +78,7 @@ const Navbar = () => {
               <a
                 className="no-anchor-style"
                 target="_blank"
-                href="https://speckyfox.com/contact-us"
+                href={homeConfig.contactUrl}
               >
                 Contact
               </a>
@@ -91,7 +90,7 @@ const Navbar = () => {
       )}
       <nav className="navbar" ref={buttonRef}>
         <div className="logo">
-          <img src={logo} />
+          <img src={homeConfig.logo} />
         </div>
         <div
           className="nav-hamburger"

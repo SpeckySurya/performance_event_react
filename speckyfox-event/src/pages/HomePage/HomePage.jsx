@@ -8,10 +8,12 @@ import EventService from "../../services/EventService";
 import { LinearProgress } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import SpeakerService from "../../services/SpeakerService";
+import HomeConfigService from "../../services/HomeConfigService";
 
 const HomePage = () => {
   const [event, setEvent] = useState({});
   const [speaker, setSpeaker] = useState({});
+  const [homeConfig, setHomeConfig] = useState({});
   const [loading, setLoading] = useState(true);
   const { param } = useParams();
   const navigate = useNavigate();
@@ -25,6 +27,7 @@ const HomePage = () => {
       .getEvent(param)
       .then((response) => {
         setEvent(response.data);
+        console.log(response.data);
         setLoading(false);
         const speakerService = new SpeakerService();
         speakerService
@@ -36,6 +39,11 @@ const HomePage = () => {
       .catch((error) => {
         navigate("/pagenotfound");
       });
+
+    const homeConfiService = new HomeConfigService();
+    homeConfiService.getHomeConfig().then((response) => {
+      setHomeConfig(response.data);
+    });
   }, []);
 
   return loading ? (
@@ -43,7 +51,7 @@ const HomePage = () => {
   ) : (
     <div className="eventHome">
       <div className="header-div">
-        <Header />
+        <Header homeConfig={homeConfig} />
       </div>
       <div className="banner-div">
         <Banner event={event} speaker={speaker}></Banner>
@@ -52,7 +60,7 @@ const HomePage = () => {
         <About speaker={speaker} />
       </div>
       <div className="footer-div">
-        <Footer />
+        <Footer homeConfig={homeConfig} />
       </div>
     </div>
   );

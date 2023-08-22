@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./Banner.css";
 import RegistrationForm from "../RegistrationForm/RegistrationForm";
 import dateFormatter, {
+  addTime,
   convertTo12HourFormat,
 } from "../../utils/DateFormatter";
 
@@ -12,7 +13,9 @@ export const Banner = (props) => {
 
   useEffect(() => {
     setFormattedDate(dateFormatter(props.event.date));
-    setFormattedTime(convertTo12HourFormat(props.event.time));
+    const startTime = convertTo12HourFormat(props.event.time);
+    const endTime = addTime(startTime, props.event.duration);
+    setFormattedTime(`${startTime} to ${endTime}`);
   }, [props.event]);
 
   return (
@@ -59,7 +62,9 @@ export const Banner = (props) => {
                 <div className="icon">
                   <i className="bx bx-time-five bx-spin"></i>
                 </div>
-                <div className="time">12:00 pm to 1:30 pm (IST)</div>
+                <div className="time">
+                  {formattedTime} (IST){}
+                </div>
               </div>
               <div className="location-container flex-aic">
                 <div className="icon">

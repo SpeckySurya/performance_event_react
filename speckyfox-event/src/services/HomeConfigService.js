@@ -5,8 +5,8 @@ import serviceUrl from "../utils/Constant";
 export default class HomeConfigService {
   headers = new Header();
   baseUrl = serviceUrl();
-  getHomeConfig(homeConfigId) {
-    return axios.get(`${this.baseUrl}/admin/homepage/getById/${homeConfigId}`);
+  getHomeConfig() {
+    return axios.get(`${this.baseUrl}/app/getHomepageConfiguration`);
   }
   saveHomeConfig(homeConfig) {
     const headers = this.headers.multipartAuth();

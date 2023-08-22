@@ -35,7 +35,9 @@ const EventForm = (props) => {
       "duration",
       `${formData.duration.hours}:${formData.duration.minutes}`
     );
-
+    for (const [key, value] of request.entries()) {
+      console.log(`${key}: ${value}`);
+    }
     const eventService = new EventService();
     if (props.formTitle === "Update") {
       eventService
