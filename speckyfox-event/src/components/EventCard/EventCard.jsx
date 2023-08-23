@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { TbTargetArrow } from "react-icons/tb";
 import dateFormatter, {
+  addTime,
   convertTo12HourFormat,
 } from "../../utils/DateFormatter";
 import { Link } from "react-router-dom";
@@ -57,7 +58,11 @@ const EventCard = (props) => {
         >
           {props.events.map((event, k5) => {
             const formattedDate = dateFormatter(event.events.date);
-            const formattedTime = convertTo12HourFormat(event.events.time);
+            const startTime = convertTo12HourFormat(event.events.time);
+            const endTime = addTime(startTime, event.events.duration);
+            const formattedTime = `${
+              startTime[1] === ":" ? "0" + startTime : startTime
+            } to ${endTime}`;
 
             return (
               <Card

@@ -3,7 +3,16 @@ import EventForm from "../../components/EventForm/EventForm";
 import "./DashboardPage.css";
 import NotifyParticipant from "../../components/NotifyParticipant/NotifyParticipant";
 import AdminHeader from "../../components/AdminHeader/AdminHeader";
-import { Box, Stack } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Stack,
+} from "@mui/material";
 import EventCard from "../../components/EventCard/EventCard";
 import EventService from "../../services/EventService";
 import HomePageConfiguration from "../../components/HomePageConfiguration/HomePageConfiguration";
@@ -12,6 +21,7 @@ import ManageUser from "../../components/ManageUser/ManageUser";
 import { useNavigate } from "react-router-dom";
 import SpeakerService from "../../services/SpeakerService";
 import ShowSpeaker from "../../components/ShowSpeaker/ShowSpeaker";
+import { stopTimer } from "../../utils/Constant";
 
 const formDataDefault = {
   title: "",
@@ -82,12 +92,49 @@ export const DashboardPage = () => {
     }
   }
 
+  const [open, setOpen] = React.useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setOpen(true);
+    }, tokenExpireTime() - tokenExpireAlertTime());
+  }, []);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleLoginAgain = () => {
+    sessionStorage.removeItem("token");
+    stopTimer();
+    navigate("/login");
+  };
+
   return (
     <>
       <AdminHeader handleSidebar={handleSidebar} />
       <Box padding={5}>
         <Box margin={"auto"}>{menuComponentFinder()}</Box>
       </Box>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Alert !</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            You will be automatically logout in 5 minutes.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleLoginAgain}>Login Again</Button>
+          <Button onClick={handleClose} autoFocus>
+            Stay
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };

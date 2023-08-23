@@ -15,7 +15,9 @@ export const Banner = (props) => {
     setFormattedDate(dateFormatter(props.event.date));
     const startTime = convertTo12HourFormat(props.event.time);
     const endTime = addTime(startTime, props.event.duration);
-    setFormattedTime(`${startTime} to ${endTime}`);
+    setFormattedTime(
+      `${startTime[1] === ":" ? "0" + startTime : startTime} to ${endTime}`
+    );
   }, [props.event]);
 
   return (

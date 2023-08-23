@@ -22,6 +22,10 @@ const EventForm = (props) => {
     setFormData({ ...formData, [event.target.name]: value });
   };
 
+  useEffect(() => {
+    console.log(duration);
+  }, [duration]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
@@ -30,14 +34,13 @@ const EventForm = (props) => {
     Object.entries(formData).forEach(([key, val]) => {
       request.append(key, val);
     });
+
     request.delete("duration");
-    request.append(
-      "duration",
-      `${formData.duration.hours}:${formData.duration.minutes}`
-    );
+    request.append("duration", `${duration.hours}:${duration.minutes}`);
     for (const [key, value] of request.entries()) {
       console.log(`${key}: ${value}`);
     }
+
     const eventService = new EventService();
     if (props.formTitle === "Update") {
       eventService

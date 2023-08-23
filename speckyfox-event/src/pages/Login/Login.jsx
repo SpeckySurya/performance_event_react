@@ -4,6 +4,7 @@ import "./login.css";
 import { useNavigate } from "react-router-dom";
 import LoginService from "./../../services/LoginService";
 import { CircularProgress } from "@mui/material";
+import { tokenExpireTimer } from "../../utils/Constant";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -27,6 +28,7 @@ const Login = () => {
       .adminLogin(formData)
       .then((response) => {
         sessionStorage.setItem("token", response.data.token);
+        tokenExpireTimer();
         setLoading(false);
         navigate("/dashboard");
       })

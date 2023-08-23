@@ -11,19 +11,19 @@ import { useFormik } from "formik";
 import "./HomePageConfiguration.css";
 
 import { HomePageConfigationSchema } from "../../schemas/Homepagevalidation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HomeConfigService from "../../services/HomeConfigService";
 
-const initialValues = {
-  linkedinUrl: "",
-  twitterUrl: "",
-  facebookUrl: "",
-  websiteUrl: "",
-  contactUrl: "",
-  youtubeUrl: "",
-  footerText: "",
-};
 function HomePageConfiguration(props) {
+  const [initialValues, setInitialValues] = useState({
+    linkedinUrl: "",
+    twitterUrl: "",
+    facebookUrl: "",
+    websiteUrl: "",
+    contactUrl: "",
+    youtubeUrl: "",
+    footerText: "",
+  });
   const [banner, setBanner] = useState(null);
   const [logo, setLogo] = useState(null);
   const handleBannerChange = (event) => {
@@ -34,6 +34,23 @@ function HomePageConfiguration(props) {
     const file = event.target.files[0];
     setLogo(file);
   };
+
+  useEffect(() => {
+    const homeConfiService = new HomeConfigService();
+    homeConfiService.getHomeConfig().then((response) => {
+      console.log(response.data);
+      setInitialValues({
+        contactUrl: response.data.contactUrl,
+        facebookUrl: response.data.facebookUrl,
+        linkedinUrl: response.data.linkdinUrl,
+        twitterUrl: response.data.twitterUrl,
+        websiteUrl: response.data.websiteUrl,
+        youtubeUrl: response.data.youtubeUrl,
+        footerText: response.data.footerText,
+      });
+    });
+  }, []);
+
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useFormik({
       initialValues: initialValues,
@@ -45,10 +62,12 @@ function HomePageConfiguration(props) {
         }
         request.append("banner", banner);
         request.append("logo", logo);
-
+        for (const obj of request) {
+          console.log(obj[0], obj[1]);
+        }
         const homeConfigService = new HomeConfigService();
         homeConfigService
-          .saveHomeConfig(request)
+          .updateHomeConfig(request)
           .then((response) => {
             alert("Homepage details saved");
           })
@@ -82,6 +101,7 @@ function HomePageConfiguration(props) {
                     type="file"
                     name="logo"
                     id="logo"
+                    accept=".jpg, .jpeg, .png"
                     variant="outlined"
                     onChange={handleLogoChange}
                     onBlur={handleBlur}
@@ -94,6 +114,7 @@ function HomePageConfiguration(props) {
                     type="file"
                     name="banner"
                     id="banner"
+                    accept=".jpg, .jpeg, .png"
                     variant="outlined"
                     onChange={handleBannerChange}
                     onBlur={handleBlur}
@@ -109,7 +130,7 @@ function HomePageConfiguration(props) {
                     placeholder="Upload LinkedIn url"
                     variant="outlined"
                     fullWidth
-                    value={values.linkedinUrl}
+                    value={initialValues.linkedinUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
@@ -127,7 +148,7 @@ function HomePageConfiguration(props) {
                     placeholder="Upload Twiter url"
                     variant="outlined"
                     fullWidth
-                    value={values.twitterUrl}
+                    value={initialValues.twitterUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
@@ -143,7 +164,7 @@ function HomePageConfiguration(props) {
                     id="facebookUrl"
                     placeholder="Upload Facebook url"
                     variant="outlined"
-                    value={values.facebookUrl}
+                    value={initialValues.facebookUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
@@ -160,7 +181,7 @@ function HomePageConfiguration(props) {
                     id="websiteUrl"
                     placeholder="Upload Website url"
                     variant="outlined"
-                    value={values.websiteUrl}
+                    value={initialValues.websiteUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
@@ -177,7 +198,7 @@ function HomePageConfiguration(props) {
                     id="contactUrl"
                     placeholder="Upload content url"
                     variant="outlined"
-                    value={values.contactUrl}
+                    value={initialValues.contactUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
@@ -194,7 +215,7 @@ function HomePageConfiguration(props) {
                     id="youtubeUrl"
                     placeholder="Upload Youtube url"
                     variant="outlined"
-                    value={values.youtubeUrl}
+                    value={initialValues.youtubeUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
@@ -212,7 +233,7 @@ function HomePageConfiguration(props) {
                     s
                     placeholder="Upload Footer Text url"
                     variant="outlined"
-                    value={values.footerText}
+                    value={initialValues.footerText}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth

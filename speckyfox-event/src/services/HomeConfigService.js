@@ -16,4 +16,15 @@ export default class HomeConfigService {
       headers
     );
   }
+  updateHomeConfig(homeConfig) {
+    for (const obj of homeConfig) {
+      console.log(obj[0], obj[1]);
+    }
+    const headers = this.headers.multipartAuth();
+    return axios.put(
+      `${this.baseUrl}/admin/homepage/update/1`,
+      homeConfig,
+      headers
+    );
+  }
 }
