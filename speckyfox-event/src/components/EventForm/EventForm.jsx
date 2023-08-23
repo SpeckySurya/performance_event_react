@@ -40,7 +40,8 @@ const EventForm = (props) => {
     for (const [key, value] of request.entries()) {
       console.log(`${key}: ${value}`);
     }
-
+    console.log(request.get("eventBanner"));
+    // return;
     const eventService = new EventService();
     if (props.formTitle === "Update") {
       eventService

@@ -1,6 +1,6 @@
 const serviceUrl = () => `http://34.218.92.121:8096`;
 
-const timerId = null;
+let timerId = null;
 export const stopTimer = () => clearInterval(timerId);
 
 export const tokenExpireTimer = () => {

@@ -94,12 +94,6 @@ export const DashboardPage = () => {
 
   const [open, setOpen] = React.useState(false);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setOpen(true);
-    }, tokenExpireTime() - tokenExpireAlertTime());
-  }, []);
-
   const handleClose = () => {
     setOpen(false);
   };
