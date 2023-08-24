@@ -1,0 +1,10 @@
+.VideoCartContainer {
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (max-width: 1000px) {
+  .VideoCartContainer {
+    flex-wrap: wrap;
+  }
+}

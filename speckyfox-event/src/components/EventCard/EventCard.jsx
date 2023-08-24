@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "../../responsive.css";
 import "./EventCard.css";
 import {
   Box,
@@ -12,9 +13,10 @@ import {
   styled,
 } from "@mui/material";
 import { TbTargetArrow } from "react-icons/tb";
-import banner from "./../../assets/card-bg.png";
 import dateFormatter, {
+  addTime,
   convertTo12HourFormat,
+  isPastDateTime,
 } from "../../utils/DateFormatter";
 import { Link } from "react-router-dom";
 import UpdateEvent from "../UpdateEvent/UpdateEvent";
@@ -23,6 +25,7 @@ import Editbtn from "../Editbtn/Editbtn";
 const EventCard = (props) => {
   const [eventEditing, setEventEditing] = useState(false);
   const [editEvent, setEditEvent] = useState(null);
+  const [speaker, setSpeaker] = useState({});
 
   const BootstrapButton = styled(Button)({
     backgroundColor: "#ff970a",
@@ -32,6 +35,7 @@ const EventCard = (props) => {
       backgroundColor: "#f7542b",
     },
   });
+  useEffect(() => {}, [props.events]);
 
   const CustomLink = styled(Link)(({ theme }) => ({
     color: "#ffffff",
@@ -53,12 +57,19 @@ const EventCard = (props) => {
           float={"left"}
           padding={3}
         >
-          {props.events.map((event) => {
-            const formattedDate = dateFormatter(event.date);
-            const formattedTime = convertTo12HourFormat(event.time);
+          {props.events.map((event, k5) => {
+            const formattedDate = dateFormatter(event.events.date);
+            const startTime = convertTo12HourFormat(event.events.time);
+            const endTime = addTime(startTime, event.events.duration);
+            const formattedTime = `${
+              startTime[1] === ":" ? "0" + startTime : startTime
+            } to ${endTime}`;
+
+            const isOutdated = isPastDateTime(formattedDate, event.events.time);
+
             return (
               <Card
-                key={event.id}
+                key={k5}
                 sx={{
                   paddingBottom: 5,
                   width: 380,
@@ -69,7 +80,7 @@ const EventCard = (props) => {
                 <CardMedia
                   component="img"
                   height="200"
-                  image={banner}
+                  image={event.events.eventBanner}
                   alt="Event Banner"
                 />
                 {!props.isEventPage && (
@@ -82,7 +93,7 @@ const EventCard = (props) => {
 
                 <CardContent sx={{ flex: "1 0 auto" }}>
                   <Typography gutterBottom variant="h4" fontWeight={600}>
-                    {event.title}
+                    {event.events.title}
                   </Typography>
                   <Typography fontWeight={600} py={1}>
                     Agenda -
@@ -90,14 +101,14 @@ const EventCard = (props) => {
                   <Box fontSize={"5px"} marginBottom={3}>
                     {
                       <ul className="agenda-list">
-                        {event.description.split(",").length < 2
-                          ? event.description.split(",").map((e) => (
-                              <li key={e.id}>
+                        {event.events.description.split(",").length < 2
+                          ? event.events.description.split(",").map((e, k3) => (
+                              <li key={k3}>
                                 <span>{e}</span>
                               </li>
                             ))
-                          : event.description.split(",").map((e) => (
-                              <li key={e.id} style={{ fontSize: "10px" }}>
+                          : event.events.description.split(",").map((e, k4) => (
+                              <li key={k4} style={{ fontSize: "10px" }}>
                                 <TbTargetArrow className="agenda-icon" />
                                 <span>{e}</span>
                               </li>
@@ -126,22 +137,42 @@ const EventCard = (props) => {
                         <i className="bx bx-microphone"></i>
                       </Typography>
                       <Typography>
-                        {event.speakerName}, {event.speakerDesignation}
+                        {event?.events.speaker?.name},{" "}
+                        {event?.events.speaker?.designation}
                       </Typography>
                     </Stack>
                   </Box>
                 </CardContent>
                 {props.isEventPage && (
                   <CardActions>
-                    <BootstrapButton
-                      sx={{
-                        position: "absolute",
-                        bottom: "2%",
-                        right: "calc(50% - 50px)",
-                      }}
-                    >
-                      <CustomLink to="/">Register</CustomLink>
-                    </BootstrapButton>
+                    {isOutdated ? (
+                      <Button
+                        sx={{
+                          backgroundColor: "gray",
+                          cursor: "default",
+                          color: "lightgray",
+                          position: "absolute",
+                          bottom: "2%",
+                          paddingX: "20px",
+                          right: "calc(50% - 50px)",
+                          "&:hover": { backgroundColor: "gray" },
+                        }}
+                      >
+                        Expired
+                      </Button>
+                    ) : (
+                      <BootstrapButton
+                        sx={{
+                          position: "absolute",
+                          bottom: "2%",
+                          right: "calc(50% - 50px)",
+                        }}
+                      >
+                        <CustomLink to={`/${event.events.id}`}>
+                          Register
+                        </CustomLink>
+                      </BootstrapButton>
+                    )}
                   </CardActions>
                 )}
               </Card>

@@ -1,17 +1,18 @@
 .registration-form {
-  padding: 30px;
+  padding: 20px;
+
   border: 2px solid #fff;
   border-radius: 4px;
   background-color: #3c78d8;
   background-image: linear-gradient(110deg, #4158d0, #c850c0);
   color: white;
   margin: auto;
-  max-width: 450px;
+  max-width: 350px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .note {
-  margin-right: 2px;
+  margin-top: -5px;
   font-size: x-small;
 }
 .mark {
@@ -24,7 +25,7 @@
   font-size: 20px;
 }
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 8px;
 }
 .msg {
   display: flex;
@@ -39,16 +40,17 @@
 }
 .form-group label {
   display: block;
-  padding: 5px 0;
-  font-weight: bold;
+  padding: 1px 0;
+  font-size: 12px;
 }
 
-.form-group input[type="text"],
-.form-group input[type="number"],
-.form-group input[type="email"],
+.registration-form .form-group input[type="text"],
+.registration-form .form-group input[type="number"],
+.registration-form .form-group input[type="email"],
 .form-group input[type="checkbox"] {
   width: 100%;
-  padding: 8px;
+  padding: 4px;
+  height: 25px;
   border: 1px solid #ccc;
   border-radius: 4px;
   margin-right: 5px;
@@ -68,26 +70,20 @@
   cursor: pointer;
   width: 100%;
   font-weight: 600;
+  height: 26px;
 }
 
-button:hover {
+.registration-form button:hover {
   background-color: #f7542b;
 }
 @media screen and (max-width: 992px) {
   .msg {
     display: block;
   }
-  /* .note {
-    margin-top: 6px;
-  }
-  .notemsg {
-    margin-left: 5px;
-  } */
 }
 
 .form-header-reg {
   text-align: center;
-  font-size: 30px;
-  padding: 10px 0 30px 0;
-  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 10px;
 }

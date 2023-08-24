@@ -59,18 +59,33 @@
   height: 40vh;
   border-radius: 12px;
   padding: 20px;
+
+  right: 1px;
+  top: 54px;
+  font-size: 22px;
+  position: absolute;
+  background-color: white;
+
+  transition: all ease 0.2s;
+}
+
+.mob-remove-dropdown {
+  z-index: 10;
+  width: 50%;
+  height: 40vh;
+  border-radius: 12px;
+  padding: 20px;
   display: none;
   right: 1px;
   top: 54px;
   font-size: 22px;
   position: absolute;
   background-color: white;
-  /* background-color: #333333; */
+
   transition: all ease 0.2s;
 }
 
 .mob-navbar a {
-  /* color: white; */
   color: #333;
 }
 

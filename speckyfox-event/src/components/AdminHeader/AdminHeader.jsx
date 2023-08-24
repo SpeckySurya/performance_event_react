@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -9,20 +9,20 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Divider,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import HomeIcon from "@mui/icons-material/Home";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import AssuredWorkloadOutlinedIcon from "@mui/icons-material/AssuredWorkloadOutlined";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
+import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { useNavigate } from "react-router-dom";
-import MyContext from "../../context";
 
 const AdminHeader = (props) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const { sharedState, setSharedState } = useContext(MyContext);
 
   const toggleDrawer = (isOpen) => (event) => {
     if (
@@ -36,18 +36,14 @@ const AdminHeader = (props) => {
   };
 
   const handleLogout = () => {
-    sessionStorage.clear();
-    if (sharedState.admin) {
-      const newState = delete sharedState.amdin;
-      setSharedState(newState);
-    }
+    sessionStorage.removeItem("token");
     navigate("/");
   };
 
   const menuItems = [
     {
       text: "Show Events",
-      icon: <HomeIcon />,
+      icon: <HomeOutlinedIcon />,
       onClick: () => {
         props.handleSidebar("show");
         setOpen(false);
@@ -55,17 +51,51 @@ const AdminHeader = (props) => {
     },
     {
       text: "Create Event",
-      icon: <AddCircleIcon />,
+      icon: <AddCircleOutlineOutlinedIcon />,
       onClick: () => {
         props.handleSidebar("create");
         setOpen(false);
       },
     },
+
     {
-      text: "Notify User",
-      icon: <NotificationsIcon />,
+      text: "Home Configuration",
+      icon: <AssuredWorkloadOutlinedIcon />,
+      onClick: () => {
+        props.handleSidebar("homeConfig");
+        setOpen(false);
+      },
+    },
+    {
+      text: "Show Speaker",
+      icon: <PeopleAltOutlinedIcon />,
+      onClick: () => {
+        props.handleSidebar("showSpeaker");
+        setOpen(false);
+      },
+    },
+    {
+      text: "Create Speaker",
+      icon: <PeopleAltOutlinedIcon />,
+      onClick: () => {
+        props.handleSidebar("manageSpeaker");
+        setOpen(false);
+      },
+    },
+
+    {
+      text: "Notify Participant",
+      icon: <NotificationsActiveOutlinedIcon />,
       onClick: () => {
         props.handleSidebar("notify");
+        setOpen(false);
+      },
+    },
+    {
+      text: "View Participant",
+      icon: <ManageAccountsIcon />,
+      onClick: () => {
+        props.handleSidebar("manageUser");
         setOpen(false);
       },
     },

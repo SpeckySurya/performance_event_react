@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import banner from "./../../assets/banner.png";
-import speakerImg from "./../../assets/speaker-at-banner.png";
+
 import "./Banner.css";
 import RegistrationForm from "../RegistrationForm/RegistrationForm";
 import dateFormatter, {
+  addTime,
   convertTo12HourFormat,
 } from "../../utils/DateFormatter";
 
@@ -13,7 +13,11 @@ export const Banner = (props) => {
 
   useEffect(() => {
     setFormattedDate(dateFormatter(props.event.date));
-    setFormattedTime(convertTo12HourFormat(props.event.time));
+    const startTime = convertTo12HourFormat(props.event.time);
+    const endTime = addTime(startTime, props.event.duration);
+    setFormattedTime(
+      `${startTime[1] === ":" ? "0" + startTime : startTime} to ${endTime}`
+    );
   }, [props.event]);
 
   return (
@@ -26,14 +30,14 @@ export const Banner = (props) => {
               <div>
                 <ul className="agenda-list">
                   {props.event.description.split(",").length < 2
-                    ? props.event.description.split(",").map((e) => (
-                        <li>
+                    ? props.event.description.split(",").map((e, k1) => (
+                        <li key={k1}>
                           <span>{e}</span>
                         </li>
                       ))
-                    : props.event.description.split(",").map((e) => (
-                        <li>
-                          <i class="bx bx-target-lock agenda-icon"></i>
+                    : props.event.description.split(",").map((e, k2) => (
+                        <li key={k2}>
+                          <i className="bx bx-target-lock agenda-icon"></i>
                           <span>{e}</span>
                         </li>
                       ))}
@@ -48,51 +52,51 @@ export const Banner = (props) => {
                   <i className="bx bx-calendar"></i>
                 </div>
                 <div className="date">
-                  <div className="day">{formattedDate.dayOfWeekName}</div>
                   <div className="full-date">
                     {formattedDate.day} {formattedDate.monthName}{" "}
                     {formattedDate.year}
                   </div>
+                  &nbsp;
+                  <div className="day">({formattedDate.dayOfWeekName})</div>
                 </div>
               </div>
               <div className="time-container flex-aic">
                 <div className="icon">
                   <i className="bx bx-time-five bx-spin"></i>
                 </div>
-                <div className="time">{formattedTime}</div>
-              </div>
-              <div className="location-container flex-aic">
-                <div className="icon">
-                  <i class="bx bx-broadcast"></i>
+                <div className="time">
+                  {formattedTime} (IST){}
                 </div>
-                <div className="location">Online</div>
               </div>
               <div className="location-container flex-aic">
                 <div className="icon">
-                  <i class="bx bx-envelope"></i>
+                  <i className="bx bx-broadcast"></i>
+                </div>
+                <div className="location">{props.event.location}</div>
+              </div>
+              <div className="location-container flex-aic">
+                <div className="icon">
+                  <i className="bx bx-envelope"></i>
                 </div>
                 <div className="email">
                   <a
                     className="no-anchor-style"
                     href="mailto:sales@speckyfox.com"
                   >
-                    Any Queries
+                    {props.event.contactTo}
                   </a>
                 </div>
               </div>
-              <section className="live-streaming-txt">
-                <p>Live Webinar</p>
-              </section>
             </div>
             <div className="speaker-details flex">
               <section className="speaker-img">
-                <img src={speakerImg} alt="speaker image" />
+                <img src={props.event.speaker.picture} alt="speaker image" />
               </section>
               <section className="speaker-name">
                 <div style={{ whiteSpace: "nowrap" }}>
-                  {props.event.speakerName}
+                  {props.event.speaker.name}
                 </div>
-                <div>{props.event.speakerDesignation}</div>
+                <div>{props.event.speaker.designation}</div>
                 <p>( Speaker )</p>
               </section>
             </div>

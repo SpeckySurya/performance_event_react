@@ -1,55 +1,60 @@
 import React, { useEffect, useState } from "react";
 import "./EventForm.css";
 import EventService from "../../services/EventService";
-import { Alert, Box, CircularProgress } from "@mui/material";
+import { Alert, Box, CircularProgress, Typography } from "@mui/material";
 import { toDDMMYYYY } from "../../utils/DateFormatter";
 import Duration from "../Duration/Duration";
+import { useNavigate } from "react-router-dom";
 
 const EventForm = (props) => {
   const [formData, setFormData] = useState(props.formDataDefault);
   const [selectedFile, setSelectedFile] = useState(null);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const navigate = useNavigate();
+  const [currentSpeaker, setCurrentSpeaker] = useState("Select Speaker");
   const [loading, setLoading] = useState(false);
-  const [duration, setDuration] = useState(props.eventDuration);
-
-  useEffect(() => {
-    console.log(formData);
-  }, []);
-
+  const [duration, setDuration] = useState(props.formDataDefault.duration);
   const handleChange = (event) => {
     let { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
-  };
-
-  const handleDateChange = (event) => {
-    const value = toDDMMYYYY(event.target.value);
-    setFormData({ ...formData, [event.target.name]: value });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
     const request = new FormData();
-    request.append("profilePicture", selectedFile);
+    request.append("eventBanner", selectedFile);
     Object.entries(formData).forEach(([key, val]) => {
       request.append(key, val);
     });
+
+    request.delete("duration");
     request.append("duration", `${duration.hours}:${duration.minutes}`);
+    request.delete("date");
     request.append("date", toDDMMYYYY(formData.date));
-    // for (const entry of request.entries()) {
-    //   console.log(entry[0], entry[1]);
-    // }
+
     const eventService = new EventService();
-    eventService
-      .saveEvent(request)
-      .then((response) => {
-        setIsAlertVisible(true);
-        setLoading(false);
-        setFormData(formDataDefault);
-      })
-      .catch((error) => {
-        alert("Something went wrong :" + error);
-      });
+    if (props.formTitle === "Update") {
+      eventService
+        .updateEvent(formData.eventId, request)
+        .then((response) => {
+          setIsAlertVisible(true);
+          setLoading(false);
+        })
+        .catch((error) => {
+          alert("Something went wrong :" + error);
+        });
+    } else {
+      eventService
+        .saveEvent(request)
+        .then((response) => {
+          setIsAlertVisible(true);
+          setLoading(false);
+        })
+        .catch((error) => {
+          alert("Something went wrong :" + error);
+        });
+    }
   };
 
   const handleAlertClose = () => {
@@ -63,7 +68,7 @@ const EventForm = (props) => {
 
   return (
     <div className="event-form-container">
-      <h1>{props.formTitle}</h1>
+      <h1>{props.formTitle} an Event</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="title">Title</label>
@@ -74,6 +79,7 @@ const EventForm = (props) => {
             placeholder="Event Title"
             value={formData.title}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="form-group">
@@ -84,6 +90,7 @@ const EventForm = (props) => {
             placeholder="Event Description"
             value={formData.description}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="form-group">
@@ -93,7 +100,8 @@ const EventForm = (props) => {
             id="date"
             name="date"
             value={formData.date}
-            onChange={handleDateChange}
+            onChange={handleChange}
+            required
           />
         </div>
         <div className="form-group">
@@ -105,41 +113,11 @@ const EventForm = (props) => {
             step={1}
             value={formData.time}
             onChange={handleChange}
+            required
           />
         </div>
         <Duration duration={duration} setDuration={setDuration} />
-        <div className="form-group">
-          <label htmlFor="speakerName">Speaker Name</label>
-          <input
-            type="text"
-            id="speakerName"
-            name="speakerName"
-            placeholder="Speaker Name"
-            value={formData.speakerName}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="speakerDesignation">Speaker Designation</label>
-          <input
-            type="text"
-            id="speakerDesignation"
-            name="speakerDesignation"
-            placeholder="Speaker Designation"
-            value={formData.speakerDesignation}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="speakerDesignation">Speaker Photo</label>
-          <input
-            type="file"
-            id="speakerPhoto"
-            name="profilePicture"
-            placeholder="Speaker Photo"
-            onChange={handleFileChange}
-          />
-        </div>
+
         <div className="form-group">
           <label htmlFor="meetingUrl">Meeting URL</label>
           <input
@@ -160,16 +138,82 @@ const EventForm = (props) => {
             placeholder="Event Location"
             value={formData.location}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="form-group">
           <label htmlFor="active">Active</label>
-          <select name="active" id="active" onChange={handleChange}>
-            <option selected value={"false"}>
-              False
-            </option>
+          <select
+            name="active"
+            value={formData.active}
+            id="active"
+            onChange={handleChange}
+            required
+          >
+            <option value={"false"}>False</option>
             <option value={"true"}>True</option>
           </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="acceptRegistration">
+            Active Registration for Homepage
+          </label>
+          <select
+            name="acceptRegistration"
+            id="acceptRegistration"
+            value={formData.acceptRegistration}
+            onChange={handleChange}
+            required
+          >
+            <option value={"false"}>False</option>
+            <option value={"true"}>True</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="eventBanner">Event Banner</label>
+          <Typography fontSize={10}>Max file size : 2 MB</Typography>
+          <input
+            type="file"
+            id="eventBanner"
+            name="eventBanner"
+            placeholder="Event Banner"
+            onChange={handleFileChange}
+            required
+          />
+          {props.formTitle === "Update" ? (
+            <img
+              style={{ width: "100px", margin: "10px" }}
+              src={props.formDataDefault.banner}
+            />
+          ) : null}
+        </div>
+        <div className="form-group">
+          <label htmlFor="speakerId">Speaker</label>
+          <select
+            name="speakerId"
+            id="speakerId"
+            onChange={handleChange}
+            value={formData.speakerId}
+            required
+          >
+            {props.speakers.map((speaker) => (
+              <option key={speaker.id} value={speaker.id}>
+                {speaker.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="contactTo">Contact</label>
+          <input
+            id="contactTo"
+            name="contactTo"
+            placeholder="Contact To"
+            value={formData.contactTo}
+            onChange={handleChange}
+            required
+          />
         </div>
         <button type="submit" className="flex-jcc-aic">
           {loading ? (

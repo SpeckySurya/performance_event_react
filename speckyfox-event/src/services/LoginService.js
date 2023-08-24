@@ -1,9 +1,11 @@
 import axios from "axios";
-import withAuth from "../utils/Header";
+import Header from "../utils/Header";
+import serviceUrl from "../utils/Constant";
 
 export default class LoginService {
-  baseUrl = "http://34.218.92.121:8095";
+  headers = new Header();
+  baseUrl = serviceUrl();
   adminLogin(data) {
-    return axios.post(`${this.baseUrl}/admin/login`, data, withAuth);
+    return axios.post(`${this.baseUrl}/admin/login`, data);
   }
 }

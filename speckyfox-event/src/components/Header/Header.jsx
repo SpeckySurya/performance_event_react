@@ -3,10 +3,10 @@ import Navbar from "../Navbar/Navbar";
 import "./Header.css";
 import { MdOutlinePermPhoneMsg } from "react-icons/md";
 
-export const Header = () => {
+export const Header = ({ homeConfig }) => {
   return (
     <div className="header-container">
-      <Navbar />
+      <Navbar homeConfig={homeConfig} />
     </div>
   );
 };

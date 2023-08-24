@@ -1,31 +1,45 @@
 import axios from "axios";
-import basicHeader, { multipartAuth, withAuth } from "../utils/Header";
+import Header from "../utils/Header";
+import serviceUrl from "../utils/Constant";
 
 export default class EventService {
-  baseUrl = "http://34.218.92.121:8095";
+  headers = new Header();
+  baseUrl = serviceUrl();
+
   getEvent(eventId) {
-    return axios.get(`${this.baseUrl}/app/event/1`);
+    return axios.get(`${this.baseUrl}/app/event/${eventId}`);
   }
   getAllActiveEvents() {
     return axios.get(`${this.baseUrl}/app/getAllEvents`, {
-      headers: basicHeader(),
+      headers: this.headers.basicHeader(),
     });
   }
   getAllEvents() {
-    return axios.get(`${this.baseUrl}/admin/event-list`, withAuth());
+    return axios.get(
+      `${this.baseUrl}/admin/event-list`,
+      this.headers.withAuth()
+    );
   }
   notifyUsers(eventId) {
     return axios.get(
       `${this.baseUrl}/admin/send-event-reminder/${eventId}`,
-      withAuth()
+      this.headers.withAuth()
     );
   }
   saveEvent(event) {
-    const headers = multipartAuth();
+    const headers = this.headers.multipartAuth();
     return axios.post(`${this.baseUrl}/admin/save-event`, event, headers);
   }
+  updateEvent(eventId, event) {
+    const headers = this.headers.multipartAuth();
+    return axios.put(
+      `${this.baseUrl}/admin/update-event/${eventId}`,
+      event,
+      headers
+    );
+  }
   deleteEvent(evendId) {
-    const headers = withAuth();
+    const headers = this.headers.withAuth();
     return axios.delete(
       `${this.baseUrl}/admin/deleteEvent/${evendId}`,
       headers

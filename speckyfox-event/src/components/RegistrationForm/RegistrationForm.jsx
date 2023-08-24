@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import "./RegistrationForm.css"; // Import the CSS file
-import { useNavigate } from "react-router-dom";
+import "./RegistrationForm.css";
+import { useNavigate, useParams } from "react-router-dom";
 import RegistrationService from "../../services/RegistrationService";
-import { CircularProgress, LinearProgress, Stack } from "@mui/material";
+import { CircularProgress, Stack } from "@mui/material";
 
 const RegistrationForm = () => {
-  // State to store form data
+  const params = useParams();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -15,10 +15,10 @@ const RegistrationForm = () => {
     email: "",
     ptNeeded: false,
     anyPtToolUsed: false,
-    eventId: 1,
+    eventId: params.param,
   });
   const [loading, setLoading] = useState(false);
-
+  const [mobNo, setMobNo] = useState(false);
   const navigate = useNavigate();
 
   // Handle form field changes
@@ -42,23 +42,36 @@ const RegistrationForm = () => {
         ...prevFormData,
         [name]: value,
       }));
+      setMobNo(true);
     }
-    console.log(formData);
+    if (`${value}`.length > 8) {
+      setMobNo(false);
+    }
   };
 
-  // Handle form submission
   const handleSubmit = (event) => {
+    if (mobNo) {
+      event.preventDefault();
+      return;
+    }
     setLoading(true);
     event.preventDefault();
     let obj = new RegistrationService();
+
+    let firstName = formData.name;
+    let lastName = "";
+    if (formData.name.trim().includes(" ")) {
+      firstName = formData.name.substring(0, formData.name.indexOf(" "));
+      lastName = formData.name.substring(formData.name.indexOf(" ") + 1);
+    }
+    formData.firstName = firstName;
+    formData.lastName = lastName;
+
     obj
       .saveUser(formData)
       .then((response) => {
         if (response.status == 200) {
-          console.log(response.data);
           navigate("/thankyou");
-        } else {
-          console.log(response.data);
         }
       })
       .catch((error) => {
@@ -70,26 +83,13 @@ const RegistrationForm = () => {
     <form className="registration-form" onSubmit={handleSubmit}>
       <div className="form-header-reg">Event Registration</div>
       <div className="form-group">
-        <label htmlFor="firstName">
-          First Name<span className="mark">*</span>
+        <label htmlFor="name">
+          Name<span className="mark">*</span>
         </label>
         <input
           type="text"
-          id="firstName"
-          name="firstName"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="lastName">
-          Last Name<span className="mark">*</span>
-        </label>
-        <input
-          type="text"
-          id="lastName"
-          name="lastName"
+          id="name"
+          name="name"
           value={formData.name}
           onChange={handleChange}
           required
@@ -136,6 +136,11 @@ const RegistrationForm = () => {
           type="number"
           required
         />
+        {mobNo && (
+          <span style={{ fontSize: "10px" }}>
+            Phone should atleast of 8 digits
+          </span>
+        )}
       </div>
 
       <div className="form-group">
@@ -179,7 +184,7 @@ const RegistrationForm = () => {
       </div>
       <span className="msg">
         <p className="note">
-          Note : All <span className="marks"> * </span> field should be required
+          Note : All <span className="marks"> * </span> field are required
         </p>
       </span>
       <button type="submit" className="flex-jcc-aic">

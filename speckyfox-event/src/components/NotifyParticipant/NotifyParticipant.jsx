@@ -12,7 +12,6 @@ import {
   Alert,
 } from "@mui/material";
 import EventService from "../../services/EventService";
-import { event } from "jquery";
 
 const NotifyParticipant = () => {
   const [selectedEvent, setSelectedEvent] = useState("");
@@ -25,27 +24,35 @@ const NotifyParticipant = () => {
 
   useEffect(() => {
     const eventService = new EventService();
-    eventService.getAllEvents().then((response) => setEvents(response.data));
-    events[selectedEvent - 1]?.users?.length > 0
-      ? setBtnDisabled(false)
-      : setBtnDisabled(true);
+    eventService.getAllEvents().then((response) => {
+      setEvents(response.data);
+    });
   }, [selectedEvent]);
 
   const handleEventChange = (e) => {
     const eventId = e.target.value;
+    if (eventId === -1) {
+      setSelectedEvent(eventId);
+      setSelectedUsers([]);
+      setBtnDisabled(true);
+      return;
+    }
     setSelectedEvent(eventId);
-    const obj = events.filter((event) => event.id === eventId)[0];
-    const userList = obj.users.map(
+    const obj = events.filter((event) => event.events.id === eventId)[0];
+    const userList = obj.events.users.map(
       (user) => `${user.firstName} ${user.lastName}`
     );
     setSelectedUsers(userList);
+    setBtnDisabled(false);
   };
 
   const handleUserSelectAll = () => {
     if (selectAll) {
       setSelectedUsers([]);
     } else {
-      const obj = events.filter((event) => event.id === selectedEvent)[0];
+      const obj = events.filter(
+        (event) => event.events.id === selectedEvent
+      )[0];
       const userList = obj.users.map(
         (user) => `${user.firstName} ${user.lastName}`
       );
@@ -85,9 +92,12 @@ const NotifyParticipant = () => {
           value={selectedEvent}
           onChange={handleEventChange}
         >
+          <MenuItem value={-1}>
+            <Typography fontStyle={"italic"}>None</Typography>
+          </MenuItem>
           {events.map((event) => (
-            <MenuItem key={event.id} value={event.id}>
-              {event.title}
+            <MenuItem key={event.events.id} value={event.events.id}>
+              {event.events.title}
             </MenuItem>
           ))}
         </Select>
@@ -95,10 +105,8 @@ const NotifyParticipant = () => {
 
       <Box textAlign={"end"}>
         <Button
-          // variant={btnDisabled}
           variant={btnDisabled ? "outlined" : "contained"}
-          //  variant="contained"
-          disabled={btnDisabled ? true : false}
+          disabled={btnDisabled}
           onClick={handleUserSelectAll}
           sx={{ ml: 2, mt: 3 }}
         >
@@ -107,7 +115,7 @@ const NotifyParticipant = () => {
         <Button
           sx={{ ml: 2, mt: 3 }}
           variant={btnDisabled ? "outlined" : "contained"}
-          disabled={btnDisabled ? true : false}
+          disabled={btnDisabled}
           onClick={() => handleNotify()}
         >
           {loading ? (

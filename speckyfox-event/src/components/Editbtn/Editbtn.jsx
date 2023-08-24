@@ -1,10 +1,10 @@
-import * as React from "react";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import EventService from "../../services/EventService";
 
-const options = ["Edit", "Delete", "Active"];
+const options = ["Edit", "Delete"];
 
 const ITEM_HEIGHT = 40;
 
@@ -26,7 +26,23 @@ export default function Editbtn(props) {
         break;
       }
       case "Delete": {
-        alert("Do you really want to delete");
+        alert("Do you really want to delete " + props.event.events.id);
+        const choice = prompt("Do you really want to delete");
+        if (choice) {
+          const eventService = new EventService();
+          eventService
+            .deleteEvent(props.event.events.id)
+            .then((response) => {
+              if (response) {
+                alert(props.event.events.title + " deleted succesfully !");
+              } else {
+                alert("Something went wrong !");
+              }
+            })
+            .catch((error) => {
+              alert(error);
+            });
+        }
         break;
       }
     }

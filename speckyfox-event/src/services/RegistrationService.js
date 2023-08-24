@@ -1,7 +1,10 @@
 import axios from "axios";
+import Header from "../utils/Header";
+import serviceUrl from "../utils/Constant";
 
 export default class RegistrationService {
-  baseUrl = "http://34.218.92.121:8095";
+  headers = new Header();
+  baseUrl = serviceUrl();
 
   saveUser(user) {
     return axios.post(`${this.baseUrl}/app/register`, user);
