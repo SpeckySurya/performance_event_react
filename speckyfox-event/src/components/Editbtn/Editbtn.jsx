@@ -3,6 +3,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import EventService from "../../services/EventService";
+import React from "react";
 
 const options = ["Edit", "Delete"];
 
