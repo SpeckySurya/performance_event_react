@@ -12,7 +12,6 @@ export const Banner = (props) => {
   const [formattedTime, setFormattedTime] = useState("");
 
   useEffect(() => {
-    console.log(props.speaker);
     setFormattedDate(dateFormatter(props.event.date));
     const startTime = convertTo12HourFormat(props.event.time);
     const endTime = addTime(startTime, props.event.duration);

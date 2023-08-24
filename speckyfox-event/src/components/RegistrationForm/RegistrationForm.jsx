@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./RegistrationForm.css";
 import { useNavigate, useParams } from "react-router-dom";
 import RegistrationService from "../../services/RegistrationService";
-import { CircularProgress, LinearProgress, Stack } from "@mui/material";
+import { CircularProgress, Stack } from "@mui/material";
 
 const RegistrationForm = () => {
   const params = useParams();
@@ -66,7 +66,7 @@ const RegistrationForm = () => {
     }
     formData.firstName = firstName;
     formData.lastName = lastName;
-    console.log(formData);
+
     obj
       .saveUser(formData)
       .then((response) => {

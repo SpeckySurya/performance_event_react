@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { About } from "../../components/About/About";
 import { Banner } from "../../components/Banner/Banner";
 import Footer from "../../components/Footer/Footer";
@@ -27,7 +27,7 @@ const HomePage = () => {
       .getEvent(param)
       .then((response) => {
         setEvent(response.data);
-        console.log(response.data);
+
         setLoading(false);
         const speakerService = new SpeakerService();
         speakerService

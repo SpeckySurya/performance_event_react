@@ -1,5 +1,3 @@
-import React from "react";
-import Readmore from "../Readmore/Readmore";
 import "./About.css";
 
 export const About = (props) => {
@@ -19,7 +17,6 @@ export const About = (props) => {
         </div>
         <div className="about-body" style={{ fontSize: "15px" }}>
           {props.event.speaker?.aboutSpeaker}
-          {/* <Readmore speaker={props.speaker} /> */}
         </div>
       </div>
     </div>

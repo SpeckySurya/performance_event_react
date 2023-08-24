@@ -35,21 +35,6 @@ function HomePageConfiguration(props) {
     setLogo(file);
   };
 
-  // useEffect(() => {
-  //   const homeConfiService = new HomeConfigService();
-  //   homeConfiService.getHomeConfig().then((response) => {
-  //     setInitialValues({
-  //       contactUrl: response.data.contactUrl,
-  //       facebookUrl: response.data.facebookUrl,
-  //       linkedinUrl: response.data.linkdinUrl,
-  //       twitterUrl: response.data.twitterUrl,
-  //       websiteUrl: response.data.websiteUrl,
-  //       youtubeUrl: response.data.youtubeUrl,
-  //       footerText: response.data.footerText,
-  //     });
-  //   });
-  // }, []);
-
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useFormik({
       initialValues: initialValues,
@@ -61,9 +46,7 @@ function HomePageConfiguration(props) {
         }
         request.append("banner", banner);
         request.append("logo", logo);
-        for (const obj of request) {
-          console.log(obj[0], obj[1]);
-        }
+
         const homeConfigService = new HomeConfigService();
         homeConfigService
           .getHomeConfigById()

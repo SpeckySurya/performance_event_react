@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import logo from "./../../assets/logo.png";
+
 import "./Navbar.css";
 
 import { BsFacebook, BsYoutube, BsTwitter, BsLinkedin } from "react-icons/bs";

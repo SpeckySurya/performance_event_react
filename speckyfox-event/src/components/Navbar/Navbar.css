@@ -59,13 +59,13 @@
   height: 40vh;
   border-radius: 12px;
   padding: 20px;
-  /* display: none; */
+
   right: 1px;
   top: 54px;
   font-size: 22px;
   position: absolute;
   background-color: white;
-  /* background-color: #333333; */
+
   transition: all ease 0.2s;
 }
 

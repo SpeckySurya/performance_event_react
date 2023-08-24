@@ -8,7 +8,7 @@ import {
   Stack,
   Box,
 } from "@mui/material";
-import { Edit, Delete } from "@mui/icons-material";
+
 import SpeakerService from "../../services/SpeakerService";
 
 const ShowSpeaker = () => {
@@ -33,8 +33,6 @@ const ShowSpeaker = () => {
       });
   }
 
-  function onEdit() {}
-
   return (
     <Stack marginTop={"20vh"} flexWrap={"wrap"} direction={"row"} spacing={5}>
       {speakers.map((speaker) => {
@@ -55,18 +53,6 @@ const ShowSpeaker = () => {
                   {speaker.designation}
                 </Typography>
               </CardContent>
-              {/* <IconButton
-                sx={{ color: "green" }}
-                onClick={() => onEdit(speaker.id)}
-              >
-                <Edit />
-              </IconButton>
-              <IconButton
-                sx={{ color: "red" }}
-                onClick={() => onDelete(speaker.id)}
-              >
-                <Delete />
-              </IconButton> */}
             </Card>
           </Box>
         );

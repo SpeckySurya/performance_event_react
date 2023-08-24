@@ -1,7 +1,7 @@
 export default function dateFormatter(dateString) {
   const date = new Date(dateString);
 
-  // Step 2: Define arrays for days and months names
+
   const daysOfWeek = [
     "Sunday",
     "Monday",

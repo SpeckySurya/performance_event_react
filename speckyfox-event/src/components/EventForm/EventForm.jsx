@@ -32,9 +32,7 @@ const EventForm = (props) => {
     request.append("duration", `${duration.hours}:${duration.minutes}`);
     request.delete("date");
     request.append("date", toDDMMYYYY(formData.date));
-    for (const [key, value] of request.entries()) {
-      console.log(`${key}: ${value}`);
-    }
+
     const eventService = new EventService();
     if (props.formTitle === "Update") {
       eventService

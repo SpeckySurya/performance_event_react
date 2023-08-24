@@ -38,7 +38,6 @@ function ManageSpeaker(props) {
       onSubmit: (values) => {
         const request = new FormData();
         for (let entry in initialValues) {
-          console.log(entry, values[entry]);
           request.append(entry, values[entry]);
         }
         request.append("picture", selectedFile);
