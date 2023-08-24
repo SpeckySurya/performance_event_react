@@ -12,13 +12,13 @@ export const About = (props) => {
           <div className="imgcirclediv">
             <img
               className="imgcircle"
-              src={props.speaker.picture}
+              src={props.event.speaker.picture}
               alt="speaker photo"
             />
           </div>
         </div>
         <div className="about-body" style={{ fontSize: "15px" }}>
-          {props.speaker?.aboutSpeaker}
+          {props.event.speaker?.aboutSpeaker}
           {/* <Readmore speaker={props.speaker} /> */}
         </div>
       </div>

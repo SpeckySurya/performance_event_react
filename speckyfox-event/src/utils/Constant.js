@@ -1,13 +1,16 @@
-const serviceUrl = () => `http://34.218.92.121:8096`;
+const serviceUrl = () => `https://eventbackend.speckyfox.com`;
 
 let timerId = null;
 export const stopTimer = () => clearInterval(timerId);
 
-export const tokenExpireTimer = () => {
+export const tokenExpireTimer = (navigateToLogin) => {
   timerId = setTimeout(() => {
     sessionStorage.removeItem("token");
-    navigate("/login");
-  }, 30000);
+    navigateToLogin();
+  }, expireTime());
 };
+
+export const expireTime = () => 3000000;
+export const alertBeforeExpireTime = () => 300000;
 
 export default serviceUrl;

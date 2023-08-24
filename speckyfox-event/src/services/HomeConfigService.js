@@ -8,6 +8,10 @@ export default class HomeConfigService {
   getHomeConfig() {
     return axios.get(`${this.baseUrl}/app/getHomepageConfiguration`);
   }
+  getHomeConfigById() {
+    const headers = this.headers.multipartAuth();
+    return axios.get(`${this.baseUrl}/admin/homepage/getById/1`, headers);
+  }
   saveHomeConfig(homeConfig) {
     const headers = this.headers.multipartAuth();
     return axios.post(

@@ -10,7 +10,9 @@ const UpdateEvent = (props) => {
   const [speakers, setSpeakers] = useState([]);
   function getDate() {
     const dateObj = dateFormatter(props.event.events.date);
-    return `${dateObj.year}-${dateObj.month}-${dateObj.day}`;
+    return `${dateObj.year}-${Number(dateObj.month) + 1 < 10 ? "0" : ""}${
+      Number(dateObj.month) + 1
+    }-${dateObj.day}`;
   }
 
   useEffect(() => {
@@ -27,10 +29,11 @@ const UpdateEvent = (props) => {
       description: props.event.events.description,
       date: getDate(),
       time: props.event.events.time.split(" ")[0],
-      speakerId: props.event.speakerDetails.id,
+      speakerId: props.event.events.speaker.id,
       meetingUrl: props.event.events.meetingUrl,
       location: props.event.events.location,
       active: props.event.events.active,
+      banner: props.event.events.eventBanner,
       duration: {
         hours: Number(props.event.events.duration.split(":")[0]),
         minutes: Number(props.event.events.duration.split(":")[1]),

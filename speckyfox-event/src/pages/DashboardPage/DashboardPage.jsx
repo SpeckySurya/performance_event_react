@@ -21,7 +21,11 @@ import ManageUser from "../../components/ManageUser/ManageUser";
 import { useNavigate } from "react-router-dom";
 import SpeakerService from "../../services/SpeakerService";
 import ShowSpeaker from "../../components/ShowSpeaker/ShowSpeaker";
-import { stopTimer } from "../../utils/Constant";
+import {
+  alertBeforeExpireTime,
+  expireTime,
+  stopTimer,
+} from "../../utils/Constant";
 
 const formDataDefault = {
   title: "",
@@ -29,8 +33,9 @@ const formDataDefault = {
   time: "",
   meetingUrl: "",
   location: "",
+  date: "",
   active: false,
-  activeHomePage: false,
+  acceptRegistration: false,
   contactTo: "",
   speakerId: 0,
   duration: { hours: 0, minutes: 0 },
@@ -40,9 +45,12 @@ export const DashboardPage = () => {
   const [selected, setSelected] = useState("show");
   const [events, setEvents] = useState([]);
   const [speakers, setSpeakers] = useState([]);
+  const [open, setOpen] = React.useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
+    setTimeout(() => setOpen(true), expireTime() - alertBeforeExpireTime());
     if (sessionStorage.getItem("token") === null) {
       navigate("/login");
     }
@@ -91,8 +99,6 @@ export const DashboardPage = () => {
         return null;
     }
   }
-
-  const [open, setOpen] = React.useState(false);
 
   const handleClose = () => {
     setOpen(false);

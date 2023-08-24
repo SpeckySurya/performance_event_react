@@ -55,7 +55,7 @@ const ShowSpeaker = () => {
                   {speaker.designation}
                 </Typography>
               </CardContent>
-              <IconButton
+              {/* <IconButton
                 sx={{ color: "green" }}
                 onClick={() => onEdit(speaker.id)}
               >
@@ -66,7 +66,7 @@ const ShowSpeaker = () => {
                 onClick={() => onDelete(speaker.id)}
               >
                 <Delete />
-              </IconButton>
+              </IconButton> */}
             </Card>
           </Box>
         );

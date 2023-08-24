@@ -20,6 +20,8 @@ const Login = () => {
     }
   });
 
+  const toLogin = () => navigate("/login");
+
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
@@ -28,7 +30,7 @@ const Login = () => {
       .adminLogin(formData)
       .then((response) => {
         sessionStorage.setItem("token", response.data.token);
-        tokenExpireTimer();
+        tokenExpireTimer(toLogin);
         setLoading(false);
         navigate("/dashboard");
       })

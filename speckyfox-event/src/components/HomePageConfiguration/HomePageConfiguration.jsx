@@ -35,21 +35,20 @@ function HomePageConfiguration(props) {
     setLogo(file);
   };
 
-  useEffect(() => {
-    const homeConfiService = new HomeConfigService();
-    homeConfiService.getHomeConfig().then((response) => {
-      console.log(response.data);
-      setInitialValues({
-        contactUrl: response.data.contactUrl,
-        facebookUrl: response.data.facebookUrl,
-        linkedinUrl: response.data.linkdinUrl,
-        twitterUrl: response.data.twitterUrl,
-        websiteUrl: response.data.websiteUrl,
-        youtubeUrl: response.data.youtubeUrl,
-        footerText: response.data.footerText,
-      });
-    });
-  }, []);
+  // useEffect(() => {
+  //   const homeConfiService = new HomeConfigService();
+  //   homeConfiService.getHomeConfig().then((response) => {
+  //     setInitialValues({
+  //       contactUrl: response.data.contactUrl,
+  //       facebookUrl: response.data.facebookUrl,
+  //       linkedinUrl: response.data.linkdinUrl,
+  //       twitterUrl: response.data.twitterUrl,
+  //       websiteUrl: response.data.websiteUrl,
+  //       youtubeUrl: response.data.youtubeUrl,
+  //       footerText: response.data.footerText,
+  //     });
+  //   });
+  // }, []);
 
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useFormik({
@@ -67,12 +66,33 @@ function HomePageConfiguration(props) {
         }
         const homeConfigService = new HomeConfigService();
         homeConfigService
-          .updateHomeConfig(request)
+          .getHomeConfigById()
           .then((response) => {
-            alert("Homepage details saved");
+            homeConfigService
+              .updateHomeConfig(request)
+              .then((response) => {
+                alert("Homepage details updated");
+              })
+              .catch((error) => {
+                alert(error);
+              });
           })
           .catch((error) => {
-            alert(error);
+            if (
+              "HomepageConfigurationService.notFound" ===
+              error.response.data.message
+            ) {
+              homeConfigService
+                .saveHomeConfig(request)
+                .then((response) => {
+                  alert("Homepage details saved");
+                })
+                .catch((error) => {
+                  alert(error);
+                });
+            } else {
+              alert("Something went wrong");
+            }
           });
       },
     });

@@ -18,7 +18,7 @@ const RegistrationForm = () => {
     eventId: params.param,
   });
   const [loading, setLoading] = useState(false);
-
+  const [mobNo, setMobNo] = useState(false);
   const navigate = useNavigate();
 
   // Handle form field changes
@@ -42,10 +42,18 @@ const RegistrationForm = () => {
         ...prevFormData,
         [name]: value,
       }));
+      setMobNo(true);
+    }
+    if (`${value}`.length > 8) {
+      setMobNo(false);
     }
   };
 
   const handleSubmit = (event) => {
+    if (mobNo) {
+      event.preventDefault();
+      return;
+    }
     setLoading(true);
     event.preventDefault();
     let obj = new RegistrationService();
@@ -128,6 +136,11 @@ const RegistrationForm = () => {
           type="number"
           required
         />
+        {mobNo && (
+          <span style={{ fontSize: "10px" }}>
+            Phone should atleast of 8 digits
+          </span>
+        )}
       </div>
 
       <div className="form-group">

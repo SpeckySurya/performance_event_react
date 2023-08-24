@@ -12,6 +12,7 @@ export const Banner = (props) => {
   const [formattedTime, setFormattedTime] = useState("");
 
   useEffect(() => {
+    console.log(props.speaker);
     setFormattedDate(dateFormatter(props.event.date));
     const startTime = convertTo12HourFormat(props.event.time);
     const endTime = addTime(startTime, props.event.duration);
@@ -90,11 +91,13 @@ export const Banner = (props) => {
             </div>
             <div className="speaker-details flex">
               <section className="speaker-img">
-                <img src={props.speaker.picture} alt="speaker image" />
+                <img src={props.event.speaker.picture} alt="speaker image" />
               </section>
               <section className="speaker-name">
-                <div style={{ whiteSpace: "nowrap" }}>{props.speaker.name}</div>
-                <div>{props.speaker.designation}</div>
+                <div style={{ whiteSpace: "nowrap" }}>
+                  {props.event.speaker.name}
+                </div>
+                <div>{props.event.speaker.designation}</div>
                 <p>( Speaker )</p>
               </section>
             </div>

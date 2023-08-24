@@ -57,7 +57,7 @@ const HomePage = () => {
         <Banner event={event} speaker={speaker}></Banner>
       </div>
       <div className="about-speaker-div">
-        <About speaker={speaker} />
+        <About event={event} />
       </div>
       <div className="footer-div">
         <Footer homeConfig={homeConfig} />

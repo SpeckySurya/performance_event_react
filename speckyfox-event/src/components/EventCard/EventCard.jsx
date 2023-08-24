@@ -16,6 +16,7 @@ import { TbTargetArrow } from "react-icons/tb";
 import dateFormatter, {
   addTime,
   convertTo12HourFormat,
+  isPastDateTime,
 } from "../../utils/DateFormatter";
 import { Link } from "react-router-dom";
 import UpdateEvent from "../UpdateEvent/UpdateEvent";
@@ -63,6 +64,8 @@ const EventCard = (props) => {
             const formattedTime = `${
               startTime[1] === ":" ? "0" + startTime : startTime
             } to ${endTime}`;
+
+            const isOutdated = isPastDateTime(formattedDate, event.events.time);
 
             return (
               <Card
@@ -134,25 +137,42 @@ const EventCard = (props) => {
                         <i className="bx bx-microphone"></i>
                       </Typography>
                       <Typography>
-                        {event?.speakerDetails?.name},{" "}
-                        {event?.speakerDetails?.designation}
+                        {event?.events.speaker?.name},{" "}
+                        {event?.events.speaker?.designation}
                       </Typography>
                     </Stack>
                   </Box>
                 </CardContent>
                 {props.isEventPage && (
                   <CardActions>
-                    <BootstrapButton
-                      sx={{
-                        position: "absolute",
-                        bottom: "2%",
-                        right: "calc(50% - 50px)",
-                      }}
-                    >
-                      <CustomLink to={`/${event.events.id}`}>
-                        Register
-                      </CustomLink>
-                    </BootstrapButton>
+                    {isOutdated ? (
+                      <Button
+                        sx={{
+                          backgroundColor: "gray",
+                          cursor: "default",
+                          color: "lightgray",
+                          position: "absolute",
+                          bottom: "2%",
+                          paddingX: "20px",
+                          right: "calc(50% - 50px)",
+                          "&:hover": { backgroundColor: "gray" },
+                        }}
+                      >
+                        Expired
+                      </Button>
+                    ) : (
+                      <BootstrapButton
+                        sx={{
+                          position: "absolute",
+                          bottom: "2%",
+                          right: "calc(50% - 50px)",
+                        }}
+                      >
+                        <CustomLink to={`/${event.events.id}`}>
+                          Register
+                        </CustomLink>
+                      </BootstrapButton>
+                    )}
                   </CardActions>
                 )}
               </Card>

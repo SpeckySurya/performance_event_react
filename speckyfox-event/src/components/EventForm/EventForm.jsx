@@ -4,27 +4,20 @@ import EventService from "../../services/EventService";
 import { Alert, Box, CircularProgress, Typography } from "@mui/material";
 import { toDDMMYYYY } from "../../utils/DateFormatter";
 import Duration from "../Duration/Duration";
+import { useNavigate } from "react-router-dom";
 
 const EventForm = (props) => {
   const [formData, setFormData] = useState(props.formDataDefault);
   const [selectedFile, setSelectedFile] = useState(null);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const navigate = useNavigate();
+  const [currentSpeaker, setCurrentSpeaker] = useState("Select Speaker");
   const [loading, setLoading] = useState(false);
   const [duration, setDuration] = useState(props.formDataDefault.duration);
-
   const handleChange = (event) => {
     let { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  const handleDateChange = (event) => {
-    const value = toDDMMYYYY(event.target.value);
-    setFormData({ ...formData, [event.target.name]: value });
-  };
-
-  useEffect(() => {
-    console.log(duration);
-  }, [duration]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -37,11 +30,11 @@ const EventForm = (props) => {
 
     request.delete("duration");
     request.append("duration", `${duration.hours}:${duration.minutes}`);
+    request.delete("date");
+    request.append("date", toDDMMYYYY(formData.date));
     for (const [key, value] of request.entries()) {
       console.log(`${key}: ${value}`);
     }
-    console.log(request.get("eventBanner"));
-    // return;
     const eventService = new EventService();
     if (props.formTitle === "Update") {
       eventService
@@ -49,7 +42,6 @@ const EventForm = (props) => {
         .then((response) => {
           setIsAlertVisible(true);
           setLoading(false);
-          setFormData(props.formDataDefault);
         })
         .catch((error) => {
           alert("Something went wrong :" + error);
@@ -60,7 +52,6 @@ const EventForm = (props) => {
         .then((response) => {
           setIsAlertVisible(true);
           setLoading(false);
-          setFormData(props.formDataDefault);
         })
         .catch((error) => {
           alert("Something went wrong :" + error);
@@ -110,7 +101,8 @@ const EventForm = (props) => {
             type="date"
             id="date"
             name="date"
-            onChange={handleDateChange}
+            value={formData.date}
+            onChange={handleChange}
             required
           />
         </div>
@@ -153,32 +145,36 @@ const EventForm = (props) => {
         </div>
         <div className="form-group">
           <label htmlFor="active">Active</label>
-          <select name="active" id="active" onChange={handleChange} required>
-            <option selected value={"false"}>
-              False
-            </option>
+          <select
+            name="active"
+            value={formData.active}
+            id="active"
+            onChange={handleChange}
+            required
+          >
+            <option value={"false"}>False</option>
             <option value={"true"}>True</option>
           </select>
         </div>
         <div className="form-group">
-          <label htmlFor="activeHomePage">
+          <label htmlFor="acceptRegistration">
             Active Registration for Homepage
           </label>
           <select
-            name="activeHomePage"
-            id="activeHomePage"
+            name="acceptRegistration"
+            id="acceptRegistration"
+            value={formData.acceptRegistration}
             onChange={handleChange}
             required
           >
-            <option selected value={"false"}>
-              False
-            </option>
+            <option value={"false"}>False</option>
             <option value={"true"}>True</option>
           </select>
         </div>
 
         <div className="form-group">
           <label htmlFor="eventBanner">Event Banner</label>
+          <Typography fontSize={10}>Max file size : 2 MB</Typography>
           <input
             type="file"
             id="eventBanner"
@@ -187,7 +183,12 @@ const EventForm = (props) => {
             onChange={handleFileChange}
             required
           />
-          <Typography fontSize={10}>Max file size : 2 MB</Typography>
+          {props.formTitle === "Update" ? (
+            <img
+              style={{ width: "100px", margin: "10px" }}
+              src={props.formDataDefault.banner}
+            />
+          ) : null}
         </div>
         <div className="form-group">
           <label htmlFor="speakerId">Speaker</label>
@@ -195,11 +196,9 @@ const EventForm = (props) => {
             name="speakerId"
             id="speakerId"
             onChange={handleChange}
+            value={formData.speakerId}
             required
           >
-            <option selected value="" disabled>
-              Speaker name
-            </option>
             {props.speakers.map((speaker) => (
               <option key={speaker.id} value={speaker.id}>
                 {speaker.name}

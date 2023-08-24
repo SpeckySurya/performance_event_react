@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import EventService from "../../services/EventService";
 
-const options = ["Edit", "Delete", "Active"];
+const options = ["Edit", "Delete"];
 
 const ITEM_HEIGHT = 40;
 

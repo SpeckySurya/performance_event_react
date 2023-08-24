@@ -28,7 +28,7 @@ export default function dateFormatter(dateString) {
 
   return {
     dayOfWeekName: daysOfWeek[date.getDay()],
-    day: date.getDate(),
+    day: date.getDate() < 10 ? "0" + date.getDate() : "" + date.getDate(),
     month: date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth(),
     monthName: months[date.getMonth()],
     year: date.getFullYear(),
@@ -45,6 +45,18 @@ export function convertTo12HourFormat(timeString = "") {
   const minutes12 = minutes < 10 ? `0${minutes}` : minutes;
 
   return `${hours12}:${minutes12} ${period}`;
+}
+
+export function isPastDateTime(date, time) {
+  const currentDateTime = new Date();
+  const combinedDateTime = new Date(
+    date.year,
+    parseInt(date.month),
+    date.day,
+    ...time.split(":").map(Number)
+  );
+
+  return combinedDateTime < currentDateTime;
 }
 
 export function addTime(startTimeString, durationString) {
