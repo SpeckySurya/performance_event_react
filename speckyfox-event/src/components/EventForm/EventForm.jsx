@@ -203,9 +203,10 @@ const EventForm = (props) => {
             name="speakerId"
             id="speakerId"
             onChange={handleChange}
-            value={formData.speakerId}
+            value={props.formTitle === "Update" ? formData.speakerId : ""}
             required
           >
+            <option value="">Select speaker</option>
             {props.speakers.map((speaker) => (
               <option key={speaker.id} value={speaker.id}>
                 {speaker.name}
