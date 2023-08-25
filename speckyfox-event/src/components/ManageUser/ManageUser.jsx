@@ -1,21 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   TextField,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
-  Paper,
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  InputAdornment,
   Box,
+  Button,
+  Stack,
 } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+import TableComponent from "../TableComponent/TableComponent";
 
 const ManageUser = ({ events }) => {
   const [selectedEvent, setSelectedEvent] = useState("");
@@ -32,14 +26,12 @@ const ManageUser = ({ events }) => {
     });
   };
 
+  console.log(events[0].events.users);
+
   const handleEventChange = (e) => {
     const event = e.target.value;
     setSelectedEvent(event);
     setUsers(usersByEvent(event) || []);
-  };
-
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
   };
 
   const filteredUsers = users.filter((user) =>
@@ -48,61 +40,40 @@ const ManageUser = ({ events }) => {
 
   return (
     <Box py={10}>
-      <FormControl>
-        <InputLabel>Event</InputLabel>
-        <Select
-          sx={{
-            height: "40px",
-            minWidth: "100px",
-            maxWidth: "250px",
-            margin: "10px 10px 10px 0",
-          }}
-          value={selectedEvent}
-          onChange={handleEventChange}
-          label="Event"
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          {events.map((event) => (
-            <MenuItem key={event.events.id} value={event}>
-              {event.events.title}
+      <Stack
+        direction={"row"}
+        alignItems={"center"}
+        justifyContent={"space-between"}
+      >
+        <FormControl>
+          <InputLabel>Event</InputLabel>
+          <Select
+            sx={{
+              border: "1px #1976d2 solid",
+              height: "40px",
+              minWidth: "100px",
+              maxWidth: "250px",
+              margin: "10px 10px 10px 0",
+            }}
+            value={selectedEvent}
+            onChange={handleEventChange}
+            label="Event"
+          >
+            <MenuItem value="">
+              <em>None</em>
             </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <TextField
-        label="Search Participant"
-        variant="outlined"
-        size="small"
-        sx={{ margin: "10px 10px 10px 0" }}
-        onChange={handleSearch}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-        }}
-      />
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell sx={{ fontWeight: "bold" }}>Name</TableCell>
-              <TableCell sx={{ fontWeight: "bold" }}>Email</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredUsers.map((user) => (
-              <TableRow key={user.id}>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
-              </TableRow>
+            {events.map((event) => (
+              <MenuItem key={event.events.id} value={event}>
+                {event.events.title}
+              </MenuItem>
             ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+          </Select>
+        </FormControl>
+        <Button sx={{ height: "40px" }} variant="outlined">
+          Export
+        </Button>
+      </Stack>
+      <TableComponent rowData={selectedEvent?.events?.users} />
     </Box>
   );
 };

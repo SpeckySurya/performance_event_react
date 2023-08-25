@@ -12,6 +12,9 @@ import MyContext from "./context";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
 import PopupAlert from "./components/PopupAlert/PopupAlert";
 import SnackbarComponent from "./components/SnackbarComponent/SnackbarComponent";
+import TableComponent from "./components/TableComponent/TableComponent";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 
 function App() {
   const [sharedState, setSharedState] = useState({
