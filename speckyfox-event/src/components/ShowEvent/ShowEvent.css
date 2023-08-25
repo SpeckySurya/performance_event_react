@@ -1,4 +1,8 @@
 .show-event-container {
+  margin: auto;
+}
+
+/* .show-event-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -39,4 +43,4 @@
 
 .show-event-container .event a:active {
   background-color: #f55f19;
-}
+} */

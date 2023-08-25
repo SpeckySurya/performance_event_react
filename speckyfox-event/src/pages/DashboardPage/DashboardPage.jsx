@@ -11,6 +11,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  LinearProgress,
 } from "@mui/material";
 import EventCard from "../../components/EventCard/EventCard";
 import EventService from "../../services/EventService";
@@ -25,6 +26,8 @@ import {
   expireTime,
   stopTimer,
 } from "../../utils/Constant";
+import { TbRuler2Off } from "react-icons/tb";
+import ShowEvent from "../../components/ShowEvent/ShowEvent";
 
 const formDataDefault = {
   title: "",
@@ -43,24 +46,42 @@ const formDataDefault = {
 export const DashboardPage = () => {
   const [selected, setSelected] = useState("show");
   const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [speakers, setSpeakers] = useState([]);
+  const [update, setUpdate] = useState(false);
   const [open, setOpen] = React.useState(false);
 
   const navigate = useNavigate();
+
+  const initialSetup = () => {
+    const eventService = new EventService();
+    eventService.getAllEvents().then((response) => {
+      setEvents(response.data);
+      setLoading(false);
+    });
+    const speakerService = new SpeakerService();
+    speakerService.getAllSpeakers().then((response) => {
+      setSpeakers(response.data);
+    });
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    initialSetup();
+  }, []);
+
+  useEffect(() => {
+    if (selected === "show" || update) {
+      initialSetup();
+      setUpdate(false);
+    }
+  }, [selected, update]);
 
   useEffect(() => {
     setTimeout(() => setOpen(true), expireTime() - alertBeforeExpireTime());
     if (sessionStorage.getItem("token") === null) {
       navigate("/login");
     }
-    const eventService = new EventService();
-    eventService.getAllEvents().then((response) => {
-      setEvents(response.data);
-    });
-    const speakerService = new SpeakerService();
-    speakerService.getAllSpeakers().then((response) => {
-      setSpeakers(response.data);
-    });
   }, []);
 
   function handleSidebar(data) {
@@ -74,6 +95,7 @@ export const DashboardPage = () => {
           <EventForm
             formDataDefault={formDataDefault}
             speakers={speakers}
+            setSelected={setSelected}
             formTitle="Create"
           />
         );
@@ -83,7 +105,14 @@ export const DashboardPage = () => {
             (speaker) => speaker.id === event.id
           );
         });
-        return <EventCard events={events} isEventPage={false} />;
+        return (
+          <ShowEvent
+            setLoading={setLoading}
+            events={events}
+            setUpdate={setUpdate}
+            isEventPage={false}
+          />
+        );
       case "homeConfig":
         return <HomePageConfiguration />;
       case "manageSpeaker":
@@ -111,8 +140,9 @@ export const DashboardPage = () => {
 
   return (
     <>
+      {loading && <LinearProgress color="error" sx={{ zIndex: 10 }} />}
       <AdminHeader handleSidebar={handleSidebar} />
-      <Box padding={5}>
+      <Box paddingY={10} paddingX={3}>
         <Box margin={"auto"}>{menuComponentFinder()}</Box>
       </Box>
       <Dialog

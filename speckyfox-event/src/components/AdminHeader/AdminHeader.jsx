@@ -22,6 +22,7 @@ import { useNavigate } from "react-router-dom";
 
 const AdminHeader = (props) => {
   const [open, setOpen] = useState(false);
+  const [menuItem, setMenuItem] = useState("Show Events");
   const navigate = useNavigate();
 
   const toggleDrawer = (isOpen) => (event) => {
@@ -47,6 +48,7 @@ const AdminHeader = (props) => {
       onClick: () => {
         props.handleSidebar("show");
         setOpen(false);
+        setMenuItem("Show Events");
       },
     },
     {
@@ -55,6 +57,7 @@ const AdminHeader = (props) => {
       onClick: () => {
         props.handleSidebar("create");
         setOpen(false);
+        setMenuItem("Create Event");
       },
     },
 
@@ -64,6 +67,7 @@ const AdminHeader = (props) => {
       onClick: () => {
         props.handleSidebar("homeConfig");
         setOpen(false);
+        setMenuItem("Home Configuration");
       },
     },
     {
@@ -72,6 +76,7 @@ const AdminHeader = (props) => {
       onClick: () => {
         props.handleSidebar("showSpeaker");
         setOpen(false);
+        setMenuItem("Show Speaker");
       },
     },
     {
@@ -80,6 +85,7 @@ const AdminHeader = (props) => {
       onClick: () => {
         props.handleSidebar("manageSpeaker");
         setOpen(false);
+        setMenuItem("Create Speaker");
       },
     },
 
@@ -89,6 +95,7 @@ const AdminHeader = (props) => {
       onClick: () => {
         props.handleSidebar("notify");
         setOpen(false);
+        setMenuItem("Notify Participant");
       },
     },
     {
@@ -97,6 +104,7 @@ const AdminHeader = (props) => {
       onClick: () => {
         props.handleSidebar("manageUser");
         setOpen(false);
+        setMenuItem("View Participant");
       },
     },
     { text: "Logout", icon: <ExitToAppIcon />, onClick: handleLogout },
@@ -131,6 +139,14 @@ const AdminHeader = (props) => {
           </IconButton>
           <Typography variant="h6">Event Dashboard</Typography>
         </Toolbar>
+        <Typography
+          fontStyle={"italic"}
+          marginBottom={1}
+          marginLeft={3.5}
+          fontSize={14}
+        >
+          Home / {menuItem}
+        </Typography>
       </AppBar>
       <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
         {list()}

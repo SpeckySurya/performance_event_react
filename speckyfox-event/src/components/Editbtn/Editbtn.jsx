@@ -3,7 +3,10 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import EventService from "../../services/EventService";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import PopupAlert from "../PopupAlert/PopupAlert";
+import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
+import { CircularProgress, LinearProgress } from "@mui/material";
 
 const options = ["Edit", "Delete"];
 
@@ -11,6 +14,8 @@ const ITEM_HEIGHT = 40;
 
 export default function Editbtn(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [dialog, setDialog] = useState({ open: false, action: null });
+  const [snackbar, setSnackbar] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -18,6 +23,37 @@ export default function Editbtn(props) {
   const handleClose = (event) => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    handleClose();
+    if (dialog.action === "Yes") {
+      props.setLoading(true);
+      const eventService = new EventService();
+      eventService
+        .deleteEvent(props.event.events.id)
+        .then((response) => {
+          if (response) {
+            setSnackbar(
+              <SnackbarComponent message="Event deleted" severity="success" />
+            );
+          } else {
+            setSnackbar(
+              <SnackbarComponent message="Event not deleted" severity="error" />
+            );
+          }
+          props.setLoading(false);
+        })
+        .catch((error) => {
+          setSnackbar(
+            <SnackbarComponent
+              message="Something went wrong"
+              severity="error"
+            />
+          );
+          props.setLoading(false);
+        });
+    }
+  }, [dialog]);
 
   const handleItemClick = (option) => {
     switch (option) {
@@ -27,23 +63,7 @@ export default function Editbtn(props) {
         break;
       }
       case "Delete": {
-        alert("Do you really want to delete " + props.event.events.id);
-        const choice = prompt("Do you really want to delete");
-        if (choice) {
-          const eventService = new EventService();
-          eventService
-            .deleteEvent(props.event.events.id)
-            .then((response) => {
-              if (response) {
-                alert(props.event.events.title + " deleted succesfully !");
-              } else {
-                alert("Something went wrong !");
-              }
-            })
-            .catch((error) => {
-              alert(error);
-            });
-        }
+        setDialog({ ...dialog, open: true });
         break;
       }
     }
@@ -51,6 +71,15 @@ export default function Editbtn(props) {
 
   return (
     <div>
+      <PopupAlert
+        control={{
+          dialog: dialog,
+          setDialog: (dialog) => setDialog({ ...dialog, open: open }),
+        }}
+        title="Alert"
+        content={"Do you really want to delete ?"}
+        action={{ first: "Yes", second: "No" }}
+      />
       <IconButton
         sx={{
           color: "white",
@@ -100,6 +129,7 @@ export default function Editbtn(props) {
           </MenuItem>
         ))}
       </Menu>
+      {snackbar}
     </div>
   );
 }

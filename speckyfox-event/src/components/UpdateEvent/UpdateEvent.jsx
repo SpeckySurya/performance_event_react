@@ -45,6 +45,7 @@ const UpdateEvent = (props) => {
 
   function handleBackButton() {
     props.setEventEditing(false);
+    props.setUpdate(true);
   }
 
   return (
@@ -59,6 +60,8 @@ const UpdateEvent = (props) => {
         formDataDefault={getEventData()}
         speakers={speakers}
         formTitle="Update"
+        setEventEditing={props.setEventEditing}
+        handleBackButton={handleBackButton}
       />
     </div>
   );

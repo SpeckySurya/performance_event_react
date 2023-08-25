@@ -11,6 +11,7 @@ const EventForm = (props) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const navigate = useNavigate();
+  const [snackbar, setSnackbar] = useState(null);
   const [currentSpeaker, setCurrentSpeaker] = useState("Select Speaker");
   const [loading, setLoading] = useState(false);
   const [duration, setDuration] = useState(props.formDataDefault.duration);
@@ -40,9 +41,16 @@ const EventForm = (props) => {
         .then((response) => {
           setIsAlertVisible(true);
           setLoading(false);
+          setTimeout(() => props.handleBackButton(), 1000);
         })
         .catch((error) => {
-          alert("Something went wrong :" + error);
+          console.log(error);
+          setSnackbar(
+            <SnackbarComponent
+              message="Something went wrong"
+              severity="success"
+            />
+          );
         });
     } else {
       eventService
@@ -50,6 +58,7 @@ const EventForm = (props) => {
         .then((response) => {
           setIsAlertVisible(true);
           setLoading(false);
+          setTimeout(() => props.setSelected("show"), 1000);
         })
         .catch((error) => {
           alert("Something went wrong :" + error);
@@ -121,7 +130,7 @@ const EventForm = (props) => {
         <div className="form-group">
           <label htmlFor="meetingUrl">Meeting URL</label>
           <input
-            type="text"
+            type="url"
             id="meetingUrl"
             name="meetingUrl"
             placeholder="Meeting URL"
@@ -219,7 +228,7 @@ const EventForm = (props) => {
           {loading ? (
             <CircularProgress size={20} color={"error"} />
           ) : (
-            "Create Event"
+            props.formTitle + " Event"
           )}
         </button>
       </form>
@@ -230,7 +239,7 @@ const EventForm = (props) => {
               handleAlertClose();
             }}
           >
-            Event created successfully !
+            Event {props.formTitle}d Successfully !
           </Alert>
         )}
       </Box>

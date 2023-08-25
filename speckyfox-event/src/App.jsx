@@ -10,11 +10,14 @@ import EventPage from "./pages/EventPage/EventPage";
 import { DashboardPage } from "./pages/DashboardPage/DashboardPage";
 import MyContext from "./context";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
+import PopupAlert from "./components/PopupAlert/PopupAlert";
+import SnackbarComponent from "./components/SnackbarComponent/SnackbarComponent";
 
 function App() {
   const [sharedState, setSharedState] = useState({
     admin: false,
   });
+
   return (
     <MyContext.Provider value={{ sharedState, setSharedState }}>
       <Routes>
