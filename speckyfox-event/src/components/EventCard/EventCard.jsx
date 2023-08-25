@@ -24,7 +24,6 @@ import dateFormatter, {
 } from "../../utils/DateFormatter";
 import EventService from "../../services/EventService";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
-
 const EventCard = (props) => {
   const [active, setActive] = useState(props.event.events.active);
 
@@ -102,23 +101,25 @@ const EventCard = (props) => {
         position: "relative",
       }}
     >
-      <Stack
-        left={20}
-        top={20}
-        spacing={1}
-        direction={"row"}
-        alignItems={"center"}
-        position={"absolute"}
-        sx={{ cursor: "pointer" }}
-        onClick={() => handleEventStatus(props.event.events)}
-      >
-        {active ? (
-          <ToggleOnOutlinedIcon sx={{ fontSize: "30px", color: "green" }} />
-        ) : (
-          <ToggleOffOutlinedIcon sx={{ fontSize: "30px", color: "red" }} />
-        )}
-        <Typography>{active ? "Active" : "Inactive"}</Typography>
-      </Stack>
+      {!props.isEventPage && (
+        <Stack
+          left={20}
+          top={20}
+          spacing={1}
+          direction={"row"}
+          alignItems={"center"}
+          position={"absolute"}
+          sx={{ cursor: "pointer" }}
+          onClick={() => handleEventStatus(props.event.events)}
+        >
+          {active ? (
+            <ToggleOnOutlinedIcon sx={{ fontSize: "30px", color: "green" }} />
+          ) : (
+            <ToggleOffOutlinedIcon sx={{ fontSize: "30px", color: "red" }} />
+          )}
+          <Typography>{active ? "Active" : "Inactive"}</Typography>
+        </Stack>
+      )}
       <CardMedia
         component="img"
         height="200"
