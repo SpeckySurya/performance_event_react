@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 const EventForm = (props) => {
   const [formData, setFormData] = useState(props.formDataDefault);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [speakerSelect, setSpeakerSelect] = useState("");
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const navigate = useNavigate();
   const [snackbar, setSnackbar] = useState(null);
@@ -16,6 +17,9 @@ const EventForm = (props) => {
   const [loading, setLoading] = useState(false);
   const [duration, setDuration] = useState(props.formDataDefault.duration);
   const handleChange = (event) => {
+    if (event.target.name === "speakerId") {
+      setSpeakerSelect(event.target.value);
+    }
     let { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -203,10 +207,14 @@ const EventForm = (props) => {
             name="speakerId"
             id="speakerId"
             onChange={handleChange}
-            value={props.formTitle === "Update" ? formData.speakerId : ""}
+            value={
+              props.formTitle === "Update" ? formData.speakerId : speakerSelect
+            }
             required
           >
-            <option value="">Select speaker</option>
+            <option disabled value="">
+              Select speaker
+            </option>
             {props.speakers.map((speaker) => (
               <option key={speaker.id} value={speaker.id}>
                 {speaker.name}
