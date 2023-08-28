@@ -48,7 +48,7 @@ const EventForm = (props) => {
           setTimeout(() => props.handleBackButton(), 1000);
         })
         .catch((error) => {
-          console.log(error);
+          setLoading(false);
           setSnackbar(
             <SnackbarComponent
               message="Something went wrong"
@@ -65,7 +65,13 @@ const EventForm = (props) => {
           setTimeout(() => props.setSelected("show"), 1000);
         })
         .catch((error) => {
-          alert("Something went wrong :" + error);
+          setLoading(false);
+          setSnackbar(
+            <SnackbarComponent
+              message="Something went wrong"
+              severity="success"
+            />
+          );
         });
     }
   };
@@ -252,6 +258,7 @@ const EventForm = (props) => {
           </Alert>
         )}
       </Box>
+      {snackbar}
     </div>
   );
 };

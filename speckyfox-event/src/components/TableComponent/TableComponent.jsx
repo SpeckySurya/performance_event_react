@@ -1,10 +1,17 @@
-import React, { useCallback, useMemo, useRef } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+} from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { Button } from "@mui/material";
+import { useEditable } from "@chakra-ui/react";
 
-const TableComponent = ({ rowData }) => {
+const TableComponent = React.forwardRef(({ rowData }, ref) => {
   const gridRef = useRef();
   const defaultColDef = useMemo(() => {
     return {
@@ -36,7 +43,6 @@ const TableComponent = ({ rowData }) => {
       headerName: "Mobile Number",
       field: "mobileNumber",
     },
-    { headerName: "Event ID", field: "eventId", sortable: true, filter: true },
     {
       headerName: "Any PT Tool Used",
       field: "anyPtToolUsed",
@@ -46,6 +52,10 @@ const TableComponent = ({ rowData }) => {
       field: "ptNeeded",
     },
   ];
+
+  useImperativeHandle(ref, () => ({
+    onBtnExport,
+  }));
 
   const onBtnExport = useCallback(() => {
     gridRef.current.api.exportDataAsCsv();
@@ -67,6 +77,6 @@ const TableComponent = ({ rowData }) => {
       />
     </div>
   );
-};
+});
 
 export default TableComponent;

@@ -1,0 +1,68 @@
+{
+  "admin": [
+    {
+      "events": {
+        "id": 2,
+        "title": "Cricket Event",
+        "description": "This is cricket event",
+        "date": "2023-08-31T00:00:00.000+00:00",
+        "time": "12:34:17",
+        "duration": "2:0",
+        "meetingUrl": "https://meet.google.com/pdg-ptzd-pbr?hs=224",
+        "location": "Virtual/Online",
+        "active": true,
+        "acceptRegistration": false,
+        "eventBanner": "https://peroformenceeventbucket.s3.amazonaws.com/banner.png",
+        "contactTo": "sourabh@gmail.com",
+        "meetingUUID": "0ceb5160-5b56-47b8-b20b-4976b4754725",
+        "createdAt": "2023-08-28T07:05:06.000+00:00",
+        "updatedAt": "2023-08-28T07:05:06.000+00:00",
+        "users": [],
+        "speaker": {
+          "id": 4,
+          "name": "Sourabh Gautam",
+          "designation": "Senior Software Engineer",
+          "aboutSpeaker": "About speaker",
+          "email": "sourabh.gautam@speckfox.com",
+          "picture": "https://peroformenceeventbucket.s3.amazonaws.com/pic.png",
+          "linkdinUrl": "https://www.demo.com",
+          "twitterUrl": "https://www.demo.com",
+          "youtubeUrl": "https://www.demo.com"
+        }
+      }
+    },
+    {
+      "events": {
+        "id": 3,
+        "title": "Space Event",
+        "description": "This is space event",
+        "date": "2023-09-10T00:00:00.000+00:00",
+        "time": "11:00:00",
+        "duration": "1:30",
+        "meetingUrl": "https://meet.google.com/pdg-ptzd-pbr?hs=224",
+        "location": "Noida",
+        "active": true,
+        "acceptRegistration": false,
+        "eventBanner": "https://peroformenceeventbucket.s3.amazonaws.com/banner-old.png",
+        "contactTo": "sourabh@gmail.com",
+        "meetingUUID": "dca04b01-b34e-4fbc-b867-e22ca202194f",
+        "createdAt": "2023-08-28T07:08:13.000+00:00",
+        "updatedAt": "2023-08-28T07:08:13.000+00:00",
+        "users": [],
+        "speaker": {
+          "id": 5,
+          "name": "Abhishek Aggarwal",
+          "designation": "Manager",
+          "aboutSpeaker": "About speaker",
+          "email": "abhishek@speckyfox.com",
+          "picture": "https://peroformenceeventbucket.s3.amazonaws.com/oldspeaker.png",
+          "linkdinUrl": "https://www.demo.com",
+          "twitterUrl": "https://www.demo.com",
+          "youtubeUrl": "https://www.demo.com"
+        }
+      }
+    }
+  ],
+  "comments": [{ "id": 1, "body": "some comment", "postId": 1 }],
+  "profile": { "name": "typicode" }
+}
