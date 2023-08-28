@@ -1,4 +1,5 @@
 // const serviceUrl = () => `https://eventbackend.speckyfox.com`;
+// const serviceUrl = () => `  http://localhost:3000`;
 const serviceUrl = () => `http://34.218.92.121:8096`;
 
 let timerId = null;
