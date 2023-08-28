@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   TextField,
   FormControl,
@@ -13,30 +13,17 @@ import TableComponent from "../TableComponent/TableComponent";
 
 const ManageUser = ({ events }) => {
   const [selectedEvent, setSelectedEvent] = useState("");
-  const [users, setUsers] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const usersByEvent = (event) => {
-    return event.events.users.map((user) => {
-      let obj = {};
-      obj["id"] = user.id;
-      obj["name"] = user.firstName;
-      obj["email"] = user.email;
-      return obj;
-    });
-  };
-
-  console.log(events[0].events.users);
+  const tableRef = useRef(null);
 
   const handleEventChange = (e) => {
     const event = e.target.value;
     setSelectedEvent(event);
-    setUsers(usersByEvent(event) || []);
   };
-
-  const filteredUsers = users.filter((user) =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  function handleClick() {
+    if (tableRef.current) {
+      tableRef.current.onBtnExport();
+    }
+  }
 
   return (
     <Box py={10}>
@@ -69,11 +56,15 @@ const ManageUser = ({ events }) => {
             ))}
           </Select>
         </FormControl>
-        <Button sx={{ height: "40px" }} variant="outlined">
+        <Button
+          onClick={handleClick}
+          sx={{ height: "40px" }}
+          variant="outlined"
+        >
           Export
         </Button>
       </Stack>
-      <TableComponent rowData={selectedEvent?.events?.users} />
+      <TableComponent ref={tableRef} rowData={selectedEvent?.events?.users} />
     </Box>
   );
 };
