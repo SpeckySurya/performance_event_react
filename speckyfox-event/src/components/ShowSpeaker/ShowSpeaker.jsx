@@ -1,63 +1,119 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+
 import {
   Card,
   CardMedia,
   CardContent,
   Typography,
-  IconButton,
   Stack,
-  Box,
+  Button,
+  CardActions,
 } from "@mui/material";
 
 import SpeakerService from "../../services/SpeakerService";
+import PopupAlert from "../PopupAlert/PopupAlert";
 
 const ShowSpeaker = () => {
   const speakerService = new SpeakerService();
   const [speakers, setSpeakers] = useState([]);
-
+  const [dialog, setDialog] = useState({ open: false, action: null });
+  const [speakerId, setSpeakerId] = useState(-1);
   useEffect(() => {
     speakerService.getAllSpeakers().then((response) => {
       setSpeakers(response.data);
     });
   }, []);
+  useEffect(() => {
+    console.log(speakers);
+    if (dialog.action === "Yes") {
+      speakerService
+        .deleteSpeaker(speakerId)
+        .then((response) => {
+          alert("Speaker deleted !");
+        })
+        .catch((error) => {
+          alert(error);
+        });
+      setDialog({ open: false, action: null });
+    }
+    if (dialog.action === "No") {
+      setDialog({ open: false, action: null });
+    }
+  }, [dialog]);
+  console.log(dialog, dialog.action);
 
   function onDelete(speakerId) {
-    alert(speakerId);
-    speakerService
-      .deleteSpeaker(speakerId)
-      .then((response) => {
-        alert("Speaker deleted !");
-      })
-      .catch((error) => {
-        alert(error);
-      });
+    console.log("click");
+    setDialog({ ...dialog, open: true });
+    console.log(dialog, dialog.action);
+    setSpeakerId(speakerId);
+  }
+
+  function editspeakerfunction() {
+    alert("do you realy want to edit");
   }
 
   return (
-    <Stack marginTop={"20vh"} flexWrap={"wrap"} direction={"row"} spacing={5}>
-      {speakers.map((speaker) => {
-        return (
-          <Box marginBottom={20}>
-            <Card key={speaker.id} sx={{ width: 300 }}>
-              <CardMedia
-                component="img"
-                height="140"
-                image={speaker.picture}
-                alt={speaker.name}
-              />
-              <CardContent>
-                <Typography variant="h6" component="div">
-                  {speaker.name}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {speaker.designation}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Box>
-        );
-      })}
-    </Stack>
+    <>
+      <PopupAlert
+        control={{
+          dialog: dialog,
+          setDialog: (dialog) => setDialog({ ...dialog, open: open }),
+        }}
+        title="Alert"
+        content={"Do you really want to delete ?"}
+        action={{ first: "Yes", second: "No" }}
+      />
+      <Stack flexWrap={"wrap"} direction={"row"}>
+        {speakers.map((speaker) => {
+          return (
+            <>
+              <Card
+                key={speaker.id}
+                sx={{ width: 310, mt: 10, ml: "auto", mr: "auto" }}
+              >
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={speaker.picture}
+                  alt={speaker.name}
+                />
+                <CardContent>
+                  <Typography variant="h6" component="div">
+                    {speaker.name}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {speaker.designation}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    style={{ width: "50%" }}
+                    startIcon={<DeleteIcon />}
+                    onClick={() => onDelete(speaker.id)}
+                  >
+                    Delete
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    style={{ width: "50%" }}
+                    startIcon={<EditIcon />}
+                    onClick={editspeakerfunction}
+                  >
+                    Edit
+                  </Button>
+                </CardActions>
+              </Card>
+            </>
+          );
+        })}
+      </Stack>
+    </>
   );
 };
 
