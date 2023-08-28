@@ -56,6 +56,7 @@ function ManageSpeaker(props) {
 
   return (
     <>
+      {" "}
       <Box px={2}>
         <Card
           style={{
@@ -69,7 +70,7 @@ function ManageSpeaker(props) {
           }}
         >
           <CardContent>
-            <h3 className="ManageSpeakerh3">Create Speaker</h3>
+            <h3 className="ManageSpeakerh3">{props.title} Speaker</h3>
             <form onSubmit={handleSubmit}>
               <Grid container spacing={1}>
                 <Grid xs={12} sm={12} item>

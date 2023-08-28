@@ -29,7 +29,7 @@ const EventCard = (props) => {
 
   const BootstrapButton = styled(Button)({
     backgroundColor: "#ff970a",
-    width: "100px",
+    width: "80%",
     color: "white",
     "&:hover": {
       backgroundColor: "#f7542b",
@@ -95,8 +95,8 @@ const EventCard = (props) => {
   return (
     <Card
       sx={{
-        paddingBottom: 5,
-        width: 380,
+        paddingBottom: 6,
+        width: 350,
         m: 2,
         position: "relative",
       }}
@@ -199,7 +199,7 @@ const EventCard = (props) => {
                 position: "absolute",
                 bottom: "2%",
                 paddingX: "20px",
-                right: "calc(50% - 50px)",
+                right: "calc(25% - 50px)",
                 "&:hover": { backgroundColor: "gray" },
               }}
             >
@@ -210,7 +210,8 @@ const EventCard = (props) => {
               sx={{
                 position: "absolute",
                 bottom: "2%",
-                right: "calc(50% - 50px)",
+                right: "calc(25% - 50px)",
+                marginBottom: "12px",
               }}
             >
               <CustomLink to={`/${props.event.events.id}`}>Register</CustomLink>

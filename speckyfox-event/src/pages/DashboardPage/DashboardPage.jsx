@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import EventForm from "../../components/EventForm/EventForm";
 import "./DashboardPage.css";
 import NotifyParticipant from "../../components/NotifyParticipant/NotifyParticipant";
+import UploadVideoAndPdf from "../../components/UploadVideoAndPdf/UploadVideoAndPdf";
 import AdminHeader from "../../components/AdminHeader/AdminHeader";
 import {
   Box,
@@ -46,6 +47,7 @@ const formDataDefault = {
 export const DashboardPage = () => {
   const [selected, setSelected] = useState("show");
   const [events, setEvents] = useState([]);
+  const [updateSpeaker, setUpdateSpeaker] = useState(false);
   const [loading, setLoading] = useState(false);
   const [speakers, setSpeakers] = useState([]);
   const [update, setUpdate] = useState(false);
@@ -116,13 +118,21 @@ export const DashboardPage = () => {
       case "homeConfig":
         return <HomePageConfiguration />;
       case "manageSpeaker":
-        return <ManageSpeaker />;
+        return <ManageSpeaker title="Create" />;
       case "notify":
         return <NotifyParticipant events={events} />;
       case "manageUser":
         return <ManageUser events={events} />;
       case "showSpeaker":
-        return <ShowSpeaker />;
+        return (
+          <ShowSpeaker
+            updateSpeaker={updateSpeaker}
+            setUpdateSpeaker={setUpdateSpeaker}
+          />
+        );
+      case "UploadVideoAndPdf":
+        return <UploadVideoAndPdf />;
+
       default:
         return null;
     }
