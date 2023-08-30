@@ -11,6 +11,8 @@ import {
   ListItemText,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
+
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AssuredWorkloadOutlinedIcon from "@mui/icons-material/AssuredWorkloadOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
@@ -105,6 +107,14 @@ const AdminHeader = (props) => {
         props.handleSidebar("manageUser");
         setOpen(false);
         setMenuItem("View Participant");
+      },
+    },
+    {
+      text: "Upload Files",
+      icon: <VideoLibraryOutlinedIcon />,
+      onClick: () => {
+        props.handleSidebar("UploadVideoAndPdf");
+        setOpen(false);
       },
     },
     { text: "Logout", icon: <ExitToAppIcon />, onClick: handleLogout },

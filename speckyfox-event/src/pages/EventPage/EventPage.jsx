@@ -7,7 +7,7 @@ import { LinearProgress } from "@mui/material";
 import SpeakerService from "../../services/SpeakerService";
 import HomeConfigService from "../../services/HomeConfigService";
 import ShowEvent from "../../components/ShowEvent/ShowEvent";
-
+import Togglebtn from "../../components/Togglebtn/Togglebtn";
 const EventPage = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -31,6 +31,7 @@ const EventPage = () => {
     <div>
       <Header homeConfig={homeConfig} />
       <ShowEvent events={events} isEventPage={true} />
+      {/* <Togglebtn /> */}
       <Footer homeConfig={homeConfig} />
     </div>
   );

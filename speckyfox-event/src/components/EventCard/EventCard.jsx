@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+
 import "../../responsive.css";
 import "./EventCard.css";
+
 import {
   Box,
   Card,
@@ -11,6 +13,7 @@ import {
   Typography,
   Button,
   styled,
+  IconButton,
 } from "@mui/material";
 import ToggleOffOutlinedIcon from "@mui/icons-material/ToggleOffOutlined";
 import ToggleOnOutlinedIcon from "@mui/icons-material/ToggleOnOutlined";
@@ -24,12 +27,13 @@ import dateFormatter, {
 } from "../../utils/DateFormatter";
 import EventService from "../../services/EventService";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
+
 const EventCard = (props) => {
   const [active, setActive] = useState(props.event.events.active);
 
   const BootstrapButton = styled(Button)({
     backgroundColor: "#ff970a",
-    width: "100px",
+    width: "80%",
     color: "white",
     "&:hover": {
       backgroundColor: "#f7542b",
@@ -94,10 +98,12 @@ const EventCard = (props) => {
 
   return (
     <Card
+      className="cardeffect"
       sx={{
-        paddingBottom: 5,
-        width: 380,
-        m: 2,
+        paddingBottom: 6,
+        width: 350,
+        my: 0.8,
+        mx: 2,
         position: "relative",
       }}
     >
@@ -120,9 +126,10 @@ const EventCard = (props) => {
           <Typography>{active ? "Active" : "Inactive"}</Typography>
         </Stack>
       )}
+      {isOutdated ? "" : <button className="viewbtn">Live</button>}
       <CardMedia
         component="img"
-        height="200"
+        height="180"
         image={props.event.events.eventBanner}
         alt="Event Banner"
       />
@@ -138,10 +145,10 @@ const EventCard = (props) => {
       )}
 
       <CardContent sx={{ flex: "1 0 auto" }}>
-        <Typography gutterBottom variant="h4" fontWeight={600}>
+        <Typography gutterBottom variant="h6" fontWeight={600}>
           {props.event.events.title}
         </Typography>
-        <Typography fontWeight={600} py={1}>
+        <Typography fontWeight={600} py={1} mt={-1}>
           Agenda -
         </Typography>
         <Box fontSize={"5px"} marginBottom={3}>
@@ -162,9 +169,9 @@ const EventCard = (props) => {
             </ul>
           }
         </Box>
-        <Box sx={{ mt: "auto" }}>
+        <Box className="margintopforui" sx={{ mt: "100 " }}>
           <Stack direction="row" alignItems="center">
-            <Typography color="#f37d47" marginX={1} fontSize={18}>
+            <Typography color="#f37d47" marginX={1} marginY={-1} fontSize={18}>
               <i className="bx bxs-calendar"></i>
             </Typography>
             <Typography>
@@ -197,9 +204,10 @@ const EventCard = (props) => {
                 cursor: "default",
                 color: "lightgray",
                 position: "absolute",
-                bottom: "2%",
-                paddingX: "20px",
-                right: "calc(50% - 50px)",
+                width: "80%",
+                bottom: "4.5%",
+                // paddingX: "20px",
+                right: "calc(25% - 50px)",
                 "&:hover": { backgroundColor: "gray" },
               }}
             >
@@ -210,7 +218,8 @@ const EventCard = (props) => {
               sx={{
                 position: "absolute",
                 bottom: "2%",
-                right: "calc(50% - 50px)",
+                right: "calc(25% - 50px)",
+                marginBottom: "12px",
               }}
             >
               <CustomLink to={`/${props.event.events.id}`}>Register</CustomLink>
