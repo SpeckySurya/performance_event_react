@@ -102,7 +102,8 @@ const EventCard = (props) => {
       sx={{
         paddingBottom: 6,
         width: 350,
-        m: 2,
+        my: 0.8,
+        mx: 2,
         position: "relative",
       }}
     >
