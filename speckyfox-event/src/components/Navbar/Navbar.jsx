@@ -6,6 +6,7 @@ import { BsFacebook, BsYoutube, BsTwitter, BsLinkedin } from "react-icons/bs";
 
 import { useState } from "react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 const Navbar = ({ homeConfig }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
@@ -90,7 +91,9 @@ const Navbar = ({ homeConfig }) => {
       )}
       <nav className="navbar" ref={buttonRef}>
         <div className="logo">
-          <img src={homeConfig.logo} />
+          <Link to={"/"}>
+            <img src={homeConfig.logo} />
+          </Link>
         </div>
         <div
           className="nav-hamburger"

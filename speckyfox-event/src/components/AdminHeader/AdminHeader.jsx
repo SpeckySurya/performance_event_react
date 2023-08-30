@@ -139,14 +139,6 @@ const AdminHeader = (props) => {
           </IconButton>
           <Typography variant="h6">Event Dashboard</Typography>
         </Toolbar>
-        <Typography
-          fontStyle={"italic"}
-          marginBottom={1}
-          marginLeft={3.5}
-          fontSize={14}
-        >
-          Home / {menuItem}
-        </Typography>
       </AppBar>
       <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
         {list()}

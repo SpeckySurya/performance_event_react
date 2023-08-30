@@ -12,6 +12,7 @@ import {
   DialogContentText,
   DialogTitle,
   LinearProgress,
+  Typography,
 } from "@mui/material";
 import EventCard from "../../components/EventCard/EventCard";
 import EventService from "../../services/EventService";
@@ -88,6 +89,16 @@ export const DashboardPage = () => {
     setSelected(data);
   }
 
+  const breadCrump = {
+    create: "Create Event",
+    show: "Show Event",
+    homeConfig: "Home Configuration",
+    manageSpeaker: "Manage Speaker",
+    notify: "Notify Participant",
+    manageUser: "Manage User",
+    showSpeaker: "Show Speaker",
+  };
+
   function menuComponentFinder() {
     switch (selected) {
       case "create":
@@ -143,6 +154,9 @@ export const DashboardPage = () => {
       {loading && <LinearProgress color="error" sx={{ zIndex: 10 }} />}
       <AdminHeader handleSidebar={handleSidebar} />
       <Box paddingY={10} paddingX={3}>
+        <Typography fontWeight={"bolder"}>
+          Home / {breadCrump[selected]}
+        </Typography>
         <Box margin={"auto"}>{menuComponentFinder()}</Box>
       </Box>
       <Dialog
