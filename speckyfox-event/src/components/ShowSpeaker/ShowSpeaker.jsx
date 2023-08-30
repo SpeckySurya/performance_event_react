@@ -20,6 +20,7 @@ const ShowSpeaker = (props) => {
   const speakerService = new SpeakerService();
   const [speakers, setSpeakers] = useState([]);
   const [dialog, setDialog] = useState({ open: false, action: null });
+  const [selectedSpeaker, setSelectedSpeaker] = useState(null);
   const [speakerId, setSpeakerId] = useState(-1);
   useEffect(() => {
     speakerService.getAllSpeakers().then((response) => {
@@ -43,7 +44,6 @@ const ShowSpeaker = (props) => {
       setDialog({ open: false, action: null });
     }
   }, [dialog]);
-  console.log(dialog, dialog.action);
 
   function onDelete(speakerId) {
     console.log("click");
@@ -52,14 +52,27 @@ const ShowSpeaker = (props) => {
     setSpeakerId(speakerId);
   }
 
-  function editspeakerfunction() {
+  function editspeakerfunction(speaker) {
     props.setUpdateSpeaker(true);
+    setSelectedSpeaker(speaker);
+    props.speakerInitialValue.name = speaker.name;
+    props.speakerInitialValue.designation = speaker.designation;
+    props.speakerInitialValue.aboutSpeaker = speaker.aboutSpeaker;
+    props.speakerInitialValue.email = speaker.email;
+    props.speakerInitialValue.linkdinUrl = speaker.linkdinUrl;
+    props.speakerInitialValue.twitterUrl = speaker.twitterUrl;
+    props.speakerInitialValue.youtubeUrl = speaker.youtubeUrl;
   }
 
   return (
     <>
       {props.updateSpeaker ? (
-        <ManageSpeaker title="Update" />
+        <ManageSpeaker
+          title="Update"
+          setUpdateSpeaker={props.setUpdateSpeaker}
+          speakerInitialValue={props.speakerInitialValue}
+          selectedSpeaker={selectedSpeaker}
+        />
       ) : (
         <div>
           <PopupAlert
@@ -108,7 +121,7 @@ const ShowSpeaker = (props) => {
                         color="success"
                         style={{ width: "50%" }}
                         startIcon={<EditIcon />}
-                        onClick={editspeakerfunction}
+                        onClick={() => editspeakerfunction(speaker)}
                       >
                         Edit
                       </Button>

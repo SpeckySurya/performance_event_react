@@ -27,6 +27,7 @@ import EventCard from "../EventCard/EventCard";
 
 const ShowEvent = (props) => {
   const [eventEditing, setEventEditing] = useState(false);
+  const [isPastEvent, setPastEvent] = useState(false);
   const [editEvent, setEditEvent] = useState(null);
 
   const BootstrapButton = styled(Button)({

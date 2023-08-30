@@ -27,4 +27,8 @@ export default class SpeakerService {
     const headers = this.headers.multipartAuth();
     return axios.post(`${this.baseUrl}/admin/speaker/save`, data, headers);
   }
+  updateSpeaker(id, data) {
+    const headers = this.headers.multipartAuth();
+    return axios.put(`${this.baseUrl}/admin/speaker/update/${id}`, data, headers);
+  }
 }

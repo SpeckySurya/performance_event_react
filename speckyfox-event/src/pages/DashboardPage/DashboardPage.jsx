@@ -44,6 +44,16 @@ const formDataDefault = {
   duration: { hours: 0, minutes: 0 },
 };
 
+const speakerInitialValue = {
+  twitterUrl: "",
+  name: "",
+  designation: "",
+  linkdinUrl: "",
+  aboutSpeaker: "",
+  email: "",
+  youtubeUrl: "",
+};
+
 export const DashboardPage = () => {
   const [selected, setSelected] = useState("show");
   const [events, setEvents] = useState([]);
@@ -118,7 +128,12 @@ export const DashboardPage = () => {
       case "homeConfig":
         return <HomePageConfiguration />;
       case "manageSpeaker":
-        return <ManageSpeaker title="Create" />;
+        return (
+          <ManageSpeaker
+            title="Create"
+            speakerInitialValue={speakerInitialValue}
+          />
+        );
       case "notify":
         return <NotifyParticipant events={events} />;
       case "manageUser":
@@ -128,6 +143,7 @@ export const DashboardPage = () => {
           <ShowSpeaker
             updateSpeaker={updateSpeaker}
             setUpdateSpeaker={setUpdateSpeaker}
+            speakerInitialValue={speakerInitialValue}
           />
         );
       case "UploadVideoAndPdf":
