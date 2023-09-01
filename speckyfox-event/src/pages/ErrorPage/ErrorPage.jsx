@@ -1,5 +1,6 @@
 import { Typography, Button, Stack } from "@mui/material";
 import "./ErrorPage.css";
+import err from "./../../assets/err.jpg";
 
 import { Link, useLocation } from "react-router-dom";
 export default function ErrorPage() {

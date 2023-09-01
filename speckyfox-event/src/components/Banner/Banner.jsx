@@ -20,8 +20,13 @@ export const Banner = (props) => {
     );
   }, [props.event]);
 
+  console.log(props.event.eventBanner);
+
   return (
-    <div className="banner flex-jcsb">
+    <div
+      className="banner flex-jcsb"
+      style={{ backgroundImage: `url(${props.event.eventBanner})` }}
+    >
       <section className="left flex">
         <div className="event-details flex">
           <div className="event-title">
