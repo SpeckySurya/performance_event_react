@@ -11,3 +11,9 @@
   text-align: center;
   color: rgb(219, 219, 219);
 }
+@media screen and (min-width: 1600px) {
+  .footer {
+    position: fixed;
+    bottom: 0;
+  }
+}
