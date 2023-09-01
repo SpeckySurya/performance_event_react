@@ -31,7 +31,6 @@ const EventPage = () => {
     <div>
       <Header homeConfig={homeConfig} />
       <ShowEvent events={events} isEventPage={true} />
-      {/* <Togglebtn /> */}
       <Footer homeConfig={homeConfig} />
     </div>
   );

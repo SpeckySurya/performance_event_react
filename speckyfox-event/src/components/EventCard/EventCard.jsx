@@ -109,8 +109,8 @@ const EventCard = (props) => {
     >
       {!props.isEventPage && (
         <Stack
-          left={20}
-          top={20}
+          left={10}
+          top={30}
           spacing={1}
           direction={"row"}
           alignItems={"center"}
