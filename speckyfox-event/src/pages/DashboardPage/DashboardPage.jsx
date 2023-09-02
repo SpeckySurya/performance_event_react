@@ -109,6 +109,7 @@ export const DashboardPage = () => {
     notify: "Notify Participant",
     manageUser: "Manage User",
     showSpeaker: "Show Speaker",
+    UploadVideoAndPdf: "Upload Files",
   };
 
   function menuComponentFinder() {
