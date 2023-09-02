@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import "./Banner.css";
+import banner from "./../../assets/banner.png";
 import RegistrationForm from "../RegistrationForm/RegistrationForm";
 import dateFormatter, {
   addTime,
@@ -25,7 +26,7 @@ export const Banner = (props) => {
   return (
     <div
       className="banner flex-jcsb"
-      style={{ backgroundImage: `url(${props.event.eventBanner})` }}
+      // style={{ backgroundImage: `url(${props.event.eventBanner})` }}
     >
       <section className="left flex">
         <div className="event-details flex">
