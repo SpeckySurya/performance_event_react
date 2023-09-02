@@ -36,7 +36,6 @@ function ManageSpeaker(props) {
 
         const speakerService = new SpeakerService();
         if (props.title === "Update") {
-          alert(props.title);
           speakerService
             .updateSpeaker(props.selectedSpeaker.id, request)
             .then((response) => {

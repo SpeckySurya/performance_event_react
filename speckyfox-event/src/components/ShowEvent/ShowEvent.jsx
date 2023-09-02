@@ -11,6 +11,8 @@ import {
   Typography,
   Button,
   styled,
+  ToggleButtonGroup,
+  ToggleButton,
 } from "@mui/material";
 import ToggleOffOutlinedIcon from "@mui/icons-material/ToggleOffOutlined";
 import ToggleOnOutlinedIcon from "@mui/icons-material/ToggleOnOutlined";
@@ -47,26 +49,8 @@ const ShowEvent = (props) => {
     },
   }));
 
-  function handleEventStatus(event) {
-    console.log(event);
-  }
-
   return (
     <div className="event-card-container">
-      <Stack
-        direction={"row"}
-        spacing={0}
-        alignItems={"center"}
-        justifyContent={"center"}
-        marginY={1}
-      >
-        <Button color="success" onClick={() => setPastEvents(false)}>
-          Upcoming
-        </Button>
-        <Button color="secondary" onClick={() => setPastEvents(true)}>
-          Past
-        </Button>
-      </Stack>
       {eventEditing ? (
         <UpdateEvent
           event={editEvent}
@@ -74,41 +58,67 @@ const ShowEvent = (props) => {
           setEventEditing={setEventEditing}
         />
       ) : (
-        <Box
-          display="flex"
-          justifyContent={"center"}
-          flexWrap="wrap"
-          float={"left"}
-          padding={3}
-        >
-          {props.events.map((event) => {
-            return pastEvents
-              ? isPastDateTime(
-                  dateFormatter(event.events.date),
-                  event.events.time
-                ) && (
-                  <EventCard
-                    event={event}
-                    isEventPage={props.isEventPage}
-                    setLoading={props.setLoading}
-                    setEventEditing={setEventEditing}
-                    setEditEvent={setEditEvent}
-                  />
-                )
-              : !isPastDateTime(
-                  dateFormatter(event.events.date),
-                  event.events.time
-                ) && (
-                  <EventCard
-                    event={event}
-                    isEventPage={props.isEventPage}
-                    setLoading={props.setLoading}
-                    setEventEditing={setEventEditing}
-                    setEditEvent={setEditEvent}
-                  />
-                );
-          })}
-        </Box>
+        <div>
+          <Stack
+            direction={"row"}
+            spacing={0}
+            alignItems={"center"}
+            justifyContent={"center"}
+            marginY={1}
+          >
+            <Button
+              sx={{ width: "100px" }}
+              variant="outlined"
+              color="success"
+              onClick={() => setPastEvents(false)}
+            >
+              Upcoming
+            </Button>
+            <Button
+              sx={{ width: "100px" }}
+              variant="outlined"
+              color="secondary"
+              onClick={() => setPastEvents(true)}
+            >
+              Past
+            </Button>
+          </Stack>
+          <Box
+            display="flex"
+            justifyContent={"center"}
+            flexWrap="wrap"
+            float={"left"}
+            padding={3}
+          >
+            {props.events.map((event) => {
+              return pastEvents
+                ? isPastDateTime(
+                    dateFormatter(event.events.date),
+                    event.events.time
+                  ) && (
+                    <EventCard
+                      event={event}
+                      isEventPage={props.isEventPage}
+                      setLoading={props.setLoading}
+                      setEventEditing={setEventEditing}
+                      setEditEvent={setEditEvent}
+                    />
+                  )
+                : !isPastDateTime(
+                    dateFormatter(event.events.date),
+                    event.events.time
+                  ) && (
+                    <EventCard
+                      event={event}
+                      isEventPage={props.isEventPage}
+                      setLoading={props.setLoading}
+                      setEventEditing={setEventEditing}
+                      setEditEvent={setEditEvent}
+                    />
+                  );
+            })}
+          </Box>
+        </div>
       )}
     </div>
   );

@@ -28,7 +28,6 @@ const ShowSpeaker = (props) => {
     });
   }, []);
   useEffect(() => {
-    console.log(speakers);
     if (dialog.action === "Yes") {
       speakerService
         .deleteSpeaker(speakerId)
@@ -46,9 +45,7 @@ const ShowSpeaker = (props) => {
   }, [dialog]);
 
   function onDelete(speakerId) {
-    console.log("click");
     setDialog({ ...dialog, open: true });
-    console.log(dialog, dialog.action);
     setSpeakerId(speakerId);
   }
 
