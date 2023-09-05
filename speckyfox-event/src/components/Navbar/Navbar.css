@@ -3,6 +3,7 @@
 }
 
 .navbar {
+  height: 100px;
   color: #333;
   background-color: #fff;
   display: flex;

@@ -26,11 +26,14 @@ import { Link } from "react-router-dom";
 import UpdateEvent from "../UpdateEvent/UpdateEvent";
 import Editbtn from "../Editbtn/Editbtn";
 import EventCard from "../EventCard/EventCard";
+import { render } from "@testing-library/react";
 
 const ShowEvent = (props) => {
   const [eventEditing, setEventEditing] = useState(false);
-  const [pastEvents, setPastEvents] = useState(false);
   const [editEvent, setEditEvent] = useState(null);
+  const [pastEvents, setPastEvents] = useState([]);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [renderEvents, setRenderEvents] = useState([]);
 
   const BootstrapButton = styled(Button)({
     backgroundColor: "#ff970a",
@@ -40,6 +43,18 @@ const ShowEvent = (props) => {
       backgroundColor: "#f7542b",
     },
   });
+
+  useEffect(() => {
+    const pastEventsFilter = props.events.filter((event) =>
+      isPastDateTime(dateFormatter(event.events.date), event.events.time)
+    );
+    setPastEvents(pastEventsFilter);
+    const upcomingEventsFilter = props.events.filter(
+      (event) =>
+        !isPastDateTime(dateFormatter(event.events.date), event.events.time)
+    );
+    setUpcomingEvents(upcomingEventsFilter);
+  }, []);
 
   const CustomLink = styled(Link)(({ theme }) => ({
     color: "#ffffff",
@@ -70,7 +85,7 @@ const ShowEvent = (props) => {
               sx={{ width: "100px" }}
               variant="outlined"
               color="success"
-              onClick={() => setPastEvents(false)}
+              onClick={() => setRenderEvents(upcomingEvents)}
             >
               Upcoming
             </Button>
@@ -78,7 +93,7 @@ const ShowEvent = (props) => {
               sx={{ width: "100px" }}
               variant="outlined"
               color="secondary"
-              onClick={() => setPastEvents(true)}
+              onClick={() => setRenderEvents(pastEvents)}
             >
               Past
             </Button>
@@ -90,33 +105,21 @@ const ShowEvent = (props) => {
             float={"left"}
             padding={3}
           >
-            {props.events.map((event) => {
-              return pastEvents
-                ? isPastDateTime(
-                    dateFormatter(event.events.date),
-                    event.events.time
-                  ) && (
-                    <EventCard
-                      event={event}
-                      isEventPage={props.isEventPage}
-                      setLoading={props.setLoading}
-                      setEventEditing={setEventEditing}
-                      setEditEvent={setEditEvent}
-                    />
-                  )
-                : !isPastDateTime(
-                    dateFormatter(event.events.date),
-                    event.events.time
-                  ) && (
-                    <EventCard
-                      event={event}
-                      isEventPage={props.isEventPage}
-                      setLoading={props.setLoading}
-                      setEventEditing={setEventEditing}
-                      setEditEvent={setEditEvent}
-                    />
-                  );
-            })}
+            {renderEvents.length === 0 ? (
+              <Typography variant="h4">No Events</Typography>
+            ) : (
+              renderEvents.map((event) => {
+                return (
+                  <EventCard
+                    event={event}
+                    isEventPage={props.isEventPage}
+                    setLoading={props.setLoading}
+                    setEventEditing={setEventEditing}
+                    setEditEvent={setEditEvent}
+                  />
+                );
+              })
+            )}
           </Box>
         </div>
       )}
