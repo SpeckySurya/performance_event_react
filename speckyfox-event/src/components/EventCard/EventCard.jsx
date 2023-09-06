@@ -214,16 +214,18 @@ const EventCard = (props) => {
               Expired
             </Button>
           ) : (
-            <BootstrapButton
-              sx={{
-                position: "absolute",
-                bottom: "2%",
-                right: "calc(25% - 50px)",
-                marginBottom: "12px",
-              }}
-            >
-              <CustomLink to={`/${props.event.events.id}`}>Register</CustomLink>
-            </BootstrapButton>
+            <CustomLink to={`/${props.event.events.id}`}>
+              <BootstrapButton
+                sx={{
+                  position: "absolute",
+                  bottom: "2%",
+                  right: "calc(25% - 50px)",
+                  marginBottom: "12px",
+                }}
+              >
+                Register
+              </BootstrapButton>
+            </CustomLink>
           )}
         </CardActions>
       )}

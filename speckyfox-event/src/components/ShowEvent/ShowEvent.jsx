@@ -26,7 +26,6 @@ import { Link } from "react-router-dom";
 import UpdateEvent from "../UpdateEvent/UpdateEvent";
 import Editbtn from "../Editbtn/Editbtn";
 import EventCard from "../EventCard/EventCard";
-import { render } from "@testing-library/react";
 
 const ShowEvent = (props) => {
   const [eventEditing, setEventEditing] = useState(false);
@@ -34,15 +33,6 @@ const ShowEvent = (props) => {
   const [pastEvents, setPastEvents] = useState([]);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [renderEvents, setRenderEvents] = useState([]);
-
-  const BootstrapButton = styled(Button)({
-    backgroundColor: "#ff970a",
-    width: "100px",
-    color: "white",
-    "&:hover": {
-      backgroundColor: "#f7542b",
-    },
-  });
 
   useEffect(() => {
     const pastEventsFilter = props.events.filter((event) =>
@@ -54,7 +44,8 @@ const ShowEvent = (props) => {
         !isPastDateTime(dateFormatter(event.events.date), event.events.time)
     );
     setUpcomingEvents(upcomingEventsFilter);
-  }, []);
+    setRenderEvents(upcomingEventsFilter);
+  }, [props.events]);
 
   const CustomLink = styled(Link)(({ theme }) => ({
     color: "#ffffff",
