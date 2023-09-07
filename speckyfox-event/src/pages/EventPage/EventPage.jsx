@@ -28,9 +28,13 @@ const EventPage = () => {
   return loading ? (
     <LinearProgress color="error" />
   ) : (
-    <div>
+    <div className="event-page-container">
       <Header homeConfig={homeConfig} />
-      <ShowEvent events={events} isEventPage={true} />
+      {events.length == 0 ? (
+        <h1>No Upcoming Events</h1>
+      ) : (
+        <ShowEvent events={events} isEventPage={true} />
+      )}
       <Footer homeConfig={homeConfig} />
     </div>
   );

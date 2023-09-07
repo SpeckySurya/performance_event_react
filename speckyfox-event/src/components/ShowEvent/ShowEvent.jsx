@@ -29,18 +29,26 @@ import EventCard from "../EventCard/EventCard";
 
 const ShowEvent = (props) => {
   const [eventEditing, setEventEditing] = useState(false);
-  const [pastEvents, setPastEvents] = useState(false);
   const [editEvent, setEditEvent] = useState(null);
+
   const [showToggle, SetShowToggle] = useState();
 
-  const BootstrapButton = styled(Button)({
-    backgroundColor: "#ff970a",
-    width: "100px",
-    color: "white",
-    "&:hover": {
-      backgroundColor: "#f7542b",
-    },
-  });
+  const [pastEvents, setPastEvents] = useState([]);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [renderEvents, setRenderEvents] = useState([]);
+
+  useEffect(() => {
+    const pastEventsFilter = props.events.filter((event) =>
+      isPastDateTime(dateFormatter(event.events.date), event.events.time)
+    );
+    setPastEvents(pastEventsFilter);
+    const upcomingEventsFilter = props.events.filter(
+      (event) =>
+        !isPastDateTime(dateFormatter(event.events.date), event.events.time)
+    );
+    setUpcomingEvents(upcomingEventsFilter);
+    setRenderEvents(upcomingEventsFilter);
+  }, [props.events]);
 
   const CustomLink = styled(Link)(({ theme }) => ({
     color: "#ffffff",
@@ -73,12 +81,15 @@ const ShowEvent = (props) => {
                 exclusive
                 aria-label="Platform"
               >
-                <ToggleButton value="web" onClick={() => setPastEvents(false)}>
+                <ToggleButton
+                  value="web"
+                  onClick={() => setRenderEvents(upcomingEvents)}
+                >
                   Upcoming
                 </ToggleButton>
                 <ToggleButton
                   value="android"
-                  onClick={() => setPastEvents(true)}
+                  onClick={() => setRenderEvents(pastEvents)}
                 >
                   Past
                 </ToggleButton>
@@ -92,36 +103,13 @@ const ShowEvent = (props) => {
             float={"left"}
             padding={3}
           >
-            {props.isEventPage
-              ? props.events.map((event) => {
-                  return pastEvents
-                    ? isPastDateTime(
-                        dateFormatter(event.events.date),
-                        event.events.time
-                      ) && (
-                        <EventCard
-                          event={event}
-                          isEventPage={props.isEventPage}
-                          setLoading={props.setLoading}
-                          setEventEditing={setEventEditing}
-                          setEditEvent={setEditEvent}
-                        />
-                      )
-                    : !isPastDateTime(
-                        dateFormatter(event.events.date),
-                        event.events.time
-                      ) && (
-                        <EventCard
-                          event={event}
-                          isEventPage={props.isEventPage}
-                          setLoading={props.setLoading}
-                          setEventEditing={setEventEditing}
-                          setEditEvent={setEditEvent}
-                        />
-                      );
-                })
-              : props.events.map((event) => (
+            {renderEvents.length === 0 ? (
+              <Typography variant="h4">No Events</Typography>
+            ) : (
+              renderEvents.map((event) => {
+                return (
                   <EventCard
+                    key={event.events.id}
                     event={event}
                     isEventPage={props.isEventPage}
                     setLoading={props.setLoading}
@@ -129,7 +117,9 @@ const ShowEvent = (props) => {
                     setEditEvent={setEditEvent}
                     setUpdateBread={props?.setUpdateBread}
                   />
-                ))}
+                );
+              })
+            )}
           </Box>
         </div>
       )}

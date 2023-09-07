@@ -1,5 +1,6 @@
 .event-card-container {
   margin: auto;
+  min-height: calc(100vh - 208px);
 }
 .margintopforui {
   margin-top: -15px !important;

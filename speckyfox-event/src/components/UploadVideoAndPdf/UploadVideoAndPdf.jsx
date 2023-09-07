@@ -139,10 +139,11 @@ function UploadVideoAndPdf() {
                   className="uploadpdf"
                   type="file"
                   inputProps={{
-                    accept: "pplication/vnd.ms-powerpoint,",
+                    accept:
+                      "application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation",
                   }}
-                  name="pfd-File"
-                  id="pfd-File"
+                  name="ppt-File"
+                  id="ppt-File"
                   variant="outlined"
                   onChange={(e) => setuploadFile(e.target.files[0])}
                   fullWidth
