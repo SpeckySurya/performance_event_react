@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
+import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AssuredWorkloadOutlinedIcon from "@mui/icons-material/AssuredWorkloadOutlined";
@@ -83,7 +85,7 @@ const AdminHeader = (props) => {
     },
     {
       text: "Create Speaker",
-      icon: <PeopleAltOutlinedIcon />,
+      icon: <PersonAddAltOutlinedIcon />,
       onClick: () => {
         props.handleSidebar("manageSpeaker");
         setOpen(false);
@@ -102,7 +104,7 @@ const AdminHeader = (props) => {
     },
     {
       text: "View Participant",
-      icon: <ManageAccountsIcon />,
+      icon: <VisibilityOffOutlinedIcon />,
       onClick: () => {
         props.handleSidebar("manageUser");
         setOpen(false);

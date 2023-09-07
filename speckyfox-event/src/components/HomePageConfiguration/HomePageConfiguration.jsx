@@ -6,6 +6,11 @@ import {
   InputLabel,
   Button,
   Box,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from "@mui/material";
 import { useFormik } from "formik";
 import "./HomePageConfiguration.css";
@@ -24,8 +29,14 @@ function HomePageConfiguration(props) {
     youtubeUrl: "",
     footerText: "",
   });
+
   const [banner, setBanner] = useState(null);
   const [logo, setLogo] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [popUpMsg, setPopUpmsg] = useState("");
+  const handleClose = () => {
+    setOpen(false);
+  };
   const handleBannerChange = (event) => {
     const file = event.target.files[0];
     setBanner(file);
@@ -34,14 +45,21 @@ function HomePageConfiguration(props) {
     const file = event.target.files[0];
     setLogo(file);
   };
-
+  useEffect(() => {
+    console.log("value", values);
+    console.log("initial value", initialValues);
+  });
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useFormik({
       initialValues: initialValues,
       validationSchema: HomePageConfigationSchema,
+
       onSubmit: (values) => {
+        console.log("ititialvalues", initialValues);
+        console.log("values", values);
         const request = new FormData();
         for (let entry in initialValues) {
+          console.log(entry, values[entry]);
           request.append(entry, values[entry]);
         }
         request.append("banner", banner);
@@ -54,7 +72,10 @@ function HomePageConfiguration(props) {
             homeConfigService
               .updateHomeConfig(request)
               .then((response) => {
-                alert("Homepage details updated");
+                console.log(response);
+                setOpen(true);
+                setPopUpmsg("Homepage details updated");
+                // alert("Homepage details updated");
               })
               .catch((error) => {
                 alert(error);
@@ -68,7 +89,10 @@ function HomePageConfiguration(props) {
               homeConfigService
                 .saveHomeConfig(request)
                 .then((response) => {
-                  alert("Homepage details saved");
+                  // alert("Homepage details saved");
+                  console.log(response);
+                  setOpen(true);
+                  setPopUpmsg("Homepage details saved");
                 })
                 .catch((error) => {
                   alert(error);
@@ -82,6 +106,24 @@ function HomePageConfiguration(props) {
 
   return (
     <>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Success</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {popUpMsg}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Box px={2}>
         <Card
           style={{
@@ -133,7 +175,7 @@ function HomePageConfiguration(props) {
                     placeholder="Upload LinkedIn url"
                     variant="outlined"
                     fullWidth
-                    value={initialValues.linkedinUrl}
+                    value={values?.linkedinUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
@@ -151,7 +193,7 @@ function HomePageConfiguration(props) {
                     placeholder="Upload Twiter url"
                     variant="outlined"
                     fullWidth
-                    value={initialValues.twitterUrl}
+                    value={values?.twitterUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
@@ -167,7 +209,7 @@ function HomePageConfiguration(props) {
                     id="facebookUrl"
                     placeholder="Upload Facebook url"
                     variant="outlined"
-                    value={initialValues.facebookUrl}
+                    value={values?.facebookUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
@@ -184,7 +226,7 @@ function HomePageConfiguration(props) {
                     id="websiteUrl"
                     placeholder="Upload Website url"
                     variant="outlined"
-                    value={initialValues.websiteUrl}
+                    value={values?.websiteUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
@@ -201,7 +243,7 @@ function HomePageConfiguration(props) {
                     id="contactUrl"
                     placeholder="Upload content url"
                     variant="outlined"
-                    value={initialValues.contactUrl}
+                    value={values?.contactUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
@@ -218,7 +260,7 @@ function HomePageConfiguration(props) {
                     id="youtubeUrl"
                     placeholder="Upload Youtube url"
                     variant="outlined"
-                    value={initialValues.youtubeUrl}
+                    value={values?.youtubeUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
@@ -233,10 +275,9 @@ function HomePageConfiguration(props) {
                     type="text"
                     name="footerText"
                     id="footerText"
-                    s
                     placeholder="Upload Footer Text url"
                     variant="outlined"
-                    value={initialValues.footerText}
+                    value={values?.footerText}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
@@ -251,7 +292,7 @@ function HomePageConfiguration(props) {
                     type="submit"
                     variant="contained"
                     color="primary"
-                    fullWidth="100%"
+                    fullWidth
                   >
                     Submit
                   </Button>

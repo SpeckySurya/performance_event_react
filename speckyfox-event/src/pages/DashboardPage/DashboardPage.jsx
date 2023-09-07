@@ -63,6 +63,7 @@ export const DashboardPage = () => {
   const [speakers, setSpeakers] = useState([]);
   const [update, setUpdate] = useState(false);
   const [open, setOpen] = React.useState(false);
+  const [updateBread, setUpdateBread] = useState(false);
 
   const navigate = useNavigate();
 
@@ -87,6 +88,7 @@ export const DashboardPage = () => {
     if (selected === "show" || update) {
       initialSetup();
       setUpdate(false);
+      setUpdateBread(false);
     }
   }, [selected, update]);
 
@@ -103,7 +105,7 @@ export const DashboardPage = () => {
 
   const breadCrump = {
     create: "Create Event",
-    show: "Show Event",
+    show: updateBread ? "Show Event / Update Event" : "Show Event",
     homeConfig: "Home Configuration",
     manageSpeaker: "Manage Speaker",
     notify: "Notify Participant",
@@ -134,6 +136,7 @@ export const DashboardPage = () => {
             setLoading={setLoading}
             events={events}
             setUpdate={setUpdate}
+            setUpdateBread={setUpdateBread}
             isEventPage={false}
           />
         );

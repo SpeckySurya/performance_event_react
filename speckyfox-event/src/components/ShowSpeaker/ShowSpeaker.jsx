@@ -10,6 +10,11 @@ import {
   Stack,
   Button,
   CardActions,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from "@mui/material";
 
 import SpeakerService from "../../services/SpeakerService";
@@ -21,6 +26,11 @@ const ShowSpeaker = (props) => {
   const [speakers, setSpeakers] = useState([]);
   const [dialog, setDialog] = useState({ open: false, action: null });
   const [selectedSpeaker, setSelectedSpeaker] = useState(null);
+  const [opendilog, setOpendilog] = useState(false);
+  const [popUpMsg, setPopUpmsg] = useState("");
+  const handleClose = () => {
+    setOpendilog(false);
+  };
   const [speakerId, setSpeakerId] = useState(-1);
   useEffect(() => {
     speakerService.getAllSpeakers().then((response) => {
@@ -32,7 +42,8 @@ const ShowSpeaker = (props) => {
       speakerService
         .deleteSpeaker(speakerId)
         .then((response) => {
-          alert("Speaker deleted !");
+          setPopUpmsg("Speaker Deleted Successfully!");
+          setOpendilog(true);
         })
         .catch((error) => {
           alert(error);
@@ -63,6 +74,24 @@ const ShowSpeaker = (props) => {
 
   return (
     <>
+      <Dialog
+        open={opendilog}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Success</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {popUpMsg}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
       {props.updateSpeaker ? (
         <ManageSpeaker
           title="Update"

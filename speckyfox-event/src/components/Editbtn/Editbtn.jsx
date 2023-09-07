@@ -58,6 +58,7 @@ export default function Editbtn(props) {
   const handleItemClick = (option) => {
     switch (option) {
       case "Edit": {
+        props?.setUpdateBread(true);
         props.setEventEditing(true);
         props.setEditEvent(props.event);
         break;

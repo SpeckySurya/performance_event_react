@@ -31,6 +31,7 @@ const ShowEvent = (props) => {
   const [eventEditing, setEventEditing] = useState(false);
   const [pastEvents, setPastEvents] = useState(false);
   const [editEvent, setEditEvent] = useState(null);
+  const [showToggle, SetShowToggle] = useState();
 
   const BootstrapButton = styled(Button)({
     backgroundColor: "#ff970a",
@@ -66,22 +67,23 @@ const ShowEvent = (props) => {
             justifyContent={"center"}
             marginY={1}
           >
-            <Button
-              sx={{ width: "100px" }}
-              variant="outlined"
-              color="success"
-              onClick={() => setPastEvents(false)}
-            >
-              Upcoming
-            </Button>
-            <Button
-              sx={{ width: "100px" }}
-              variant="outlined"
-              color="secondary"
-              onClick={() => setPastEvents(true)}
-            >
-              Past
-            </Button>
+            {props.isEventPage ? (
+              <ToggleButtonGroup
+                color="primary"
+                exclusive
+                aria-label="Platform"
+              >
+                <ToggleButton value="web" onClick={() => setPastEvents(false)}>
+                  Upcoming
+                </ToggleButton>
+                <ToggleButton
+                  value="android"
+                  onClick={() => setPastEvents(true)}
+                >
+                  Past
+                </ToggleButton>
+              </ToggleButtonGroup>
+            ) : null}
           </Stack>
           <Box
             display="flex"
@@ -90,33 +92,44 @@ const ShowEvent = (props) => {
             float={"left"}
             padding={3}
           >
-            {props.events.map((event) => {
-              return pastEvents
-                ? isPastDateTime(
-                    dateFormatter(event.events.date),
-                    event.events.time
-                  ) && (
-                    <EventCard
-                      event={event}
-                      isEventPage={props.isEventPage}
-                      setLoading={props.setLoading}
-                      setEventEditing={setEventEditing}
-                      setEditEvent={setEditEvent}
-                    />
-                  )
-                : !isPastDateTime(
-                    dateFormatter(event.events.date),
-                    event.events.time
-                  ) && (
-                    <EventCard
-                      event={event}
-                      isEventPage={props.isEventPage}
-                      setLoading={props.setLoading}
-                      setEventEditing={setEventEditing}
-                      setEditEvent={setEditEvent}
-                    />
-                  );
-            })}
+            {props.isEventPage
+              ? props.events.map((event) => {
+                  return pastEvents
+                    ? isPastDateTime(
+                        dateFormatter(event.events.date),
+                        event.events.time
+                      ) && (
+                        <EventCard
+                          event={event}
+                          isEventPage={props.isEventPage}
+                          setLoading={props.setLoading}
+                          setEventEditing={setEventEditing}
+                          setEditEvent={setEditEvent}
+                        />
+                      )
+                    : !isPastDateTime(
+                        dateFormatter(event.events.date),
+                        event.events.time
+                      ) && (
+                        <EventCard
+                          event={event}
+                          isEventPage={props.isEventPage}
+                          setLoading={props.setLoading}
+                          setEventEditing={setEventEditing}
+                          setEditEvent={setEditEvent}
+                        />
+                      );
+                })
+              : props.events.map((event) => (
+                  <EventCard
+                    event={event}
+                    isEventPage={props.isEventPage}
+                    setLoading={props.setLoading}
+                    setEventEditing={setEventEditing}
+                    setEditEvent={setEditEvent}
+                    setUpdateBread={props?.setUpdateBread}
+                  />
+                ))}
           </Box>
         </div>
       )}

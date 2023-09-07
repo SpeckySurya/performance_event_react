@@ -139,7 +139,7 @@ function UploadVideoAndPdf() {
                   className="uploadpdf"
                   type="file"
                   inputProps={{
-                    accept: "application/pdf,application/vnd.ms-powerpoint,",
+                    accept: "pplication/vnd.ms-powerpoint,",
                   }}
                   name="pfd-File"
                   id="pfd-File"

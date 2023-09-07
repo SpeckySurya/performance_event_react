@@ -6,6 +6,11 @@ import {
   InputLabel,
   Button,
   Box,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from "@mui/material";
 import { useFormik } from "formik";
 import "./ManageSpeaker.css";
@@ -18,6 +23,11 @@ import { useEffect, useState } from "react";
 
 function ManageSpeaker(props) {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [popUpMsg, setPopUpmsg] = useState("");
+  const handleClose = () => {
+    setOpen(false);
+  };
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
@@ -39,7 +49,8 @@ function ManageSpeaker(props) {
           speakerService
             .updateSpeaker(props.selectedSpeaker.id, request)
             .then((response) => {
-              alert("Speaker updated");
+              setOpen(true);
+              setPopUpmsg("Speaker updated Successfully!");
             })
             .catch((error) => {
               alert(error);
@@ -48,7 +59,8 @@ function ManageSpeaker(props) {
           speakerService
             .saveSpeaker(request)
             .then((response) => {
-              alert("Speaker saved");
+              setOpen(true);
+              setPopUpmsg("Speaker created Successfully!");
             })
             .catch((error) => {
               alert(error);
@@ -59,6 +71,24 @@ function ManageSpeaker(props) {
 
   return (
     <>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Success</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {popUpMsg}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
       {props.title === "Update" ? (
         <Button
           className="arrowbtn"
