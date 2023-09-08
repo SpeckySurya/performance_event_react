@@ -13,6 +13,8 @@ import PageNotFound from "./pages/PageNotFound/PageNotFound";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
+import Forgotpassword from "./pages/Login/Forgotpassword";
+import UpdatePassword from "./pages/UpdatePassword/UpdatePassword";
 
 function App() {
   const [sharedState, setSharedState] = useState({
@@ -28,7 +30,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/error" element={<ErrorPage />} />
+        <Route path="/forgot-password" element={<Forgotpassword />} />
         <Route path="/pagenotfound" element={<PageNotFound />} />
+        <Route path="/updatePassword" element={<UpdatePassword />} />
       </Routes>
     </MyContext.Provider>
   );

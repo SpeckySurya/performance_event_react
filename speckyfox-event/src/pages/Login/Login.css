@@ -34,6 +34,7 @@
 }
 
 .login-container button {
+  margin-bottom: 10px;
   display: block;
   width: 100%;
   padding: 10px;
@@ -45,7 +46,9 @@
   cursor: pointer;
   transition: 0.3s ease all;
 }
-
+.forgetpassword {
+  margin-top: 10px;
+}
 .login-container button:hover {
   background-color: #f55f19;
 }
@@ -57,4 +60,19 @@
 .mandatory-field {
   color: crimson;
   margin: 0 5px;
+}
+.forgot_password {
+  text-decoration: none;
+  float: right;
+  margin: -8px 1px 10px;
+  opacity: 0.7;
+  font-size: smaller;
+  cursor: pointer;
+}
+.forgot_password-back {
+  margin: 76px 75px !important;
+  opacity: 0.7;
+  font-size: smaller;
+  cursor: pointer;
+  text-decoration: none;
 }

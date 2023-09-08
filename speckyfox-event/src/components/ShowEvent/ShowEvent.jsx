@@ -28,6 +28,7 @@ import Editbtn from "../Editbtn/Editbtn";
 import EventCard from "../EventCard/EventCard";
 
 const ShowEvent = (props) => {
+  console.log(props);
   const [eventEditing, setEventEditing] = useState(false);
   const [editEvent, setEditEvent] = useState(null);
 
@@ -47,8 +48,15 @@ const ShowEvent = (props) => {
         !isPastDateTime(dateFormatter(event.events.date), event.events.time)
     );
     setUpcomingEvents(upcomingEventsFilter);
-    setRenderEvents(upcomingEventsFilter);
-  }, [props.events]);
+
+    if (props.isEventPage) {
+      // If isEventPage is true, render based on the toggle
+      setRenderEvents(upcomingEventsFilter);
+    } else {
+      // If isEventPage is false, render all events
+      setRenderEvents(props.events);
+    }
+  }, [props.events, props.isEventPage]);
 
   const CustomLink = styled(Link)(({ theme }) => ({
     color: "#ffffff",
