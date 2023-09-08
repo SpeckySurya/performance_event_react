@@ -29,4 +29,12 @@ export default class PasswordService {
       headers
     );
   }
+  getAdminRoles() {
+    const headers = this.headers.withAuth();
+    return axios.get(
+      `${this.baseUrl}/admin/get-roles`,
+      headers
+    );
+  }
+
 }
