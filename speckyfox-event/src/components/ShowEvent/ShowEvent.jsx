@@ -17,6 +17,8 @@ import {
 import ToggleOffOutlinedIcon from "@mui/icons-material/ToggleOffOutlined";
 import ToggleOnOutlinedIcon from "@mui/icons-material/ToggleOnOutlined";
 import { TbTargetArrow } from "react-icons/tb";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+
 import dateFormatter, {
   addTime,
   convertTo12HourFormat,
@@ -50,10 +52,8 @@ const ShowEvent = (props) => {
     setUpcomingEvents(upcomingEventsFilter);
 
     if (props.isEventPage) {
-      // If isEventPage is true, render based on the toggle
       setRenderEvents(upcomingEventsFilter);
     } else {
-      // If isEventPage is false, render all events
       setRenderEvents(props.events);
     }
   }, [props.events, props.isEventPage]);
@@ -111,20 +111,29 @@ const ShowEvent = (props) => {
             float={"left"}
             padding={3}
           >
+            {props.isEventPage ? null : (
+              <Link to={"/admin-update-password"}>
+                <div className="ManageIconWithTooltip">
+                  <ManageAccountsIcon className="Manageicon" />
+                </div>
+              </Link>
+            )}
             {renderEvents.length === 0 ? (
               <Typography variant="h4">No Events</Typography>
             ) : (
               renderEvents.map((event) => {
                 return (
-                  <EventCard
-                    key={event.events.id}
-                    event={event}
-                    isEventPage={props.isEventPage}
-                    setLoading={props.setLoading}
-                    setEventEditing={setEventEditing}
-                    setEditEvent={setEditEvent}
-                    setUpdateBread={props?.setUpdateBread}
-                  />
+                  <>
+                    <EventCard
+                      key={event.events.id}
+                      event={event}
+                      isEventPage={props.isEventPage}
+                      setLoading={props.setLoading}
+                      setEventEditing={setEventEditing}
+                      setEditEvent={setEditEvent}
+                      setUpdateBread={props?.setUpdateBread}
+                    />
+                  </>
                 );
               })
             )}

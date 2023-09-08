@@ -1,6 +1,14 @@
 .show-event-container {
   margin: auto;
 }
+.Manageicon {
+  color: white;
+  position: absolute;
+  z-index: 10;
+  top: 23px;
+  right: 16px;
+  cursor: pointer;
+}
 
 /* .show-event-container {
   display: flex;

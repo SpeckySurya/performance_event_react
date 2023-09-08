@@ -15,7 +15,8 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import Forgotpassword from "./pages/Login/Forgotpassword";
 import UpdatePassword from "./pages/UpdatePassword/UpdatePassword";
-
+import AdminUpdatePassword from "./pages/AdminUpdatePassword/AdminUpdatePassword";
+import AdminRegistation from "./pages/AdminRegistation/AdminRegistation";
 function App() {
   const [sharedState, setSharedState] = useState({
     admin: false,
@@ -33,6 +34,11 @@ function App() {
         <Route path="/forgot-password" element={<Forgotpassword />} />
         <Route path="/pagenotfound" element={<PageNotFound />} />
         <Route path="/updatePassword" element={<UpdatePassword />} />
+        <Route path="/adminRegistation" element={<AdminRegistation />} />
+        <Route
+          path="/admin-update-password"
+          element={<AdminUpdatePassword />}
+        />
       </Routes>
     </MyContext.Provider>
   );
