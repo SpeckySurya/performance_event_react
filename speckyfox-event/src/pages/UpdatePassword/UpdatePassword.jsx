@@ -1,56 +1,84 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import PasswordService from "../../services/PasswordService";
 function UpdatePassword() {
   const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    newPassword: "",
+    confirmPassword: "",
+  });
+  const { token } = useParams();
+  const navigate = useNavigate();
+  const passwordService = new PasswordService();
+
+  useEffect(() => {
+    passwordService
+      .validateResetPwdLink(token)
+      .then((response) => {
+        if (!response.data) {
+          navigate("/forgot-password");
+        }
+      })
+      .catch((error) => {
+        navigate("/");
+      });
+  }, []);
+
+  function handleChange(event) {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+  }
+
+  function handleResetPwdClick() {
+    passwordService
+      .resetPassword(formData, token.replaceAll("-", "."))
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   return (
     <>
       <div className="login-container">
         <h1>Update Password</h1>
-        <form>
-          <div className="form-group">
-            <label htmlFor="email">
-              OTP<span className="mandatory-field">*</span>
-            </label>
-            <input
-              type="text"
-              id="otptext"
-              name="otptext"
-              placeholder="Enter OTP"
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">
-              New Password<span className="mandatory-field">*</span>
-            </label>
-            <input
-              type="Password"
-              id="newPassword"
-              name="newPassword"
-              placeholder="Enter new password"
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">
-              Confirm Password<span className="mandatory-field">*</span>
-            </label>
-            <input
-              type="Password"
-              id="confirmPassword"
-              name="confirmPassword"
-              placeholder="confirm your password"
-              required
-            />
-          </div>
+        <div className="form-group">
+          <label htmlFor="password">
+            New Password<span className="mandatory-field">*</span>
+          </label>
+          <input
+            type="Password"
+            value={formData.newPassword}
+            id="newPassword"
+            name="newPassword"
+            placeholder="Enter new password"
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">
+            Confirm Password<span className="mandatory-field">*</span>
+          </label>
+          <input
+            type="Password"
+            value={formData.confirmPassword}
+            id="confirmPassword"
+            name="confirmPassword"
+            placeholder="confirm your password"
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-          <button type="submit" className="flex-jcc-aic">
-            {loading ? (
-              <CircularProgress size={20} color={"error"} />
-            ) : (
-              "Update Password"
-            )}
-          </button>
-        </form>
+        <button onClick={handleResetPwdClick} className="flex-jcc-aic">
+          {loading ? (
+            <CircularProgress size={20} color={"error"} />
+          ) : (
+            "Update Password"
+          )}
+        </button>
       </div>
     </>
   );

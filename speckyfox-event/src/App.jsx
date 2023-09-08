@@ -32,7 +32,7 @@ function App() {
         <Route path="/error" element={<ErrorPage />} />
         <Route path="/forgot-password" element={<Forgotpassword />} />
         <Route path="/pagenotfound" element={<PageNotFound />} />
-        <Route path="/updatePassword" element={<UpdatePassword />} />
+        <Route path="/forgot-password/:token" element={<UpdatePassword />} />
       </Routes>
     </MyContext.Provider>
   );
