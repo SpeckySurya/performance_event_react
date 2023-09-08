@@ -34,7 +34,7 @@ function App() {
         <Route path="/forgot-password" element={<Forgotpassword />} />
         <Route path="/pagenotfound" element={<PageNotFound />} />
 
-        <Route path="/adminRegistation" element={<AdminRegistation />} />
+        <Route path="/admin-registation" element={<AdminRegistation />} />
         <Route
           path="/admin-update-password"
           element={<AdminUpdatePassword />}

@@ -32,10 +32,12 @@ function UpdatePassword() {
     passwordService
       .resetPassword(formData, token.replaceAll("-", "."))
       .then((response) => {
-        console.log(response.data);
+        if (true) {
+          navigate("/login");
+        }
       })
       .catch((error) => {
-        console.log(error);
+        alert("Something went wrong");
       });
   }
 

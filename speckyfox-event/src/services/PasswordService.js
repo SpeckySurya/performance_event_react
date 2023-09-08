@@ -31,10 +31,10 @@ export default class PasswordService {
   }
   getAdminRoles() {
     const headers = this.headers.withAuth();
-    return axios.get(
-      `${this.baseUrl}/admin/get-roles`,
-      headers
-    );
+    return axios.get(`${this.baseUrl}/admin/get-roles`, headers);
   }
-
+  updatePassword(data) {
+    const headers = this.headers.withAuth();
+    return axios.post(`${this.baseUrl}/admin/change-admin-pwd`, data, headers);
+  }
 }

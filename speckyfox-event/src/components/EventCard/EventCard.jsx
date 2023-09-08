@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import "../../responsive.css";
 import "./EventCard.css";
@@ -28,7 +28,7 @@ import ToggleOnOutlinedIcon from "@mui/icons-material/ToggleOnOutlined";
 import { TbTargetArrow } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import Editbtn from "../Editbtn/Editbtn";
-import OpenModel from "../OpenModel/OpenModel";
+import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
 import ContentService from "../../services/ContentService";
 import dateFormatter, {
   addTime,
@@ -37,12 +37,30 @@ import dateFormatter, {
 } from "../../utils/DateFormatter";
 import EventService from "../../services/EventService";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
+import ReactPlayer from "react-player";
 
 const EventCard = (props) => {
   const [active, setActive] = useState(props.event.events.active);
   const [snackbar, setSnackbar] = useState(null);
   const [open, setOpen] = useState(false);
   const [userMail, setUserMail] = useState("");
+  const [play, setPlay] = useState(false);
+  const [eventData, setEventData] = useState({});
+  const videoPlayerRef = useRef(null);
+
+  const handleOutsideClick = (e) => {
+    if (videoPlayerRef.current && !videoPlayerRef.current.contains(e.target)) {
+      setPlay(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("click", handleOutsideClick);
+    return () => {
+      window.removeEventListener("click", handleOutsideClick);
+    };
+  }, [play]);
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -67,21 +85,6 @@ const EventCard = (props) => {
       textDecoration: "none",
     },
   }));
-
-  function debounce(func, delay) {
-    let timeoutId;
-
-    return function () {
-      const context = this;
-      const args = arguments;
-
-      clearTimeout(timeoutId);
-
-      timeoutId = setTimeout(() => {
-        func.apply(context, args);
-      }, delay);
-    };
-  }
 
   function downloadedPpt() {
     console.log(props.event.events.id, userMail);
@@ -108,28 +111,22 @@ const EventCard = (props) => {
     setOpen(false);
   }
 
-  function updateEventStatus(eventId, data) {
-    const eventService = new EventService();
-    eventService
-      .updateEvent(eventId, data)
-      .then((response) => {
-        setSnackbar(
-          <SnackbarComponent
-            message="Event status changed !"
-            severity="success"
-          />
-        );
-      })
-      .catch((error) => {
-        setSnackbar(
-          <SnackbarComponent message="Something went wrong" severity="error" />
-        );
-      });
-  }
-
   function handleEventStatus(event) {
     setActive(!active);
-    console.log(event);
+  }
+
+  function handlePlayVideo() {
+    const contentService = new ContentService();
+    contentService
+      .getEventDataInfo(props.event.events.id)
+      .then((response) => {
+        setEventData(response.data);
+        console.log(response.data);
+        setPlay(true);
+      })
+      .catch((error) => {
+        alert("Something went wrong");
+      });
   }
 
   const formattedDate = dateFormatter(props.event.events.date);
@@ -144,6 +141,24 @@ const EventCard = (props) => {
   return (
     <>
       {snackbar}
+      {play && (
+        <Box
+          ref={videoPlayerRef}
+          sx={{
+            position: "absolute",
+            zIndex: 5,
+            height: "60vh",
+            width: "52.4%",
+          }}
+        >
+          <ReactPlayer
+            url={eventData.video}
+            width="100%"
+            height="100%"
+            controls
+          />
+        </Box>
+      )}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Enter Email Address</DialogTitle>
         <DialogContent>
@@ -198,6 +213,21 @@ const EventCard = (props) => {
             <Typography>{active ? "Active" : "Inactive"}</Typography>
           </Stack>
         )}
+        {isOutdated && (
+          <Box onClick={handlePlayVideo}>
+            <PlayCircleFilledIcon
+              sx={{
+                position: "absolute",
+                top: "14%",
+                left: "calc(50% - 35px)",
+                fontSize: "70px",
+                color: "red",
+                cursor: "pointer",
+              }}
+            />
+          </Box>
+        )}
+
         {isOutdated ? "" : <button className="viewbtn">Live</button>}
         <CardMedia
           component="img"
