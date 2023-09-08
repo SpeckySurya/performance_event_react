@@ -1,0 +1,24 @@
+
+class Animal
+{
+
+      constructor(name)
+     {
+       console.log("animal is ");   
+     }
+     info()
+     {
+         console.log("animal info ");
+     }
+}
+class Dog extends Animal
+{
+    
+     constructor(name)
+    {
+         super();
+         super.info();
+      console.log("dog is  "+name);   
+    }
+}
+var x=new Dog("Dog")

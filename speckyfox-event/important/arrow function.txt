@@ -1,0 +1,19 @@
+
+console.log("Welcome to Programiz!");
+function fun1()
+{
+    console.log("function  1");
+}
+fun1();
+
+
+
+var store=function(p)
+{
+    console.log("funtion 2 "+p);
+}
+store(5);
+
+
+var x=(y)=>{console.log("arrow function"+y);}
+x(10);

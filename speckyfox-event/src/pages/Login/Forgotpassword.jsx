@@ -7,21 +7,40 @@ import {
   DialogTitle,
   Button, // Use MUI's Button instead of Bootstrap's
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import PasswordService from "../../services/PasswordService";
 
 function Forgotpassword() {
-  const [openDialog, setOpenDialog] = useState(false); // Changed variable name to openDialog
-  const [popUpMsg, setPopUpMsg] = useState(""); // Changed variable name to setPopUpMsg
-
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialog, setDialog] = useState({ dialogMsg: "", title: "" });
+  const navigate = useNavigate();
   const handleClose = () => {
-    setOpenDialog(false); // Changed variable name to setOpenDialog
+    setOpenDialog(false);
+    navigate("/login");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const email = e.target.email.value; // Get the value of the email input field
-    setPopUpMsg(email);
-    setOpenDialog(true);
+    const formData = new FormData();
+    formData.append("email", email);
+    const passwordService = new PasswordService();
+    passwordService
+      .sendResetPwdEmail({ email: email })
+      .then((response) => {
+        setDialog({
+          dialogMsg: "A reset email has sent to your email id.",
+          title: "Success",
+        });
+        setOpenDialog(true);
+      })
+      .catch((error) => {
+        setDialog({
+          dialogMsg: "Unable to send reset password email. Please try later !",
+          title: "Error",
+        });
+        setOpenDialog(true);
+      });
   };
 
   return (
@@ -32,10 +51,10 @@ function Forgotpassword() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Success</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{dialog.title}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {popUpMsg} {/* Display the popUpMsg inside the dialog */}
+            {dialog.dialogMsg}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

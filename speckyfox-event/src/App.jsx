@@ -33,12 +33,14 @@ function App() {
         <Route path="/error" element={<ErrorPage />} />
         <Route path="/forgot-password" element={<Forgotpassword />} />
         <Route path="/pagenotfound" element={<PageNotFound />} />
-        <Route path="/updatePassword" element={<UpdatePassword />} />
+
         <Route path="/adminRegistation" element={<AdminRegistation />} />
         <Route
           path="/admin-update-password"
           element={<AdminUpdatePassword />}
         />
+
+        <Route path="/forgot-password/:token" element={<UpdatePassword />} />
       </Routes>
     </MyContext.Provider>
   );

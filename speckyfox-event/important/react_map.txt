@@ -1,0 +1,7 @@
+
+var arr=[11,20,39,48,50,11,20,39,48,50]
+var v=arr.map((ele)=>{
+                      return ele+10;
+                     })
+   
+console.log(v);
