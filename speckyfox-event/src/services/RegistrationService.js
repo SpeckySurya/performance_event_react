@@ -7,6 +7,18 @@ export default class RegistrationService {
   baseUrl = serviceUrl();
 
   saveUser(user) {
-    return axios.post(`${this.baseUrl}/app/register`, user);
+    return axios.post(
+      `${this.baseUrl}/app/register`,
+      user,
+      this.headers.basicHeader()
+    );
+  }
+
+  newAdminRegistration(data) {
+    return axios.post(
+      `${this.baseUrl}/admin/register`,
+      data,
+      this.headers.withAuth()
+    );
   }
 }

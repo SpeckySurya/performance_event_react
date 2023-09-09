@@ -112,17 +112,16 @@ const EventCard = (props) => {
   }
 
   function handleEventStatus(event) {
-    setActive(!active);
-    console.log(event);
-    console.log(active);
     const eventService = new EventService();
     eventService
       .setActiveOrInactive(event.id, { active: !active })
       .then((response) => {
-        console.log(response);
+        setActive(!active);
       })
       .catch((error) => {
-        console.log(error);
+        setSnackbar(
+          <SnackbarComponent message="Restricted !" severity={"error"} />
+        );
       });
   }
 
