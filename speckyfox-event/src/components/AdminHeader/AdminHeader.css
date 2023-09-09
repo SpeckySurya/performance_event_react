@@ -84,25 +84,27 @@
   color: white;
   position: absolute;
   z-index: 10;
-  top: 23px;
-
+  top: 13px;
   right: 1%;
+  margin-right: 2%;
   cursor: pointer;
 }
 .Manageicontool {
   color: white;
   position: absolute;
   z-index: 10;
-  top: 23px;
-  right: 25%;
+  margin-right: 2%;
+  top: 13px;
+  right: 19%;
   cursor: pointer;
 }
 .Manageicontool3 {
   color: white;
   position: absolute;
   z-index: 10;
-  top: 23px;
-  right: 15%;
+  top: 13px;
+  right: 10%;
+  margin-right: 2%;
   cursor: pointer;
 }
 .hometext {
@@ -110,9 +112,44 @@
 }
 .changepasswordtext {
   font-size: xx-small;
-  margin-bottom: 3px;
+  margin-right: 4% !important;
+  position: absolute;
+  top: 20px;
 }
+.iconpasswordctr {
+  display: flex;
+}
+.iconhome {
+  display: flex;
+}
+.hometext {
+  position: absolute;
+  top: 20px;
 
+  right: 0px;
+  margin-top: 2px;
+}
 .createadmintext {
   font-size: xx-small !important;
+}
+.iconadmin {
+  display: flex;
+}
+.createadmintext {
+  position: absolute;
+  top: 20px;
+
+  right: 0px;
+  margin-top: 2px;
+}
+@media (max-width: 750px) {
+  .changepasswordtext {
+    font-size: 7px;
+  }
+  .createadmintext {
+    font-size: 7px !important;
+  }
+  .hometext {
+    font-size: 7px;
+  }
 }

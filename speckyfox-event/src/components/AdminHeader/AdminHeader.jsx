@@ -159,25 +159,25 @@ const AdminHeader = (props) => {
           </IconButton>
           <Typography variant="h6">Event Dashboard</Typography>
           <Box
-            className="ManageIconWithTooltip Manageicon"
+            className="ManageIconWithTooltip Manageicontool3 iconhomectr"
+            onClick={() => handleManageAdminClick("/")}
+          >
+            <HomeOutlinedIcon className="iconhome" />
+            <span className="hometext"> Home</span>
+          </Box>
+          <Box
+            className="ManageIconWithTooltip Manageicon createiconpatent iconadminctr"
             onClick={() => handleManageAdminClick("/admin-registation")}
           >
-            <ManageAccountsIcon className="textcreateAdmin" />{" "}
+            <ManageAccountsIcon className="iconadmin" />{" "}
             <span className="createadmintext">Create Admin </span>
           </Box>
           <Box
-            className="ManageIconWithTooltip Manageicontool"
+            className="ManageIconWithTooltip Manageicontool iconpasswordctr"
             onClick={() => handleManageAdminClick("/admin-update-password")}
           >
-            <SupervisorAccountOutlinedIcon />{" "}
+            <SupervisorAccountOutlinedIcon className="iconpassword" />{" "}
             <span className="changepasswordtext"> Change Password</span>
-          </Box>
-          <Box
-            className="ManageIconWithTooltip Manageicontool3"
-            onClick={() => handleManageAdminClick("/")}
-          >
-            <HomeOutlinedIcon />
-            <span className="hometext"> Home</span>
           </Box>
         </Toolbar>
       </AppBar>
