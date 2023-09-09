@@ -17,7 +17,11 @@ import {
 import ToggleOffOutlinedIcon from "@mui/icons-material/ToggleOffOutlined";
 import ToggleOnOutlinedIcon from "@mui/icons-material/ToggleOnOutlined";
 import { TbTargetArrow } from "react-icons/tb";
+import AddHomeOutlinedIcon from "@mui/icons-material/AddHomeOutlined";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import SupervisorAccountOutlinedIcon from "@mui/icons-material/SupervisorAccountOutlined";
 
 import dateFormatter, {
   addTime,
@@ -111,13 +115,6 @@ const ShowEvent = (props) => {
             float={"left"}
             padding={3}
           >
-            {props.isEventPage ? null : (
-              <Link to={"/admin-update-password"}>
-                <div className="ManageIconWithTooltip">
-                  <ManageAccountsIcon className="Manageicon" />
-                </div>
-              </Link>
-            )}
             {renderEvents.length === 0 ? (
               <Typography variant="h4">No Events</Typography>
             ) : (

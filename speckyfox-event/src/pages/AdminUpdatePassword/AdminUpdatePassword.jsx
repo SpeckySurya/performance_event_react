@@ -105,7 +105,6 @@ function AdminUpdatePassword() {
               "Update Password"
             )}
           </button>
-          <Link to="/dashboard">Home</Link>
         </div>
       </form>
     </>

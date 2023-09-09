@@ -9,16 +9,18 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Link,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
 import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import SupervisorAccountOutlinedIcon from "@mui/icons-material/SupervisorAccountOutlined";
 import AssuredWorkloadOutlinedIcon from "@mui/icons-material/AssuredWorkloadOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+
 import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -151,6 +153,23 @@ const AdminHeader = (props) => {
           </IconButton>
           <Typography variant="h6">Event Dashboard</Typography>
         </Toolbar>
+        <>
+          <Link to={"/admin-update-password"}>
+            <div className="ManageIconWithTooltip">
+              <ManageAccountsIcon className="Manageicon" />
+            </div>
+          </Link>
+          <Link to={"/admin-registation"}>
+            <div className="ManageIconWithTooltip">
+              <SupervisorAccountOutlinedIcon className="Manageicontool" />
+            </div>
+          </Link>
+          <Link to={"/"}>
+            <div className="ManageIconWithTooltip">
+              <HomeOutlinedIcon className="Manageicontool3" />
+            </div>
+          </Link>
+        </>
       </AppBar>
       <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
         {list()}
