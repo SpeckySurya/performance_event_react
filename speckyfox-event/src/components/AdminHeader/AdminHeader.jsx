@@ -10,6 +10,7 @@ import {
   ListItemIcon,
   ListItemText,
   Link,
+  Box,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
@@ -139,6 +140,10 @@ const AdminHeader = (props) => {
     </List>
   );
 
+  function handleManageAdminClick(path) {
+    navigate(path);
+  }
+
   return (
     <div>
       <AppBar position="fixed" sx={{ zIndex: 5, bgcolor: "#322653" }}>
@@ -152,24 +157,25 @@ const AdminHeader = (props) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6">Event Dashboard</Typography>
+          <Box
+            className="ManageIconWithTooltip Manageicon"
+            onClick={() => handleManageAdminClick("/admin-registation")}
+          >
+            <ManageAccountsIcon /> Create Admin
+          </Box>
+          <Box
+            className="ManageIconWithTooltip Manageicontool"
+            onClick={() => handleManageAdminClick("/admin-update-password")}
+          >
+            <SupervisorAccountOutlinedIcon /> Change Password
+          </Box>
+          <Box
+            className="ManageIconWithTooltip Manageicontool3"
+            onClick={() => handleManageAdminClick("/")}
+          >
+            <HomeOutlinedIcon /> Home
+          </Box>
         </Toolbar>
-        <>
-          <Link to={"/admin-update-password"}>
-            <div className="ManageIconWithTooltip">
-              <ManageAccountsIcon className="Manageicon" />
-            </div>
-          </Link>
-          <Link to={"/admin-registation"}>
-            <div className="ManageIconWithTooltip">
-              <SupervisorAccountOutlinedIcon className="Manageicontool" />
-            </div>
-          </Link>
-          <Link to={"/"}>
-            <div className="ManageIconWithTooltip">
-              <HomeOutlinedIcon className="Manageicontool3" />
-            </div>
-          </Link>
-        </>
       </AppBar>
       <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
         {list()}
