@@ -1,10 +1,11 @@
-import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { CircularProgress } from "@mui/material";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import PasswordService from "../../services/PasswordService";
 import SnackbarComponent from "../../components/SnackbarComponent/SnackbarComponent";
 import RegistrationService from "../../services/RegistrationService";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 
 function AdminRegistration() {
   const [loading, setLoading] = useState(false);
@@ -24,9 +25,10 @@ function AdminRegistration() {
         .then((res) => {
           setSelectedRole(res[0]);
           setRoles(res.data);
-          console.log(res);
         })
-        .catch((ale) => alert(ale));
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }, []);
 
@@ -48,7 +50,7 @@ function AdminRegistration() {
     if (inputData.password !== inputData.confirmPassword) {
       setSnackbar(
         <SnackbarComponent
-          message={"New password and confirm password does not match"}
+          message={"New password and confirm password do not match"}
           severity={"error"}
         />
       );
@@ -71,91 +73,92 @@ function AdminRegistration() {
   };
 
   return (
-    <div className="login-container">
-      {snackbar}
-      <h1>Admin Registration</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="email">
-            Email<span className="mandatory-field">*</span>
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Email"
-            value={inputData.email}
-            onChange={handleData}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">
-            Password<span className="mandatory-field">*</span>
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Enter password"
-            value={inputData.password}
-            onChange={handleData}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="confirmPassword">
-            Confirm Password<span className="mandatory-field">*</span>
-          </label>
-          <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            placeholder="Confirm password"
-            value={inputData.confirmPassword}
-            onChange={handleData}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="confirmPassword">
-            Role<span className="mandatory-field">*</span>
-          </label>
-          <Box>
-            <FormControl fullWidth>
-              <InputLabel id="role">Role</InputLabel>
-              <Select
-                labelId="role"
-                label="Role"
-                id="demo-simple-select"
-                value={selectedRole}
-                name="role"
-                onChange={handleData}
-              >
-                {roles.map((role, index) => (
-                  <MenuItem key={index} value={role}>
-                    {role}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
-        </div>
-
-        <button type="submit" className="flex-jcc-aic">
-          {loading ? (
-            <CircularProgress size={20} color={"error"} />
-          ) : (
-            "Register"
-          )}
-        </button>
-      </form>
-      <Box textAlign={"end"}>
-        <Link to={"/dashboard"} className="no-anchor-style">
-          Go back
-        </Link>
-      </Box>
-    </div>
+    <>
+      <div className="login-container">
+        {snackbar}
+        <h1>Admin Registration</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="email">
+              Email<span className="mandatory-field">*</span>
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email"
+              value={inputData.email}
+              onChange={handleData}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">
+              Password<span className="mandatory-field">*</span>
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter password"
+              value={inputData.password}
+              onChange={handleData}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="confirmPassword">
+              Confirm Password<span className="mandatory-field">*</span>
+            </label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Confirm password"
+              value={inputData.confirmPassword}
+              onChange={handleData}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="confirmPassword">
+              Role<span className="mandatory-field">*</span>
+            </label>
+            <Box>
+              <FormControl fullWidth>
+                <InputLabel id="role">Role</InputLabel>
+                <Select
+                  labelId="role"
+                  label="Role"
+                  id="demo-simple-select"
+                  value={selectedRole}
+                  name="role"
+                  onChange={handleData}
+                >
+                  {roles.map((role, index) => (
+                    <MenuItem key={index} value={role}>
+                      {role}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+          </div>
+          <button type="submit" className="flex-jcc-aic">
+            {loading ? (
+              <CircularProgress size={20} color={"error"} />
+            ) : (
+              "Register"
+            )}
+          </button>
+        </form>
+        <Box textAlign={"end"}>
+          <Link to={"/dashboard"} className="no-anchor-style">
+            Go back
+          </Link>
+        </Box>
+      </div>
+    </>
   );
 }
 
