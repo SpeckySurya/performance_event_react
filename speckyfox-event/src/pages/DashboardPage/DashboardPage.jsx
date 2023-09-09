@@ -30,6 +30,7 @@ import {
 } from "../../utils/Constant";
 import { TbRuler2Off } from "react-icons/tb";
 import ShowEvent from "../../components/ShowEvent/ShowEvent";
+import { findRoleFromToken } from "../../utils/TokenDecoder";
 
 const formDataDefault = {
   title: "",
@@ -185,7 +186,7 @@ export const DashboardPage = () => {
       <AdminHeader handleSidebar={handleSidebar} />
       <Box paddingY={10} paddingX={3}>
         <Typography fontWeight={"bolder"}>
-          Home / {breadCrump[selected]}
+          Dashboard / {breadCrump[selected]}
         </Typography>
         <Box margin={"auto"}>{menuComponentFinder()}</Box>
       </Box>

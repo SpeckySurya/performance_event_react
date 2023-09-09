@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -28,11 +28,36 @@ import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsAc
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { useNavigate } from "react-router-dom";
+import { findRoleFromToken } from "../../utils/TokenDecoder";
 
 const AdminHeader = (props) => {
   const [open, setOpen] = useState(false);
+  const [menuItems, setMenuItems] = useState([]);
   const [menuItem, setMenuItem] = useState("Show Events");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const role = findRoleFromToken();
+    switch (role) {
+      case "ADMIN": {
+        setMenuItems([
+          ...menuItemsForAdmin,
+          ...menuItemsForEditor,
+          ...commonMenuItems,
+        ]);
+        break;
+      }
+      case "EDITOR": {
+        setMenuItems([...menuItemsForEditor, ...commonMenuItems]);
+        break;
+      }
+      case "VIEWER": {
+        setMenuItems([...commonMenuItems]);
+        break;
+      }
+    }
+    console.log(menuItems);
+  }, []);
 
   const toggleDrawer = (isOpen) => (event) => {
     if (
@@ -50,7 +75,7 @@ const AdminHeader = (props) => {
     navigate("/");
   };
 
-  const menuItems = [
+  const commonMenuItems = [
     {
       text: "Show Events",
       icon: <HomeOutlinedIcon />,
@@ -58,25 +83,6 @@ const AdminHeader = (props) => {
         props.handleSidebar("show");
         setOpen(false);
         setMenuItem("Show Events");
-      },
-    },
-    {
-      text: "Create Event",
-      icon: <AddCircleOutlineOutlinedIcon />,
-      onClick: () => {
-        props.handleSidebar("create");
-        setOpen(false);
-        setMenuItem("Create Event");
-      },
-    },
-
-    {
-      text: "Home Configuration",
-      icon: <AssuredWorkloadOutlinedIcon />,
-      onClick: () => {
-        props.handleSidebar("homeConfig");
-        setOpen(false);
-        setMenuItem("Home Configuration");
       },
     },
     {
@@ -89,31 +95,46 @@ const AdminHeader = (props) => {
       },
     },
     {
-      text: "Create Speaker",
-      icon: <PersonAddAltOutlinedIcon />,
-      onClick: () => {
-        props.handleSidebar("manageSpeaker");
-        setOpen(false);
-        setMenuItem("Create Speaker");
-      },
-    },
-
-    {
-      text: "Notify Participant",
-      icon: <NotificationsActiveOutlinedIcon />,
-      onClick: () => {
-        props.handleSidebar("notify");
-        setOpen(false);
-        setMenuItem("Notify Participant");
-      },
-    },
-    {
       text: "View Participant",
       icon: <VisibilityOffOutlinedIcon />,
       onClick: () => {
         props.handleSidebar("manageUser");
         setOpen(false);
         setMenuItem("View Participant");
+      },
+    },
+    { text: "Logout", icon: <ExitToAppIcon />, onClick: handleLogout },
+  ];
+
+  const menuItemsForEditor = [
+    {
+      text: "Home Configuration",
+      icon: <AssuredWorkloadOutlinedIcon />,
+      onClick: () => {
+        props.handleSidebar("homeConfig");
+        setOpen(false);
+        setMenuItem("Home Configuration");
+      },
+    },
+  ];
+
+  const menuItemsForAdmin = [
+    {
+      text: "Create Event",
+      icon: <AddCircleOutlineOutlinedIcon />,
+      onClick: () => {
+        props.handleSidebar("create");
+        setOpen(false);
+        setMenuItem("Create Event");
+      },
+    },
+    {
+      text: "Create Speaker",
+      icon: <PersonAddAltOutlinedIcon />,
+      onClick: () => {
+        props.handleSidebar("manageSpeaker");
+        setOpen(false);
+        setMenuItem("Create Speaker");
       },
     },
     {
@@ -124,8 +145,93 @@ const AdminHeader = (props) => {
         setOpen(false);
       },
     },
-    { text: "Logout", icon: <ExitToAppIcon />, onClick: handleLogout },
+    {
+      text: "Notify Participant",
+      icon: <NotificationsActiveOutlinedIcon />,
+      onClick: () => {
+        props.handleSidebar("notify");
+        setOpen(false);
+        setMenuItem("Notify Participant");
+      },
+    },
   ];
+
+  // const menuItems = [
+  //   {
+  //     text: "Show Events",
+  //     icon: <HomeOutlinedIcon />,
+  //     onClick: () => {
+  //       props.handleSidebar("show");
+  //       setOpen(false);
+  //       setMenuItem("Show Events");
+  //     },
+  //   },
+  //   {
+  //     text: "Create Event",
+  //     icon: <AddCircleOutlineOutlinedIcon />,
+  //     onClick: () => {
+  //       props.handleSidebar("create");
+  //       setOpen(false);
+  //       setMenuItem("Create Event");
+  //     },
+  //   },
+
+  //   {
+  //     text: "Home Configuration",
+  //     icon: <AssuredWorkloadOutlinedIcon />,
+  //     onClick: () => {
+  //       props.handleSidebar("homeConfig");
+  //       setOpen(false);
+  //       setMenuItem("Home Configuration");
+  //     },
+  //   },
+  //   {
+  //     text: "Show Speaker",
+  //     icon: <PeopleAltOutlinedIcon />,
+  //     onClick: () => {
+  //       props.handleSidebar("showSpeaker");
+  //       setOpen(false);
+  //       setMenuItem("Show Speaker");
+  //     },
+  //   },
+  //   {
+  //     text: "Create Speaker",
+  //     icon: <PersonAddAltOutlinedIcon />,
+  //     onClick: () => {
+  //       props.handleSidebar("manageSpeaker");
+  //       setOpen(false);
+  //       setMenuItem("Create Speaker");
+  //     },
+  //   },
+
+  //   {
+  //     text: "Notify Participant",
+  //     icon: <NotificationsActiveOutlinedIcon />,
+  //     onClick: () => {
+  //       props.handleSidebar("notify");
+  //       setOpen(false);
+  //       setMenuItem("Notify Participant");
+  //     },
+  //   },
+  //   {
+  //     text: "View Participant",
+  //     icon: <VisibilityOffOutlinedIcon />,
+  //     onClick: () => {
+  //       props.handleSidebar("manageUser");
+  //       setOpen(false);
+  //       setMenuItem("View Participant");
+  //     },
+  //   },
+  //   {
+  //     text: "Upload Files",
+  //     icon: <VideoLibraryOutlinedIcon />,
+  //     onClick: () => {
+  //       props.handleSidebar("UploadVideoAndPdf");
+  //       setOpen(false);
+  //     },
+  //   },
+  //   { text: "Logout", icon: <ExitToAppIcon />, onClick: handleLogout },
+  // ];
 
   const list = () => (
     <List>
