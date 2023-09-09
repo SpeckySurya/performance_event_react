@@ -49,4 +49,12 @@ export default class EventService {
       headers
     );
   }
+  setActiveOrInactive(eventId, data) {
+    const headers = this.headers.withAuth();
+    return axios.patch(
+      `${this.baseUrl}/admin/active-event/${eventId}`,
+      data,
+      headers
+    );
+  }
 }
