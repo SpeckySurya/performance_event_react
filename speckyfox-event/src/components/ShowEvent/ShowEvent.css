@@ -1,12 +1,12 @@
 .show-event-container {
   margin: auto;
 }
-.Manageicon {
+/* .Manageicon {
   color: white;
   position: absolute;
   z-index: 10;
   top: 23px;
-  right: 5%;
+  right: 1%;
   cursor: pointer;
 }
 .Manageicontool {
@@ -14,7 +14,7 @@
   position: absolute;
   z-index: 10;
   top: 23px;
-  right: 15%;
+  right: 40%;
   cursor: pointer;
 }
 .Manageicontool3 {
@@ -24,7 +24,7 @@
   top: 23px;
   right: 25%;
   cursor: pointer;
-}
+} */
 /* .show-event-container {
   display: flex;
   flex-wrap: wrap;
