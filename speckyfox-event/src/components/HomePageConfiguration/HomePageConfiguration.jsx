@@ -185,7 +185,7 @@ function HomePageConfiguration(props) {
                   ) : null}
                 </Grid>
                 <Grid xs={12} sm={12} item>
-                  <InputLabel>Twiter url</InputLabel>
+                  <InputLabel>Twitter url</InputLabel>
                   <TextField
                     type="text"
                     name="twitterUrl"
