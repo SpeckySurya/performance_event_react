@@ -11,7 +11,6 @@ function AdminUpdatePassword() {
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
-    token: sessionStorage.getItem("token"),
   });
 
   useEffect(() => {
@@ -38,10 +37,18 @@ function AdminUpdatePassword() {
     passwordService
       .updatePassword(formData)
       .then((response) => {
-        console.log(response.data);
+        setSnackbar(
+          <SnackbarComponent
+            message={"Password Updated"}
+            severity={"success"}
+          />
+        );
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 3000);
       })
       .catch((error) => {
-        console.log(error);
+        alert(error);
       });
   }
 
