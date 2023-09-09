@@ -19,7 +19,7 @@ const Navbar = ({ homeConfig }) => {
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
-
+    console.log("home config value", homeConfig);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -45,7 +45,7 @@ const Navbar = ({ homeConfig }) => {
                 target="_blank"
                 href={homeConfig.twitterUrl}
               >
-                Twiter
+                Twitter
               </a>
             </li>
             <li>

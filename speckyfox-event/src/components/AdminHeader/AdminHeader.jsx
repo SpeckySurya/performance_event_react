@@ -13,6 +13,7 @@ import {
   Box,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import "./AdminHeader.css";
 import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
 import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
@@ -161,19 +162,22 @@ const AdminHeader = (props) => {
             className="ManageIconWithTooltip Manageicon"
             onClick={() => handleManageAdminClick("/admin-registation")}
           >
-            <ManageAccountsIcon /> Create Admin
+            <ManageAccountsIcon className="textcreateAdmin" />{" "}
+            <span className="createadmintext">Create Admin </span>
           </Box>
           <Box
             className="ManageIconWithTooltip Manageicontool"
             onClick={() => handleManageAdminClick("/admin-update-password")}
           >
-            <SupervisorAccountOutlinedIcon /> Change Password
+            <SupervisorAccountOutlinedIcon />{" "}
+            <span className="changepasswordtext"> Change Password</span>
           </Box>
           <Box
             className="ManageIconWithTooltip Manageicontool3"
             onClick={() => handleManageAdminClick("/")}
           >
-            <HomeOutlinedIcon /> Home
+            <HomeOutlinedIcon />
+            <span className="hometext"> Home</span>
           </Box>
         </Toolbar>
       </AppBar>

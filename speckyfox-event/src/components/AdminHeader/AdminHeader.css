@@ -74,9 +74,45 @@
   flex-direction: column;
   justify-content: space-evenly;
 }
-.ManageiconHome {
+/* .ManageiconHome {
   top: 23px !important;
   font-size: x-large !important;
   right: 63px !important;
   position: absolute !important;
+} */
+.Manageicon {
+  color: white;
+  position: absolute;
+  z-index: 10;
+  top: 23px;
+
+  right: 1%;
+  cursor: pointer;
+}
+.Manageicontool {
+  color: white;
+  position: absolute;
+  z-index: 10;
+  top: 23px;
+  right: 25%;
+  cursor: pointer;
+}
+.Manageicontool3 {
+  color: white;
+  position: absolute;
+  z-index: 10;
+  top: 23px;
+  right: 15%;
+  cursor: pointer;
+}
+.hometext {
+  font-size: xx-small;
+}
+.changepasswordtext {
+  font-size: xx-small;
+  margin-bottom: 3px;
+}
+
+.createadmintext {
+  font-size: xx-small !important;
 }
