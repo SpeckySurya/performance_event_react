@@ -229,7 +229,7 @@ function HomePageConfiguration(props) {
                     id="facebookUrl"
                     placeholder="Upload Facebook url"
                     variant="outlined"
-                    value={values?.facebookUrl}
+                    value={initialValues?.facebookUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth

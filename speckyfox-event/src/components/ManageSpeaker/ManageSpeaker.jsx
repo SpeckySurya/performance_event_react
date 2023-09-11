@@ -11,6 +11,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  CircularProgress,
 } from "@mui/material";
 import { useFormik } from "formik";
 import "./ManageSpeaker.css";
@@ -24,6 +25,7 @@ import { useEffect, useState } from "react";
 function ManageSpeaker(props) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [popUpMsg, setPopUpmsg] = useState("");
   const handleClose = () => {
     setOpen(false);
@@ -38,6 +40,7 @@ function ManageSpeaker(props) {
       initialValues: props.speakerInitialValue,
       validationSchema: ManageSpeakerValidation,
       onSubmit: (values) => {
+        setLoading(true);
         const request = new FormData();
         for (let entry in props.speakerInitialValue) {
           request.append(entry, values[entry]);
@@ -50,6 +53,7 @@ function ManageSpeaker(props) {
             .updateSpeaker(props.selectedSpeaker.id, request)
             .then((response) => {
               setOpen(true);
+              setLoading(false);
               setPopUpmsg("Speaker updated Successfully!");
             })
             .catch((error) => {
@@ -60,6 +64,7 @@ function ManageSpeaker(props) {
             .saveSpeaker(request)
             .then((response) => {
               setOpen(true);
+              setLoading(false);
               setPopUpmsg("Speaker created Successfully!");
             })
             .catch((error) => {
@@ -272,7 +277,11 @@ function ManageSpeaker(props) {
                     color="primary"
                     fullWidth="100%"
                   >
-                    Submit
+                    {loading ? (
+                      <CircularProgress size={20} color={"error"} />
+                    ) : (
+                      "Submit"
+                    )}
                   </Button>
                 </Grid>
               </Grid>
