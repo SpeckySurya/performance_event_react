@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PasswordService from "../../services/PasswordService";
+import { CircularProgress } from "@mui/material";
 
 function UpdatePassword() {
   const [loading, setLoading] = useState(false);
@@ -34,6 +35,7 @@ function UpdatePassword() {
 
   function handleResetPwdClick() {
     // Check if passwords match before proceeding
+    setLoading(true);
     if (!passwordsMatch) {
       alert("Passwords do not match");
       return;
