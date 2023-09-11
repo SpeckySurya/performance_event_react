@@ -5,12 +5,14 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Button, // Use MUI's Button instead of Bootstrap's
+  Button,
+  CircularProgress, // Use MUI's Button instead of Bootstrap's
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import PasswordService from "../../services/PasswordService";
 
 function Forgotpassword() {
+  const [loading, setLoading] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [dialog, setDialog] = useState({ dialogMsg: "", title: "" });
   const navigate = useNavigate();
@@ -21,6 +23,7 @@ function Forgotpassword() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     const email = e.target.email.value; // Get the value of the email input field
     const formData = new FormData();
     formData.append("email", email);
@@ -28,6 +31,7 @@ function Forgotpassword() {
     passwordService
       .sendResetPwdEmail({ email: email })
       .then((response) => {
+        setLoading(false);
         setDialog({
           dialogMsg: "A reset email has sent to your email id.",
           title: "Success",
@@ -80,7 +84,7 @@ function Forgotpassword() {
           </div>
 
           <button type="submit" className="flex-jcc-aic">
-            Send
+            {loading ? <CircularProgress size={20} color={"error"} /> : "Send"}
           </button>
           <Link to="/login" className="forgot_password-back">
             Back to login page

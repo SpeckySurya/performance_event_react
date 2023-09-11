@@ -23,6 +23,7 @@ function AdminUpdatePassword() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true);
     if (formData.newPassword !== formData.confirmPassword) {
       setSnackbar(
         <SnackbarComponent
@@ -37,6 +38,7 @@ function AdminUpdatePassword() {
     passwordService
       .updatePassword(formData)
       .then((response) => {
+        setLoading(false);
         setSnackbar(
           <SnackbarComponent
             message={"Password Updated"}
