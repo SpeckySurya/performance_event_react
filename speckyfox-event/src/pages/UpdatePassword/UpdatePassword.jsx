@@ -17,6 +17,7 @@ function UpdatePassword() {
     passwordService
       .validateResetPwdLink(token)
       .then((response) => {
+        console.log(response.data);
         if (!response.data) {
           navigate("/forgot-password");
         }

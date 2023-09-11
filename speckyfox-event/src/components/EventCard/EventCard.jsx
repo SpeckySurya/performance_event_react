@@ -41,7 +41,7 @@ import ReactPlayer from "react-player";
 import { findRoleFromToken } from "../../utils/TokenDecoder";
 
 const EventCard = (props) => {
-  const [active, setActive] = useState(props.event.events.active);
+  const [active, setActive] = useState(false);
   const [snackbar, setSnackbar] = useState(null);
   const [open, setOpen] = useState(false);
   const [userMail, setUserMail] = useState("");
@@ -54,6 +54,10 @@ const EventCard = (props) => {
       setPlay(false);
     }
   };
+
+  useEffect(() => {
+    setActive(props.event.events.active);
+  }, [props.event]);
 
   useEffect(() => {
     window.addEventListener("click", handleOutsideClick);
@@ -132,11 +136,15 @@ const EventCard = (props) => {
       .getEventDataInfo(props.event.events.id)
       .then((response) => {
         setEventData(response.data);
-        console.log(response.data);
         setPlay(true);
       })
       .catch((error) => {
-        alert("Something went wrong");
+        setSnackbar(
+          <SnackbarComponent
+            message="Video not available !"
+            severity={"error"}
+          />
+        );
       });
   }
 
@@ -216,14 +224,12 @@ const EventCard = (props) => {
             sx={{ cursor: "pointer" }}
             onClick={() => handleEventStatus(props.event.events)}
           >
-            {props.event.events.active ? (
+            {active ? (
               <ToggleOnOutlinedIcon sx={{ fontSize: "30px", color: "green" }} />
             ) : (
               <ToggleOffOutlinedIcon sx={{ fontSize: "30px", color: "red" }} />
             )}
-            <Typography>
-              {props.event.events.active ? "Active" : "Inactive"}
-            </Typography>
+            <Typography>{active ? "Active" : "Inactive"}</Typography>
           </Stack>
         )}
         {isOutdated && (

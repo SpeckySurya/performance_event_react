@@ -30,11 +30,7 @@ const EventPage = () => {
   ) : (
     <div className="event-page-container">
       <Header homeConfig={homeConfig} />
-      {events.length == 0 ? (
-        <h1>No Upcoming Events</h1>
-      ) : (
-        <ShowEvent events={events} isEventPage={true} />
-      )}
+      <ShowEvent events={events} isEventPage={true} />
       <Footer homeConfig={homeConfig} />
     </div>
   );
