@@ -11,6 +11,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  CircularProgress,
 } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -27,6 +28,8 @@ import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
 
 function UploadVideoAndPdf() {
   const [uploadFile, setuploadFile] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const [uploadVideo, setuploadVideo] = useState("");
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState("");
@@ -46,6 +49,7 @@ function UploadVideoAndPdf() {
   }, [selectedEvent]);
 
   function fundisplayfileandvideo() {
+    setLoading(true);
     const event = events.find((event) => event.events.id === selectedEvent);
     const formData = new FormData();
 
@@ -60,6 +64,7 @@ function UploadVideoAndPdf() {
     eventService
       .uploadPastEventData(formData)
       .then((response) => {
+        setLoading(false);
         setOpen(true);
       })
       .catch((error) => alert(error));
@@ -190,7 +195,11 @@ function UploadVideoAndPdf() {
                   fullWidth="100%"
                   onClick={fundisplayfileandvideo}
                 >
-                  Submit
+                  {loading ? (
+                    <CircularProgress size={20} color={"error"} />
+                  ) : (
+                    "Submit"
+                  )}
                 </Button>
               </Grid>
             </Grid>
