@@ -18,6 +18,7 @@ import "./HomePageConfiguration.css";
 import { HomePageConfigationSchema } from "../../schemas/Homepagevalidation";
 import { useEffect, useState } from "react";
 import HomeConfigService from "../../services/HomeConfigService";
+const homeConfigService = new HomeConfigService();
 
 function HomePageConfiguration(props) {
   const [initialValues, setInitialValues] = useState({
@@ -29,6 +30,27 @@ function HomePageConfiguration(props) {
     youtubeUrl: "",
     footerText: "",
   });
+
+  useEffect(() => {
+    homeConfigService
+      .getHomeConfigById()
+      .then((data) => {
+        console.log("api calling data", data.data);
+        const apiData = data.data;
+        setInitialValues({
+          linkedinUrl: apiData.linkdinUrl,
+          twitterUrl: apiData.twitterUrl,
+          facebookUrl: apiData.facebookUrl,
+          websiteUrl: apiData.websiteUrl,
+          contactUrl: apiData.contactUrl,
+          youtubeUrl: apiData.youtubeUrl,
+          footerText: apiData.footerText,
+        });
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
 
   const [banner, setBanner] = useState(null);
   const [logo, setLogo] = useState(null);
@@ -65,7 +87,6 @@ function HomePageConfiguration(props) {
         request.append("banner", banner);
         request.append("logo", logo);
 
-        const homeConfigService = new HomeConfigService();
         homeConfigService
           .getHomeConfigById()
           .then((response) => {
@@ -75,7 +96,6 @@ function HomePageConfiguration(props) {
                 console.log(response);
                 setOpen(true);
                 setPopUpmsg("Homepage details updated");
-                // alert("Homepage details updated");
               })
               .catch((error) => {
                 alert(error);

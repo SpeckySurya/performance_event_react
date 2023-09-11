@@ -47,6 +47,7 @@ function AdminRegistration() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     if (inputData.password !== inputData.confirmPassword) {
       setSnackbar(
         <SnackbarComponent
@@ -60,6 +61,7 @@ function AdminRegistration() {
     registrationService
       .newAdminRegistration(inputData)
       .then((response) => {
+        setLoading(false);
         setSnackbar(
           <SnackbarComponent message={response.data} severity={"success"} />
         );
