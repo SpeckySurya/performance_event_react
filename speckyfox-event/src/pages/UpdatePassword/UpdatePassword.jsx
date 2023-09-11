@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PasswordService from "../../services/PasswordService";
+import { CircularProgress } from "@mui/material";
+
 function UpdatePassword() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -28,7 +30,17 @@ function UpdatePassword() {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   }
 
+  // Check if passwords match and update the state accordingly
+  const passwordsMatch = formData.newPassword === formData.confirmPassword;
+
   function handleResetPwdClick() {
+    // Check if passwords match before proceeding
+    setLoading(true);
+    if (!passwordsMatch) {
+      alert("Passwords do not match");
+      return;
+    }
+
     passwordService
       .resetPassword(formData, token.replaceAll("-", "."))
       .then((response) => {
@@ -50,7 +62,7 @@ function UpdatePassword() {
             New Password<span className="mandatory-field">*</span>
           </label>
           <input
-            type="Password"
+            type="password"
             value={formData.newPassword}
             id="newPassword"
             name="newPassword"
@@ -64,13 +76,16 @@ function UpdatePassword() {
             Confirm Password<span className="mandatory-field">*</span>
           </label>
           <input
-            type="Password"
+            type="password"
             value={formData.confirmPassword}
             id="confirmPassword"
             name="confirmPassword"
-            placeholder="confirm your password"
+            placeholder="Confirm your password"
             onChange={handleChange}
             required
+            style={{
+              borderColor: !passwordsMatch ? "red" : "", // Apply red border if passwords don't match
+            }}
           />
         </div>
 
@@ -85,4 +100,5 @@ function UpdatePassword() {
     </>
   );
 }
+
 export default UpdatePassword;
