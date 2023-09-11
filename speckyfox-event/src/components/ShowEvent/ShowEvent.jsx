@@ -3,43 +3,22 @@ import "../../responsive.css";
 import "./ShowEvent.css";
 import {
   Box,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
   Stack,
   Typography,
-  Button,
   styled,
   ToggleButtonGroup,
   ToggleButton,
 } from "@mui/material";
-import ToggleOffOutlinedIcon from "@mui/icons-material/ToggleOffOutlined";
-import ToggleOnOutlinedIcon from "@mui/icons-material/ToggleOnOutlined";
-import { TbTargetArrow } from "react-icons/tb";
-import AddHomeOutlinedIcon from "@mui/icons-material/AddHomeOutlined";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import SupervisorAccountOutlinedIcon from "@mui/icons-material/SupervisorAccountOutlined";
-
-import dateFormatter, {
-  addTime,
-  convertTo12HourFormat,
-  isPastDateTime,
-} from "../../utils/DateFormatter";
+import dateFormatter, { isPastDateTime } from "../../utils/DateFormatter";
 import { Link } from "react-router-dom";
 import UpdateEvent from "../UpdateEvent/UpdateEvent";
-import Editbtn from "../Editbtn/Editbtn";
 import EventCard from "../EventCard/EventCard";
 
 const ShowEvent = (props) => {
   console.log(props);
   const [eventEditing, setEventEditing] = useState(false);
   const [editEvent, setEditEvent] = useState(null);
-
-  const [showToggle, SetShowToggle] = useState();
-
   const [pastEvents, setPastEvents] = useState([]);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [renderEvents, setRenderEvents] = useState([]);

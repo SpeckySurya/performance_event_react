@@ -18,8 +18,8 @@ import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
 import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import SupervisorAccountOutlinedIcon from "@mui/icons-material/SupervisorAccountOutlined";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
+import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
 import AssuredWorkloadOutlinedIcon from "@mui/icons-material/AssuredWorkloadOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
@@ -102,6 +102,11 @@ const AdminHeader = (props) => {
         setMenuItem("View Participant");
       },
     },
+    {
+      text: "Change Password",
+      icon: <ChangeCircleIcon />,
+      onClick: () => navigate("/admin-update-password"),
+    },
     { text: "Logout", icon: <ExitToAppIcon />, onClick: handleLogout },
   ];
 
@@ -152,6 +157,11 @@ const AdminHeader = (props) => {
         setOpen(false);
         setMenuItem("Notify Participant");
       },
+    },
+    {
+      text: "Admin Registration",
+      icon: <AppRegistrationIcon />,
+      onClick: () => navigate("/admin-registation"),
     },
   ];
 
@@ -247,10 +257,6 @@ const AdminHeader = (props) => {
     </List>
   );
 
-  function handleManageAdminClick(path) {
-    navigate(path);
-  }
-
   return (
     <div>
       <AppBar position="fixed" sx={{ zIndex: 5, bgcolor: "#322653" }}>
@@ -264,27 +270,6 @@ const AdminHeader = (props) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6">Event Dashboard</Typography>
-          <Box
-            className="ManageIconWithTooltip Manageicontool3 iconhomectr"
-            onClick={() => handleManageAdminClick("/")}
-          >
-            <HomeOutlinedIcon className="iconhome" />
-            <span className="hometext"> Home</span>
-          </Box>
-          <Box
-            className="ManageIconWithTooltip Manageicon createiconpatent iconadminctr"
-            onClick={() => handleManageAdminClick("/admin-registation")}
-          >
-            <ManageAccountsIcon className="iconadmin" />{" "}
-            <span className="createadmintext">Create Admin </span>
-          </Box>
-          <Box
-            className="ManageIconWithTooltip Manageicontool iconpasswordctr"
-            onClick={() => handleManageAdminClick("/admin-update-password")}
-          >
-            <SupervisorAccountOutlinedIcon className="iconpassword" />{" "}
-            <span className="changepasswordtext"> Change Password</span>
-          </Box>
         </Toolbar>
       </AppBar>
       <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>

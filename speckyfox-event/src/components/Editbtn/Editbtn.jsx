@@ -6,9 +6,7 @@ import EventService from "../../services/EventService";
 import React, { useEffect, useState } from "react";
 import PopupAlert from "../PopupAlert/PopupAlert";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
-import { CircularProgress, LinearProgress } from "@mui/material";
-
-const options = ["Edit", "Delete"];
+import { findRoleFromToken } from "../../utils/TokenDecoder";
 
 const ITEM_HEIGHT = 40;
 
@@ -16,6 +14,7 @@ export default function Editbtn(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [dialog, setDialog] = useState({ open: false, action: null });
   const [snackbar, setSnackbar] = useState(null);
+  const [options, setOptions] = useState([]);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -23,6 +22,14 @@ export default function Editbtn(props) {
   const handleClose = (event) => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    if (findRoleFromToken() === "EDITOR") {
+      setOptions(["Edit"]);
+    } else if (findRoleFromToken() === "ADMIN") {
+      setOptions(["Edit", "Delete"]);
+    }
+  }, []);
 
   useEffect(() => {
     handleClose();

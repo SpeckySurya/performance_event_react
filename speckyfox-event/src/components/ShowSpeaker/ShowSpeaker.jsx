@@ -20,6 +20,7 @@ import {
 import SpeakerService from "../../services/SpeakerService";
 import PopupAlert from "../PopupAlert/PopupAlert";
 import ManageSpeaker from "../ManageSpeaker/ManageSpeaker";
+import { findRoleFromToken } from "../../utils/TokenDecoder";
 
 const ShowSpeaker = (props) => {
   const speakerService = new SpeakerService();
@@ -132,26 +133,30 @@ const ShowSpeaker = (props) => {
                         {speaker.designation}
                       </Typography>
                     </CardContent>
-                    <CardActions>
-                      <Button
-                        variant="contained"
-                        color="error"
-                        style={{ width: "50%" }}
-                        startIcon={<DeleteIcon />}
-                        onClick={() => onDelete(speaker.id)}
-                      >
-                        Delete
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="success"
-                        style={{ width: "50%" }}
-                        startIcon={<EditIcon />}
-                        onClick={() => editspeakerfunction(speaker)}
-                      >
-                        Edit
-                      </Button>
-                    </CardActions>
+                    {findRoleFromToken() !== "VIEWER" && (
+                      <CardActions>
+                        {findRoleFromToken() !== "EDITOR" && (
+                          <Button
+                            variant="contained"
+                            color="error"
+                            style={{ width: "50%" }}
+                            startIcon={<DeleteIcon />}
+                            onClick={() => onDelete(speaker.id)}
+                          >
+                            Delete
+                          </Button>
+                        )}
+                        <Button
+                          variant="contained"
+                          color="success"
+                          style={{ width: "50%" }}
+                          startIcon={<EditIcon />}
+                          onClick={() => editspeakerfunction(speaker)}
+                        >
+                          Edit
+                        </Button>
+                      </CardActions>
+                    )}
                   </Card>
                 </>
               );

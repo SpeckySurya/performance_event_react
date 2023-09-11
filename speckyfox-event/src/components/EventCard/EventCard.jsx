@@ -38,6 +38,7 @@ import dateFormatter, {
 import EventService from "../../services/EventService";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
 import ReactPlayer from "react-player";
+import { findRoleFromToken } from "../../utils/TokenDecoder";
 
 const EventCard = (props) => {
   const [active, setActive] = useState(props.event.events.active);
@@ -215,12 +216,14 @@ const EventCard = (props) => {
             sx={{ cursor: "pointer" }}
             onClick={() => handleEventStatus(props.event.events)}
           >
-            {active ? (
+            {props.event.events.active ? (
               <ToggleOnOutlinedIcon sx={{ fontSize: "30px", color: "green" }} />
             ) : (
               <ToggleOffOutlinedIcon sx={{ fontSize: "30px", color: "red" }} />
             )}
-            <Typography>{active ? "Active" : "Inactive"}</Typography>
+            <Typography>
+              {props.event.events.active ? "Active" : "Inactive"}
+            </Typography>
           </Stack>
         )}
         {isOutdated && (
@@ -245,7 +248,7 @@ const EventCard = (props) => {
           image={props.event.events.eventBanner}
           alt="Event Banner"
         />
-        {!props.isEventPage && (
+        {!props.isEventPage && findRoleFromToken() !== "VIEWER" && (
           <Box>
             <Editbtn
               setLoading={props.setLoading}
