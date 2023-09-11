@@ -164,18 +164,11 @@ const EventCard = (props) => {
         <Box
           ref={videoPlayerRef}
           sx={{
-            position: "absolute",
+            position: "fixed",
             zIndex: 5,
-            height: "60vh",
-            width: "52.4%",
           }}
         >
-          <ReactPlayer
-            url={eventData.video}
-            width="100%"
-            height="100%"
-            controls
-          />
+          <ReactPlayer url={eventData.video} controls />
         </Box>
       )}
       <Dialog open={open} onClose={handleClose}>

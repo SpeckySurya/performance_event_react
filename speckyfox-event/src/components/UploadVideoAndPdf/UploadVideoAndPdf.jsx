@@ -133,7 +133,7 @@ function UploadVideoAndPdf() {
 
             <Grid spacing={1}>
               <Grid xs={12} sm={6} item>
-                <InputLabel className="uploadvideotext">Upload File</InputLabel>
+                <InputLabel className="uploadvideotext">Upload PPT</InputLabel>
                 <Input
                   style={{ paddingLeft: "10px" }}
                   className="uploadpdf"

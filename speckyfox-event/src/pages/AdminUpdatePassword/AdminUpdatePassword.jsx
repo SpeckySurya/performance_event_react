@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SnackbarComponent from "../../components/SnackbarComponent/SnackbarComponent";
 import PasswordService from "../../services/PasswordService";
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 
 function AdminUpdatePassword() {
   const [loading, setLoading] = useState(false);
