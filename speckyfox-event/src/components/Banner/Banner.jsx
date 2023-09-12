@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 import "./Banner.css";
 import banner from "./../../assets/banner.png";
@@ -7,10 +9,19 @@ import dateFormatter, {
   addTime,
   convertTo12HourFormat,
 } from "../../utils/DateFormatter";
+import { Button, Typography } from "@mui/material";
 
 export const Banner = (props) => {
   const [formattedDate, setFormattedDate] = useState({});
   const [formattedTime, setFormattedTime] = useState("");
+  const [showCrossWindow, setShowCrossWindow] = useState(true);
+  const registrationFormRef = useRef(null);
+  const handleRegisterButtonClick = () => {
+    // Scroll to the RegistrationForm section when the button is clicked
+    if (registrationFormRef.current) {
+      registrationFormRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   useEffect(() => {
     setFormattedDate(dateFormatter(props.event.date));
@@ -109,7 +120,25 @@ export const Banner = (props) => {
           </div>
         </div>
       </section>
-      <section className="right">
+      {showCrossWindow ? (
+        <Button
+          className="crosebuttonoverregirter"
+          onClick={() => setShowCrossWindow(false)}
+        >
+          <CloseIcon className="crossiconbutton" />
+        </Button>
+      ) : null}
+      {showCrossWindow ? (
+        <div className="BannerRegisterButtonatTop">
+          <Typography
+            className="BannerRegisterButtonatTopinside"
+            onClick={handleRegisterButtonClick}
+          >
+            {/* <ArrowDownwardIcon /> */}Register
+          </Typography>
+        </div>
+      ) : null}
+      <section className="right" ref={registrationFormRef}>
         <RegistrationForm />
       </section>
     </div>

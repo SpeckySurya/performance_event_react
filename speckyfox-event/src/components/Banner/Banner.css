@@ -116,17 +116,62 @@
   align-items: center;
   margin: 0 auto;
 }
-
+html {
+  scroll-behavior: smooth;
+}
 .banner .speaker-name {
   font-size: 10px;
   text-align: center;
   font-weight: bolder;
   width: 200px;
 }
+.BannerRegisterButtonatTop {
+  position: absolute !important;
+  background: currentColor !important;
+  border-radius: 10px !important;
+  top: 123px !important;
+  right: 10px !important;
+  height: 70px !important;
+  display: none !important;
+  background-color: #ec720f !important;
+  box-shadow: 5px 5px 5px gray;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  padding: 10px !important;
+}
+.BannerRegisterButtonatTopinside {
+  color: white !important;
+  margin: 10px 5px 43px 5px !important;
 
+  border-radius: 10px !important;
+  display: none !important;
+}
+.crosebuttonoverregirter {
+  background-color: transparent !important;
+  z-index: 10;
+  color: black !important;
+  position: absolute !important;
+  right: -11px;
+  top: 108px;
+}
+.crossiconbutton {
+  display: none !important;
+}
+.ArrowDownwardIcon {
+  font-size: x-large;
+}
 @media screen and (max-width: 1000px) {
   .event-timing {
     margin-top: none;
+  }
+  .BannerRegisterButtonatTopinside {
+    display: block !important;
+  }
+  .BannerRegisterButtonatTop {
+    display: block !important;
+  }
+  .crossiconbutton {
+    display: block !important;
   }
 }
 @media screen and (max-width: 540px) {
