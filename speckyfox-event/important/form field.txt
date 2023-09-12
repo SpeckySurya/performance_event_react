@@ -1,7 +1,0 @@
-name 
-company
-designation
-phone 
-email 
-do you use (check)
-have you used any (check)

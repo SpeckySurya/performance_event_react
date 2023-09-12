@@ -1,4 +1,0 @@
-mkdir sassfolder
-cd sassfolder
-npm init
-npm install node-sass --save-dev
