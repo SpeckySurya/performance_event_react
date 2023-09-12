@@ -148,7 +148,7 @@ html {
 }
 .crosebuttonoverregirter {
   background-color: transparent !important;
-  z-index: 10;
+  z-index: 1;
   color: black !important;
   position: absolute !important;
   right: -11px;

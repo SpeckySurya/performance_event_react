@@ -16,7 +16,6 @@ import UpdateEvent from "../UpdateEvent/UpdateEvent";
 import EventCard from "../EventCard/EventCard";
 
 const ShowEvent = (props) => {
-  console.log(props);
   const [eventEditing, setEventEditing] = useState(false);
   const [editEvent, setEditEvent] = useState(null);
   const [pastEvents, setPastEvents] = useState([]);

@@ -32,8 +32,6 @@ export const Banner = (props) => {
     );
   }, [props.event]);
 
-  console.log(props.event.eventBanner);
-
   return (
     <div
       className="banner flex-jcsb"

@@ -57,9 +57,7 @@ function UploadVideoAndPdf() {
     formData.append("eventId", event.events.id);
     formData.append("eventVideo", uploadVideo);
     formData.append("eventPPT", uploadFile);
-    for (let e of formData.entries()) {
-      console.log(e[0], e[1]);
-    }
+
     const eventService = new EventService();
     eventService
       .uploadPastEventData(formData)
