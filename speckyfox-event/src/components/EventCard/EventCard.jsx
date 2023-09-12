@@ -92,7 +92,6 @@ const EventCard = (props) => {
   }));
 
   function downloadedPpt() {
-    console.log(props.event.events.id, userMail);
     const data = {
       email: userMail,
       eventId: props.event.events.id,
@@ -226,7 +225,7 @@ const EventCard = (props) => {
           </Stack>
         )}
         {isOutdated && (
-          <Box onClick={handlePlayVideo}>
+          <Box title="Watch recording" onClick={handlePlayVideo}>
             <PlayCircleFilledIcon
               sx={{
                 position: "absolute",
@@ -259,7 +258,11 @@ const EventCard = (props) => {
           </Box>
         )}
         {isOutdated ? (
-          <Button className="downloadbutton" onClick={() => setOpen(true)}>
+          <Button
+            title="Download PPT"
+            className="downloadbutton"
+            onClick={() => setOpen(true)}
+          >
             <FileDownloadIcon />
           </Button>
         ) : null}
@@ -340,7 +343,7 @@ const EventCard = (props) => {
                 Expired
               </Button>
             ) : (
-              <CustomLink>
+              <CustomLink to={`/${props.event.events.id}`}>
                 <BootstrapButton
                   sx={{
                     position: "absolute",

@@ -32,7 +32,8 @@
   position: absolute !important;
   left: 260px !important;
   top: 20 !important;
-  border-radius: 50% !important;
+  height: 50px;
+  width: 50px;
   cursor: pointer;
 }
 @media screen and (max-width: 450px) {

@@ -14,7 +14,7 @@ export default class PasswordService {
     );
   }
   validateResetPwdLink(token) {
-    const headers = this.headers.basicHeader();
+    const headers = this.headers.textType();
     return axios.post(
       `${this.baseUrl}/admin/reset-pwd-link-validate`,
       token,
