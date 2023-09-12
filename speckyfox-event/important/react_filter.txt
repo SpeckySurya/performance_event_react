@@ -1,9 +1,0 @@
-var arr=[11,20,39,48,50,11,20,39,48,50]
-
-var v=arr.filter(
-                   (ele)=>{
-                            return ele%10==0;
-                          }
-                )
-   
-console.log(v);

@@ -1,3 +1,0 @@
- inputProps={{
-                    accept: "application/pdf,application/vnd.ms-powerpoint,",
-                  }}

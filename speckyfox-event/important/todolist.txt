@@ -1,9 +1,0 @@
-  const [data, setdata] = useState("");
-  const [item, setitems] = useState([]);
-
-  const listofitem = () => {
-    setitems((olditem) => {
-      return [...olditem, data];
-    });
-    setdata("");
-  };
