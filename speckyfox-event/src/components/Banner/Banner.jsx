@@ -132,7 +132,7 @@ export const Banner = (props) => {
             className="BannerRegisterButtonatTopinside"
             onClick={handleRegisterButtonClick}
           >
-            {/* <ArrowDownwardIcon /> */}Register
+            Register
           </Typography>
         </div>
       ) : null}

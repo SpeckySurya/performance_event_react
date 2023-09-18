@@ -25,9 +25,16 @@ const NotifyParticipant = () => {
   useEffect(() => {
     const eventService = new EventService();
     eventService.getAllEvents().then((response) => {
-      setEvents(response.data);
+      // Get the current date
+      const currentDate = new Date();
+      // Filter events to keep only upcoming ones
+      const upcomingEvents = response.data.filter((event) => {
+        const eventDate = new Date(event.events.date);
+        return eventDate > currentDate;
+      });
+      setEvents(upcomingEvents);
     });
-  }, [selectedEvent]);
+  }, []);
 
   const handleEventChange = (e) => {
     const eventId = e.target.value;
@@ -53,7 +60,7 @@ const NotifyParticipant = () => {
       const obj = events.filter(
         (event) => event.events.id === selectedEvent
       )[0];
-      const userList = obj.users.map(
+      const userList = obj.events.users.map(
         (user) => `${user.firstName} ${user.lastName}`
       );
       setSelectedUsers(userList);
@@ -75,7 +82,7 @@ const NotifyParticipant = () => {
         setIsAlertVisible(true);
       })
       .catch((error) => {
-        alert("Something wrong in our end.");
+        alert("Something went wrong on our end.");
       });
   };
 
@@ -116,7 +123,7 @@ const NotifyParticipant = () => {
           sx={{ ml: 2, mt: 3 }}
           variant={btnDisabled ? "outlined" : "contained"}
           disabled={btnDisabled}
-          onClick={() => handleNotify()}
+          onClick={handleNotify}
         >
           {loading ? (
             <CircularProgress style={{ color: "whitesmoke" }} size={24.5} />
@@ -150,13 +157,8 @@ const NotifyParticipant = () => {
         )}
       </Box>
       {isAlertVisible && (
-        <Alert
-          style={{ margin: "5px 0" }}
-          onClose={() => {
-            handleAlertClose();
-          }}
-        >
-          Notified !
+        <Alert style={{ margin: "5px 0" }} onClose={handleAlertClose}>
+          Notified!
         </Alert>
       )}
     </Box>

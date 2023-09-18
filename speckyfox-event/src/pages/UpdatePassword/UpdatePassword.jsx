@@ -14,11 +14,9 @@ function UpdatePassword() {
   const passwordService = new PasswordService();
 
   useEffect(() => {
-    console.log(token);
     passwordService
       .validateResetPwdLink(token)
       .then((response) => {
-        console.log(response.data);
         if (!response.data) {
           navigate("/forgot-password");
         }

@@ -27,7 +27,7 @@ function AdminRegistration() {
           setRoles(res.data);
         })
         .catch((error) => {
-          console.log(error);
+          alert(error);
         });
     }
   }, []);
@@ -70,7 +70,7 @@ function AdminRegistration() {
         }, 3000);
       })
       .catch((error) => {
-        console.log(error);
+        alert(error);
       });
   };
 
