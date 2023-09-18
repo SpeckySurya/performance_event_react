@@ -151,7 +151,7 @@ html {
   z-index: 1;
   color: black !important;
   position: absolute !important;
-  right: -11px;
+  right: 11px;
   top: 108px;
 }
 .crossiconbutton {
