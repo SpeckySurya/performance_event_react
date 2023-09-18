@@ -56,7 +56,6 @@ const AdminHeader = (props) => {
         break;
       }
     }
-    console.log(menuItems);
   }, []);
 
   const toggleDrawer = (isOpen) => (event) => {

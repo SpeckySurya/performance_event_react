@@ -35,7 +35,6 @@ function HomePageConfiguration(props) {
     homeConfigService
       .getHomeConfigById()
       .then((data) => {
-        console.log("api calling data", data.data);
         const apiData = data.data;
         setInitialValues({
           linkedinUrl: apiData.linkdinUrl,
@@ -67,21 +66,15 @@ function HomePageConfiguration(props) {
     const file = event.target.files[0];
     setLogo(file);
   };
-  useEffect(() => {
-    console.log("value", values);
-    console.log("initial value", initialValues);
-  });
+
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useFormik({
       initialValues: initialValues,
       validationSchema: HomePageConfigationSchema,
 
       onSubmit: (values) => {
-        console.log("ititialvalues", initialValues);
-        console.log("values", values);
         const request = new FormData();
         for (let entry in initialValues) {
-          console.log(entry, values[entry]);
           request.append(entry, values[entry]);
         }
         request.append("banner", banner);
@@ -93,7 +86,6 @@ function HomePageConfiguration(props) {
             homeConfigService
               .updateHomeConfig(request)
               .then((response) => {
-                console.log(response);
                 setOpen(true);
                 setPopUpmsg("Homepage details updated");
               })
@@ -109,8 +101,6 @@ function HomePageConfiguration(props) {
               homeConfigService
                 .saveHomeConfig(request)
                 .then((response) => {
-                  // alert("Homepage details saved");
-                  console.log(response);
                   setOpen(true);
                   setPopUpmsg("Homepage details saved");
                 })

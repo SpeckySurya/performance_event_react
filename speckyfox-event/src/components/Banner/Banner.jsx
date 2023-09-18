@@ -32,8 +32,6 @@ export const Banner = (props) => {
     );
   }, [props.event]);
 
-  console.log(props.event.eventBanner);
-
   return (
     <div
       className="banner flex-jcsb"
@@ -134,7 +132,7 @@ export const Banner = (props) => {
             className="BannerRegisterButtonatTopinside"
             onClick={handleRegisterButtonClick}
           >
-            {/* <ArrowDownwardIcon /> */}Register
+            Register
           </Typography>
         </div>
       ) : null}

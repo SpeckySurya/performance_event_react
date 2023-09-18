@@ -44,42 +44,6 @@
   color: #f8a63e;
 }
 
-/* .nav-hamburger {
-  font-size: 30px;
-  margin: 0 30px;
-  display: none;
-} */
-
-/* .mob-navbar {
-  z-index: 10;
-  width: 50%;
-  height: 40vh;
-  border-radius: 12px;
-  padding: 20px;
-  display: none;
-  font-size: 22px;
-  position: absolute;
-  background-color: #333333;
-  transition: all ease 0.2s;
-} */
-
-/* .mob-navbar a {
-  color: white;
-}
-
-.mob-navbar ul {
-  display: flex;
-  list-style: none;
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-evenly;
-} */
-/* .ManageiconHome {
-  top: 23px !important;
-  font-size: x-large !important;
-  right: 63px !important;
-  position: absolute !important;
-} */
 .Manageicon {
   color: white;
   position: absolute;

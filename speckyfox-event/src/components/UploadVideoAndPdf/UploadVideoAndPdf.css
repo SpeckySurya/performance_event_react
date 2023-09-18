@@ -8,7 +8,6 @@
   width: 50px;
   border-bottom: none;
   cursor: pointer;
-  /* display: contents !important; */
 }
 .uploadpdf:hover {
   cursor: pointer;
@@ -18,7 +17,7 @@
   border: 1px dotted gray;
   height: 50px;
   width: 50px;
-  /* display: contents !important; */
+
   cursor: pointer;
   border-bottom: none;
 }
