@@ -14,7 +14,6 @@ function UpdatePassword() {
   const passwordService = new PasswordService();
 
   useEffect(() => {
-    console.log(token);
     passwordService
       .validateResetPwdLink(token)
       .then((response) => {
@@ -44,7 +43,7 @@ function UpdatePassword() {
     }
 
     passwordService
-      .resetPassword(formData, token.replaceAll("-", "."))
+      .resetPassword(formData, token.replaceAll("-dot-", "."))
       .then((response) => {
         if (true) {
           navigate("/login");
