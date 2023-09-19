@@ -25,19 +25,41 @@ import InputAdornment from "@mui/material/InputAdornment";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
+import styled from "styled-components";
 
 function UploadVideoAndPdf() {
   const [uploadFile, setuploadFile] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const [validate, setValidate] = useState(false);
   const [uploadVideo, setuploadVideo] = useState("");
   const [events, setEvents] = useState([]);
-  const [selectedEvent, setSelectedEvent] = useState("");
+  const [pastEvents, setPastEvents] = useState([]); // Store past events
+  const [selectedEvent, setSelectedEvent] = useState(-1);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [open, setOpen] = useState(false);
   const handleClose = () => {
     setOpen(false);
   };
+
+  const BootstrapButtonDisabled = styled(Button)({
+    backgroundColor: "gray",
+    width: "100%",
+    cursor: "default",
+    color: "black",
+    "&:hover": {
+      backgroundColor: "gray",
+    },
+  });
+
+  const BootstrapButton = styled(Button)({
+    backgroundColor: "#ff970a",
+    width: "100%",
+    color: "white",
+    "&:hover": {
+      backgroundColor: "#f7542b",
+    },
+  });
+
   useEffect(() => {
     const eventService = new EventService();
     eventService
@@ -48,38 +70,50 @@ function UploadVideoAndPdf() {
       .catch((error) => alert(error));
   }, [selectedEvent]);
 
-  function fundisplayfileandvideo() {
-    setLoading(true);
-    const event = events.find((event) => event.events.id === selectedEvent);
-    const formData = new FormData();
+  function fundisplayfileandvideo(e) {
+    e.preventDefault();
+    if (uploadFile && uploadVideo && selectedEvent !== -1) {
+      setLoading(true);
+      const event = pastEvents.find(
+        (event) => event.events.id === selectedEvent
+      );
+      const formData = new FormData();
 
-    formData.append("title", event.events.title);
-    formData.append("eventId", event.events.id);
-    formData.append("eventVideo", uploadVideo);
-    formData.append("eventPPT", uploadFile);
+      formData.append("title", event.events.title);
+      formData.append("eventId", event.events.id);
+      formData.append("eventVideo", uploadVideo);
+      formData.append("eventPPT", uploadFile);
 
-    const eventService = new EventService();
-    eventService
-      .uploadPastEventData(formData)
-      .then((response) => {
-        setLoading(false);
-        setOpen(true);
-      })
-      .catch((error) => alert(error));
+      const eventService = new EventService();
+      eventService
+        .uploadPastEventData(formData)
+        .then((response) => {
+          setLoading(false);
+          setOpen(true);
+        })
+        .catch((error) => alert(error));
+    }
   }
   const handleEventChange = (e) => {
-    const eventId = e.target.value;
-    if (eventId === -1) {
+    const name = e.target.name;
+    if (name === "ppt-File") {
+      setuploadFile(e.target.files[0]);
+    } else if (name === "video-file") {
+      setuploadVideo(e.target.files[0]);
+    } else {
+      const eventId = e.target.value;
+      if (eventId === -1) {
+        setSelectedEvent(eventId);
+        setSelectedUsers([]);
+        return;
+      }
       setSelectedEvent(eventId);
-      setSelectedUsers([]);
-      return;
+      const obj = pastEvents.filter((event) => event.events.id === eventId)[0];
+      const userList = obj.events.users.map(
+        (user) => `${user.firstName} ${user.lastName}`
+      );
+      setSelectedUsers(userList);
     }
-    setSelectedEvent(eventId);
-    const obj = events.filter((event) => event.events.id === eventId)[0];
-    const userList = obj.events.users.map(
-      (user) => `${user.firstName} ${user.lastName}`
-    );
-    setSelectedUsers(userList);
   };
   return (
     <>
@@ -122,6 +156,7 @@ function UploadVideoAndPdf() {
                 label="Select Event"
                 value={selectedEvent}
                 onChange={handleEventChange}
+                required
               >
                 <MenuItem value={-1}>
                   <Typography fontStyle={"italic"}>None</Typography>
@@ -148,8 +183,9 @@ function UploadVideoAndPdf() {
                   name="ppt-File"
                   id="ppt-File"
                   variant="outlined"
-                  onChange={(e) => setuploadFile(e.target.files[0])}
+                  onChange={handleEventChange}
                   fullWidth
+                  required
                   endAdornment={
                     <InputAdornment
                       position="end"
@@ -172,9 +208,10 @@ function UploadVideoAndPdf() {
                   inputProps={{ accept: "video/mp4,video/x-m4v,video/*" }}
                   name="video-file"
                   id="video-file"
-                  onChange={(e) => setuploadVideo(e.target.files[0])}
+                  onChange={handleEventChange}
                   variant="outlined"
                   fullWidth
+                  required
                   endAdornment={
                     <InputAdornment
                       position="end "
@@ -186,19 +223,19 @@ function UploadVideoAndPdf() {
                 />
               </Grid>
               <Grid xs={12} sm={12} marginY={2} item>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  fullWidth="100%"
-                  onClick={fundisplayfileandvideo}
-                >
-                  {loading ? (
-                    <CircularProgress size={20} color={"error"} />
-                  ) : (
-                    "Submit"
-                  )}
-                </Button>
+                {uploadFile && uploadVideo && selectedEvent !== -1 ? (
+                  <BootstrapButton onClick={fundisplayfileandvideo}>
+                    {loading ? (
+                      <CircularProgress size={20} color={"error"} />
+                    ) : (
+                      "Submit"
+                    )}
+                  </BootstrapButton>
+                ) : (
+                  <BootstrapButtonDisabled onClick={fundisplayfileandvideo}>
+                    Submit
+                  </BootstrapButtonDisabled>
+                )}
               </Grid>
             </Grid>
           </CardContent>
