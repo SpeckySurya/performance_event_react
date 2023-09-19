@@ -29,6 +29,8 @@ function ManageSpeaker(props) {
   const [popUpMsg, setPopUpmsg] = useState("");
   const handleClose = () => {
     setOpen(false);
+    props.setSelected("showSpeaker");
+    props.setUpdateSpeaker(false);
   };
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -208,7 +210,7 @@ function ManageSpeaker(props) {
                   {props.title === "Update" ? (
                     <img
                       style={{ width: "100px", margin: "10px" }}
-                      src={props.selectedSpeaker.picture}
+                      src={props.selectedSpeaker?.picture}
                     />
                   ) : null}
                   {errors.picture && touched.picture ? (

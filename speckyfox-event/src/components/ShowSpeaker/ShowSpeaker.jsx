@@ -95,6 +95,7 @@ const ShowSpeaker = (props) => {
       </Dialog>
       {props.updateSpeaker ? (
         <ManageSpeaker
+          setSelected={props.setSelected}
           title="Update"
           setUpdateSpeaker={props.setUpdateSpeaker}
           speakerInitialValue={props.speakerInitialValue}
