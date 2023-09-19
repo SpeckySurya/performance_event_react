@@ -1,3 +1,5 @@
+import React, { useState, useEffect } from "react";
+import "./UploadVideoAndPdf.css";
 import {
   Card,
   CardContent,
@@ -17,26 +19,22 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { Typography } from "@mui/material";
-import { useState, useEffect } from "react";
 import EventService from "../../services/EventService";
-import { event } from "jquery";
-import "./UploadVideoAndPdf.css";
 import InputAdornment from "@mui/material/InputAdornment";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
 import styled from "styled-components";
 
 function UploadVideoAndPdf() {
-  const [uploadFile, setuploadFile] = useState("");
+  const [uploadFile, setUploadFile] = useState("");
   const [loading, setLoading] = useState(false);
-  const [validate, setValidate] = useState(false);
-  const [uploadVideo, setuploadVideo] = useState("");
+  const [uploadVideo, setUploadVideo] = useState("");
   const [events, setEvents] = useState([]);
   const [pastEvents, setPastEvents] = useState([]); // Store past events
   const [selectedEvent, setSelectedEvent] = useState(-1);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [open, setOpen] = useState(false);
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -66,11 +64,18 @@ function UploadVideoAndPdf() {
       .getAllEvents()
       .then((response) => {
         setEvents(response.data);
+        // Filter the events to get only past events
+        const currentDate = new Date();
+        const pastEvents = response.data.filter((event) => {
+          const eventDate = new Date(event.events.date); // Assuming 'date' is the property for the event date
+          return eventDate < currentDate;
+        });
+        setPastEvents(pastEvents); // Update the state with past events
       })
       .catch((error) => alert(error));
-  }, [selectedEvent]);
+  }, []);
 
-  function fundisplayfileandvideo(e) {
+  const fundisplayfileandvideo = (e) => {
     e.preventDefault();
     if (uploadFile && uploadVideo && selectedEvent !== -1) {
       setLoading(true);
@@ -93,13 +98,14 @@ function UploadVideoAndPdf() {
         })
         .catch((error) => alert(error));
     }
-  }
+  };
+
   const handleEventChange = (e) => {
     const name = e.target.name;
     if (name === "ppt-File") {
-      setuploadFile(e.target.files[0]);
+      setUploadFile(e.target.files[0]);
     } else if (name === "video-file") {
-      setuploadVideo(e.target.files[0]);
+      setUploadVideo(e.target.files[0]);
     } else {
       const eventId = e.target.value;
       if (eventId === -1) {
@@ -108,13 +114,14 @@ function UploadVideoAndPdf() {
         return;
       }
       setSelectedEvent(eventId);
-      const obj = pastEvents.filter((event) => event.events.id === eventId)[0];
+      const obj = pastEvents.find((event) => event.events.id === eventId);
       const userList = obj.events.users.map(
         (user) => `${user.firstName} ${user.lastName}`
       );
       setSelectedUsers(userList);
     }
   };
+
   return (
     <>
       <Dialog
@@ -161,7 +168,7 @@ function UploadVideoAndPdf() {
                 <MenuItem value={-1}>
                   <Typography fontStyle={"italic"}>None</Typography>
                 </MenuItem>
-                {events.map((event) => (
+                {pastEvents.map((event) => (
                   <MenuItem key={event.events.id} value={event.events.id}>
                     {event.events.title}
                   </MenuItem>
@@ -169,7 +176,7 @@ function UploadVideoAndPdf() {
               </Select>
             </FormControl>
 
-            <Grid spacing={1}>
+            <Grid spacing={2}>
               <Grid xs={12} sm={6} item>
                 <InputLabel className="uploadvideotext">Upload PPT</InputLabel>
                 <Input

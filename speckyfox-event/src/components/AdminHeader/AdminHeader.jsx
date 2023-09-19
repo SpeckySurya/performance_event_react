@@ -165,7 +165,11 @@ const AdminHeader = (props) => {
     {
       text: "Admin Registration",
       icon: <AppRegistrationIcon />,
-      onClick: () => navigate("/admin-registation"),
+      onClick: () => {
+        props.handleSidebar("AdminRegistration");
+        setOpen(false);
+        setMenuItem("Admin Registration");
+      },
     },
   ];
 

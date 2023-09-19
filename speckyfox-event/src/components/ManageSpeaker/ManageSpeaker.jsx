@@ -60,6 +60,7 @@ function ManageSpeaker(props) {
             })
             .catch((error) => {
               alert(error);
+              setLoading(false);
             });
         } else if (props.title === "Create") {
           speakerService
@@ -71,6 +72,7 @@ function ManageSpeaker(props) {
             })
             .catch((error) => {
               alert(error);
+              setLoading(false);
             });
         }
       },

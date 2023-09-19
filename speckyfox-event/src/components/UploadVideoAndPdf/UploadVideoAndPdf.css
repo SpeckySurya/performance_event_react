@@ -5,7 +5,7 @@
 .uploadpdf {
   border: 1px dotted gray;
   height: 50px;
-  width: 50px;
+
   border-bottom: none;
   cursor: pointer;
 }
@@ -16,7 +16,6 @@
 .uploadvideo {
   border: 1px dotted gray;
   height: 50px;
-  width: 50px;
 
   cursor: pointer;
   border-bottom: none;

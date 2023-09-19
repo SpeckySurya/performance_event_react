@@ -4,6 +4,7 @@ import "./DashboardPage.css";
 import NotifyParticipant from "../../components/NotifyParticipant/NotifyParticipant";
 import UploadVideoAndPdf from "../../components/UploadVideoAndPdf/UploadVideoAndPdf";
 import AdminHeader from "../../components/AdminHeader/AdminHeader";
+
 import {
   Box,
   Button,
@@ -32,7 +33,7 @@ import { TbRuler2Off } from "react-icons/tb";
 import ShowEvent from "../../components/ShowEvent/ShowEvent";
 import { findRoleFromToken } from "../../utils/TokenDecoder";
 import AdminUpdatePassword from "../AdminUpdatePassword/AdminUpdatePassword";
-
+import AdminRegistration from "../AdminRegistation/AdminRegistation";
 const formDataDefault = {
   title: "",
   description: "",
@@ -115,6 +116,7 @@ export const DashboardPage = () => {
     showSpeaker: "Show Speaker",
     AdminUpdatePassword: "Change Password",
     UploadVideoAndPdf: "Upload Files",
+    AdminRegistration: "Admin Registration",
   };
 
   function menuComponentFinder() {
@@ -170,6 +172,8 @@ export const DashboardPage = () => {
         return <UploadVideoAndPdf />;
       case "AdminUpdatePassword":
         return <AdminUpdatePassword />;
+      case "AdminRegistration":
+        return <AdminRegistration />;
       default:
         return null;
     }

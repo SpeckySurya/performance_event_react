@@ -155,11 +155,11 @@ function AdminRegistration() {
             )}
           </button>
         </form>
-        <Box textAlign={"end"}>
+        {/* <Box textAlign={"end"}>
           <Link to={"/dashboard"} className="no-anchor-style">
             Go back
           </Link>
-        </Box>
+        </Box> */}
       </div>
     </>
   );
