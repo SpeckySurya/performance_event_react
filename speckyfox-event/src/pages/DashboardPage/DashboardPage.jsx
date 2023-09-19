@@ -147,6 +147,7 @@ export const DashboardPage = () => {
         return (
           <ManageSpeaker
             title="Create"
+            setSelected={setSelected}
             speakerInitialValue={speakerInitialValue}
           />
         );
@@ -158,6 +159,7 @@ export const DashboardPage = () => {
         return (
           <ShowSpeaker
             updateSpeaker={updateSpeaker}
+            setSelected={setSelected}
             setUpdateSpeaker={setUpdateSpeaker}
             speakerInitialValue={speakerInitialValue}
           />
