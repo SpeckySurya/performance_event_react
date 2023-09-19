@@ -19,9 +19,11 @@ import Select from "@mui/material/Select";
 import { Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import EventService from "../../services/EventService";
+import { event } from "jquery";
 import "./UploadVideoAndPdf.css";
 import InputAdornment from "@mui/material/InputAdornment";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
 import styled from "styled-components";
 
@@ -35,7 +37,6 @@ function UploadVideoAndPdf() {
   const [selectedEvent, setSelectedEvent] = useState(-1);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [open, setOpen] = useState(false);
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -64,17 +65,10 @@ function UploadVideoAndPdf() {
     eventService
       .getAllEvents()
       .then((response) => {
-        const currentDate = new Date();
-        // Filter out past events
-        const pastEvents = response.data.filter((event) => {
-          const eventDate = new Date(event.events.date);
-          return eventDate < currentDate;
-        });
-        setEvents(pastEvents); // Set past events
-        setPastEvents(pastEvents);
+        setEvents(response.data);
       })
       .catch((error) => alert(error));
-  }, []);
+  }, [selectedEvent]);
 
   function fundisplayfileandvideo(e) {
     e.preventDefault();
@@ -100,7 +94,6 @@ function UploadVideoAndPdf() {
         .catch((error) => alert(error));
     }
   }
-
   const handleEventChange = (e) => {
     const name = e.target.name;
     if (name === "ppt-File") {
@@ -122,7 +115,6 @@ function UploadVideoAndPdf() {
       setSelectedUsers(userList);
     }
   };
-
   return (
     <>
       <Dialog
@@ -169,7 +161,7 @@ function UploadVideoAndPdf() {
                 <MenuItem value={-1}>
                   <Typography fontStyle={"italic"}>None</Typography>
                 </MenuItem>
-                {pastEvents.map((event) => (
+                {events.map((event) => (
                   <MenuItem key={event.events.id} value={event.events.id}>
                     {event.events.title}
                   </MenuItem>
@@ -252,5 +244,4 @@ function UploadVideoAndPdf() {
     </>
   );
 }
-
 export default UploadVideoAndPdf;

@@ -30,11 +30,9 @@ function UpdatePassword() {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   }
 
-  // Check if passwords match and update the state accordingly
   const passwordsMatch = formData.newPassword === formData.confirmPassword;
 
   function handleResetPwdClick() {
-    // Check if passwords match before proceeding
     setLoading(true);
     if (!passwordsMatch) {
       alert("Passwords do not match");
@@ -84,7 +82,7 @@ function UpdatePassword() {
             onChange={handleChange}
             required
             style={{
-              borderColor: !passwordsMatch ? "red" : "", // Apply red border if passwords don't match
+              borderColor: !passwordsMatch ? "red" : "",
             }}
           />
         </div>

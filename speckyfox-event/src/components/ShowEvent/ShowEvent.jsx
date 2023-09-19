@@ -21,8 +21,13 @@ const ShowEvent = (props) => {
   const [pastEvents, setPastEvents] = useState([]);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [renderEvents, setRenderEvents] = useState([]);
+  const [alignment, setAlignment] = React.useState("left");
 
+  const handleAlignment = (event, newAlignment) => {
+    setAlignment(newAlignment);
+  };
   useEffect(() => {
+    console.log(props.isEventPage);
     const pastEventsFilter = props.events.filter((event) =>
       isPastDateTime(dateFormatter(event.events.date), event.events.time)
     );
@@ -68,18 +73,22 @@ const ShowEvent = (props) => {
             {props.isEventPage ? (
               <ToggleButtonGroup
                 color="primary"
+                value={alignment}
                 exclusive
                 aria-label="Platform"
+                onChange={handleAlignment}
               >
                 <ToggleButton
                   value="web"
                   onClick={() => setRenderEvents(upcomingEvents)}
+                  sx={{ width: 100 }}
                 >
                   Upcoming
                 </ToggleButton>
                 <ToggleButton
                   value="android"
                   onClick={() => setRenderEvents(pastEvents)}
+                  sx={{ width: 100 }}
                 >
                   Past
                 </ToggleButton>

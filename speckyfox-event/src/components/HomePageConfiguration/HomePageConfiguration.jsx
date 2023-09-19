@@ -11,6 +11,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  CircularProgress,
 } from "@mui/material";
 import { useFormik } from "formik";
 import "./HomePageConfiguration.css";
@@ -30,7 +31,7 @@ function HomePageConfiguration(props) {
     youtubeUrl: "",
     footerText: "",
   });
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     homeConfigService
       .getHomeConfigById()
@@ -73,6 +74,7 @@ function HomePageConfiguration(props) {
       validationSchema: HomePageConfigationSchema,
 
       onSubmit: (values) => {
+        setLoading(true);
         const request = new FormData();
         for (let entry in initialValues) {
           request.append(entry, values[entry]);
@@ -87,6 +89,7 @@ function HomePageConfiguration(props) {
               .updateHomeConfig(request)
               .then((response) => {
                 setOpen(true);
+                setLoading(false);
                 setPopUpmsg("Homepage details updated");
               })
               .catch((error) => {
@@ -102,6 +105,7 @@ function HomePageConfiguration(props) {
                 .saveHomeConfig(request)
                 .then((response) => {
                   setOpen(true);
+                  setLoading(false);
                   setPopUpmsg("Homepage details saved");
                 })
                 .catch((error) => {
@@ -109,6 +113,7 @@ function HomePageConfiguration(props) {
                 });
             } else {
               alert("Something went wrong");
+              setLoading(false);
             }
           });
       },
@@ -219,7 +224,7 @@ function HomePageConfiguration(props) {
                     id="facebookUrl"
                     placeholder="Upload Facebook url"
                     variant="outlined"
-                    value={initialValues?.facebookUrl}
+                    value={values?.facebookUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
@@ -304,7 +309,11 @@ function HomePageConfiguration(props) {
                     color="primary"
                     fullWidth
                   >
-                    Submit
+                    {loading ? (
+                      <CircularProgress size={20} color={"error"} />
+                    ) : (
+                      "Submit"
+                    )}
                   </Button>
                 </Grid>
               </Grid>

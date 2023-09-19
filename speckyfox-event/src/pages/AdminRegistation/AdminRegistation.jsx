@@ -55,6 +55,7 @@ function AdminRegistration() {
           severity={"error"}
         />
       );
+      setLoading(false);
       return;
     }
     const registrationService = new RegistrationService();
