@@ -105,7 +105,11 @@ const AdminHeader = (props) => {
     {
       text: "Change Password",
       icon: <ChangeCircleIcon />,
-      onClick: () => navigate("/admin-update-password"),
+      onClick: () => {
+        props.handleSidebar("AdminUpdatePassword");
+        setOpen(false);
+        setMenuItem("Change Password");
+      },
     },
     { text: "Logout", icon: <ExitToAppIcon />, onClick: handleLogout },
   ];

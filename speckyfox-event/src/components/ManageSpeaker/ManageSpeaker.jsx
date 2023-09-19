@@ -277,7 +277,7 @@ function ManageSpeaker(props) {
                     type="submit"
                     variant="contained"
                     color="primary"
-                    fullWidth="100%"
+                    fullWidth
                   >
                     {loading ? (
                       <CircularProgress size={20} color={"error"} />

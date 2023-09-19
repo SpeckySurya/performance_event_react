@@ -105,21 +105,17 @@ const ShowEvent = (props) => {
             {renderEvents.length === 0 ? (
               <Typography variant="h4">No Events</Typography>
             ) : (
-              renderEvents.map((event) => {
-                return (
-                  <>
-                    <EventCard
-                      key={event.events.id}
-                      event={event}
-                      isEventPage={props.isEventPage}
-                      setLoading={props.setLoading}
-                      setEventEditing={setEventEditing}
-                      setEditEvent={setEditEvent}
-                      setUpdateBread={props?.setUpdateBread}
-                    />
-                  </>
-                );
-              })
+              renderEvents.map((event) => (
+                <EventCard
+                  key={event.events.id} // Use a unique identifier here
+                  event={event}
+                  isEventPage={props.isEventPage}
+                  setLoading={props.setLoading}
+                  setEventEditing={setEventEditing}
+                  setEditEvent={setEditEvent}
+                  setUpdateBread={props?.setUpdateBread}
+                />
+              ))
             )}
           </Box>
         </div>

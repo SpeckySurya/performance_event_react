@@ -116,11 +116,11 @@ function AdminUpdatePassword() {
               "Update Password"
             )}
           </button>
-          <Box textAlign={"end"}>
+          {/* <Box textAlign={"end"}>
             <Link to={"/dashboard"} className="no-anchor-style">
               Go back
             </Link>
-          </Box>
+          </Box> */}
         </div>
       </form>
     </>

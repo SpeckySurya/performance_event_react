@@ -31,6 +31,7 @@ import {
 import { TbRuler2Off } from "react-icons/tb";
 import ShowEvent from "../../components/ShowEvent/ShowEvent";
 import { findRoleFromToken } from "../../utils/TokenDecoder";
+import AdminUpdatePassword from "../AdminUpdatePassword/AdminUpdatePassword";
 
 const formDataDefault = {
   title: "",
@@ -112,6 +113,7 @@ export const DashboardPage = () => {
     notify: "Notify Participant",
     manageUser: "Manage User",
     showSpeaker: "Show Speaker",
+    AdminUpdatePassword: "Change Password",
     UploadVideoAndPdf: "Upload Files",
   };
 
@@ -166,7 +168,8 @@ export const DashboardPage = () => {
         );
       case "UploadVideoAndPdf":
         return <UploadVideoAndPdf />;
-
+      case "AdminUpdatePassword":
+        return <AdminUpdatePassword />;
       default:
         return null;
     }
