@@ -31,6 +31,7 @@ function AdminUpdatePassword() {
           severity={"error"}
         />
       );
+      setLoading(false);
       return;
     }
 

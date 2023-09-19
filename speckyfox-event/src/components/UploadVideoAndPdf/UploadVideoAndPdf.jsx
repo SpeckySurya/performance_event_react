@@ -19,9 +19,11 @@ import Select from "@mui/material/Select";
 import { Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import EventService from "../../services/EventService";
+import { event } from "jquery";
 import "./UploadVideoAndPdf.css";
 import InputAdornment from "@mui/material/InputAdornment";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
 
 function UploadVideoAndPdf() {
@@ -30,35 +32,25 @@ function UploadVideoAndPdf() {
 
   const [uploadVideo, setuploadVideo] = useState("");
   const [events, setEvents] = useState([]);
-  const [pastEvents, setPastEvents] = useState([]); // Store past events
   const [selectedEvent, setSelectedEvent] = useState("");
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [open, setOpen] = useState(false);
-
   const handleClose = () => {
     setOpen(false);
   };
-
   useEffect(() => {
     const eventService = new EventService();
     eventService
       .getAllEvents()
       .then((response) => {
-        const currentDate = new Date();
-        // Filter out past events
-        const pastEvents = response.data.filter((event) => {
-          const eventDate = new Date(event.events.date);
-          return eventDate < currentDate;
-        });
-        setEvents(pastEvents); // Set past events
-        setPastEvents(pastEvents);
+        setEvents(response.data);
       })
       .catch((error) => alert(error));
-  }, []);
+  }, [selectedEvent]);
 
   function fundisplayfileandvideo() {
     setLoading(true);
-    const event = pastEvents.find((event) => event.events.id === selectedEvent);
+    const event = events.find((event) => event.events.id === selectedEvent);
     const formData = new FormData();
 
     formData.append("title", event.events.title);
@@ -75,7 +67,6 @@ function UploadVideoAndPdf() {
       })
       .catch((error) => alert(error));
   }
-
   const handleEventChange = (e) => {
     const eventId = e.target.value;
     if (eventId === -1) {
@@ -84,13 +75,12 @@ function UploadVideoAndPdf() {
       return;
     }
     setSelectedEvent(eventId);
-    const obj = pastEvents.filter((event) => event.events.id === eventId)[0];
+    const obj = events.filter((event) => event.events.id === eventId)[0];
     const userList = obj.events.users.map(
       (user) => `${user.firstName} ${user.lastName}`
     );
     setSelectedUsers(userList);
   };
-
   return (
     <>
       <Dialog
@@ -136,7 +126,7 @@ function UploadVideoAndPdf() {
                 <MenuItem value={-1}>
                   <Typography fontStyle={"italic"}>None</Typography>
                 </MenuItem>
-                {pastEvents.map((event) => (
+                {events.map((event) => (
                   <MenuItem key={event.events.id} value={event.events.id}>
                     {event.events.title}
                   </MenuItem>
@@ -217,5 +207,4 @@ function UploadVideoAndPdf() {
     </>
   );
 }
-
 export default UploadVideoAndPdf;

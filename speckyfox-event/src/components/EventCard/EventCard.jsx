@@ -56,6 +56,7 @@ const EventCard = (props) => {
   };
 
   useEffect(() => {
+    console.log(props.isEventPage);
     setActive(props.event.events.active);
   }, [props.event]);
 
@@ -257,7 +258,7 @@ const EventCard = (props) => {
             />
           </Box>
         )}
-        {isOutdated ? (
+        {props.isEventPage && isOutdated ? (
           <Button
             title="Download PPT"
             className="downloadbutton"
@@ -267,7 +268,12 @@ const EventCard = (props) => {
           </Button>
         ) : null}
         <CardContent sx={{ flex: "1 0 auto" }}>
-          <Typography gutterBottom variant="h6" fontWeight={600}>
+          <Typography
+            sx={{ width: "91%" }}
+            gutterBottom
+            variant="h6"
+            fontWeight={600}
+          >
             {props.event.events.title}
           </Typography>
           <Typography fontWeight={600} py={1} mt={-1}>

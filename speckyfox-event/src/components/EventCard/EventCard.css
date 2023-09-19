@@ -18,6 +18,11 @@
   width: 10%;
 }
 
+.cardeffect {
+  /* Add your initial styles here */
+
+  /* Add other styles like positioning, background, etc. */
+}
 .cardeffect:hover {
   scale: 1.01;
   transition: 0.5s;
@@ -25,14 +30,9 @@
 }
 .downloadbutton {
   position: absolute !important;
-  left: 260px !important;
-  top: 20 !important;
+  right: 1% !important;
+  top: 25 !important;
   height: 50px;
   width: 50px;
   cursor: pointer;
-}
-@media screen and (max-width: 450px) {
-  .downloadbutton {
-    left: 160px !important;
-  }
 }
