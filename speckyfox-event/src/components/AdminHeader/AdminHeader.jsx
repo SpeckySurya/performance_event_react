@@ -12,6 +12,7 @@ import {
   Link,
   Box,
 } from "@mui/material";
+import ChangeCircleOutlinedIcon from "@mui/icons-material/ChangeCircleOutlined";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import "./AdminHeader.css";
@@ -104,7 +105,7 @@ const AdminHeader = (props) => {
     },
     {
       text: "Change Password",
-      icon: <ChangeCircleIcon />,
+      icon: <ChangeCircleOutlinedIcon />,
       onClick: () => {
         props.handleSidebar("AdminUpdatePassword");
         setOpen(false);

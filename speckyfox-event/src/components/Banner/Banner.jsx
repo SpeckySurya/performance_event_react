@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-
 import "./Banner.css";
 import banner from "./../../assets/banner.png";
 import RegistrationForm from "../RegistrationForm/RegistrationForm";
@@ -15,12 +14,23 @@ export const Banner = (props) => {
   const [formattedDate, setFormattedDate] = useState({});
   const [formattedTime, setFormattedTime] = useState("");
   const [showCrossWindow, setShowCrossWindow] = useState(true);
+  const [animateRegisterButton, setAnimateRegisterButton] = useState(true); // Start the animation by default
   const registrationFormRef = useRef(null);
+
   const handleRegisterButtonClick = () => {
     // Scroll to the RegistrationForm section when the button is clicked
     if (registrationFormRef.current) {
       registrationFormRef.current.scrollIntoView({ behavior: "smooth" });
     }
+
+    // Trigger the animation for the Register button
+    setAnimateRegisterButton(true);
+
+    // Automatically close the registration window after 4 seconds
+    setTimeout(() => {
+      setAnimateRegisterButton(false);
+      setShowCrossWindow(false);
+    }, 4000);
   };
 
   useEffect(() => {
@@ -33,10 +43,7 @@ export const Banner = (props) => {
   }, [props.event]);
 
   return (
-    <div
-      className="banner flex-jcsb"
-      // style={{ backgroundImage: `url(${props.event.eventBanner})` }}
-    >
+    <div className="banner flex-jcsb">
       <section className="left flex">
         <div className="event-details flex">
           <div className="event-title">
@@ -118,22 +125,24 @@ export const Banner = (props) => {
           </div>
         </div>
       </section>
+
       {showCrossWindow ? (
         <Button
-          className="crosebuttonoverregirter"
+          className={`crosebuttonoverregirter ${
+            animateRegisterButton ? "animatinoverregister" : ""
+          }`}
           onClick={() => setShowCrossWindow(false)}
         >
-          <CloseIcon className="crossiconbutton" />
+          <CloseIcon
+            className={`crossiconbutton ${
+              animateRegisterButton ? "ArrowDownwardIcon" : ""
+            }`}
+          />
         </Button>
       ) : null}
       {showCrossWindow ? (
-        <div className="BannerRegisterButtonatTop">
-          <Typography
-            className="BannerRegisterButtonatTopinside"
-            onClick={handleRegisterButtonClick}
-          >
-            Register
-          </Typography>
+        <div className={"BannerRegisterButtonatTop"}>
+          <Typography onClick={handleRegisterButtonClick}>Register</Typography>
         </div>
       ) : null}
       <section className="right" ref={registrationFormRef}>
