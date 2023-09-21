@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import "./Banner.css";
-import banner from "./../../assets/banner.png";
 import RegistrationForm from "../RegistrationForm/RegistrationForm";
 import dateFormatter, {
   addTime,
@@ -27,10 +26,6 @@ export const Banner = (props) => {
     setAnimateRegisterButton(true);
 
     // Automatically close the registration window after 4 seconds
-    setTimeout(() => {
-      setAnimateRegisterButton(false);
-      setShowCrossWindow(false);
-    }, 4000);
   };
 
   useEffect(() => {
@@ -125,24 +120,21 @@ export const Banner = (props) => {
           </div>
         </div>
       </section>
-
       {showCrossWindow ? (
-        <Button
-          className={`crosebuttonoverregirter ${
-            animateRegisterButton ? "animatinoverregister" : ""
-          }`}
-          onClick={() => setShowCrossWindow(false)}
+        <div
+          style={{
+            textAlign: "center",
+            marginTop: "90px",
+            transform: "rotate(15deg)",
+          }}
+          className={"BannerRegisterButtonatTop"}
         >
-          <CloseIcon
-            className={`crossiconbutton ${
-              animateRegisterButton ? "ArrowDownwardIcon" : ""
-            }`}
-          />
-        </Button>
-      ) : null}
-      {showCrossWindow ? (
-        <div className={"BannerRegisterButtonatTop"}>
-          <Typography onClick={handleRegisterButtonClick}>Register</Typography>
+          <Typography p={1} color={"blue"} onClick={handleRegisterButtonClick}>
+            Register
+            <Typography fontSize={10} color={"white"}>
+              Click me
+            </Typography>
+          </Typography>
         </div>
       ) : null}
       <section className="right" ref={registrationFormRef}>

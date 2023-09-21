@@ -126,7 +126,6 @@ html {
   width: 200px;
 }
 .BannerRegisterButtonatTop {
-  opacity: 0.5 !important;
   position: absolute !important;
   background: currentColor !important;
   border-radius: 10px !important;
@@ -145,37 +144,25 @@ html {
   animation-iteration-count: 3;
 }
 @keyframes popup {
-  0%,
   100% {
-    transform: translateY(0);
+    transform: rotate(15deg);
   }
   50% {
-    transform: translateY(-10px);
+    transform: rotate(30deg);
   }
 }
 
 .BannerRegisterButtonatTopinside {
   color: white !important;
   margin: 10px 5px 43px 5px !important;
-
   border-radius: 10px !important;
   display: none !important;
 }
-.crosebuttonoverregirter {
-  background-color: transparent !important;
-  opacity: 0.6;
-  z-index: 1;
-  color: black !important;
-  position: absolute !important;
-  right: 11px;
-  top: 108px;
-}
-.crossiconbutton {
-  display: none !important;
-}
+
 .ArrowDownwardIcon {
   font-size: x-large;
 }
+
 @media screen and (max-width: 1000px) {
   .event-timing {
     margin-top: none;
