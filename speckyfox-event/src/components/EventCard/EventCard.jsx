@@ -93,6 +93,16 @@ const EventCard = (props) => {
   }));
 
   function downloadedPpt() {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!userMail.trim() || !emailRegex.test(userMail)) {
+      setSnackbar(
+        <SnackbarComponent
+          message="Please enter a valid email address."
+          severity={"error"}
+        />
+      );
+      return;
+    }
     const data = {
       email: userMail,
       eventId: props.event.events.id,
