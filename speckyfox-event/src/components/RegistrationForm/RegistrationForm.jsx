@@ -9,9 +9,9 @@ const RegistrationForm = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    companyName: "",
+    companyName: "NA",
     designation: "",
-    mobileNumber: "",
+    mobileNumber: "NA",
     email: "",
     ptNeeded: false,
     anyPtToolUsed: false,
@@ -32,6 +32,7 @@ const RegistrationForm = () => {
 
   const handlePhoneChange = (e) => {
     const { name, value } = e.target;
+
     if (`${value}`.length > 12) {
       setFormData((prevFormData) => ({
         ...prevFormData,
@@ -67,6 +68,11 @@ const RegistrationForm = () => {
     formData.firstName = firstName;
     formData.lastName = lastName;
 
+    // If designation is empty, set it to "NA"
+    if (formData.designation === "") {
+      formData.designation = "NA";
+    }
+
     obj
       .saveUser(formData)
       .then((response) => {
@@ -95,54 +101,6 @@ const RegistrationForm = () => {
           required
         />
       </div>
-
-      <div className="form-group">
-        <label htmlFor="companyName">
-          Company<span className="mark">*</span>
-        </label>
-        <input
-          type="text"
-          id="companyName"
-          name="companyName"
-          value={formData.company}
-          onChange={handleChange}
-          required
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="designation">
-          Designation<span className="mark">*</span>
-        </label>
-        <input
-          type="text"
-          id="designation"
-          name="designation"
-          value={formData.designation}
-          onChange={handleChange}
-          required
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="mobileNumber">
-          Phone<span className="mark">*</span>
-        </label>
-        <input
-          id="mobileNumber"
-          name="mobileNumber"
-          value={formData.mobileNumber}
-          onChange={handlePhoneChange}
-          type="number"
-          required
-        />
-        {mobNo && (
-          <span style={{ fontSize: "10px" }}>
-            Phone should atleast of 8 digits
-          </span>
-        )}
-      </div>
-
       <div className="form-group">
         <label htmlFor="email">
           Email<span className="mark">*</span>
@@ -154,6 +112,43 @@ const RegistrationForm = () => {
           value={formData.email}
           onChange={handleChange}
           required
+        />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="mobileNumber">Phone</label>
+        <input
+          id="mobileNumber"
+          name="mobileNumber"
+          value={formData.mobileNumber}
+          onChange={handlePhoneChange}
+          type="number"
+        />
+        {mobNo && (
+          <span style={{ fontSize: "10px" }}>
+            Phone should atleast of 8 digits
+          </span>
+        )}
+      </div>
+      <div className="form-group">
+        <label htmlFor="companyName">Company</label>
+        <input
+          type="text"
+          id="companyName"
+          name="companyName"
+          value={formData.company}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="designation">Designation</label>
+        <input
+          type="text"
+          id="designation"
+          name="designation"
+          value={formData.designation}
+          onChange={handleChange}
         />
       </div>
 
