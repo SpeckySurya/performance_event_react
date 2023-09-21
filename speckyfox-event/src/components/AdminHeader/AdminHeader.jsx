@@ -21,7 +21,7 @@ import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
-import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import AssuredWorkloadOutlinedIcon from "@mui/icons-material/AssuredWorkloadOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
@@ -170,6 +170,15 @@ const AdminHeader = (props) => {
         props.handleSidebar("AdminRegistration");
         setOpen(false);
         setMenuItem("Admin Registration");
+      },
+    },
+    {
+      text: "Manage Admin",
+      icon: <ManageAccountsIcon />,
+      onClick: () => {
+        props.handleSidebar("manageAdmin");
+        setOpen(false);
+        setMenuItem("Manage Admin");
       },
     },
   ];

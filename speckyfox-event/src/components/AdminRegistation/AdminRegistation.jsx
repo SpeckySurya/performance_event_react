@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PasswordService from "../../services/PasswordService";
-import SnackbarComponent from "../../components/SnackbarComponent/SnackbarComponent";
+import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
 import RegistrationService from "../../services/RegistrationService";
 import { Link } from "react-router-dom";
 import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { CircularProgress } from "@mui/material";
 
-function AdminRegistration() {
+function AdminRegistration(props) {
   const [loading, setLoading] = useState(false);
   const data = { email: "", password: "", confirmPassword: "", role: "" };
   const [selectedRole, setSelectedRole] = useState("");
@@ -66,9 +66,7 @@ function AdminRegistration() {
         setSnackbar(
           <SnackbarComponent message={response.data} severity={"success"} />
         );
-        setTimeout(() => {
-          navigate("/dashboard");
-        }, 3000);
+        props.setSelected("manageAdmin");
       })
       .catch((error) => {
         alert(error);

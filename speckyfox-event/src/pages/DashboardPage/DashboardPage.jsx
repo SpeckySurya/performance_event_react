@@ -32,8 +32,9 @@ import {
 import { TbRuler2Off } from "react-icons/tb";
 import ShowEvent from "../../components/ShowEvent/ShowEvent";
 import { findRoleFromToken } from "../../utils/TokenDecoder";
-import AdminUpdatePassword from "../AdminUpdatePassword/AdminUpdatePassword";
-import AdminRegistration from "../AdminRegistation/AdminRegistation";
+import AdminUpdatePassword from "../../components/AdminUpdatePassword/AdminUpdatePassword";
+import AdminRegistration from "../../components/AdminRegistation/AdminRegistation";
+import ManageAdmin from "../../components/ManageAdmin/ManageAdmin";
 const formDataDefault = {
   title: "",
   description: "",
@@ -117,6 +118,7 @@ export const DashboardPage = () => {
     AdminUpdatePassword: "Change Password",
     UploadVideoAndPdf: "Upload Files",
     AdminRegistration: "Admin Registration",
+    manageAdmin: "Manage Admin",
   };
 
   function menuComponentFinder() {
@@ -173,7 +175,9 @@ export const DashboardPage = () => {
       case "AdminUpdatePassword":
         return <AdminUpdatePassword />;
       case "AdminRegistration":
-        return <AdminRegistration />;
+        return <AdminRegistration setSelected={setSelected} />;
+      case "manageAdmin":
+        return <ManageAdmin />;
       default:
         return null;
     }

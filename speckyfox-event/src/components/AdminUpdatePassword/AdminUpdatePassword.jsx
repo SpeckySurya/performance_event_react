@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import SnackbarComponent from "../../components/SnackbarComponent/SnackbarComponent";
+import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
 import PasswordService from "../../services/PasswordService";
 import { Box, CircularProgress } from "@mui/material";
 
