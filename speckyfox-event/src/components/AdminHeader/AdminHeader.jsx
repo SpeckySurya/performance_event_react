@@ -21,7 +21,7 @@ import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
 import AssuredWorkloadOutlinedIcon from "@mui/icons-material/AssuredWorkloadOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
@@ -174,7 +174,7 @@ const AdminHeader = (props) => {
     },
     {
       text: "Manage Admin",
-      icon: <ManageAccountsIcon />,
+      icon: <ManageAccountsOutlinedIcon />,
       onClick: () => {
         props.handleSidebar("manageAdmin");
         setOpen(false);
@@ -182,83 +182,6 @@ const AdminHeader = (props) => {
       },
     },
   ];
-
-  // const menuItems = [
-  //   {
-  //     text: "Show Events",
-  //     icon: <HomeOutlinedIcon />,
-  //     onClick: () => {
-  //       props.handleSidebar("show");
-  //       setOpen(false);
-  //       setMenuItem("Show Events");
-  //     },
-  //   },
-  //   {
-  //     text: "Create Event",
-  //     icon: <AddCircleOutlineOutlinedIcon />,
-  //     onClick: () => {
-  //       props.handleSidebar("create");
-  //       setOpen(false);
-  //       setMenuItem("Create Event");
-  //     },
-  //   },
-
-  //   {
-  //     text: "Home Configuration",
-  //     icon: <AssuredWorkloadOutlinedIcon />,
-  //     onClick: () => {
-  //       props.handleSidebar("homeConfig");
-  //       setOpen(false);
-  //       setMenuItem("Home Configuration");
-  //     },
-  //   },
-  //   {
-  //     text: "Show Speaker",
-  //     icon: <PeopleAltOutlinedIcon />,
-  //     onClick: () => {
-  //       props.handleSidebar("showSpeaker");
-  //       setOpen(false);
-  //       setMenuItem("Show Speaker");
-  //     },
-  //   },
-  //   {
-  //     text: "Create Speaker",
-  //     icon: <PersonAddAltOutlinedIcon />,
-  //     onClick: () => {
-  //       props.handleSidebar("manageSpeaker");
-  //       setOpen(false);
-  //       setMenuItem("Create Speaker");
-  //     },
-  //   },
-
-  //   {
-  //     text: "Notify Participant",
-  //     icon: <NotificationsActiveOutlinedIcon />,
-  //     onClick: () => {
-  //       props.handleSidebar("notify");
-  //       setOpen(false);
-  //       setMenuItem("Notify Participant");
-  //     },
-  //   },
-  //   {
-  //     text: "View Participant",
-  //     icon: <VisibilityOffOutlinedIcon />,
-  //     onClick: () => {
-  //       props.handleSidebar("manageUser");
-  //       setOpen(false);
-  //       setMenuItem("View Participant");
-  //     },
-  //   },
-  //   {
-  //     text: "Upload Files",
-  //     icon: <VideoLibraryOutlinedIcon />,
-  //     onClick: () => {
-  //       props.handleSidebar("UploadVideoAndPdf");
-  //       setOpen(false);
-  //     },
-  //   },
-  //   { text: "Logout", icon: <ExitToAppIcon />, onClick: handleLogout },
-  // ];
 
   const list = () => (
     <List>
