@@ -6,6 +6,7 @@ import LoginService from "./../../services/LoginService";
 import { CircularProgress } from "@mui/material";
 import { tokenExpireTimer } from "../../utils/Constant";
 import { Link } from "react-router-dom";
+import SnackbarComponent from "../../components/SnackbarComponent/SnackbarComponent";
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -13,6 +14,7 @@ const Login = () => {
   });
   const [loading, setLoading] = useState(false);
   const [forgotPasswordVisible, setForgotPasswordVisible] = useState(false);
+  const [snackbar, setSnackbar] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,6 +22,12 @@ const Login = () => {
       navigate("/dashboard");
     }
   }, [navigate]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setSnackbar(null);
+    }, 3000);
+  }, [snackbar]);
 
   const toLogin = () => navigate("/login");
 
@@ -36,7 +44,12 @@ const Login = () => {
         navigate("/dashboard");
       })
       .catch((error) => {
-        navigate("/error");
+        if (error.response.status === 401) {
+          setSnackbar(
+            <SnackbarComponent message="Wrong credentials" severity="error" />
+          );
+        }
+        setLoading(false);
       });
   };
 
@@ -51,6 +64,7 @@ const Login = () => {
 
   return (
     <>
+      {snackbar}
       <div className="login-container">
         <h1>Admin Login</h1>
         <form onSubmit={handleSubmit}>

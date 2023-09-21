@@ -27,7 +27,6 @@ const ShowEvent = (props) => {
     setAlignment(newAlignment);
   };
   useEffect(() => {
-    console.log(props.isEventPage);
     const pastEventsFilter = props.events.filter((event) =>
       isPastDateTime(dateFormatter(event.events.date), event.events.time)
     );

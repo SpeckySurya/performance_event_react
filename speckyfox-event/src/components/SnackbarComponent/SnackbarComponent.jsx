@@ -2,6 +2,25 @@ import React, { useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
+/**
+ *
+ * Usage :
+ *
+ * const [snackbar, setSnackbar] = useState(null);
+ * 
+ * {snackbar}
+ * 
+ * setSnackbar(<SnackbarComponent message="Event deleted" severity="success" />);
+ * 
+ *  useEffect(() => {
+      setTimeout(() => {
+        setSnackbar(null);
+      }, 3000);
+    }, [snackbar]);
+ *
+ *
+ */
+
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });

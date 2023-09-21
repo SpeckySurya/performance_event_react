@@ -46,12 +46,20 @@ function AdminUpdatePassword() {
             severity={"success"}
           />
         );
-        setTimeout(() => {
-          navigate("/dashboard");
-        }, 3000);
+        setFormData({
+          currentPassword: "",
+          newPassword: "",
+          confirmPassword: "",
+        });
       })
       .catch((error) => {
-        alert(error);
+        setLoading(false);
+        setSnackbar(
+          <SnackbarComponent
+            message={"Something wrong. Please recheck your current password"}
+            severity={"error"}
+          />
+        );
       });
   }
 
@@ -64,7 +72,7 @@ function AdminUpdatePassword() {
   return (
     <>
       {snackbar}
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="login-container">
           <h1>Update Password</h1>
           <div className="form-group">
@@ -109,18 +117,13 @@ function AdminUpdatePassword() {
               required
             />
           </div>
-          <button onClick={handleSubmit} className="flex-jcc-aic">
+          <button type="submit" className="flex-jcc-aic">
             {loading ? (
               <CircularProgress size={20} color={"error"} />
             ) : (
               "Update Password"
             )}
           </button>
-          {/* <Box textAlign={"end"}>
-            <Link to={"/dashboard"} className="no-anchor-style">
-              Go back
-            </Link>
-          </Box> */}
         </div>
       </form>
     </>

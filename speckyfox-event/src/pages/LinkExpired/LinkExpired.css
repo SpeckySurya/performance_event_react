@@ -1,0 +1,22 @@
+.expired {
+  height: 100vh;
+  background: rgba(96, 196, 196, 0.3);
+  font-family: "Open-sans", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.expired .message h1 {
+  color: #3698dc;
+
+  font-size: 50px;
+  font-weight: 400;
+}
+.expired .message p {
+  color: #262c34;
+  font-size: 1.3em;
+  font-weight: lighter;
+  line-height: 1.1em;
+}
