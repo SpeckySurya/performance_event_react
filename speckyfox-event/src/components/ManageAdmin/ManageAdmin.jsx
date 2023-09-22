@@ -7,11 +7,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import AdminService from "../../services/AdminService";
-import { Button, MenuItem, Select } from "@mui/material";
+import { AlertTitle, Button, MenuItem, Select } from "@mui/material";
 import PasswordService from "../../services/PasswordService";
 import PopupAlert from "../PopupAlert/PopupAlert";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
-
+import Alert from "@mui/material/Alert";
+import "./ManageAdmin.css";
 export default function ManageAdmin() {
   const [admins, setAdmins] = useState([]);
   const [roles, setRoles] = useState([]);
@@ -21,7 +22,7 @@ export default function ManageAdmin() {
     data: {},
   });
   const [snackbar, setSnackbar] = useState(null);
-
+  const [showAlert, setShowAlert] = useState(false);
   const adminService = new AdminService();
 
   function dateConversion(isoDate) {
@@ -95,8 +96,14 @@ export default function ManageAdmin() {
     adminService
       .updateRole(adminId, { role: e.target.value })
       .then((response) => {
+        setShowAlert(true);
+        console.log("role changed");
         getAllAdmins();
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 2000);
       })
+
       .catch((error) => {
         alert(error);
       });
@@ -105,6 +112,12 @@ export default function ManageAdmin() {
   return (
     <>
       {snackbar}
+      {showAlert && (
+        <Alert className="bottom-alert" severity="success">
+          <AlertTitle>Success</AlertTitle>
+          Role has been changed successfully!
+        </Alert>
+      )}
       <PopupAlert
         control={{
           dialog: dialog,

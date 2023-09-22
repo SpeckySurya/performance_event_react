@@ -93,6 +93,7 @@ function UploadVideoAndPdf() {
       eventService
         .uploadPastEventData(formData)
         .then((response) => {
+          setLoading(false);
           setOpen(true);
           setLoading(false);
           setSelectedEvent(-1);
@@ -160,7 +161,7 @@ function UploadVideoAndPdf() {
           }}
         >
           <CardContent>
-            <h3 className="uploadpdfh3">Upload Files</h3>
+            <h3 className="uploadpdfh3">Add or Upload Files</h3>
             <FormControl fullWidth>
               <InputLabel id="select-event-label">Select Event</InputLabel>
               <Select
