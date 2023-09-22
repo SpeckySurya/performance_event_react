@@ -135,7 +135,7 @@ const EventCard = (props) => {
       })
       .catch((error) => {
         setSnackbar(
-          <SnackbarComponent message="Restricted !" severity={"error"} />
+          <SnackbarComponent message="Action Restricted !" severity={"error"} />
         );
       });
   }

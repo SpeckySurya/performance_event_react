@@ -173,7 +173,7 @@ const AdminHeader = (props) => {
       },
     },
     {
-      text: "Manage Admin",
+      text: "Manage Users & Role",
       icon: <ManageAccountsOutlinedIcon />,
       onClick: () => {
         props.handleSidebar("manageAdmin");
