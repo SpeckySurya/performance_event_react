@@ -95,15 +95,11 @@ function UploadVideoAndPdf() {
         .then((response) => {
           setOpen(true);
           setLoading(false);
-          setUploadVideo("");
-          setUploadFile("");
           setSelectedEvent(-1);
         })
         .catch((error) => {
           alert(error);
           setLoading(false);
-          setUploadVideo("");
-          setUploadFile("");
           setSelectedEvent(-1);
         });
     }
