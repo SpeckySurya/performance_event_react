@@ -93,10 +93,19 @@ function UploadVideoAndPdf() {
       eventService
         .uploadPastEventData(formData)
         .then((response) => {
-          setLoading(false);
           setOpen(true);
+          setLoading(false);
+          setUploadVideo("");
+          setUploadFile("");
+          setSelectedEvent(-1);
         })
-        .catch((error) => alert(error));
+        .catch((error) => {
+          alert(error);
+          setLoading(false);
+          setUploadVideo("");
+          setUploadFile("");
+          setSelectedEvent(-1);
+        });
     }
   };
 
