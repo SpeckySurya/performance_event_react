@@ -3,7 +3,7 @@ import "./login.css";
 import Forgotpassword from "./Forgotpassword";
 import { useNavigate } from "react-router-dom";
 import LoginService from "./../../services/LoginService";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 import { tokenExpireTimer } from "../../utils/Constant";
 import { Link } from "react-router-dom";
 import SnackbarComponent from "../../components/SnackbarComponent/SnackbarComponent";
@@ -14,7 +14,7 @@ const Login = () => {
   });
   const [loading, setLoading] = useState(false);
   const [forgotPasswordVisible, setForgotPasswordVisible] = useState(false);
-  const [snackbar, setSnackbar] = useState(null);
+  const [message, setMessage] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,12 +22,6 @@ const Login = () => {
       navigate("/dashboard");
     }
   }, [navigate]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setSnackbar(null);
-    }, 3000);
-  }, [snackbar]);
 
   const toLogin = () => navigate("/login");
 
@@ -45,9 +39,10 @@ const Login = () => {
       })
       .catch((error) => {
         if (error.response.status === 401) {
-          setSnackbar(
-            <SnackbarComponent message="Wrong credentials" severity="error" />
-          );
+          setMessage("Wrong Credentials !");
+          setTimeout(() => {
+            setMessage(null);
+          }, 5000);
         }
         setLoading(false);
       });
@@ -64,7 +59,6 @@ const Login = () => {
 
   return (
     <>
-      {snackbar}
       <div className="login-container">
         <h1>Admin Login</h1>
         <form onSubmit={handleSubmit}>
@@ -96,6 +90,9 @@ const Login = () => {
               required
             />
           </div>
+          <Typography fontSize={14} color={"red"}>
+            {message}
+          </Typography>
           <Link
             to="/forgot-password"
             className="forgot_password"
