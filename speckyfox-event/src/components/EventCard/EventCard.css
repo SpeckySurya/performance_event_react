@@ -30,9 +30,14 @@
 }
 .downloadbutton {
   position: absolute !important;
-  right: 1% !important;
+  right: 3% !important;
   top: 25 !important;
   height: 50px;
   width: 50px;
   cursor: pointer;
+}
+.downloadedppttext {
+  position: absolute !important;
+  right: 3% !important;
+  top: 68%;
 }

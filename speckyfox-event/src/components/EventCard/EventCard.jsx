@@ -269,17 +269,22 @@ const EventCard = (props) => {
           </Box>
         )}
         {props.isEventPage && isOutdated ? (
-          <Button
-            title="Download PPT"
-            className="downloadbutton"
-            onClick={() => setOpen(true)}
-          >
-            <FileDownloadIcon />
-          </Button>
+          <>
+            <Button
+              title="Download PPT"
+              className="downloadbutton"
+              onClick={() => setOpen(true)}
+            >
+              <FileDownloadIcon />
+              <Typography sx={{ fontSize: 10 }} className="downloadedppttext">
+                Download PPT
+              </Typography>
+            </Button>
+          </>
         ) : null}
         <CardContent sx={{ flex: "1 0 auto" }}>
           <Typography
-            sx={{ width: "91%" }}
+            sx={{ width: "80%" }}
             gutterBottom
             variant="h6"
             fontWeight={600}
