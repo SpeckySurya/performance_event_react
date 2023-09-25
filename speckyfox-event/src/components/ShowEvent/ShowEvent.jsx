@@ -21,7 +21,7 @@ const ShowEvent = (props) => {
   const [pastEvents, setPastEvents] = useState([]);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [renderEvents, setRenderEvents] = useState([]);
-  const [alignment, setAlignment] = React.useState("left");
+  const [alignment, setAlignment] = React.useState("web");
 
   const handleAlignment = (event, newAlignment) => {
     setAlignment(newAlignment);
