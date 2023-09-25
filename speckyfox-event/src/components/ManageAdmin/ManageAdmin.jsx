@@ -205,7 +205,7 @@ export default function ManageAdmin() {
                     </Button>
                   ) : (
                     <Button variant="outlined" disabled>
-                      Root Admin
+                      Disabled
                     </Button>
                   )}
                 </TableCell>
