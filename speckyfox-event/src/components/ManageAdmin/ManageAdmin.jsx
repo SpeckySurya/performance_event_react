@@ -184,7 +184,7 @@ export default function ManageAdmin() {
                     </Select>
                   ) : (
                     <Button variant="outlined" disabled>
-                      ADMIN
+                      {admin.role}
                     </Button>
                   )}
                 </TableCell>
