@@ -40,6 +40,14 @@ const AdminHeader = (props) => {
   useEffect(() => {
     const role = findRoleFromToken();
     switch (role) {
+      case "SUPER_ADMIN": {
+        setMenuItems([
+          ...menuItemsForAdmin,
+          ...menuItemsForEditor,
+          ...commonMenuItems,
+        ]);
+        break;
+      }
       case "ADMIN": {
         setMenuItems([
           ...menuItemsForAdmin,

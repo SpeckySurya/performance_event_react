@@ -48,7 +48,7 @@ function HomePageConfiguration(props) {
         });
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+        alert(error);
       });
   }, []);
 

@@ -6,6 +6,7 @@ import RegistrationService from "../../services/RegistrationService";
 import { Link } from "react-router-dom";
 import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { CircularProgress } from "@mui/material";
+import { findRoleFromToken } from "../../utils/TokenDecoder";
 
 function AdminRegistration(props) {
   const [loading, setLoading] = useState(false);
@@ -15,6 +16,7 @@ function AdminRegistration(props) {
   const [snackbar, setSnackbar] = useState(null);
   const passwordService = new PasswordService();
   const navigate = useNavigate();
+  const loggedInUserRole = findRoleFromToken();
 
   useEffect(() => {
     if (!sessionStorage.getItem("token")) {
@@ -136,11 +138,19 @@ function AdminRegistration(props) {
                   name="role"
                   onChange={handleData}
                 >
-                  {roles.map((role, index) => (
-                    <MenuItem key={index} value={role}>
-                      {role}
-                    </MenuItem>
-                  ))}
+                  {loggedInUserRole === "ADMIN"
+                    ? roles
+                        .filter((role, index) => role !== "ADMIN")
+                        .map((role, index) => (
+                          <MenuItem key={index} value={role}>
+                            {role}
+                          </MenuItem>
+                        ))
+                    : roles.map((role, index) => (
+                        <MenuItem key={index} value={role}>
+                          {role}
+                        </MenuItem>
+                      ))}
                 </Select>
               </FormControl>
             </Box>
@@ -153,11 +163,6 @@ function AdminRegistration(props) {
             )}
           </button>
         </form>
-        {/* <Box textAlign={"end"}>
-          <Link to={"/dashboard"} className="no-anchor-style">
-            Go back
-          </Link>
-        </Box> */}
       </div>
     </>
   );

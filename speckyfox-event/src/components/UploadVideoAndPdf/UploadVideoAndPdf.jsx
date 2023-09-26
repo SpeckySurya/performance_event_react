@@ -24,6 +24,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
 import styled from "styled-components";
+import ContentService from "../../services/ContentService";
 
 function UploadVideoAndPdf() {
   const [uploadFile, setUploadFile] = useState("");
@@ -34,6 +35,7 @@ function UploadVideoAndPdf() {
   const [selectedEvent, setSelectedEvent] = useState(-1);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [open, setOpen] = useState(false);
+  const [uploadAction, setUploadAction] = useState("Upload");
 
   const handleClose = () => {
     setOpen(false);
@@ -120,6 +122,18 @@ function UploadVideoAndPdf() {
         return;
       }
       setSelectedEvent(eventId);
+      const contentService = new ContentService();
+      contentService
+        .getEventDataInfo(eventId)
+        .then((response) => {
+          setUploadAction("Update");
+          console.log(response);
+        })
+        .catch((error) => {
+          if (error.code === "ERR_BAD_RESPONSE") {
+            setUploadAction("Upload");
+          }
+        });
       const obj = pastEvents.find((event) => event.events.id === eventId);
       const userList = obj.events.users.map(
         (user) => `${user.firstName} ${user.lastName}`
@@ -161,7 +175,7 @@ function UploadVideoAndPdf() {
           }}
         >
           <CardContent>
-            <h3 className="uploadpdfh3">Add or Upload Files</h3>
+            <h3 className="uploadpdfh3">Upload or Update Files</h3>
             <FormControl fullWidth>
               <InputLabel id="select-event-label">Select Event</InputLabel>
               <Select
@@ -180,8 +194,12 @@ function UploadVideoAndPdf() {
                   </MenuItem>
                 ))}
               </Select>
+              <Typography p={1} color={"crimson"}>
+                {uploadAction === "Update"
+                  ? "Recording and Presentation found. Continue to update !"
+                  : null}
+              </Typography>
             </FormControl>
-
             <Grid spacing={2}>
               <Grid xs={12} sm={6} item>
                 <InputLabel className="uploadvideotext">Upload PPT</InputLabel>
@@ -246,7 +264,7 @@ function UploadVideoAndPdf() {
                   </BootstrapButton>
                 ) : (
                   <BootstrapButtonDisabled onClick={fundisplayfileandvideo}>
-                    Submit
+                    {uploadAction}
                   </BootstrapButtonDisabled>
                 )}
               </Grid>

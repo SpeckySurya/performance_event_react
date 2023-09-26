@@ -13,6 +13,7 @@ import PopupAlert from "../PopupAlert/PopupAlert";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
 import Alert from "@mui/material/Alert";
 import "./ManageAdmin.css";
+import { findRoleFromToken } from "../../utils/TokenDecoder";
 export default function ManageAdmin() {
   const [admins, setAdmins] = useState([]);
   const [roles, setRoles] = useState([]);
@@ -24,6 +25,7 @@ export default function ManageAdmin() {
   const [snackbar, setSnackbar] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
   const adminService = new AdminService();
+  const loggedInUserRole = findRoleFromToken();
 
   function dateConversion(isoDate) {
     const date = new Date(isoDate);
@@ -50,7 +52,7 @@ export default function ManageAdmin() {
         setAdmins(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        alert(error);
       });
   }
 
@@ -92,12 +94,10 @@ export default function ManageAdmin() {
   }, [dialog]);
 
   function roleHandler(e, adminId) {
-    console.log(e.target.value, adminId);
     adminService
       .updateRole(adminId, { role: e.target.value })
       .then((response) => {
         setShowAlert(true);
-        console.log("role changed");
         getAllAdmins();
         setTimeout(() => {
           setShowAlert(false);
@@ -166,30 +166,72 @@ export default function ManageAdmin() {
                 <TableCell align="center">
                   {dateConversion(admin.updatedAt)}
                 </TableCell>
+                <TableCell align="center">{admin.createdBy}</TableCell>
                 <TableCell align="center">
-                  {admin.createdBy ? admin.createdBy : "Owner"}
-                </TableCell>
-                <TableCell align="center">
-                  {admin.createdBy ? (
+                  {loggedInUserRole === "SUPER_ADMIN" ? (
+                    admin.role !== "SUPER_ADMIN" ? (
+                      <Select
+                        value={admin.role}
+                        onChange={(e) => roleHandler(e, admin.id)}
+                        name="role"
+                      >
+                        {roles.map((role, index) => (
+                          <MenuItem key={index} value={role}>
+                            {role}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    ) : (
+                      <Button variant="outlined" disabled>
+                        {admin.role}
+                      </Button>
+                    )
+                  ) : admin.role === "SUPER_ADMIN" || admin.role == "ADMIN" ? (
+                    <Button variant="outlined" disabled>
+                      {admin.role}
+                    </Button>
+                  ) : (
                     <Select
                       value={admin.role}
                       onChange={(e) => roleHandler(e, admin.id)}
                       name="role"
                     >
-                      {roles.map((role, index) => (
-                        <MenuItem key={index} value={role}>
-                          {role}
-                        </MenuItem>
-                      ))}
+                      {roles
+                        .filter((role, index) => role !== "ADMIN")
+                        .map((role, index) => (
+                          <MenuItem key={index} value={role}>
+                            {role}
+                          </MenuItem>
+                        ))}
                     </Select>
-                  ) : (
-                    <Button variant="outlined" disabled>
-                      {admin.role}
-                    </Button>
                   )}
                 </TableCell>
                 <TableCell align="center">
-                  {admin.createdBy ? (
+                  {loggedInUserRole === "SUPER_ADMIN" ? (
+                    admin.role === "SUPER_ADMIN" ? (
+                      <Button variant="outlined" disabled>
+                        Delete
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() =>
+                          setDialog({
+                            ...dialog,
+                            open: true,
+                            data: { adminId: admin.id },
+                          })
+                        }
+                        variant="contained"
+                        color="error"
+                      >
+                        Delete
+                      </Button>
+                    )
+                  ) : admin.role === "SUPER_ADMIN" || admin.role === "ADMIN" ? (
+                    <Button variant="outlined" disabled>
+                      Delete
+                    </Button>
+                  ) : (
                     <Button
                       onClick={() =>
                         setDialog({
@@ -202,10 +244,6 @@ export default function ManageAdmin() {
                       color="error"
                     >
                       Delete
-                    </Button>
-                  ) : (
-                    <Button variant="outlined" disabled>
-                      Disabled
                     </Button>
                   )}
                 </TableCell>

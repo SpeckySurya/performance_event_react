@@ -56,7 +56,6 @@ const EventCard = (props) => {
   };
 
   useEffect(() => {
-    console.log(props.isEventPage);
     setActive(props.event.events.active);
   }, [props.event]);
 
