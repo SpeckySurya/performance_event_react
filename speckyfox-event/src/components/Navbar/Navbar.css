@@ -3,6 +3,7 @@
 }
 
 .navbar {
+  height: 100px;
   color: #333;
   background-color: #fff;
   display: flex;
@@ -10,7 +11,7 @@
   align-items: center;
   padding: 7px;
   box-shadow: 2px 5px 8px rgba(0, 0, 0, 0.03);
-  z-index: 1;
+  z-index: 20;
 }
 
 .logo img {

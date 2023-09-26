@@ -8,6 +8,13 @@ export default class Header {
     return headers;
   }
 
+  textType() {
+    const headers = {
+      "Content-Type": "text/plain",
+    };
+    return headers;
+  }
+
   withAuth() {
     return {
       headers: {

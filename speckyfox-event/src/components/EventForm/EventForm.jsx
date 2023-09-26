@@ -9,12 +9,17 @@ import { useNavigate } from "react-router-dom";
 const EventForm = (props) => {
   const [formData, setFormData] = useState(props.formDataDefault);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [speakerSelect, setSpeakerSelect] = useState("");
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const navigate = useNavigate();
+  const [snackbar, setSnackbar] = useState(null);
   const [currentSpeaker, setCurrentSpeaker] = useState("Select Speaker");
   const [loading, setLoading] = useState(false);
   const [duration, setDuration] = useState(props.formDataDefault.duration);
   const handleChange = (event) => {
+    if (event.target.name === "speakerId") {
+      setSpeakerSelect(event.target.value);
+    }
     let { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -40,9 +45,16 @@ const EventForm = (props) => {
         .then((response) => {
           setIsAlertVisible(true);
           setLoading(false);
+          setTimeout(() => props.handleBackButton(), 1000);
         })
         .catch((error) => {
-          alert("Something went wrong :" + error);
+          setLoading(false);
+          setSnackbar(
+            <SnackbarComponent
+              message="Something went wrong"
+              severity="success"
+            />
+          );
         });
     } else {
       eventService
@@ -50,9 +62,16 @@ const EventForm = (props) => {
         .then((response) => {
           setIsAlertVisible(true);
           setLoading(false);
+          setTimeout(() => props.setSelected("show"), 1000);
         })
         .catch((error) => {
-          alert("Something went wrong :" + error);
+          setLoading(false);
+          setSnackbar(
+            <SnackbarComponent
+              message="Something went wrong"
+              severity="success"
+            />
+          );
         });
     }
   };
@@ -121,7 +140,7 @@ const EventForm = (props) => {
         <div className="form-group">
           <label htmlFor="meetingUrl">Meeting URL</label>
           <input
-            type="text"
+            type="url"
             id="meetingUrl"
             name="meetingUrl"
             placeholder="Meeting URL"
@@ -194,9 +213,14 @@ const EventForm = (props) => {
             name="speakerId"
             id="speakerId"
             onChange={handleChange}
-            value={formData.speakerId}
+            value={
+              props.formTitle === "Update" ? formData.speakerId : speakerSelect
+            }
             required
           >
+            <option disabled value="">
+              Select speaker
+            </option>
             {props.speakers.map((speaker) => (
               <option key={speaker.id} value={speaker.id}>
                 {speaker.name}
@@ -219,7 +243,7 @@ const EventForm = (props) => {
           {loading ? (
             <CircularProgress size={20} color={"error"} />
           ) : (
-            "Create Event"
+            props.formTitle + " Event"
           )}
         </button>
       </form>
@@ -230,10 +254,11 @@ const EventForm = (props) => {
               handleAlertClose();
             }}
           >
-            Event created successfully !
+            Event {props.formTitle}d Successfully !
           </Alert>
         )}
       </Box>
+      {snackbar}
     </div>
   );
 };

@@ -23,7 +23,7 @@ export default function Togglebtn() {
 
   return (
     <>
-      <div className="togglebtnstyle">
+      <div style={{ border: "1px solid black" }} className="togglebtnstyle">
         <ToggleButtonGroup
           color="primary"
           value={alignment}
@@ -31,7 +31,11 @@ export default function Togglebtn() {
           onChange={handleChange}
           aria-label="Platform"
         >
-          <ToggleButton value="web" onClick={() => setopentogle(true)}>
+          <ToggleButton
+            sx={{ color: "red", fontSize: 10, width: 100 }}
+            value="web"
+            onClick={() => setopentogle(true)}
+          >
             Upcoming Event
           </ToggleButton>
           <ToggleButton value="past event" onClick={() => setopentogle(false)}>

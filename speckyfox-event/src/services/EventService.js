@@ -30,6 +30,10 @@ export default class EventService {
     const headers = this.headers.multipartAuth();
     return axios.post(`${this.baseUrl}/admin/save-event`, event, headers);
   }
+  uploadPastEventData(data) {
+    const headers = this.headers.multipartAuth();
+    return axios.post(`${this.baseUrl}/admin/upload-past-event`, data, headers);
+  }
   updateEvent(eventId, event) {
     const headers = this.headers.multipartAuth();
     return axios.put(
@@ -42,6 +46,14 @@ export default class EventService {
     const headers = this.headers.withAuth();
     return axios.delete(
       `${this.baseUrl}/admin/deleteEvent/${evendId}`,
+      headers
+    );
+  }
+  setActiveOrInactive(eventId, data) {
+    const headers = this.headers.withAuth();
+    return axios.patch(
+      `${this.baseUrl}/admin/active-event/${eventId}`,
+      data,
       headers
     );
   }

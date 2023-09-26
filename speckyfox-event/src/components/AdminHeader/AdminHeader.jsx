@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -9,20 +9,63 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Link,
+  Box,
 } from "@mui/material";
+import ChangeCircleOutlinedIcon from "@mui/icons-material/ChangeCircleOutlined";
+
 import MenuIcon from "@mui/icons-material/Menu";
+import "./AdminHeader.css";
+import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
+import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
+import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
 import AssuredWorkloadOutlinedIcon from "@mui/icons-material/AssuredWorkloadOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+
 import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { useNavigate } from "react-router-dom";
+import { findRoleFromToken } from "../../utils/TokenDecoder";
 
 const AdminHeader = (props) => {
   const [open, setOpen] = useState(false);
+  const [menuItems, setMenuItems] = useState([]);
+  const [menuItem, setMenuItem] = useState("Show Events");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const role = findRoleFromToken();
+    switch (role) {
+      case "SUPER_ADMIN": {
+        setMenuItems([
+          ...menuItemsForAdmin,
+          ...menuItemsForEditor,
+          ...commonMenuItems,
+        ]);
+        break;
+      }
+      case "ADMIN": {
+        setMenuItems([
+          ...menuItemsForAdmin,
+          ...menuItemsForEditor,
+          ...commonMenuItems,
+        ]);
+        break;
+      }
+      case "EDITOR": {
+        setMenuItems([...menuItemsForEditor, ...commonMenuItems]);
+        break;
+      }
+      case "VIEWER": {
+        setMenuItems([...commonMenuItems]);
+        break;
+      }
+    }
+  }, []);
 
   const toggleDrawer = (isOpen) => (event) => {
     if (
@@ -37,33 +80,17 @@ const AdminHeader = (props) => {
 
   const handleLogout = () => {
     sessionStorage.removeItem("token");
-    navigate("/");
+    navigate("/login");
   };
 
-  const menuItems = [
+  const commonMenuItems = [
     {
       text: "Show Events",
       icon: <HomeOutlinedIcon />,
       onClick: () => {
         props.handleSidebar("show");
         setOpen(false);
-      },
-    },
-    {
-      text: "Create Event",
-      icon: <AddCircleOutlineOutlinedIcon />,
-      onClick: () => {
-        props.handleSidebar("create");
-        setOpen(false);
-      },
-    },
-
-    {
-      text: "Home Configuration",
-      icon: <AssuredWorkloadOutlinedIcon />,
-      onClick: () => {
-        props.handleSidebar("homeConfig");
-        setOpen(false);
+        setMenuItem("Show Events");
       },
     },
     {
@@ -72,34 +99,96 @@ const AdminHeader = (props) => {
       onClick: () => {
         props.handleSidebar("showSpeaker");
         setOpen(false);
+        setMenuItem("Show Speaker");
+      },
+    },
+    {
+      text: "View Participant",
+      icon: <VisibilityOffOutlinedIcon />,
+      onClick: () => {
+        props.handleSidebar("manageUser");
+        setOpen(false);
+        setMenuItem("View Participant");
+      },
+    },
+    {
+      text: "Change Password",
+      icon: <ChangeCircleOutlinedIcon />,
+      onClick: () => {
+        props.handleSidebar("AdminUpdatePassword");
+        setOpen(false);
+        setMenuItem("Change Password");
+      },
+    },
+    { text: "Logout", icon: <ExitToAppIcon />, onClick: handleLogout },
+  ];
+
+  const menuItemsForEditor = [
+    {
+      text: "Home Configuration",
+      icon: <AssuredWorkloadOutlinedIcon />,
+      onClick: () => {
+        props.handleSidebar("homeConfig");
+        setOpen(false);
+        setMenuItem("Home Configuration");
+      },
+    },
+  ];
+
+  const menuItemsForAdmin = [
+    {
+      text: "Create Event",
+      icon: <AddCircleOutlineOutlinedIcon />,
+      onClick: () => {
+        props.handleSidebar("create");
+        setOpen(false);
+        setMenuItem("Create Event");
       },
     },
     {
       text: "Create Speaker",
-      icon: <PeopleAltOutlinedIcon />,
+      icon: <PersonAddAltOutlinedIcon />,
       onClick: () => {
         props.handleSidebar("manageSpeaker");
         setOpen(false);
+        setMenuItem("Create Speaker");
       },
     },
-
+    {
+      text: "Upload Files",
+      icon: <VideoLibraryOutlinedIcon />,
+      onClick: () => {
+        props.handleSidebar("UploadVideoAndPdf");
+        setOpen(false);
+      },
+    },
     {
       text: "Notify Participant",
       icon: <NotificationsActiveOutlinedIcon />,
       onClick: () => {
         props.handleSidebar("notify");
         setOpen(false);
+        setMenuItem("Notify Participant");
       },
     },
     {
-      text: "View Participant",
-      icon: <ManageAccountsIcon />,
+      text: "Admin Registration",
+      icon: <AppRegistrationIcon />,
       onClick: () => {
-        props.handleSidebar("manageUser");
+        props.handleSidebar("AdminRegistration");
         setOpen(false);
+        setMenuItem("Admin Registration");
       },
     },
-    { text: "Logout", icon: <ExitToAppIcon />, onClick: handleLogout },
+    {
+      text: "Manage Users & Role",
+      icon: <ManageAccountsOutlinedIcon />,
+      onClick: () => {
+        props.handleSidebar("manageAdmin");
+        setOpen(false);
+        setMenuItem("Manage Admin");
+      },
+    },
   ];
 
   const list = () => (

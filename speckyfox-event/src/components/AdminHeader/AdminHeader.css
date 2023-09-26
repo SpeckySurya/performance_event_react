@@ -44,33 +44,76 @@
   color: #f8a63e;
 }
 
-.nav-hamburger {
-  font-size: 30px;
-  margin: 0 30px;
-  display: none;
-}
-
-.mob-navbar {
-  z-index: 10;
-  width: 50%;
-  height: 40vh;
-  border-radius: 12px;
-  padding: 20px;
-  display: none;
-  font-size: 22px;
-  position: absolute;
-  background-color: #333333;
-  transition: all ease 0.2s;
-}
-
-.mob-navbar a {
+.Manageicon {
   color: white;
+  position: absolute;
+  z-index: 10;
+  top: 13px;
+  right: 1%;
+  margin-right: 2%;
+  cursor: pointer;
 }
-
-.mob-navbar ul {
+.Manageicontool {
+  color: white;
+  position: absolute;
+  z-index: 10;
+  margin-right: 2%;
+  top: 13px;
+  right: 19%;
+  cursor: pointer;
+}
+.Manageicontool3 {
+  color: white;
+  position: absolute;
+  z-index: 10;
+  top: 13px;
+  right: 10%;
+  margin-right: 2%;
+  cursor: pointer;
+}
+.hometext {
+  font-size: xx-small;
+}
+.changepasswordtext {
+  font-size: xx-small;
+  margin-right: 4% !important;
+  position: absolute;
+  top: 20px;
+}
+.iconpasswordctr {
   display: flex;
-  list-style: none;
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-evenly;
+}
+.iconhome {
+  display: flex;
+}
+.hometext {
+  position: absolute;
+  top: 20px;
+
+  right: 0px;
+  margin-top: 2px;
+}
+.createadmintext {
+  font-size: xx-small !important;
+}
+.iconadmin {
+  display: flex;
+}
+.createadmintext {
+  position: absolute;
+  top: 20px;
+
+  right: 0px;
+  margin-top: 2px;
+}
+@media (max-width: 750px) {
+  .changepasswordtext {
+    font-size: 7px;
+  }
+  .createadmintext {
+    font-size: 7px !important;
+  }
+  .hometext {
+    font-size: 7px;
+  }
 }

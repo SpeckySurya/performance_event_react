@@ -1,15 +1,32 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useEffect, useState, useRef } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import "./Banner.css";
 import RegistrationForm from "../RegistrationForm/RegistrationForm";
 import dateFormatter, {
   addTime,
   convertTo12HourFormat,
 } from "../../utils/DateFormatter";
+import { Button, Typography } from "@mui/material";
 
 export const Banner = (props) => {
   const [formattedDate, setFormattedDate] = useState({});
   const [formattedTime, setFormattedTime] = useState("");
+  const [showCrossWindow, setShowCrossWindow] = useState(true);
+  const [animateRegisterButton, setAnimateRegisterButton] = useState(true); // Start the animation by default
+  const registrationFormRef = useRef(null);
+
+  const handleRegisterButtonClick = () => {
+    // Scroll to the RegistrationForm section when the button is clicked
+    if (registrationFormRef.current) {
+      registrationFormRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Trigger the animation for the Register button
+    setAnimateRegisterButton(true);
+
+    // Automatically close the registration window after 4 seconds
+  };
 
   useEffect(() => {
     setFormattedDate(dateFormatter(props.event.date));
@@ -103,7 +120,24 @@ export const Banner = (props) => {
           </div>
         </div>
       </section>
-      <section className="right">
+      {showCrossWindow ? (
+        <div
+          style={{
+            textAlign: "center",
+            marginTop: "90px",
+            transform: "rotate(15deg)",
+          }}
+          className={"BannerRegisterButtonatTop"}
+        >
+          <Typography p={1} color={"blue"} onClick={handleRegisterButtonClick}>
+            Register
+            <Typography fontSize={10} color={"white"}>
+              Click me
+            </Typography>
+          </Typography>
+        </div>
+      ) : null}
+      <section className="right" ref={registrationFormRef}>
         <RegistrationForm />
       </section>
     </div>

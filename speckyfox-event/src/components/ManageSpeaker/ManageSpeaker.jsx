@@ -6,26 +6,32 @@ import {
   InputLabel,
   Button,
   Box,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  CircularProgress,
 } from "@mui/material";
 import { useFormik } from "formik";
 import "./ManageSpeaker.css";
+import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
+import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 
 import { ManageSpeakerValidation } from "../../schemas/ManageSpeakerValidation";
 import SpeakerService from "../../services/SpeakerService";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const initialValues = {
-  twitterUrl: "",
-  name: "",
-  designation: "",
-  linkdinUrl: "",
-  aboutSpeaker: "",
-  email: "",
-  youtubeUrl: "",
-};
 function ManageSpeaker(props) {
   const [selectedFile, setSelectedFile] = useState(null);
-
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [popUpMsg, setPopUpmsg] = useState("");
+  const handleClose = () => {
+    setOpen(false);
+    props.setSelected("showSpeaker");
+    props.setUpdateSpeaker(false);
+  };
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
@@ -33,29 +39,73 @@ function ManageSpeaker(props) {
 
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useFormik({
-      initialValues: initialValues,
+      initialValues: props.speakerInitialValue,
       validationSchema: ManageSpeakerValidation,
       onSubmit: (values) => {
+        setLoading(true);
         const request = new FormData();
-        for (let entry in initialValues) {
+        for (let entry in props.speakerInitialValue) {
           request.append(entry, values[entry]);
         }
         request.append("picture", selectedFile);
 
         const speakerService = new SpeakerService();
-        speakerService
-          .saveSpeaker(request)
-          .then((response) => {
-            alert("Speaker saved");
-          })
-          .catch((error) => {
-            alert(error);
-          });
+        if (props.title === "Update") {
+          speakerService
+            .updateSpeaker(props.selectedSpeaker.id, request)
+            .then((response) => {
+              setOpen(true);
+              setLoading(false);
+              setPopUpmsg("Speaker updated Successfully!");
+            })
+            .catch((error) => {
+              alert(error);
+              setLoading(false);
+            });
+        } else if (props.title === "Create") {
+          speakerService
+            .saveSpeaker(request)
+            .then((response) => {
+              setOpen(true);
+              setLoading(false);
+              setPopUpmsg("Speaker created Successfully!");
+            })
+            .catch((error) => {
+              alert(error);
+              setLoading(false);
+            });
+        }
       },
     });
 
   return (
     <>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Success</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {popUpMsg}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+      {props.title === "Update" ? (
+        <Button
+          className="arrowbtn"
+          onClick={() => props.setUpdateSpeaker(false)}
+        >
+          <ArrowBackOutlinedIcon />
+        </Button>
+      ) : null}
       <Box px={2}>
         <Card
           style={{
@@ -69,7 +119,7 @@ function ManageSpeaker(props) {
           }}
         >
           <CardContent>
-            <h3 className="ManageSpeakerh3">Create Speaker</h3>
+            <h3 className="ManageSpeakerh3">{props.title} Speaker</h3>
             <form onSubmit={handleSubmit}>
               <Grid container spacing={1}>
                 <Grid xs={12} sm={12} item>
@@ -80,7 +130,7 @@ function ManageSpeaker(props) {
                     id="name"
                     placeholder="Enter Speaker Name"
                     variant="outlined"
-                    value={values.name}
+                    value={values?.name}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
@@ -98,7 +148,7 @@ function ManageSpeaker(props) {
                     id="designation"
                     placeholder="Enter Speaker Designation"
                     variant="outlined"
-                    value={values.designation}
+                    value={values?.designation}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
@@ -116,7 +166,7 @@ function ManageSpeaker(props) {
                     id="aboutSpeaker"
                     placeholder="Enter Speaker Details"
                     variant="outlined"
-                    value={values.aboutSpeaker}
+                    value={values?.aboutSpeaker}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
@@ -133,7 +183,7 @@ function ManageSpeaker(props) {
                     id="email"
                     placeholder="Enter Speaker Email"
                     variant="outlined"
-                    value={values.email}
+                    value={values?.email}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
@@ -153,11 +203,18 @@ function ManageSpeaker(props) {
                     name="picture"
                     id="picture"
                     variant="outlined"
-                    value={values.picture}
+                    value={values?.picture}
                     onChange={handleFileChange}
                     onBlur={handleBlur}
                     fullWidth
                   />
+
+                  {props.title === "Update" ? (
+                    <img
+                      style={{ width: "100px", margin: "10px" }}
+                      src={props.selectedSpeaker?.picture}
+                    />
+                  ) : null}
                   {errors.picture && touched.picture ? (
                     <p className="configationformerro">{errors.picture}</p>
                   ) : null}
@@ -172,7 +229,7 @@ function ManageSpeaker(props) {
                     placeholder="Upload LinkedIn url"
                     variant="outlined"
                     fullWidth
-                    value={values.linkdinUrl}
+                    value={values?.linkdinUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
@@ -190,7 +247,7 @@ function ManageSpeaker(props) {
                     placeholder="Upload Twiter url"
                     variant="outlined"
                     fullWidth
-                    value={values.twitterUrl}
+                    value={values?.twitterUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
@@ -207,7 +264,7 @@ function ManageSpeaker(props) {
                     id="youtubeUrl"
                     placeholder="Upload Youtube url"
                     variant="outlined"
-                    value={values.youtubeUrl}
+                    value={values?.youtubeUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
@@ -222,9 +279,13 @@ function ManageSpeaker(props) {
                     type="submit"
                     variant="contained"
                     color="primary"
-                    fullWidth="100%"
+                    fullWidth
                   >
-                    Submit
+                    {loading ? (
+                      <CircularProgress size={20} color={"error"} />
+                    ) : (
+                      "Submit"
+                    )}
                   </Button>
                 </Grid>
               </Grid>

@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import EventForm from "../../components/EventForm/EventForm";
 import "./DashboardPage.css";
 import NotifyParticipant from "../../components/NotifyParticipant/NotifyParticipant";
+import UploadVideoAndPdf from "../../components/UploadVideoAndPdf/UploadVideoAndPdf";
 import AdminHeader from "../../components/AdminHeader/AdminHeader";
+
 import {
   Box,
   Button,
@@ -11,6 +13,8 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  LinearProgress,
+  Typography,
 } from "@mui/material";
 import EventCard from "../../components/EventCard/EventCard";
 import EventService from "../../services/EventService";
@@ -25,7 +29,12 @@ import {
   expireTime,
   stopTimer,
 } from "../../utils/Constant";
-
+import { TbRuler2Off } from "react-icons/tb";
+import ShowEvent from "../../components/ShowEvent/ShowEvent";
+import { findRoleFromToken } from "../../utils/TokenDecoder";
+import AdminUpdatePassword from "../../components/AdminUpdatePassword/AdminUpdatePassword";
+import AdminRegistration from "../../components/AdminRegistation/AdminRegistation";
+import ManageAdmin from "../../components/ManageAdmin/ManageAdmin";
 const formDataDefault = {
   title: "",
   description: "",
@@ -40,32 +49,77 @@ const formDataDefault = {
   duration: { hours: 0, minutes: 0 },
 };
 
+const speakerInitialValue = {
+  twitterUrl: "",
+  name: "",
+  designation: "",
+  linkdinUrl: "",
+  aboutSpeaker: "",
+  email: "",
+  youtubeUrl: "",
+};
+
 export const DashboardPage = () => {
   const [selected, setSelected] = useState("show");
   const [events, setEvents] = useState([]);
+  const [updateSpeaker, setUpdateSpeaker] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [speakers, setSpeakers] = useState([]);
+  const [update, setUpdate] = useState(false);
   const [open, setOpen] = React.useState(false);
+  const [updateBread, setUpdateBread] = useState(false);
 
   const navigate = useNavigate();
+
+  const initialSetup = () => {
+    const eventService = new EventService();
+    eventService.getAllEvents().then((response) => {
+      setEvents(response.data);
+      setLoading(false);
+    });
+    const speakerService = new SpeakerService();
+    speakerService.getAllSpeakers().then((response) => {
+      setSpeakers(response.data);
+    });
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    initialSetup();
+  }, []);
+
+  useEffect(() => {
+    if (selected === "show" || update) {
+      initialSetup();
+      setUpdate(false);
+      setUpdateBread(false);
+    }
+  }, [selected, update]);
 
   useEffect(() => {
     setTimeout(() => setOpen(true), expireTime() - alertBeforeExpireTime());
     if (sessionStorage.getItem("token") === null) {
       navigate("/login");
     }
-    const eventService = new EventService();
-    eventService.getAllEvents().then((response) => {
-      setEvents(response.data);
-    });
-    const speakerService = new SpeakerService();
-    speakerService.getAllSpeakers().then((response) => {
-      setSpeakers(response.data);
-    });
   }, []);
 
   function handleSidebar(data) {
     setSelected(data);
   }
+
+  const breadCrump = {
+    create: "Create Event",
+    show: updateBread ? "Show Event / Update Event" : "Show Event",
+    homeConfig: "Home Configuration",
+    manageSpeaker: "Manage Speaker",
+    notify: "Notify Participant",
+    manageUser: "Manage User",
+    showSpeaker: "Show Speaker",
+    AdminUpdatePassword: "Change Password",
+    UploadVideoAndPdf: "Upload Files",
+    AdminRegistration: "Admin Registration",
+    manageAdmin: "Manage Admin",
+  };
 
   function menuComponentFinder() {
     switch (selected) {
@@ -74,6 +128,7 @@ export const DashboardPage = () => {
           <EventForm
             formDataDefault={formDataDefault}
             speakers={speakers}
+            setSelected={setSelected}
             formTitle="Create"
           />
         );
@@ -83,17 +138,46 @@ export const DashboardPage = () => {
             (speaker) => speaker.id === event.id
           );
         });
-        return <EventCard events={events} isEventPage={false} />;
+        return (
+          <ShowEvent
+            setLoading={setLoading}
+            events={events}
+            setUpdate={setUpdate}
+            setUpdateBread={setUpdateBread}
+            isEventPage={false}
+          />
+        );
       case "homeConfig":
         return <HomePageConfiguration />;
       case "manageSpeaker":
-        return <ManageSpeaker />;
+        return (
+          <ManageSpeaker
+            title="Create"
+            setSelected={setSelected}
+            speakerInitialValue={speakerInitialValue}
+          />
+        );
       case "notify":
         return <NotifyParticipant events={events} />;
       case "manageUser":
         return <ManageUser events={events} />;
       case "showSpeaker":
-        return <ShowSpeaker />;
+        return (
+          <ShowSpeaker
+            updateSpeaker={updateSpeaker}
+            setSelected={setSelected}
+            setUpdateSpeaker={setUpdateSpeaker}
+            speakerInitialValue={speakerInitialValue}
+          />
+        );
+      case "UploadVideoAndPdf":
+        return <UploadVideoAndPdf />;
+      case "AdminUpdatePassword":
+        return <AdminUpdatePassword />;
+      case "AdminRegistration":
+        return <AdminRegistration setSelected={setSelected} />;
+      case "manageAdmin":
+        return <ManageAdmin />;
       default:
         return null;
     }
@@ -111,8 +195,12 @@ export const DashboardPage = () => {
 
   return (
     <>
+      {loading && <LinearProgress color="error" sx={{ zIndex: 10 }} />}
       <AdminHeader handleSidebar={handleSidebar} />
-      <Box padding={5}>
+      <Box paddingY={10} paddingX={3}>
+        <Typography fontWeight={"bolder"}>
+          Dashboard / {breadCrump[selected]}
+        </Typography>
         <Box margin={"auto"}>{menuComponentFinder()}</Box>
       </Box>
       <Dialog

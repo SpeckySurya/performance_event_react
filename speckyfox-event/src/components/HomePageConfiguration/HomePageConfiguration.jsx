@@ -6,6 +6,12 @@ import {
   InputLabel,
   Button,
   Box,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  CircularProgress,
 } from "@mui/material";
 import { useFormik } from "formik";
 import "./HomePageConfiguration.css";
@@ -13,6 +19,7 @@ import "./HomePageConfiguration.css";
 import { HomePageConfigationSchema } from "../../schemas/Homepagevalidation";
 import { useEffect, useState } from "react";
 import HomeConfigService from "../../services/HomeConfigService";
+const homeConfigService = new HomeConfigService();
 
 function HomePageConfiguration(props) {
   const [initialValues, setInitialValues] = useState({
@@ -24,8 +31,34 @@ function HomePageConfiguration(props) {
     youtubeUrl: "",
     footerText: "",
   });
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    homeConfigService
+      .getHomeConfigById()
+      .then((data) => {
+        const apiData = data.data;
+        setInitialValues({
+          linkedinUrl: apiData.linkdinUrl,
+          twitterUrl: apiData.twitterUrl,
+          facebookUrl: apiData.facebookUrl,
+          websiteUrl: apiData.websiteUrl,
+          contactUrl: apiData.contactUrl,
+          youtubeUrl: apiData.youtubeUrl,
+          footerText: apiData.footerText,
+        });
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }, []);
+
   const [banner, setBanner] = useState(null);
   const [logo, setLogo] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [popUpMsg, setPopUpmsg] = useState("");
+  const handleClose = () => {
+    setOpen(false);
+  };
   const handleBannerChange = (event) => {
     const file = event.target.files[0];
     setBanner(file);
@@ -39,7 +72,9 @@ function HomePageConfiguration(props) {
     useFormik({
       initialValues: initialValues,
       validationSchema: HomePageConfigationSchema,
+
       onSubmit: (values) => {
+        setLoading(true);
         const request = new FormData();
         for (let entry in initialValues) {
           request.append(entry, values[entry]);
@@ -47,14 +82,15 @@ function HomePageConfiguration(props) {
         request.append("banner", banner);
         request.append("logo", logo);
 
-        const homeConfigService = new HomeConfigService();
         homeConfigService
           .getHomeConfigById()
           .then((response) => {
             homeConfigService
               .updateHomeConfig(request)
               .then((response) => {
-                alert("Homepage details updated");
+                setOpen(true);
+                setLoading(false);
+                setPopUpmsg("Homepage details updated");
               })
               .catch((error) => {
                 alert(error);
@@ -68,13 +104,16 @@ function HomePageConfiguration(props) {
               homeConfigService
                 .saveHomeConfig(request)
                 .then((response) => {
-                  alert("Homepage details saved");
+                  setOpen(true);
+                  setLoading(false);
+                  setPopUpmsg("Homepage details saved");
                 })
                 .catch((error) => {
                   alert(error);
                 });
             } else {
               alert("Something went wrong");
+              setLoading(false);
             }
           });
       },
@@ -82,6 +121,24 @@ function HomePageConfiguration(props) {
 
   return (
     <>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Success</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {popUpMsg}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Box px={2}>
         <Card
           style={{
@@ -133,7 +190,7 @@ function HomePageConfiguration(props) {
                     placeholder="Upload LinkedIn url"
                     variant="outlined"
                     fullWidth
-                    value={initialValues.linkedinUrl}
+                    value={values?.linkedinUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
@@ -143,7 +200,7 @@ function HomePageConfiguration(props) {
                   ) : null}
                 </Grid>
                 <Grid xs={12} sm={12} item>
-                  <InputLabel>Twiter url</InputLabel>
+                  <InputLabel>Twitter url</InputLabel>
                   <TextField
                     type="text"
                     name="twitterUrl"
@@ -151,7 +208,7 @@ function HomePageConfiguration(props) {
                     placeholder="Upload Twiter url"
                     variant="outlined"
                     fullWidth
-                    value={initialValues.twitterUrl}
+                    value={values?.twitterUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
@@ -167,7 +224,7 @@ function HomePageConfiguration(props) {
                     id="facebookUrl"
                     placeholder="Upload Facebook url"
                     variant="outlined"
-                    value={initialValues.facebookUrl}
+                    value={values?.facebookUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
@@ -184,7 +241,7 @@ function HomePageConfiguration(props) {
                     id="websiteUrl"
                     placeholder="Upload Website url"
                     variant="outlined"
-                    value={initialValues.websiteUrl}
+                    value={values?.websiteUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
@@ -201,7 +258,7 @@ function HomePageConfiguration(props) {
                     id="contactUrl"
                     placeholder="Upload content url"
                     variant="outlined"
-                    value={initialValues.contactUrl}
+                    value={values?.contactUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
@@ -218,7 +275,7 @@ function HomePageConfiguration(props) {
                     id="youtubeUrl"
                     placeholder="Upload Youtube url"
                     variant="outlined"
-                    value={initialValues.youtubeUrl}
+                    value={values?.youtubeUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
@@ -233,10 +290,9 @@ function HomePageConfiguration(props) {
                     type="text"
                     name="footerText"
                     id="footerText"
-                    s
                     placeholder="Upload Footer Text url"
                     variant="outlined"
-                    value={initialValues.footerText}
+                    value={values?.footerText}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     fullWidth
@@ -251,9 +307,13 @@ function HomePageConfiguration(props) {
                     type="submit"
                     variant="contained"
                     color="primary"
-                    fullWidth="100%"
+                    fullWidth
                   >
-                    Submit
+                    {loading ? (
+                      <CircularProgress size={20} color={"error"} />
+                    ) : (
+                      "Submit"
+                    )}
                   </Button>
                 </Grid>
               </Grid>

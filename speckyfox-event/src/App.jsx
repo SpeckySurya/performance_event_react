@@ -11,10 +11,18 @@ import { DashboardPage } from "./pages/DashboardPage/DashboardPage";
 import MyContext from "./context";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
 
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
+import Forgotpassword from "./pages/Login/Forgotpassword";
+import UpdatePassword from "./pages/UpdatePassword/UpdatePassword";
+import AdminUpdatePassword from "./components/AdminUpdatePassword/AdminUpdatePassword";
+import AdminRegistration from "./components/AdminRegistation/AdminRegistation";
+import LinkExpired from "./pages/LinkExpired/LinkExpired";
 function App() {
   const [sharedState, setSharedState] = useState({
     admin: false,
   });
+
   return (
     <MyContext.Provider value={{ sharedState, setSharedState }}>
       <Routes>
@@ -24,7 +32,17 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/error" element={<ErrorPage />} />
+        <Route path="/forgot-password" element={<Forgotpassword />} />
         <Route path="/pagenotfound" element={<PageNotFound />} />
+
+        <Route path="/admin-registation" element={<AdminRegistration />} />
+        <Route
+          path="/admin-update-password"
+          element={<AdminUpdatePassword />}
+        />
+
+        <Route path="/forgot-password/:token" element={<UpdatePassword />} />
+        <Route path="/link-expired" element={<LinkExpired />} />
       </Routes>
     </MyContext.Provider>
   );
