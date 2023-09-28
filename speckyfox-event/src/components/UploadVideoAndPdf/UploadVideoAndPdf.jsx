@@ -1,37 +1,37 @@
-import React, { useState, useEffect } from "react";
-import "./UploadVideoAndPdf.css";
-import {
-  Card,
-  CardContent,
-  Grid,
-  InputLabel,
-  Button,
-  Stack,
-  Input,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  CircularProgress,
-} from "@mui/material";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { Typography } from "@mui/material";
-import EventService from "../../services/EventService";
-import InputAdornment from "@mui/material/InputAdornment";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
+import {
+  Button,
+  Card,
+  CardContent,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Grid,
+  Input,
+  InputLabel,
+  Stack,
+  Typography,
+} from "@mui/material";
+import FormControl from "@mui/material/FormControl";
+import InputAdornment from "@mui/material/InputAdornment";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ContentService from "../../services/ContentService";
+import EventService from "../../services/EventService";
+import "./UploadVideoAndPdf.css";
 
 function UploadVideoAndPdf() {
   const [uploadFile, setUploadFile] = useState("");
   const [loading, setLoading] = useState(false);
   const [uploadVideo, setUploadVideo] = useState("");
   const [events, setEvents] = useState([]);
-  const [pastEvents, setPastEvents] = useState([]); // Store past events
+  const [pastEvents, setPastEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(-1);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [open, setOpen] = useState(false);
@@ -66,13 +66,12 @@ function UploadVideoAndPdf() {
       .getAllEvents()
       .then((response) => {
         setEvents(response.data);
-        // Filter the events to get only past events
         const currentDate = new Date();
         const pastEvents = response.data.filter((event) => {
-          const eventDate = new Date(event.events.date); // Assuming 'date' is the property for the event date
+          const eventDate = new Date(event.events.date);
           return eventDate < currentDate;
         });
-        setPastEvents(pastEvents); // Update the state with past events
+        setPastEvents(pastEvents);
       })
       .catch((error) => alert(error));
   }, []);
@@ -127,7 +126,6 @@ function UploadVideoAndPdf() {
         .getEventDataInfo(eventId)
         .then((response) => {
           setUploadAction("Update");
-          console.log(response);
         })
         .catch((error) => {
           if (error.code === "ERR_BAD_RESPONSE") {

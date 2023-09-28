@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import "./EventForm.css";
-import EventService from "../../services/EventService";
 import { Alert, Box, CircularProgress, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import EventService from "../../services/EventService";
 import { toDDMMYYYY } from "../../utils/DateFormatter";
 import Duration from "../Duration/Duration";
-import { useNavigate } from "react-router-dom";
+import "./EventForm.css";
 
 const EventForm = (props) => {
   const [formData, setFormData] = useState(props.formDataDefault);

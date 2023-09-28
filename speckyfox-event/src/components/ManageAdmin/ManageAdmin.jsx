@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
+import { AlertTitle, Button, MenuItem, Select } from "@mui/material";
+import Alert from "@mui/material/Alert";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import React, { useEffect, useState } from "react";
 import AdminService from "../../services/AdminService";
-import { AlertTitle, Button, MenuItem, Select } from "@mui/material";
 import PasswordService from "../../services/PasswordService";
+import { findRoleFromToken } from "../../utils/TokenDecoder";
 import PopupAlert from "../PopupAlert/PopupAlert";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
-import Alert from "@mui/material/Alert";
 import "./ManageAdmin.css";
-import { findRoleFromToken } from "../../utils/TokenDecoder";
 export default function ManageAdmin() {
   const [admins, setAdmins] = useState([]);
   const [roles, setRoles] = useState([]);

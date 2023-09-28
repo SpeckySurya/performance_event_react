@@ -1,10 +1,10 @@
-import "./Togglebtn.css";
-import { useState, useEffect } from "react";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import VideoCart from "../VideoCart/VideoCart";
+import { useEffect, useState } from "react";
 import EventService from "../../services/EventService";
 import EventCard from "../EventCard/EventCard";
+import VideoCart from "../VideoCart/VideoCart";
+import "./Togglebtn.css";
 
 export default function Togglebtn() {
   const [opentogle, setopentogle] = useState(true);

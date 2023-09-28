@@ -1,7 +1,7 @@
-import { Typography, Button, Box, Stack } from "@mui/material";
-import "./style.css";
-import Thanksimg from "../../assets/Thanksimg.jpg";
+import { Button, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import Thanksimg from "../../assets/Thanksimg.jpg";
+import "./style.css";
 export default function ThankYouPage() {
   return (
     <div className="tahnkyoucartctr">

@@ -1,6 +1,6 @@
-import { Box, Stack, Typography } from "@mui/material";
-import "./Footer.css";
+import { Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import "./Footer.css";
 function Footer({ homeConfig }) {
   return (
     <div className="footer">

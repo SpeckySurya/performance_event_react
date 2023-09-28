@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
+import AdminHeader from "../../components/AdminHeader/AdminHeader";
 import EventForm from "../../components/EventForm/EventForm";
-import "./DashboardPage.css";
 import NotifyParticipant from "../../components/NotifyParticipant/NotifyParticipant";
 import UploadVideoAndPdf from "../../components/UploadVideoAndPdf/UploadVideoAndPdf";
-import AdminHeader from "../../components/AdminHeader/AdminHeader";
+import "./DashboardPage.css";
 
 import {
   Box,
@@ -16,25 +16,22 @@ import {
   LinearProgress,
   Typography,
 } from "@mui/material";
-import EventCard from "../../components/EventCard/EventCard";
-import EventService from "../../services/EventService";
+import { useNavigate } from "react-router-dom";
+import AdminRegistration from "../../components/AdminRegistation/AdminRegistation";
+import AdminUpdatePassword from "../../components/AdminUpdatePassword/AdminUpdatePassword";
 import HomePageConfiguration from "../../components/HomePageConfiguration/HomePageConfiguration";
+import ManageAdmin from "../../components/ManageAdmin/ManageAdmin";
 import ManageSpeaker from "../../components/ManageSpeaker/ManageSpeaker";
 import ManageUser from "../../components/ManageUser/ManageUser";
-import { useNavigate } from "react-router-dom";
-import SpeakerService from "../../services/SpeakerService";
+import ShowEvent from "../../components/ShowEvent/ShowEvent";
 import ShowSpeaker from "../../components/ShowSpeaker/ShowSpeaker";
+import EventService from "../../services/EventService";
+import SpeakerService from "../../services/SpeakerService";
 import {
   alertBeforeExpireTime,
   expireTime,
   stopTimer,
 } from "../../utils/Constant";
-import { TbRuler2Off } from "react-icons/tb";
-import ShowEvent from "../../components/ShowEvent/ShowEvent";
-import { findRoleFromToken } from "../../utils/TokenDecoder";
-import AdminUpdatePassword from "../../components/AdminUpdatePassword/AdminUpdatePassword";
-import AdminRegistration from "../../components/AdminRegistation/AdminRegistation";
-import ManageAdmin from "../../components/ManageAdmin/ManageAdmin";
 const formDataDefault = {
   title: "",
   description: "",

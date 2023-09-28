@@ -1,6 +1,6 @@
 import React from "react";
-import "./LinkExpired.css";
 import { Link } from "react-router-dom";
+import "./LinkExpired.css";
 
 const LinkExpired = () => {
   return (

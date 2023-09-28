@@ -1,8 +1,8 @@
+import { CircularProgress } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import PasswordService from "../../services/PasswordService";
-import { CircularProgress } from "@mui/material";
 import SnackbarComponent from "../../components/SnackbarComponent/SnackbarComponent";
+import PasswordService from "../../services/PasswordService";
 
 function UpdatePassword() {
   const [loading, setLoading] = useState(false);

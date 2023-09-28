@@ -1,4 +1,5 @@
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import {
   Box,
   Collapse,
@@ -10,7 +11,6 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { Link } from "react-router-dom";
 
 const TermsAndConditionsPage = () => {

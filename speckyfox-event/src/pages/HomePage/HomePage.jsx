@@ -1,14 +1,14 @@
+import { LinearProgress } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { About } from "../../components/About/About";
 import { Banner } from "../../components/Banner/Banner";
 import Footer from "../../components/Footer/Footer";
 import { Header } from "../../components/Header/Header";
-import "./HomePage.css";
 import EventService from "../../services/EventService";
-import { LinearProgress } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
-import SpeakerService from "../../services/SpeakerService";
 import HomeConfigService from "../../services/HomeConfigService";
+import SpeakerService from "../../services/SpeakerService";
+import "./HomePage.css";
 
 const HomePage = () => {
   const [event, setEvent] = useState({});

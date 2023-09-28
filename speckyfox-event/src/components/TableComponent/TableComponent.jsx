@@ -1,15 +1,12 @@
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
+import { AgGridReact } from "ag-grid-react";
 import React, {
   useCallback,
-  useEffect,
   useImperativeHandle,
   useMemo,
   useRef,
 } from "react";
-import { AgGridReact } from "ag-grid-react";
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css";
-import { Button } from "@mui/material";
-import { useEditable } from "@chakra-ui/react";
 
 const TableComponent = React.forwardRef(({ rowData }, ref) => {
   const gridRef = useRef();
@@ -80,7 +77,6 @@ const TableComponent = React.forwardRef(({ rowData }, ref) => {
         suppressCellSelection={true}
         ref={gridRef}
         suppressExcelExport={true}
-        // Attach the custom export function to the grid
         processGridOptions={(gridOptions) => {
           gridOptions.api.exportDataAsCsv = customExportCsv;
         }}

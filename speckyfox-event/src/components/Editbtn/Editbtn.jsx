@@ -1,12 +1,12 @@
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import EventService from "../../services/EventService";
 import React, { useEffect, useState } from "react";
+import EventService from "../../services/EventService";
+import { findRoleFromToken } from "../../utils/TokenDecoder";
 import PopupAlert from "../PopupAlert/PopupAlert";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
-import { findRoleFromToken } from "../../utils/TokenDecoder";
 
 const ITEM_HEIGHT = 40;
 

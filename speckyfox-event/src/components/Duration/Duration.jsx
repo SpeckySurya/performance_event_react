@@ -5,7 +5,7 @@ import {
   Select,
   Stack,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 
 const Duration = (props) => {
   const hours = [0, 1, 2, 3, 4, 5, 6];

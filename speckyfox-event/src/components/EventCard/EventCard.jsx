@@ -1,44 +1,42 @@
 import { useEffect, useRef, useState } from "react";
 
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import "../../responsive.css";
 import "./EventCard.css";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
+import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
+import ToggleOffOutlinedIcon from "@mui/icons-material/ToggleOffOutlined";
+import ToggleOnOutlinedIcon from "@mui/icons-material/ToggleOnOutlined";
 import {
   Box,
+  Button,
   Card,
   CardActions,
   CardContent,
   CardMedia,
-  Stack,
-  Typography,
-  Button,
-  styled,
-  IconButton,
   Dialog,
-  DialogTitle,
+  DialogActions,
   DialogContent,
   DialogContentText,
-  DialogActions,
+  DialogTitle,
+  Stack,
   TextField,
-  Snackbar,
+  Typography,
+  styled,
 } from "@mui/material";
-import ToggleOffOutlinedIcon from "@mui/icons-material/ToggleOffOutlined";
-import ToggleOnOutlinedIcon from "@mui/icons-material/ToggleOnOutlined";
 import { TbTargetArrow } from "react-icons/tb";
+import ReactPlayer from "react-player";
 import { Link } from "react-router-dom";
-import Editbtn from "../Editbtn/Editbtn";
-import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
 import ContentService from "../../services/ContentService";
+import EventService from "../../services/EventService";
 import dateFormatter, {
   addTime,
   convertTo12HourFormat,
   isPastDateTime,
 } from "../../utils/DateFormatter";
-import EventService from "../../services/EventService";
-import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
-import ReactPlayer from "react-player";
 import { findRoleFromToken } from "../../utils/TokenDecoder";
+import Editbtn from "../Editbtn/Editbtn";
+import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
 
 const EventCard = (props) => {
   const [active, setActive] = useState(false);
@@ -355,7 +353,6 @@ const EventCard = (props) => {
                   position: "absolute",
                   width: "80%",
                   bottom: "4.5%",
-                  // paddingX: "20px",
                   right: "calc(25% - 50px)",
                   "&:hover": { backgroundColor: "gray" },
                 }}

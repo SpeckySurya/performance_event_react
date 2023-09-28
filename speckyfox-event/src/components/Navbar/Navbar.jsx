@@ -2,10 +2,9 @@ import { useRef } from "react";
 
 import "./Navbar.css";
 
-import { BsFacebook, BsYoutube, BsTwitter, BsLinkedin } from "react-icons/bs";
+import { BsFacebook, BsLinkedin, BsTwitter, BsYoutube } from "react-icons/bs";
 
-import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 const Navbar = ({ homeConfig }) => {
   const [menuOpen, setMenuOpen] = useState(false);

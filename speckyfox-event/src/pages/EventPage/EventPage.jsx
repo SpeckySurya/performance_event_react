@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { Header } from "../../components/Header/Header";
-import EventService from "../../services/EventService";
-import Footer from "../../components/Footer/Footer";
 import { LinearProgress } from "@mui/material";
-import HomeConfigService from "../../services/HomeConfigService";
+import React, { useEffect, useState } from "react";
+import Footer from "../../components/Footer/Footer";
+import { Header } from "../../components/Header/Header";
 import ShowEvent from "../../components/ShowEvent/ShowEvent";
+import EventService from "../../services/EventService";
+import HomeConfigService from "../../services/HomeConfigService";
 const EventPage = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);

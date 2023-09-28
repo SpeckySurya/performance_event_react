@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import "../../responsive.css";
-import "./ShowEvent.css";
 import {
   Box,
   Stack,
+  ToggleButton,
+  ToggleButtonGroup,
   Typography,
   styled,
-  ToggleButtonGroup,
-  ToggleButton,
 } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import "../../responsive.css";
+import "./ShowEvent.css";
 
-import dateFormatter, { isPastDateTime } from "../../utils/DateFormatter";
 import { Link } from "react-router-dom";
-import UpdateEvent from "../UpdateEvent/UpdateEvent";
+import dateFormatter, { isPastDateTime } from "../../utils/DateFormatter";
 import EventCard from "../EventCard/EventCard";
+import UpdateEvent from "../UpdateEvent/UpdateEvent";
 
 const ShowEvent = (props) => {
   const [eventEditing, setEventEditing] = useState(false);
@@ -106,7 +106,7 @@ const ShowEvent = (props) => {
             ) : (
               renderEvents.map((event) => (
                 <EventCard
-                  key={event.events.id} // Use a unique identifier here
+                  key={event.events.id}
                   event={event}
                   isEventPage={props.isEventPage}
                   setLoading={props.setLoading}

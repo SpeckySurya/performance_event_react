@@ -1,13 +1,13 @@
-import { useState } from "react";
 import {
+  Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Button,
-  CircularProgress, // Use MUI's Button instead of Bootstrap's
 } from "@mui/material";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PasswordService from "../../services/PasswordService";
 
@@ -24,7 +24,7 @@ function Forgotpassword() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    const email = e.target.email.value; // Get the value of the email input field
+    const email = e.target.email.value;
     const formData = new FormData();
     formData.append("email", email);
     const passwordService = new PasswordService();
@@ -50,7 +50,7 @@ function Forgotpassword() {
   return (
     <>
       <Dialog
-        open={openDialog} // Changed variable name to openDialog
+        open={openDialog}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"

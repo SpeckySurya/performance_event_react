@@ -18,11 +18,6 @@
   width: 10%;
 }
 
-.cardeffect {
-  /* Add your initial styles here */
-
-  /* Add other styles like positioning, background, etc. */
-}
 .cardeffect:hover {
   scale: 1.01;
   transition: 0.5s;
