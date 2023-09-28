@@ -20,6 +20,8 @@ import AdminRegistration from "./components/AdminRegistation/AdminRegistation";
 import LinkExpired from "./pages/LinkExpired/LinkExpired";
 import TermsAndConditionsPage from "./pages/TermsAndConditionsPage/TermsAndConditionsPage";
 import PrivacyPage from "./pages/PrivacyPage/PrivacyPage";
+import DashboardPage2 from "./pages/DashboardPage2/DashboardPage2";
+import DashboardEventView from "./dashboard-components/DashboardEventView";
 function App() {
   const [sharedState, setSharedState] = useState({
     admin: false,
@@ -28,7 +30,9 @@ function App() {
   return (
     <MyContext.Provider value={{ sharedState, setSharedState }}>
       <Routes>
-        <Route exact path="/" element={<EventPage />} />
+        <Route path="/" element={<DashboardPage2 />} />
+        {/* <Route path="/" element={<DashboardEventView />} /> */}
+        {/* <Route exact path="/" element={<EventPage />} />
         <Route path="/:param" element={<HomePage />} />
         <Route path="/thankyou" element={<ThankYouPage />} />
         <Route path="/login" element={<Login />} />
@@ -46,7 +50,7 @@ function App() {
         <Route path="/forgot-password/:token" element={<UpdatePassword />} />
         <Route path="/link-expired" element={<LinkExpired />} />
         <Route path="/t-and-c" element={<TermsAndConditionsPage />} />
-        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} /> */}
       </Routes>
     </MyContext.Provider>
   );
