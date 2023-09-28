@@ -111,14 +111,14 @@ export const DashboardPage = () => {
     create: "Create Event",
     show: updateBread ? "Show Event / Update Event" : "Show Event",
     homeConfig: "Home Configuration",
-    manageSpeaker: "Manage Speaker",
+    manageSpeaker: "Create Speaker",
     notify: "Notify Participant",
     manageUser: "Manage User",
     showSpeaker: "Show Speaker",
     AdminUpdatePassword: "Change Password",
     UploadVideoAndPdf: "Upload Files",
-    AdminRegistration: "Admin Registration",
-    manageAdmin: "Manage Admin",
+    AdminRegistration: "User Registration",
+    manageAdmin: "Manage Users & Roles",
   };
 
   function menuComponentFinder() {

@@ -196,7 +196,7 @@ function UploadVideoAndPdf() {
               </Select>
               <Typography p={1} color={"crimson"}>
                 {uploadAction === "Update"
-                  ? "Recording and Presentation found. Continue to update !"
+                  ? "Video and PPT are already added to the event. If you upload new PPT and Video it will replace the existing Video and PPT."
                   : null}
               </Typography>
             </FormControl>

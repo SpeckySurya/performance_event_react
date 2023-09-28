@@ -26,7 +26,7 @@ export default function Editbtn(props) {
   useEffect(() => {
     if (findRoleFromToken() === "EDITOR") {
       setOptions(["Edit"]);
-    } else if (findRoleFromToken() === "ADMIN") {
+    } else {
       setOptions(["Edit", "Delete"]);
     }
   }, []);

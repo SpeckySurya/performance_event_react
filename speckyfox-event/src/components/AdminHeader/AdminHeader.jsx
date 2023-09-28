@@ -172,7 +172,7 @@ const AdminHeader = (props) => {
       },
     },
     {
-      text: "Admin Registration",
+      text: "User Registration",
       icon: <AppRegistrationIcon />,
       onClick: () => {
         props.handleSidebar("AdminRegistration");
