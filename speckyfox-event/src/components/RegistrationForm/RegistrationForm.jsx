@@ -1,8 +1,8 @@
+import { CircularProgress, Stack } from "@mui/material";
 import React, { useState } from "react";
-import "./RegistrationForm.css";
 import { useNavigate, useParams } from "react-router-dom";
 import RegistrationService from "../../services/RegistrationService";
-import { CircularProgress, Stack } from "@mui/material";
+import "./RegistrationForm.css";
 
 const RegistrationForm = () => {
   const params = useParams();
@@ -21,7 +21,6 @@ const RegistrationForm = () => {
   const [mobNo, setMobNo] = useState(false);
   const navigate = useNavigate();
 
-  // Handle form field changes
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
     setFormData((prevFormData) => ({
@@ -68,7 +67,6 @@ const RegistrationForm = () => {
     formData.firstName = firstName;
     formData.lastName = lastName;
 
-    // If designation is empty, set it to "NA"
     if (formData.designation === "") {
       formData.designation = "NA";
     }

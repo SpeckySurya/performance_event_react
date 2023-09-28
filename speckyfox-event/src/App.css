@@ -3,6 +3,11 @@
   color: black;
 }
 
+.no-anchor-style-white {
+  text-decoration: none;
+  color: white;
+}
+
 .display-none {
   display: none;
 }

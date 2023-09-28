@@ -1,14 +1,13 @@
-import React, { useRef, useState } from "react";
 import {
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   Box,
   Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
   Stack,
 } from "@mui/material";
+import React, { useRef, useState } from "react";
 import TableComponent from "../TableComponent/TableComponent";
 
 const ManageUser = ({ events }) => {

@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
 import {
+  Alert,
+  Box,
+  Button,
+  Checkbox,
+  CircularProgress,
   FormControl,
   InputLabel,
-  Select,
   MenuItem,
-  Checkbox,
-  Button,
-  Box,
+  Select,
   Typography,
-  CircularProgress,
-  Alert,
 } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import EventService from "../../services/EventService";
 
 const NotifyParticipant = () => {
@@ -25,9 +25,7 @@ const NotifyParticipant = () => {
   useEffect(() => {
     const eventService = new EventService();
     eventService.getAllEvents().then((response) => {
-      // Get the current date
       const currentDate = new Date();
-      // Filter events to keep only upcoming ones
       const upcomingEvents = response.data.filter((event) => {
         const eventDate = new Date(event.events.date);
         return eventDate > currentDate;

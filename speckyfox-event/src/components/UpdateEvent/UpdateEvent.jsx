@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
+import SpeakerService from "../../services/SpeakerService";
+import dateFormatter from "../../utils/DateFormatter";
 import EventForm from "../EventForm/EventForm";
 import "./UpdateEvent.css";
-import dateFormatter, {
-  convertTo12HourFormat,
-} from "../../utils/DateFormatter";
-import SpeakerService from "../../services/SpeakerService";
 
 const UpdateEvent = (props) => {
   const [speakers, setSpeakers] = useState([]);

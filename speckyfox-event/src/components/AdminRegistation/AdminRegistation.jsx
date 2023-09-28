@@ -1,12 +1,17 @@
+import {
+  Box,
+  CircularProgress,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PasswordService from "../../services/PasswordService";
-import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
 import RegistrationService from "../../services/RegistrationService";
-import { Link } from "react-router-dom";
-import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { CircularProgress } from "@mui/material";
 import { findRoleFromToken } from "../../utils/TokenDecoder";
+import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
 
 function AdminRegistration(props) {
   const [loading, setLoading] = useState(false);

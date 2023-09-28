@@ -18,6 +18,8 @@ import UpdatePassword from "./pages/UpdatePassword/UpdatePassword";
 import AdminUpdatePassword from "./components/AdminUpdatePassword/AdminUpdatePassword";
 import AdminRegistration from "./components/AdminRegistation/AdminRegistation";
 import LinkExpired from "./pages/LinkExpired/LinkExpired";
+import TermsAndConditionsPage from "./pages/TermsAndConditionsPage/TermsAndConditionsPage";
+import PrivacyPage from "./pages/PrivacyPage/PrivacyPage";
 function App() {
   const [sharedState, setSharedState] = useState({
     admin: false,
@@ -43,6 +45,8 @@ function App() {
 
         <Route path="/forgot-password/:token" element={<UpdatePassword />} />
         <Route path="/link-expired" element={<LinkExpired />} />
+        <Route path="/t-and-c" element={<TermsAndConditionsPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
       </Routes>
     </MyContext.Provider>
   );

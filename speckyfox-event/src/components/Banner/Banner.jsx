@@ -1,31 +1,24 @@
-import React, { useEffect, useState, useRef } from "react";
-import CloseIcon from "@mui/icons-material/Close";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import "./Banner.css";
-import RegistrationForm from "../RegistrationForm/RegistrationForm";
+import { Typography } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
 import dateFormatter, {
   addTime,
   convertTo12HourFormat,
 } from "../../utils/DateFormatter";
-import { Button, Typography } from "@mui/material";
+import RegistrationForm from "../RegistrationForm/RegistrationForm";
+import "./Banner.css";
 
 export const Banner = (props) => {
   const [formattedDate, setFormattedDate] = useState({});
   const [formattedTime, setFormattedTime] = useState("");
   const [showCrossWindow, setShowCrossWindow] = useState(true);
-  const [animateRegisterButton, setAnimateRegisterButton] = useState(true); // Start the animation by default
+  const [animateRegisterButton, setAnimateRegisterButton] = useState(true);
   const registrationFormRef = useRef(null);
 
   const handleRegisterButtonClick = () => {
-    // Scroll to the RegistrationForm section when the button is clicked
     if (registrationFormRef.current) {
       registrationFormRef.current.scrollIntoView({ behavior: "smooth" });
     }
-
-    // Trigger the animation for the Register button
     setAnimateRegisterButton(true);
-
-    // Automatically close the registration window after 4 seconds
   };
 
   useEffect(() => {

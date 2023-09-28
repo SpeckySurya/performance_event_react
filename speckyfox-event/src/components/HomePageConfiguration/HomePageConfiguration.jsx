@@ -1,23 +1,23 @@
 import {
-  Card,
-  Grid,
-  CardContent,
-  TextField,
-  InputLabel,
-  Button,
   Box,
+  Button,
+  Card,
+  CardContent,
+  CircularProgress,
   Dialog,
-  DialogTitle,
+  DialogActions,
   DialogContent,
   DialogContentText,
-  DialogActions,
-  CircularProgress,
+  DialogTitle,
+  Grid,
+  InputLabel,
+  TextField,
 } from "@mui/material";
 import { useFormik } from "formik";
 import "./HomePageConfiguration.css";
 
-import { HomePageConfigationSchema } from "../../schemas/Homepagevalidation";
 import { useEffect, useState } from "react";
+import { HomePageConfigationSchema } from "../../schemas/Homepagevalidation";
 import HomeConfigService from "../../services/HomeConfigService";
 const homeConfigService = new HomeConfigService();
 
