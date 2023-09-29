@@ -22,6 +22,7 @@ import TermsAndConditionsPage from "./pages/TermsAndConditionsPage/TermsAndCondi
 import PrivacyPage from "./pages/PrivacyPage/PrivacyPage";
 import DashboardPage2 from "./pages/DashboardPage2/DashboardPage2";
 import DashboardEventView from "./dashboard-components/DashboardEventView";
+import ManageAdmin from "./components/ManageAdmin/ManageAdmin";
 function App() {
   const [sharedState, setSharedState] = useState({
     admin: false,
@@ -30,12 +31,15 @@ function App() {
   return (
     <MyContext.Provider value={{ sharedState, setSharedState }}>
       <Routes>
-        <Route path="/" element={<DashboardPage2 />} />
+        <Route path="dashboard" element={<DashboardPage2 />}>
+          <Route path="events" element={<DashboardEventView />} />
+          <Route path="users" element={<ManageAdmin />} />
+        </Route>
+        <Route path="login" element={<Login />} />
         {/* <Route path="/" element={<DashboardEventView />} /> */}
         {/* <Route exact path="/" element={<EventPage />} />
         <Route path="/:param" element={<HomePage />} />
         <Route path="/thankyou" element={<ThankYouPage />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/error" element={<ErrorPage />} />
         <Route path="/forgot-password" element={<Forgotpassword />} />

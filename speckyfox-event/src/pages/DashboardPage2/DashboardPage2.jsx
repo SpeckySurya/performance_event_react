@@ -1,28 +1,34 @@
-import * as React from "react";
-import { styled, useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import CssBaseline from "@mui/material/CssBaseline";
-import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import AddHomeIcon from "@mui/icons-material/AddHome";
+import HeadsetMicIcon from "@mui/icons-material/HeadsetMic";
+import Box from "@mui/material/Box";
+import CssBaseline from "@mui/material/CssBaseline";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import { styled, useTheme } from "@mui/material/styles";
 import DashboardAppBar from "../../dashboard-components/DashboardAppBar";
 import DashboardEventView from "../../dashboard-components/DashboardEventView";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import OtherHousesIcon from "@mui/icons-material/OtherHouses";
+import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
+import ManageAdmin from "../../components/ManageAdmin/ManageAdmin";
+import { useEffect, useState } from "react";
+import { Stack } from "@mui/material";
+import Breadcrumb from "../../dashboard-components/BreadCrumb";
+import SearchIcon from "@mui/icons-material/Search";
+import CustomSearchField from "../../dashboard-components/CustomSearchField/CustomSearchField";
+import EventService from "../../services/EventService";
+import SpeakerService from "../../services/SpeakerService";
 
 const drawerWidth = 240;
-const menuItems = ["Events", "Speakers", "Home Configuration", "Drafts"];
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
@@ -53,8 +59,11 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export default function DashboardPage2() {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
-  sessionStorage.setItem("appbarOpen", open);
+  const [open, setOpen] = useState(true);
+  const [events, setEvents] = useState([]);
+  const [speakers, setSpeakers] = useState([]);
+  const navigate = useNavigate();
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -63,10 +72,58 @@ export default function DashboardPage2() {
     setOpen(false);
   };
 
+  const menuItems = [
+    {
+      title: "Events",
+      icon: <CalendarMonthIcon />,
+      action: () => navigate("/dashboard/events"),
+    },
+    {
+      title: "Speakers",
+      icon: <HeadsetMicIcon />,
+      action: () => navigate("/dashboard/events"),
+    },
+    {
+      title: "Users",
+      icon: <AdminPanelSettingsIcon />,
+      action: () => navigate("/dashboard/users"),
+    },
+    {
+      title: "Home Configuration",
+      icon: <OtherHousesIcon />,
+      action: () => navigate("/dashboard/events"),
+    },
+  ];
+
+  useEffect(() => {
+    if (sessionStorage.getItem("token") === null) {
+      navigate("/login");
+    }
+    navigate("/dashboard/events");
+  }, []);
+
+  const initialSetup = () => {
+    const eventService = new EventService();
+    eventService.getAllEvents().then((response) => {
+      setEvents(response.data);
+    });
+    const speakerService = new SpeakerService();
+    speakerService.getAllSpeakers().then((response) => {
+      setSpeakers(response.data);
+    });
+  };
+
+  useEffect(() => {
+    initialSetup();
+  }, []);
+
+  console.log(events);
+  console.log(speakers);
+
   return (
     <Box
       position={"relative"}
-      sx={{ backgroundColor: "lightgray", height: "100vh" }}
+      sx={{ backgroundColor: "#f3f0e8", height: "100vh" }}
     >
       <DashboardAppBar setOpen={setOpen} open={open} />
       <Box sx={{ display: "flex" }}>
@@ -96,13 +153,11 @@ export default function DashboardPage2() {
           </DrawerHeader>
           <Divider />
           <List>
-            {menuItems.map((text, index) => (
-              <ListItem key={text} disablePadding>
+            {menuItems.map((item) => (
+              <ListItem key={item.title} onClick={item.action} disablePadding>
                 <ListItemButton>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText primary={item.title} />
                 </ListItemButton>
               </ListItem>
             ))}
@@ -110,7 +165,28 @@ export default function DashboardPage2() {
         </Drawer>
         <Main open={open}>
           <DrawerHeader />
-          <DashboardEventView />
+          <Stack spacing={2}>
+            <Stack
+              direction={"row"}
+              sx={{
+                backgroundColor: "whitesmoke",
+                borderRadius: 5,
+                height: "8vh",
+                px: 2,
+                alignItems: "center",
+                justifyContent: "space-between",
+                boxShadow: "rgba(0, 0, 0, 0.04) 0px 3px 5px",
+              }}
+            >
+              <Breadcrumb />
+              <Stack direction={"row"}>
+                <Box>
+                  <CustomSearchField />
+                </Box>
+              </Stack>
+            </Stack>
+            <Outlet />
+          </Stack>
         </Main>
       </Box>
     </Box>

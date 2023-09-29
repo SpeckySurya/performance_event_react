@@ -127,7 +127,7 @@ export default function ManageAdmin() {
         content={"Do you really want to delete ?"}
         action={{ first: "Yes", second: "No" }}
       />
-      <TableContainer sx={{ marginTop: 8 }} component={Paper}>
+      <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }}>
           <TableHead>
             <TableRow>

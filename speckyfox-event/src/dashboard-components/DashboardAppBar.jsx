@@ -13,12 +13,26 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
-
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import { useNavigate } from "react-router-dom";
 
 export default function DashboardAppBar({ setOpen, open }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const navigate = useNavigate();
+
+  const settings = [
+    {
+      title: "Change Password",
+      action: () => alert("Change Password"),
+    },
+    {
+      title: "Logout",
+      action: () => {
+        sessionStorage.removeItem("token");
+        navigate("/login");
+      },
+    },
+  ];
 
   const handleOpenNavMenu = (event) => {
     setOpen(!open);
@@ -120,7 +134,9 @@ export default function DashboardAppBar({ setOpen, open }) {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography textAlign="center" onClick={setting.action}>
+                    {setting.title}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
