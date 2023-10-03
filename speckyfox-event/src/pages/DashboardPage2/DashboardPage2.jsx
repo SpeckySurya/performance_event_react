@@ -1,8 +1,10 @@
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import AddHomeIcon from "@mui/icons-material/AddHome";
 import HeadsetMicIcon from "@mui/icons-material/HeadsetMic";
+import OtherHousesIcon from "@mui/icons-material/OtherHouses";
+import { Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
@@ -14,19 +16,16 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { styled, useTheme } from "@mui/material/styles";
-import DashboardAppBar from "../../dashboard-components/DashboardAppBar";
-import DashboardEventView from "../../dashboard-components/DashboardEventView";
-import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
-import OtherHousesIcon from "@mui/icons-material/OtherHouses";
-import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
-import ManageAdmin from "../../components/ManageAdmin/ManageAdmin";
-import { useEffect, useState } from "react";
-import { Stack } from "@mui/material";
+import { useContext, useEffect, useState } from "react";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import Breadcrumb from "../../dashboard-components/BreadCrumb";
-import SearchIcon from "@mui/icons-material/Search";
 import CustomSearchField from "../../dashboard-components/CustomSearchField/CustomSearchField";
+import DashboardAppBar from "../../dashboard-components/DashboardAppBar";
 import EventService from "../../services/EventService";
 import SpeakerService from "../../services/SpeakerService";
+import MyContext from "../../context/MyContext";
+import AddIcon from "@mui/icons-material/Add";
+import "./DashboardPage2.css";
 
 const drawerWidth = 240;
 
@@ -63,6 +62,9 @@ export default function DashboardPage2() {
   const [events, setEvents] = useState([]);
   const [speakers, setSpeakers] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const { context, updateContext } = useContext(MyContext);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -99,7 +101,7 @@ export default function DashboardPage2() {
     if (sessionStorage.getItem("token") === null) {
       navigate("/login");
     }
-    navigate("/dashboard/events");
+    navigate(location.pathname);
   }, []);
 
   const initialSetup = () => {
@@ -117,8 +119,11 @@ export default function DashboardPage2() {
     initialSetup();
   }, []);
 
-  console.log(events);
-  console.log(speakers);
+  function handleAddIconClick(e) {
+    navigate("/dashboard/events/create-event");
+  }
+
+  console.log(context);
 
   return (
     <Box
@@ -178,14 +183,24 @@ export default function DashboardPage2() {
                 boxShadow: "rgba(0, 0, 0, 0.04) 0px 3px 5px",
               }}
             >
-              <Breadcrumb />
-              <Stack direction={"row"}>
+              <Breadcrumb pages={context.breadCrumb.pages} />
+              <Stack
+                spacing={2}
+                direction={"row"}
+                alignItems={"center"}
+                justifyContent={"center"}
+              >
                 <Box>
                   <CustomSearchField />
                 </Box>
+                <Box className={"add-icon-style"} onClick={handleAddIconClick}>
+                  <AddIcon />
+                </Box>
               </Stack>
             </Stack>
-            <Outlet />
+            <Box p={1} className={"custom-scroll"} height={"74vh"}>
+              <Outlet />
+            </Box>
           </Stack>
         </Main>
       </Box>

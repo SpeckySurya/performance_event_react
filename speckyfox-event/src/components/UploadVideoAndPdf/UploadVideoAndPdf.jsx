@@ -20,11 +20,13 @@ import FormControl from "@mui/material/FormControl";
 import InputAdornment from "@mui/material/InputAdornment";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import ContentService from "../../services/ContentService";
 import EventService from "../../services/EventService";
 import "./UploadVideoAndPdf.css";
+import MyContext from "../../context/MyContext";
+import { useNavigate } from "react-router-dom";
 
 function UploadVideoAndPdf() {
   const [uploadFile, setUploadFile] = useState("");
@@ -36,6 +38,18 @@ function UploadVideoAndPdf() {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [open, setOpen] = useState(false);
   const [uploadAction, setUploadAction] = useState("Upload");
+  const { context } = useContext(MyContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    context.breadCrumb.updatePages([
+      { name: "Events", route: () => navigate("/dashboard/events") },
+      {
+        name: "Upload Event Data",
+        route: () => navigate("/dashboard/events/upload-event-data"),
+      },
+    ]);
+  }, []);
 
   const handleClose = () => {
     setOpen(false);

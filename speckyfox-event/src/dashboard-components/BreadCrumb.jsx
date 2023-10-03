@@ -1,9 +1,8 @@
-import * as React from "react";
-import { emphasize, styled } from "@mui/material/styles";
+import HomeIcon from "@mui/icons-material/Home";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Chip from "@mui/material/Chip";
-import HomeIcon from "@mui/icons-material/Home";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { emphasize, styled } from "@mui/material/styles";
+import * as React from "react";
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
   const backgroundColor =
@@ -25,27 +24,30 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
   };
 }); // TypeScript only: need a type cast here because https://github.com/Microsoft/TypeScript/issues/26591
 
-function handleClick(event) {
+function handleClick(event, page) {
   event.preventDefault();
-  console.info("You clicked a breadcrumb.");
+  console.log(page);
+  page.route();
 }
 
-export default function Breadcrumb() {
+export default function Breadcrumb({ pages }) {
   return (
-    <div role="presentation" onClick={handleClick}>
+    <div role="presentation">
       <Breadcrumbs aria-label="breadcrumb">
-        <StyledBreadcrumb
-          component="a"
-          href="#"
-          label="Home"
-          icon={<HomeIcon fontSize="small" />}
-        />
-        <StyledBreadcrumb component="a" href="#" label="Catalog" />
-        <StyledBreadcrumb
+        {pages?.map((page) => (
+          <StyledBreadcrumb
+            component="a"
+            href="#"
+            label={page.name}
+            icon={page?.icon}
+            onClick={(e) => handleClick(e, page)}
+          />
+        ))}
+        {/* <StyledBreadcrumb
           label="Accessories"
           deleteIcon={<ExpandMoreIcon />}
           onDelete={handleClick}
-        />
+        /> */}
       </Breadcrumbs>
     </div>
   );

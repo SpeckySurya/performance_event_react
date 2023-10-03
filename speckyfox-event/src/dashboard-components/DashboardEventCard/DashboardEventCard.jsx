@@ -1,28 +1,29 @@
-import Stack from "@mui/material/Stack";
-import Paper from "@mui/material/Paper";
-import { styled } from "@mui/material/styles";
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  ToggleButton,
-  Typography,
-} from "@mui/material";
-import PageviewIcon from "@mui/icons-material/Pageview";
-import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-import DownloadIcon from "@mui/icons-material/Download";
-import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-import HighlightAltIcon from "@mui/icons-material/HighlightAlt";
 import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
-import "./DashboardEventView.css";
-import { useState } from "react";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import DownloadIcon from "@mui/icons-material/Download";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+import PageviewIcon from "@mui/icons-material/Pageview";
+import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
+import { Box, ToggleButton, Typography } from "@mui/material";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import { styled } from "@mui/material/styles";
+import { useContext, useEffect, useRef, useState } from "react";
+import { TbTargetArrow } from "react-icons/tb";
+import dateFormatter, {
+  addTime,
+  convertTo12HourFormat,
+  isPastDateTime,
+} from "../../utils/DateFormatter";
+import "./DashboardEventCard.css";
+import EventService from "../../services/EventService";
+import SnackbarComponent from "../../components/SnackbarComponent/SnackbarComponent";
+import { useNavigate } from "react-router-dom";
+import ReactPlayer from "react-player";
+import ContentService from "../../services/ContentService";
+import MyContext from "../../context/MyContext";
 
 const EventPaper = styled(Paper)(() => ({
   width: 400,
@@ -46,9 +47,22 @@ const CustomPaper2 = styled(Paper)(() => ({
   width: 100,
 }));
 
-export default function DashboardEventView() {
-  const [active, setActive] = useState(false);
+export default function DashboardEventCard({ event }) {
+  const formattedDate = dateFormatter(event.events.date);
+  const isOutdated = isPastDateTime(formattedDate, event.events.time);
+  const startTime = convertTo12HourFormat(event.events.time);
+  const endTime = addTime(startTime, event.events.duration);
+  const formattedTime = `${
+    startTime[1] === ":" ? "0" + startTime : startTime
+  } to ${endTime}`;
+  const [active, setActive] = useState(event.events.active);
   const [agendaVisible, setAgendaVisible] = useState("-65%");
+  const [snackbar, setSnackbar] = useState(null);
+  const [play, setPlay] = useState(false);
+  const [eventData, setEventData] = useState({});
+  const navigate = useNavigate();
+  const videoPlayerRef = useRef(null);
+  const { context } = useContext(MyContext);
 
   function handleViewDescriptionClick(e) {
     e.stopPropagation();
@@ -64,8 +78,74 @@ export default function DashboardEventView() {
     e.stopPropagation();
   }
 
+  function handleEventStatus(event) {
+    const eventService = new EventService();
+    eventService
+      .setActiveOrInactive(event.id, { active: !active })
+      .then((response) => {
+        setActive(!active);
+      })
+      .catch((error) => {
+        setSnackbar(
+          <SnackbarComponent message="Action Restricted !" severity={"error"} />
+        );
+      });
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setSnackbar(null);
+    }, 3000);
+  }, [snackbar]);
+
+  function handlePlayVideo() {
+    const contentService = new ContentService();
+    contentService
+      .getEventDataInfo(event.events.id)
+      .then((response) => {
+        setEventData(response.data);
+        context.popUpBackground.setPopUpBackgroundVisible("default");
+        setPlay(true);
+      })
+      .catch((error) => {
+        setSnackbar(
+          <SnackbarComponent
+            message="Video not available !"
+            severity={"error"}
+          />
+        );
+      });
+  }
+
+  const handleOutsideClick = (e) => {
+    if (videoPlayerRef.current && !videoPlayerRef.current.contains(e.target)) {
+      setPlay(false);
+      context.popUpBackground.setPopUpBackgroundVisible("none");
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("click", handleOutsideClick);
+    return () => {
+      window.removeEventListener("click", handleOutsideClick);
+    };
+  }, [play]);
+
   return (
-    <Box>
+    <Box m={1}>
+      {snackbar}
+      {play && (
+        <Box
+          ref={videoPlayerRef}
+          sx={{
+            position: "fixed",
+            zIndex: 999999,
+            left: "calc(50% - 320px)",
+          }}
+        >
+          <ReactPlayer url={eventData.video} controls />
+        </Box>
+      )}
       <EventPaper
         onClick={handleEventPaperClick}
         variant="outlined"
@@ -76,53 +156,63 @@ export default function DashboardEventView() {
           className="blur-box"
           sx={{ bottom: agendaVisible, zIndex: 99 }}
         >
-          <Typography p={1} sx={{ textAlign: "center", fontWeight: 600 }}>
-            Agenda
-          </Typography>
-          <List className="agenda-admin-event">
-            <ListItemButton>
-              <ListItemIcon sx={{ fontSize: 12 }}>
-                <HighlightAltIcon />
-              </ListItemIcon>
-              <ListItemText primary="Inbox" />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <HighlightAltIcon />
-              </ListItemIcon>
-              <ListItemText primary="Inbox" />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <HighlightAltIcon />
-              </ListItemIcon>
-              <ListItemText primary="Inbox" />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <HighlightAltIcon />
-              </ListItemIcon>
-              <ListItemText primary="Inbox" />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <HighlightAltIcon />
-              </ListItemIcon>
-              <ListItemText primary="Inbox" />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <HighlightAltIcon />
-              </ListItemIcon>
-              <ListItemText primary="Inbox" />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <HighlightAltIcon />
-              </ListItemIcon>
-              <ListItemText primary="Inbox" />
-            </ListItemButton>
-          </List>
+          <Box className="agenda-admin-event custom-scroll">
+            <Typography p={1} sx={{ fontWeight: 600 }}>
+              Event Details
+            </Typography>
+            <Box>
+              <Stack direction="row" alignItems="center">
+                <Typography
+                  color="#f37d47"
+                  marginX={1}
+                  marginY={-1}
+                  fontSize={14}
+                >
+                  <i className="bx bxs-calendar"></i>
+                </Typography>
+                <Typography fontSize={14}>
+                  {formattedDate.day} {formattedDate.monthName}{" "}
+                  {formattedDate.year}
+                </Typography>
+              </Stack>
+              <Stack direction="row" alignItems="center">
+                <Typography color="#f37d47" marginX={1} fontSize={14}>
+                  <i className="bx bx-time"></i>
+                </Typography>
+                <Typography fontSize={14}>{formattedTime}</Typography>
+              </Stack>
+              <Stack direction="row" alignItems="center">
+                <Typography color="#f37d47" marginX={1} fontSize={14}>
+                  <i className="bx bx-microphone"></i>
+                </Typography>
+                <Typography fontSize={14}>
+                  {event?.events.speaker?.name},{" "}
+                  {event?.events.speaker?.designation}
+                </Typography>
+              </Stack>
+            </Box>
+            <Typography p={1} sx={{ fontWeight: 600 }}>
+              Agenda
+            </Typography>
+            <Box mx={2}>
+              {
+                <Stack>
+                  {event.events.description.split(",").length < 2
+                    ? event.events.description.split(",").map((e, k3) => (
+                        <Typography key={k3} fontSize={14}>
+                          <span>{e}</span>
+                        </Typography>
+                      ))
+                    : event.events.description.split(",").map((e, k4) => (
+                        <Typography key={k4} style={{ fontSize: "14px" }}>
+                          <TbTargetArrow className="agenda-icon" />
+                          <span>{e}</span>
+                        </Typography>
+                      ))}
+                </Stack>
+              }
+            </Box>
+          </Box>
         </Box>
         <Stack
           p={"20px"}
@@ -133,10 +223,7 @@ export default function DashboardEventView() {
           <Stack spacing={1} direction={"row"} justifyContent={"space-between"}>
             <Stack spacing={2} width={"50%"}>
               <Stack>
-                <Typography fontWeight={600}>
-                  Analyzing Performance: Identifying Bottlenecks & Root Cause
-                  Analysis
-                </Typography>
+                <Typography fontWeight={600}>{event.events.title}</Typography>
                 <Stack
                   sx={{ cursor: "pointer" }}
                   spacing={"4px"}
@@ -148,7 +235,7 @@ export default function DashboardEventView() {
                     py={1}
                     sx={{ fontSize: "12px", fontStyle: "italic" }}
                   >
-                    View Agenda
+                    View Details
                   </Typography>
                   <KeyboardDoubleArrowRightIcon sx={{ fontSize: "12px" }} />
                 </Stack>
@@ -169,7 +256,11 @@ export default function DashboardEventView() {
                     setActive(!active);
                   }}
                 >
-                  <Stack spacing={1} direction={"row"}>
+                  <Stack
+                    spacing={1}
+                    direction={"row"}
+                    onClick={() => handleEventStatus(event.events)}
+                  >
                     <Typography fontSize={10}>
                       {active ? "Active" : "Inactive"}
                     </Typography>
@@ -187,7 +278,7 @@ export default function DashboardEventView() {
                 <img
                   width={"100%"}
                   height={"100%"}
-                  src="https://media.istockphoto.com/id/177427917/photo/close-up-of-red-cricket-ball-and-bat-sitting-on-grass.jpg?s=2048x2048&w=is&k=20&c=Zq0DS_ODjxvuyLUtMFgfeDOEqSF7XMt4XGNUUBWPHzE="
+                  src={event.events.eventBanner}
                   alt="banner"
                 />
               </Box>
@@ -198,6 +289,7 @@ export default function DashboardEventView() {
                   justifyContent={"end"}
                   spacing={1}
                   sx={{ cursor: "pointer" }}
+                  onClick={() => handlePlayVideo()}
                 >
                   <Typography
                     sx={{
@@ -237,6 +329,9 @@ export default function DashboardEventView() {
                   justifyContent={"end"}
                   spacing={1}
                   sx={{ cursor: "pointer" }}
+                  onClick={() =>
+                    navigate("/dashboard/events/upload-event-data")
+                  }
                 >
                   <Typography
                     sx={{
@@ -275,7 +370,7 @@ export default function DashboardEventView() {
                 }}
               >
                 <Typography fontWeight={600} fontSize={35}>
-                  26
+                  {event.events.users.length}
                 </Typography>
                 <Typography fontSize={12} whiteSpace={"nowrap"}>
                   Total Participant
@@ -284,7 +379,8 @@ export default function DashboardEventView() {
             </Stack>
             <CustomPaper2
               variant="outlined"
-              sx={{ backgroundColor: "#CBFFA9" }}
+              sx={{ backgroundColor: "#CBFFA9", cursor: "pointer" }}
+              onClick={() => navigate("/dashboard/events/manage-participant")}
             >
               <Stack alignItems={"center"} justifyContent={"center"}>
                 <PageviewIcon sx={{ color: "#8EAC50" }} />
@@ -299,7 +395,8 @@ export default function DashboardEventView() {
             </CustomPaper2>
             <CustomPaper2
               variant="outlined"
-              sx={{ backgroundColor: "#A6F6FF" }}
+              sx={{ backgroundColor: "#A6F6FF", cursor: "pointer" }}
+              onClick={() => navigate("/dashboard/events/notify-participant")}
             >
               <Stack alignItems={"center"} justifyContent={"center"}>
                 <NotificationsActiveIcon sx={{ color: "#6499E9" }} />

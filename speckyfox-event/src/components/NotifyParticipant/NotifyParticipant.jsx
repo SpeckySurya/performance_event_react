@@ -10,8 +10,10 @@ import {
   Select,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import EventService from "../../services/EventService";
+import MyContext from "../../context/MyContext";
+import { useNavigate } from "react-router-dom";
 
 const NotifyParticipant = () => {
   const [selectedEvent, setSelectedEvent] = useState("");
@@ -21,6 +23,18 @@ const NotifyParticipant = () => {
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const { context } = useContext(MyContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    context.breadCrumb.updatePages([
+      { name: "Events", route: () => navigate("/dashboard/events") },
+      {
+        name: "Notify Participant",
+        route: () => navigate("/dashboard/events/notify-participant"),
+      },
+    ]);
+  }, []);
 
   useEffect(() => {
     const eventService = new EventService();

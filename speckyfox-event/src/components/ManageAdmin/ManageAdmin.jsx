@@ -7,13 +7,14 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AdminService from "../../services/AdminService";
 import PasswordService from "../../services/PasswordService";
 import { findRoleFromToken } from "../../utils/TokenDecoder";
 import PopupAlert from "../PopupAlert/PopupAlert";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
 import "./ManageAdmin.css";
+import MyContext from "../../context/MyContext";
 export default function ManageAdmin() {
   const [admins, setAdmins] = useState([]);
   const [roles, setRoles] = useState([]);
@@ -24,8 +25,13 @@ export default function ManageAdmin() {
   });
   const [snackbar, setSnackbar] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
+  const { context } = useContext(MyContext);
   const adminService = new AdminService();
   const loggedInUserRole = findRoleFromToken();
+
+  useEffect(() => {
+    context.breadCrumb.updatePages([{ name: "Users" }]);
+  });
 
   function dateConversion(isoDate) {
     const date = new Date(isoDate);

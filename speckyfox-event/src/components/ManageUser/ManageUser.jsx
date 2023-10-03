@@ -7,12 +7,36 @@ import {
   Select,
   Stack,
 } from "@mui/material";
-import React, { useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import TableComponent from "../TableComponent/TableComponent";
+import MyContext from "../../context/MyContext";
+import EventService from "../../services/EventService";
+import { useNavigate } from "react-router-dom";
 
-const ManageUser = ({ events }) => {
+const ManageUser = () => {
   const [selectedEvent, setSelectedEvent] = useState("");
   const tableRef = useRef(null);
+  const { context } = useContext(MyContext);
+  const [events, setEvents] = useState([]);
+  const navigate = useNavigate();
+
+  const initialSetup = () => {
+    const eventService = new EventService();
+    eventService.getAllEvents().then((response) => {
+      setEvents(response.data);
+    });
+  };
+
+  useEffect(() => {
+    initialSetup();
+    context.breadCrumb.updatePages([
+      { name: "Events", route: () => navigate("/dashboard/events") },
+      {
+        name: "Manage Participant",
+        route: () => navigate("/dashboard/events/manage-participant"),
+      },
+    ]);
+  });
 
   const handleEventChange = (e) => {
     const event = e.target.value;
@@ -25,7 +49,7 @@ const ManageUser = ({ events }) => {
   }
 
   return (
-    <Box py={10}>
+    <Box>
       <Stack
         direction={"row"}
         alignItems={"center"}

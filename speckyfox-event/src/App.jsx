@@ -1,39 +1,43 @@
-import React, { useState } from "react";
-import { Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage/HomePage";
-import ThankYouPage from "./pages/ThanksYouPage/ThankYouPage";
+import React, { useContext, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import "./responsive.css";
 import Login from "./pages/Login/Login";
-import ErrorPage from "./pages/ErrorPage/ErrorPage";
-import EventPage from "./pages/EventPage/EventPage";
-import { DashboardPage } from "./pages/DashboardPage/DashboardPage";
-import MyContext from "./context";
-import PageNotFound from "./pages/PageNotFound/PageNotFound";
+import "./responsive.css";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import Forgotpassword from "./pages/Login/Forgotpassword";
-import UpdatePassword from "./pages/UpdatePassword/UpdatePassword";
-import AdminUpdatePassword from "./components/AdminUpdatePassword/AdminUpdatePassword";
-import AdminRegistration from "./components/AdminRegistation/AdminRegistation";
-import LinkExpired from "./pages/LinkExpired/LinkExpired";
-import TermsAndConditionsPage from "./pages/TermsAndConditionsPage/TermsAndConditionsPage";
-import PrivacyPage from "./pages/PrivacyPage/PrivacyPage";
-import DashboardPage2 from "./pages/DashboardPage2/DashboardPage2";
-import DashboardEventView from "./dashboard-components/DashboardEventView";
 import ManageAdmin from "./components/ManageAdmin/ManageAdmin";
+import DashboardPage2 from "./pages/DashboardPage2/DashboardPage2";
+import DashboardEventView from "./dashboard-components/DashboardEventView/DashboardEventView";
+import MyContextProvider from "./context/MyContextProvider";
+import NotifyParticipant from "./components/NotifyParticipant/NotifyParticipant";
+import ManageUser from "./components/ManageUser/ManageUser";
+import UploadVideoAndPdf from "./components/UploadVideoAndPdf/UploadVideoAndPdf";
+import { Box } from "@mui/material";
+import MyContext from "./context/MyContext";
+import CreateEventForm from "./dashboard-components/CreateEventForm/CreateEventForm";
 function App() {
-  const [sharedState, setSharedState] = useState({
-    admin: false,
-  });
-
+  const { context } = useContext(MyContext);
   return (
-    <MyContext.Provider value={{ sharedState, setSharedState }}>
+    <>
+      <Box
+        className={"pop-up-background"}
+        display={context.popUpBackground.popUpBackgroundVisible}
+      ></Box>
       <Routes>
         <Route path="dashboard" element={<DashboardPage2 />}>
           <Route path="events" element={<DashboardEventView />} />
           <Route path="users" element={<ManageAdmin />} />
+          <Route
+            path="events/notify-participant"
+            element={<NotifyParticipant />}
+          />
+          <Route path="events/manage-participant" element={<ManageUser />} />
+          <Route
+            path="events/upload-event-data"
+            element={<UploadVideoAndPdf />}
+          />
+          <Route path="events/create-event" element={<CreateEventForm />} />
         </Route>
         <Route path="login" element={<Login />} />
         {/* <Route path="/" element={<DashboardEventView />} /> */}
@@ -56,7 +60,7 @@ function App() {
         <Route path="/t-and-c" element={<TermsAndConditionsPage />} />
         <Route path="/privacy" element={<PrivacyPage />} /> */}
       </Routes>
-    </MyContext.Provider>
+    </>
   );
 }
 
