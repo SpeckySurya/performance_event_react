@@ -1,4 +1,5 @@
 import { LinearProgress } from "@mui/material";
+import "./EventPage.css";
 import React, { useEffect, useState } from "react";
 import Footer from "../../components/Footer/Footer";
 import { Header } from "../../components/Header/Header";

@@ -80,11 +80,13 @@ const ShowEvent = (props) => {
                 <ToggleButton
                   value="web"
                   onClick={() => setRenderEvents(upcomingEvents)}
-                  sx={{ width: 100 }}
+                  sx={{ width: 100, backgroundColor: "white" }}
+                  className="togglebtnstyle"
                 >
                   Upcoming
                 </ToggleButton>
                 <ToggleButton
+                  className="togglebtnstyle"
                   value="android"
                   onClick={() => setRenderEvents(pastEvents)}
                   sx={{ width: 100 }}
