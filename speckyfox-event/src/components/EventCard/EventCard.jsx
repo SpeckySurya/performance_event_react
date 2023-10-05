@@ -371,8 +371,8 @@ const EventCard = (props) => {
                     sx={{
                       position: "absolute",
                       opacity: "0.7",
-                      top: "10%",
-                      left: "8%",
+                      top: "14%",
+                      left: "28%",
                       fontSize: "40px",
                       color: "red",
                       cursor: "pointer",
@@ -404,7 +404,7 @@ const EventCard = (props) => {
                     <Typography>{active ? "Active" : "Inactive"}</Typography>
                   </Stack>
                 )}
-                <Stack direction="row" alignItems="center" marginBottom={4}>
+                {/* <Stack direction="row" alignItems="center" marginBottom={4}>
                   <Typography
                     color="#f37d47"
                     marginX={1}
@@ -417,12 +417,15 @@ const EventCard = (props) => {
                     {formattedDate.day} {formattedDate.monthName}{" "}
                     {formattedDate.year}
                   </Typography>
-                </Stack>
+                </Stack> */}
               </div>
 
               <div className="registerinsidedatabottomcard">
                 {!props.isEventPage && findRoleFromToken() !== "VIEWER" && (
-                  <Box className="editbutton">
+                  <Box
+                    className="editbutton"
+                    sx={{ position: "absolute", top: "8%" }}
+                  >
                     <Editbtn
                       setLoading={props.setLoading}
                       event={props.event}
@@ -454,7 +457,7 @@ const EventCard = (props) => {
                         <BootstrapButton
                           sx={{
                             position: "absolute",
-                            bottom: "5%",
+                            bottom: "20%",
                             right: "calc(25% - 50px)",
                             marginBottom: "12px",
                           }}
