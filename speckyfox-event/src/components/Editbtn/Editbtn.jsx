@@ -90,8 +90,8 @@ export default function Editbtn(props) {
       />
       <IconButton
         sx={{
-          color: "white",
-          top: "-167px",
+          // color: "white",
+          // top: "-167px",
           float: "right",
           "& svg": {
             fontSize: "35px",
