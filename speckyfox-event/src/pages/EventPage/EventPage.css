@@ -1,0 +1,18 @@
+.event-page-container {
+  background: linear-gradient(-45deg, #ea750f, #f6d5f2, #c5d7ee, #3ec4f1);
+  background-size: 700% 700%;
+  animation: gradient 10s ease infinite;
+  height: 100%;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

@@ -9,6 +9,8 @@ import {
 import React, { useEffect, useState } from "react";
 import "../../responsive.css";
 import "./ShowEvent.css";
+import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
+import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 
 import { Link } from "react-router-dom";
 import dateFormatter, { isPastDateTime } from "../../utils/DateFormatter";
@@ -80,14 +82,16 @@ const ShowEvent = (props) => {
                 <ToggleButton
                   value="web"
                   onClick={() => setRenderEvents(upcomingEvents)}
-                  sx={{ width: 100 }}
+                  sx={{ width: 120, backgroundColor: "white" }}
+                  className="togglebtnstyle"
                 >
                   Upcoming
                 </ToggleButton>
                 <ToggleButton
+                  className="togglebtnstyle"
                   value="android"
                   onClick={() => setRenderEvents(pastEvents)}
-                  sx={{ width: 100 }}
+                  sx={{ width: 120 }}
                 >
                   Past
                 </ToggleButton>

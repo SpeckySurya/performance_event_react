@@ -23,7 +23,7 @@ export default function Togglebtn() {
 
   return (
     <>
-      <div style={{ border: "1px solid black" }} className="togglebtnstyle">
+      <div style={{ border: "1px solid black" }}>
         <ToggleButtonGroup
           color="primary"
           value={alignment}
@@ -32,7 +32,11 @@ export default function Togglebtn() {
           aria-label="Platform"
         >
           <ToggleButton
-            sx={{ color: "red", fontSize: 10, width: 100 }}
+            sx={{
+              color: "red",
+              fontSize: 10,
+              width: 100,
+            }}
             value="web"
             onClick={() => setopentogle(true)}
           >

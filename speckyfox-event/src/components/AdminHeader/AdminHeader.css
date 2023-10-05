@@ -9,7 +9,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 7px;
-  box-shadow: 2px 5px 8px rgba(0, 0, 0, 0.03);
+  /* box-shadow: 2px 5px 8px rgba(0, 0, 0, 0.03); */
+  box-shadow: rgba(10, 10, 10, 0.3) 0px 3px 10px 0px;
   z-index: 1;
 }
 
