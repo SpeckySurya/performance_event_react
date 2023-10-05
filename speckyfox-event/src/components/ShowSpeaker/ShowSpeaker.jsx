@@ -1,6 +1,6 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import {
   Button,
@@ -21,30 +21,53 @@ import SpeakerService from "../../services/SpeakerService";
 import { findRoleFromToken } from "../../utils/TokenDecoder";
 import ManageSpeaker from "../ManageSpeaker/ManageSpeaker";
 import PopupAlert from "../PopupAlert/PopupAlert";
+import MyContext from "../../context/MyContext";
+import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
+import { useNavigate } from "react-router-dom";
+import Role from "../../utils/Role";
 
-const ShowSpeaker = (props) => {
+const ShowSpeaker = () => {
+  const role = findRoleFromToken();
+
   const speakerService = new SpeakerService();
   const [speakers, setSpeakers] = useState([]);
   const [dialog, setDialog] = useState({ open: false, action: null });
   const [selectedSpeaker, setSelectedSpeaker] = useState(null);
   const [opendilog, setOpendilog] = useState(false);
   const [popUpMsg, setPopUpmsg] = useState("");
+  const { context } = useContext(MyContext);
+  const [snackbar, setSnackbar] = useState(null);
+  const navigate = useNavigate();
+
   const handleClose = () => {
     setOpendilog(false);
   };
   const [speakerId, setSpeakerId] = useState(-1);
-  useEffect(() => {
+
+  function intialSetup() {
     speakerService.getAllSpeakers().then((response) => {
       setSpeakers(response.data);
     });
+  }
+
+  useEffect(() => {
+    intialSetup();
   }, []);
+
+  useEffect(() => {
+    context.breadCrumb.updatePages([{ name: "Speakers" }]);
+  }, []);
+
   useEffect(() => {
     if (dialog.action === "Yes") {
       speakerService
         .deleteSpeaker(speakerId)
         .then((response) => {
           setPopUpmsg("Speaker Deleted Successfully!");
-          setOpendilog(true);
+          setSnackbar(
+            <SnackbarComponent message="Speaker deleted" severity="success" />
+          );
+          intialSetup();
         })
         .catch((error) => {
           alert(error);
@@ -62,109 +85,80 @@ const ShowSpeaker = (props) => {
   }
 
   function editspeakerfunction(speaker) {
-    props.setUpdateSpeaker(true);
-    setSelectedSpeaker(speaker);
-    props.speakerInitialValue.name = speaker.name;
-    props.speakerInitialValue.designation = speaker.designation;
-    props.speakerInitialValue.aboutSpeaker = speaker.aboutSpeaker;
-    props.speakerInitialValue.email = speaker.email;
-    props.speakerInitialValue.linkdinUrl = speaker.linkdinUrl;
-    props.speakerInitialValue.twitterUrl = speaker.twitterUrl;
-    props.speakerInitialValue.youtubeUrl = speaker.youtubeUrl;
+    navigate("/dashboard/speakers/edit-speaker", {
+      state: { speaker: speaker },
+    });
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setSnackbar(null);
+    }, 3000);
+  }, [snackbar]);
 
   return (
     <>
-      <Dialog
-        open={opendilog}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">Success</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {popUpMsg}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} autoFocus>
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
-      {props.updateSpeaker ? (
-        <ManageSpeaker
-          setSelected={props.setSelected}
-          title="Update"
-          setUpdateSpeaker={props.setUpdateSpeaker}
-          speakerInitialValue={props.speakerInitialValue}
-          selectedSpeaker={selectedSpeaker}
+      {snackbar}
+
+      <div style={{ margin: "auto" }}>
+        <PopupAlert
+          control={{
+            dialog: dialog,
+            setDialog: (dialog) => setDialog({ ...dialog, open: open }),
+          }}
+          title="Alert"
+          content={"Do you really want to delete ?"}
+          action={{ first: "Yes", second: "No" }}
         />
-      ) : (
-        <div>
-          <PopupAlert
-            control={{
-              dialog: dialog,
-              setDialog: (dialog) => setDialog({ ...dialog, open: open }),
-            }}
-            title="Alert"
-            content={"Do you really want to delete ?"}
-            action={{ first: "Yes", second: "No" }}
-          />
-          <Stack flexWrap={"wrap"} direction={"row"}>
-            {speakers.map((speaker) => {
-              return (
-                <>
-                  <Card
-                    key={speaker.id}
-                    sx={{ width: 310, mt: 10, ml: "auto", mr: "auto" }}
-                  >
-                    <CardMedia
-                      component="img"
-                      height="140"
-                      image={speaker.picture}
-                      alt={speaker.name}
-                    />
-                    <CardContent>
-                      <Typography variant="h6" component="div">
-                        {speaker.name}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {speaker.designation}
-                      </Typography>
-                    </CardContent>
-                    {findRoleFromToken() !== "VIEWER" && (
-                      <CardActions>
-                        {findRoleFromToken() !== "EDITOR" && (
-                          <Button
-                            variant="contained"
-                            color="error"
-                            style={{ width: "50%" }}
-                            startIcon={<DeleteIcon />}
-                            onClick={() => onDelete(speaker.id)}
-                          >
-                            Delete
-                          </Button>
-                        )}
+        <Stack flexWrap={"wrap"} direction={"row"} justifyContent={"center"}>
+          {speakers.map((speaker) => {
+            return (
+              <>
+                <Card key={speaker.id} sx={{ width: 310, m: 1 }}>
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={speaker.picture}
+                    alt={speaker.name}
+                  />
+                  <CardContent>
+                    <Typography variant="h6" component="div">
+                      {speaker.name}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {speaker.designation}
+                    </Typography>
+                  </CardContent>
+                  {role !== Role.VIEWER && (
+                    <CardActions>
+                      {role !== Role.EDITOR && (
                         <Button
                           variant="contained"
-                          color="success"
+                          color="error"
                           style={{ width: "50%" }}
-                          startIcon={<EditIcon />}
-                          onClick={() => editspeakerfunction(speaker)}
+                          startIcon={<DeleteIcon />}
+                          onClick={() => onDelete(speaker.id)}
                         >
-                          Edit
+                          Delete
                         </Button>
-                      </CardActions>
-                    )}
-                  </Card>
-                </>
-              );
-            })}
-          </Stack>
-        </div>
-      )}
+                      )}
+                      <Button
+                        variant="contained"
+                        color="success"
+                        style={{ width: "50%" }}
+                        startIcon={<EditIcon />}
+                        onClick={() => editspeakerfunction(speaker)}
+                      >
+                        Edit
+                      </Button>
+                    </CardActions>
+                  )}
+                </Card>
+              </>
+            );
+          })}
+        </Stack>
+      </div>
     </>
   );
 };

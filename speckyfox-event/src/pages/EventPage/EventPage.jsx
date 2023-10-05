@@ -33,5 +33,4 @@ const EventPage = () => {
     </div>
   );
 };
-
 export default EventPage;

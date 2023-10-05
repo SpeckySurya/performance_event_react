@@ -1,13 +1,30 @@
 import { Alert, Box, CircularProgress, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import EventService from "../../services/EventService";
 import { toDDMMYYYY } from "../../utils/DateFormatter";
-import Duration from "../Duration/Duration";
-import "./EventForm.css";
+import "./CreateEventForm.css";
+import Duration from "../../components/Duration/Duration";
+import SpeakerService from "../../services/SpeakerService";
+import SnackbarComponent from "../../components/SnackbarComponent/SnackbarComponent";
+import MyContext from "../../context/MyContext";
 
-const EventForm = (props) => {
-  const [formData, setFormData] = useState(props.formDataDefault);
+const formDataDefault = {
+  title: "",
+  description: "",
+  time: "",
+  meetingUrl: "",
+  location: "",
+  date: "",
+  active: false,
+  acceptRegistration: false,
+  contactTo: "",
+  speakerId: 0,
+  duration: { hours: 0, minutes: 0 },
+};
+
+export default function CreateEventForm() {
+  const [formData, setFormData] = useState(formDataDefault);
   const [selectedFile, setSelectedFile] = useState(null);
   const [speakerSelect, setSpeakerSelect] = useState("");
   const [isAlertVisible, setIsAlertVisible] = useState(false);
@@ -15,7 +32,8 @@ const EventForm = (props) => {
   const [snackbar, setSnackbar] = useState(null);
   const [currentSpeaker, setCurrentSpeaker] = useState("Select Speaker");
   const [loading, setLoading] = useState(false);
-  const [duration, setDuration] = useState(props.formDataDefault.duration);
+  const [duration, setDuration] = useState(formDataDefault.duration);
+  const [speakers, setSpeakers] = useState([]);
   const handleChange = (event) => {
     if (event.target.name === "speakerId") {
       setSpeakerSelect(event.target.value);
@@ -23,6 +41,25 @@ const EventForm = (props) => {
     let { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+  const { context } = useContext(MyContext);
+
+  function initialSetup() {
+    const speakerService = new SpeakerService();
+    speakerService.getAllSpeakers().then((response) => {
+      setSpeakers(response.data);
+    });
+  }
+
+  useEffect(() => {
+    initialSetup();
+    context.breadCrumb.updatePages([
+      { name: "Events", route: () => navigate("/dashboard/events") },
+      {
+        name: "Create Event",
+        route: () => navigate("/dashboard/events/create-event"),
+      },
+    ]);
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -39,41 +76,21 @@ const EventForm = (props) => {
     request.append("date", toDDMMYYYY(formData.date));
 
     const eventService = new EventService();
-    if (props.formTitle === "Update") {
-      eventService
-        .updateEvent(formData.eventId, request)
-        .then((response) => {
-          setIsAlertVisible(true);
-          setLoading(false);
-          setTimeout(() => props.handleBackButton(), 1000);
-        })
-        .catch((error) => {
-          setLoading(false);
-          setSnackbar(
-            <SnackbarComponent
-              message="Something went wrong"
-              severity="error"
-            />
-          );
-        });
-    } else {
-      eventService
-        .saveEvent(request)
-        .then((response) => {
-          setIsAlertVisible(true);
-          setLoading(false);
-          setTimeout(() => props.setSelected("show"), 1000);
-        })
-        .catch((error) => {
-          setLoading(false);
-          setSnackbar(
-            <SnackbarComponent
-              message="Something went wrong"
-              severity="success"
-            />
-          );
-        });
-    }
+    eventService
+      .saveEvent(request)
+      .then((response) => {
+        setIsAlertVisible(true);
+        setLoading(false);
+        setTimeout(() => {
+          navigate("/dashboard/events");
+        }, 1500);
+      })
+      .catch((error) => {
+        setLoading(false);
+        setSnackbar(
+          <SnackbarComponent message="Something went wrong" severity="error" />
+        );
+      });
   };
 
   const handleAlertClose = () => {
@@ -87,7 +104,7 @@ const EventForm = (props) => {
 
   return (
     <div className="event-form-container">
-      <h1>{props.formTitle} an Event</h1>
+      <h1>Create an Event</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="title">Title</label>
@@ -200,12 +217,6 @@ const EventForm = (props) => {
             onChange={handleFileChange}
             required
           />
-          {props.formTitle === "Update" ? (
-            <img
-              style={{ width: "100px", margin: "10px" }}
-              src={props.formDataDefault.banner}
-            />
-          ) : null}
         </div>
         <div className="form-group">
           <label htmlFor="speakerId">Speaker</label>
@@ -213,15 +224,13 @@ const EventForm = (props) => {
             name="speakerId"
             id="speakerId"
             onChange={handleChange}
-            value={
-              props.formTitle === "Update" ? formData.speakerId : speakerSelect
-            }
+            value={speakerSelect}
             required
           >
             <option disabled value="">
               Select speaker
             </option>
-            {props.speakers.map((speaker) => (
+            {speakers.map((speaker) => (
               <option key={speaker.id} value={speaker.id}>
                 {speaker.name}
               </option>
@@ -243,7 +252,7 @@ const EventForm = (props) => {
           {loading ? (
             <CircularProgress size={20} color={"error"} />
           ) : (
-            props.formTitle + " Event"
+            "Create Event"
           )}
         </button>
       </form>
@@ -254,13 +263,11 @@ const EventForm = (props) => {
               handleAlertClose();
             }}
           >
-            Event {props.formTitle}d Successfully !
+            Event Created Successfully !
           </Alert>
         )}
       </Box>
       {snackbar}
     </div>
   );
-};
-
-export default EventForm;
+}

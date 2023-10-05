@@ -1,8 +1,9 @@
 import { CircularProgress } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PasswordService from "../../services/PasswordService";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
+import MyContext from "../../context/MyContext";
 
 function AdminUpdatePassword() {
   const [loading, setLoading] = useState(false);
@@ -12,6 +13,16 @@ function AdminUpdatePassword() {
     newPassword: "",
     confirmPassword: "",
   });
+  const { context } = useContext(MyContext);
+
+  useEffect(() => {
+    context.breadCrumb.updatePages([
+      {
+        name: "Change Password",
+        route: () => navigate("/dashboard/change-password"),
+      },
+    ]);
+  }, []);
 
   useEffect(() => {
     setTimeout(() => setSnackbar(null), 3000);
@@ -73,7 +84,7 @@ function AdminUpdatePassword() {
     <>
       {snackbar}
       <form onSubmit={handleSubmit}>
-        <div className="login-container">
+        <div className="login-container" style={{ margin: "auto" }}>
           <h1>Update Password</h1>
           <div className="form-group">
             <label htmlFor="currentPassword">
