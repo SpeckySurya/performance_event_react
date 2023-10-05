@@ -15,21 +15,34 @@ import {
   TextField,
 } from "@mui/material";
 import { useFormik } from "formik";
-import "./ManageSpeaker.css";
+import "./EditSpeakerForm.css";
 
 import { useContext, useEffect, useState } from "react";
 import { ManageSpeakerValidation } from "../../schemas/ManageSpeakerValidation";
 import SpeakerService from "../../services/SpeakerService";
 import MyContext from "../../context/MyContext";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import SnackbarComponent from "../../components/SnackbarComponent/SnackbarComponent";
 
-function ManageSpeaker(props) {
+function EditSpeakerForm() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [popUpMsg, setPopUpmsg] = useState("");
   const { context } = useContext(MyContext);
   const navigate = useNavigate();
+  const location = useLocation();
+  const [snackbar, setSnackbar] = useState(null);
+
+  const speakerInitialValue = {
+    name: location.state.speaker.name,
+    designation: location.state.speaker.designation,
+    aboutSpeaker: location.state.speaker.aboutSpeaker,
+    email: location.state.speaker.email,
+    linkdinUrl: location.state.speaker.linkdinUrl,
+    twitterUrl: location.state.speaker.twitterUrl,
+    youtubeUrl: location.state.speaker.youtubeUrl,
+  };
 
   useEffect(() => {
     context.breadCrumb.updatePages([
@@ -41,11 +54,6 @@ function ManageSpeaker(props) {
     ]);
   }, []);
 
-  const handleClose = () => {
-    setOpen(false);
-    props.setSelected("showSpeaker");
-    props.setUpdateSpeaker(false);
-  };
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
@@ -53,73 +61,39 @@ function ManageSpeaker(props) {
 
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useFormik({
-      initialValues: props.speakerInitialValue,
+      initialValues: speakerInitialValue,
       validationSchema: ManageSpeakerValidation,
       onSubmit: (values) => {
         setLoading(true);
         const request = new FormData();
-        for (let entry in props.speakerInitialValue) {
+        for (let entry in speakerInitialValue) {
           request.append(entry, values[entry]);
         }
         request.append("picture", selectedFile);
 
         const speakerService = new SpeakerService();
-        if (props.title === "Update") {
-          speakerService
-            .updateSpeaker(props.selectedSpeaker.id, request)
-            .then((response) => {
-              setOpen(true);
-              setLoading(false);
-              setPopUpmsg("Speaker updated Successfully!");
-            })
-            .catch((error) => {
-              alert(error);
-              setLoading(false);
-            });
-        } else if (props.title === "Create") {
-          speakerService
-            .saveSpeaker(request)
-            .then((response) => {
-              setOpen(true);
-              setLoading(false);
-              setPopUpmsg("Speaker created Successfully!");
-            })
-            .catch((error) => {
-              alert(error);
-              setLoading(false);
-            });
-        }
+
+        speakerService
+          .updateSpeaker(location.state.speaker.id, request)
+          .then((response) => {
+            setLoading(false);
+            setSnackbar(
+              <SnackbarComponent message="Speaker updated" severity="success" />
+            );
+            setTimeout(() => {
+              navigate("/dashboard/speakers");
+            }, 1500);
+          })
+          .catch((error) => {
+            alert(error);
+            setLoading(false);
+          });
       },
     });
 
   return (
     <>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">Success</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {popUpMsg}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} autoFocus>
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
-      {props.title === "Update" ? (
-        <Button
-          className="arrowbtn"
-          onClick={() => props.setUpdateSpeaker(false)}
-        >
-          <ArrowBackOutlinedIcon />
-        </Button>
-      ) : null}
+      {snackbar}
       <Box px={2}>
         <Card
           style={{
@@ -133,7 +107,7 @@ function ManageSpeaker(props) {
           }}
         >
           <CardContent>
-            <h3 className="ManageSpeakerh3">{props.title} Speaker</h3>
+            <h3 className="ManageSpeakerh3">Update Speaker</h3>
             <form onSubmit={handleSubmit}>
               <Grid container spacing={1}>
                 <Grid xs={12} sm={12} item>
@@ -222,13 +196,10 @@ function ManageSpeaker(props) {
                     onBlur={handleBlur}
                     fullWidth
                   />
-
-                  {props.title === "Update" ? (
-                    <img
-                      style={{ width: "100px", margin: "10px" }}
-                      src={props.selectedSpeaker?.picture}
-                    />
-                  ) : null}
+                  <img
+                    style={{ width: "100px", margin: "10px" }}
+                    src={location.state.speaker?.picture}
+                  />
                   {errors.picture && touched.picture ? (
                     <p className="configationformerro">{errors.picture}</p>
                   ) : null}
@@ -311,4 +282,4 @@ function ManageSpeaker(props) {
   );
 }
 
-export default ManageSpeaker;
+export default EditSpeakerForm;

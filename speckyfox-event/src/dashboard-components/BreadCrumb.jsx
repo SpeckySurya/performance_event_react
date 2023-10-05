@@ -22,12 +22,11 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
       backgroundColor: emphasize(backgroundColor, 0.12),
     },
   };
-}); // TypeScript only: need a type cast here because https://github.com/Microsoft/TypeScript/issues/26591
+});
 
 function handleClick(event, page) {
   event.preventDefault();
-  console.log(page);
-  page.route();
+  page?.route();
 }
 
 export default function Breadcrumb({ pages }) {

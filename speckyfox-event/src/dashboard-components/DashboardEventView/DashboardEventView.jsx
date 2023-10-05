@@ -28,12 +28,14 @@ export default function DashboardEventView() {
     initialSetup();
   }, []);
 
-  console.log(context.breadCrumb);
-
   return (
     <Stack direction="row" flexWrap={"wrap"} justifyContent={"center"}>
       {events.map((event, index) => (
-        <DashboardEventCard key={index} event={event} />
+        <DashboardEventCard
+          key={index}
+          event={event}
+          initialSetup={initialSetup}
+        />
       ))}
     </Stack>
   );

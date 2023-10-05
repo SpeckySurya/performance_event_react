@@ -59,7 +59,7 @@ export default function CreateEventForm() {
         route: () => navigate("/dashboard/events/create-event"),
       },
     ]);
-  });
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();

@@ -16,9 +16,10 @@ import {
 import { useFormik } from "formik";
 import "./HomePageConfiguration.css";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { HomePageConfigationSchema } from "../../schemas/Homepagevalidation";
 import HomeConfigService from "../../services/HomeConfigService";
+import MyContext from "../../context/MyContext";
 const homeConfigService = new HomeConfigService();
 
 function HomePageConfiguration(props) {
@@ -32,6 +33,17 @@ function HomePageConfiguration(props) {
     footerText: "",
   });
   const [loading, setLoading] = useState(false);
+  const { context } = useContext(MyContext);
+
+  useEffect(() => {
+    context.breadCrumb.updatePages([
+      {
+        name: "Home Configuration",
+        route: () => navigate("/dashboard/home-configuration"),
+      },
+    ]);
+  }, []);
+
   useEffect(() => {
     homeConfigService
       .getHomeConfigById()
@@ -139,10 +151,10 @@ function HomePageConfiguration(props) {
           </Button>
         </DialogActions>
       </Dialog>
-      <Box px={2}>
+      <Box>
         <Card
           style={{
-            margin: "40px auto",
+            margin: "auto",
             padding: "40px",
             border: "1px solid #ccc",
             borderRadius: "5px",

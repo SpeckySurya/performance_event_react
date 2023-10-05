@@ -4,7 +4,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import HeadsetMicIcon from "@mui/icons-material/HeadsetMic";
 import OtherHousesIcon from "@mui/icons-material/OtherHouses";
-import { Stack } from "@mui/material";
+import { Stack, Tooltip } from "@mui/material";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
@@ -26,6 +26,8 @@ import SpeakerService from "../../services/SpeakerService";
 import MyContext from "../../context/MyContext";
 import AddIcon from "@mui/icons-material/Add";
 import "./DashboardPage2.css";
+import Role from "../../utils/Role";
+import { findRoleFromToken } from "../../utils/TokenDecoder";
 
 const drawerWidth = 240;
 
@@ -57,14 +59,15 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function DashboardPage2() {
+  const role = findRoleFromToken();
+
   const theme = useTheme();
   const [open, setOpen] = useState(true);
   const [events, setEvents] = useState([]);
   const [speakers, setSpeakers] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
-
-  const { context, updateContext } = useContext(MyContext);
+  const { context } = useContext(MyContext);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -83,7 +86,7 @@ export default function DashboardPage2() {
     {
       title: "Speakers",
       icon: <HeadsetMicIcon />,
-      action: () => navigate("/dashboard/events"),
+      action: () => navigate("/dashboard/speakers"),
     },
     {
       title: "Users",
@@ -93,7 +96,7 @@ export default function DashboardPage2() {
     {
       title: "Home Configuration",
       icon: <OtherHousesIcon />,
-      action: () => navigate("/dashboard/events"),
+      action: () => navigate("/dashboard/home-configuration"),
     },
   ];
 
@@ -101,7 +104,12 @@ export default function DashboardPage2() {
     if (sessionStorage.getItem("token") === null) {
       navigate("/login");
     }
-    navigate(location.pathname);
+    console.log(location.pathname);
+    if (location.pathname === "/dashboard") {
+      navigate("/dashboard/events");
+    } else {
+      navigate(location.pathname);
+    }
   }, []);
 
   const initialSetup = () => {
@@ -115,15 +123,40 @@ export default function DashboardPage2() {
     });
   };
 
+  const addButtonTitle = () => {
+    switch (location.pathname) {
+      case "/dashboard/events": {
+        return "Add new event";
+      }
+      case "/dashboard/users": {
+        return "Add new user";
+      }
+      case "/dashboard/speakers": {
+        return "Add new speaker";
+      }
+    }
+  };
+
   useEffect(() => {
     initialSetup();
   }, []);
 
   function handleAddIconClick(e) {
-    navigate("/dashboard/events/create-event");
+    switch (location.pathname) {
+      case "/dashboard/events": {
+        navigate("/dashboard/events/create-event");
+        break;
+      }
+      case "/dashboard/users": {
+        navigate("/dashboard/users/user-registration");
+        break;
+      }
+      case "/dashboard/speakers": {
+        navigate("/dashboard/speakers/create-speaker");
+        break;
+      }
+    }
   }
-
-  console.log(context);
 
   return (
     <Box
@@ -190,12 +223,27 @@ export default function DashboardPage2() {
                 alignItems={"center"}
                 justifyContent={"center"}
               >
-                <Box>
-                  <CustomSearchField />
-                </Box>
-                <Box className={"add-icon-style"} onClick={handleAddIconClick}>
-                  <AddIcon />
-                </Box>
+                <Box>{/* <CustomSearchField /> */}</Box>
+                <Tooltip
+                  title={addButtonTitle()}
+                  sx={{
+                    cursor:
+                      role === Role.VIEWER || role === Role.EDITOR
+                        ? "default"
+                        : "pointer",
+                  }}
+                >
+                  <Box
+                    className={"add-icon-style"}
+                    onClick={
+                      role === Role.VIEWER || role === Role.EDITOR
+                        ? null
+                        : handleAddIconClick
+                    }
+                  >
+                    <AddIcon />
+                  </Box>
+                </Tooltip>
               </Stack>
             </Stack>
             <Box p={1} className={"custom-scroll"} height={"74vh"}>

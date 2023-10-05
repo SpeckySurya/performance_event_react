@@ -27,6 +27,7 @@ import EventService from "../../services/EventService";
 import "./UploadVideoAndPdf.css";
 import MyContext from "../../context/MyContext";
 import { useNavigate } from "react-router-dom";
+import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
 
 function UploadVideoAndPdf() {
   const [uploadFile, setUploadFile] = useState("");
@@ -40,6 +41,7 @@ function UploadVideoAndPdf() {
   const [uploadAction, setUploadAction] = useState("Upload");
   const { context } = useContext(MyContext);
   const navigate = useNavigate();
+  const [snackbar, setSnackbar] = useState(null);
 
   useEffect(() => {
     context.breadCrumb.updatePages([
@@ -109,9 +111,14 @@ function UploadVideoAndPdf() {
         .uploadPastEventData(formData)
         .then((response) => {
           setLoading(false);
-          setOpen(true);
           setLoading(false);
           setSelectedEvent(-1);
+          setSnackbar(
+            <SnackbarComponent message="Data uploaded" severity="success" />
+          );
+          setTimeout(() => {
+            navigate("/dashboard/events");
+          }, 1500);
         })
         .catch((error) => {
           alert(error);
@@ -156,28 +163,11 @@ function UploadVideoAndPdf() {
 
   return (
     <>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">Success</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Files uploaded successfully
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} autoFocus>
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {snackbar}
       <Stack>
         <Card
           style={{
-            margin: "40px auto",
+            margin: "auto",
             padding: "20px",
             border: "1px solid #ccc",
             borderRadius: "5px",
@@ -187,7 +177,7 @@ function UploadVideoAndPdf() {
           }}
         >
           <CardContent>
-            <h3 className="uploadpdfh3">Upload or Update Files</h3>
+            <h1 className="uploadpdfh3">Upload or Update Files</h1>
             <FormControl fullWidth>
               <InputLabel id="select-event-label">Select Event</InputLabel>
               <Select
@@ -208,7 +198,7 @@ function UploadVideoAndPdf() {
               </Select>
               <Typography p={1} color={"crimson"}>
                 {uploadAction === "Update"
-                  ? "Video and PPT are already added to the event. If you upload new PPT and Video it will replace the existing Video and PPT."
+                  ? "Warning : Video and PPT are already added to the event. If you upload new PPT and Video it will replace the existing Video and PPT."
                   : null}
               </Typography>
             </FormControl>

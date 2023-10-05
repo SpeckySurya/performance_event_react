@@ -6,12 +6,14 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import PageviewIcon from "@mui/icons-material/Pageview";
 import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
-import { Box, ToggleButton, Typography } from "@mui/material";
+import { Box, ToggleButton, Tooltip, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import { useContext, useEffect, useRef, useState } from "react";
 import { TbTargetArrow } from "react-icons/tb";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import BrushIcon from "@mui/icons-material/Brush";
 import dateFormatter, {
   addTime,
   convertTo12HourFormat,
@@ -24,6 +26,9 @@ import { useNavigate } from "react-router-dom";
 import ReactPlayer from "react-player";
 import ContentService from "../../services/ContentService";
 import MyContext from "../../context/MyContext";
+import PopupAlert from "../../components/PopupAlert/PopupAlert";
+import { findRoleFromToken } from "../../utils/TokenDecoder";
+import Role from "../../utils/Role";
 
 const EventPaper = styled(Paper)(() => ({
   width: 400,
@@ -47,11 +52,15 @@ const CustomPaper2 = styled(Paper)(() => ({
   width: 100,
 }));
 
-export default function DashboardEventCard({ event }) {
+export default function DashboardEventCard({ event, initialSetup }) {
+  const role = findRoleFromToken();
+
   const formattedDate = dateFormatter(event.events.date);
   const isOutdated = isPastDateTime(formattedDate, event.events.time);
   const startTime = convertTo12HourFormat(event.events.time);
   const endTime = addTime(startTime, event.events.duration);
+  const [dialog, setDialog] = useState({ open: false, action: null });
+
   const formattedTime = `${
     startTime[1] === ":" ? "0" + startTime : startTime
   } to ${endTime}`;
@@ -131,9 +140,54 @@ export default function DashboardEventCard({ event }) {
     };
   }, [play]);
 
+  const handleEventEdit = () => {
+    navigate("/dashboard/events/edit-event", { state: { event: event } });
+  };
+
+  const handleEventDelete = () => {
+    setDialog({ ...dialog, open: true });
+  };
+
+  useEffect(() => {
+    if (dialog.action === "Yes") {
+      const eventService = new EventService();
+      eventService
+        .deleteEvent(event.events.id)
+        .then((response) => {
+          if (response) {
+            setSnackbar(
+              <SnackbarComponent message="Event deleted" severity="success" />
+            );
+            initialSetup();
+          } else {
+            setSnackbar(
+              <SnackbarComponent message="Event not deleted" severity="error" />
+            );
+          }
+        })
+        .catch((error) => {
+          setSnackbar(
+            <SnackbarComponent
+              message="Something went wrong"
+              severity="error"
+            />
+          );
+        });
+    }
+  }, [dialog]);
+
   return (
     <Box m={1}>
       {snackbar}
+      <PopupAlert
+        control={{
+          dialog: dialog,
+          setDialog: (dialog) => setDialog({ ...dialog, open: false }),
+        }}
+        title="Alert"
+        content={"Do you really want to delete ?"}
+        action={{ first: "Yes", second: "No" }}
+      />
       {play && (
         <Box
           ref={videoPlayerRef}
@@ -141,6 +195,7 @@ export default function DashboardEventCard({ event }) {
             position: "fixed",
             zIndex: 999999,
             left: "calc(50% - 320px)",
+            top: "calc(50vh - 180px)",
           }}
         >
           <ReactPlayer url={eventData.video} controls />
@@ -243,37 +298,46 @@ export default function DashboardEventCard({ event }) {
               <Stack
                 direction={"row"}
                 spacing={1}
-                sx={{ cursor: "pointer", alignItems: "center" }}
+                sx={{ alignItems: "center" }}
               >
                 <Typography width={"30%"} py={1} fontSize={12}>
                   Status
                 </Typography>
-                <ToggleButton
-                  value="check"
-                  sx={{ width: "70%", height: 15 }}
-                  active={active}
-                  onChange={() => {
-                    setActive(!active);
-                  }}
+                <Tooltip
+                  title={"Click to " + (!active ? "Active" : "Inactive")}
                 >
-                  <Stack
-                    spacing={1}
-                    direction={"row"}
-                    onClick={() => handleEventStatus(event.events)}
+                  <ToggleButton
+                    value="check"
+                    sx={{
+                      width: "70%",
+                      height: 15,
+                      cursor: role === Role.VIEWER ? "default" : "cursor",
+                    }}
+                    active={active}
                   >
-                    <Typography fontSize={10}>
-                      {active ? "Active" : "Inactive"}
-                    </Typography>
-                    {active ? (
-                      <CheckIcon sx={{ fontSize: 16, color: "lightgreen" }} />
-                    ) : (
-                      <ClearIcon sx={{ fontSize: 16, color: "crimson" }} />
-                    )}
-                  </Stack>
-                </ToggleButton>
+                    <Stack
+                      spacing={1}
+                      direction={"row"}
+                      onClick={
+                        role === Role.VIEWER
+                          ? null
+                          : () => handleEventStatus(event.events)
+                      }
+                    >
+                      <Typography fontSize={10}>
+                        {active ? "Active" : "Inactive"}
+                      </Typography>
+                      {active ? (
+                        <CheckIcon sx={{ fontSize: 16, color: "lightgreen" }} />
+                      ) : (
+                        <ClearIcon sx={{ fontSize: 16, color: "crimson" }} />
+                      )}
+                    </Stack>
+                  </ToggleButton>
+                </Tooltip>
               </Stack>
             </Stack>
-            <Stack spacing={1} width={"40%"}>
+            <Stack spacing={1} width={"40%"} height={"180px"}>
               <Box variant="outlined" borderRadius={5} overflow={"hidden"}>
                 <img
                   width={"100%"}
@@ -282,67 +346,123 @@ export default function DashboardEventCard({ event }) {
                   alt="banner"
                 />
               </Box>
-              <Stack spacing="5px">
-                <Stack
-                  direction={"row"}
-                  alignItems={"center"}
-                  justifyContent={"end"}
-                  spacing={1}
-                  sx={{ cursor: "pointer" }}
-                  onClick={() => handlePlayVideo()}
-                >
-                  <Typography
-                    sx={{
-                      borderRadius: 2,
-                      fontSize: 10,
-                      color: "#D80032",
-                    }}
-                  >
-                    Watch Video
-                  </Typography>
-                  <PlayCircleFilledWhiteIcon
-                    sx={{ color: "#D80032" }}
-                    fontSize="10px"
-                  />
+              <Stack spacing={2}>
+                <Stack spacing="5px">
+                  <Tooltip title="Play recorded video">
+                    <Stack
+                      direction={"row"}
+                      alignItems={"center"}
+                      justifyContent={"end"}
+                      spacing={1}
+                      sx={{ cursor: "pointer" }}
+                      onClick={() => handlePlayVideo()}
+                    >
+                      <Typography
+                        sx={{
+                          borderRadius: 2,
+                          fontSize: 10,
+                          color: "#D80032",
+                        }}
+                      >
+                        Watch Video
+                      </Typography>
+                      <PlayCircleFilledWhiteIcon
+                        sx={{ color: "#D80032" }}
+                        fontSize="10px"
+                      />
+                    </Stack>
+                  </Tooltip>
+                  <Tooltip title="Download event PPT">
+                    <Stack
+                      direction={"row"}
+                      alignItems={"center"}
+                      justifyContent={"end"}
+                      spacing={1}
+                      sx={{ cursor: "pointer" }}
+                    >
+                      <Typography
+                        sx={{
+                          borderRadius: 2,
+                          fontSize: 10,
+                          color: "#219C90",
+                        }}
+                      >
+                        Download PPT
+                      </Typography>
+                      <DownloadIcon sx={{ color: "#219C90" }} fontSize="10px" />
+                    </Stack>
+                  </Tooltip>
+                  <Tooltip title="Upload recorded video and PPT of event">
+                    <Stack
+                      direction={"row"}
+                      alignItems={"center"}
+                      justifyContent={"end"}
+                      spacing={1}
+                      sx={{
+                        cursor: role === Role.VIEWER ? "default" : "cursor",
+                      }}
+                      onClick={
+                        role === Role.VIEWER
+                          ? null
+                          : () =>
+                              navigate("/dashboard/events/upload-event-data")
+                      }
+                    >
+                      <Typography
+                        sx={{
+                          borderRadius: 2,
+                          fontSize: 10,
+                          color: "#A8DF8E",
+                        }}
+                      >
+                        Upload
+                      </Typography>
+                      <CloudUploadIcon
+                        sx={{ color: "#A8DF8E" }}
+                        fontSize="10px"
+                      />
+                    </Stack>
+                  </Tooltip>
                 </Stack>
-                <Stack
-                  direction={"row"}
-                  alignItems={"center"}
-                  justifyContent={"end"}
-                  spacing={1}
-                  sx={{ cursor: "pointer" }}
-                >
-                  <Typography
-                    sx={{
-                      borderRadius: 2,
-                      fontSize: 10,
-                      color: "#219C90",
-                    }}
-                  >
-                    Download PPT
-                  </Typography>
-                  <DownloadIcon sx={{ color: "#219C90" }} fontSize="10px" />
-                </Stack>
-                <Stack
-                  direction={"row"}
-                  alignItems={"center"}
-                  justifyContent={"end"}
-                  spacing={1}
-                  sx={{ cursor: "pointer" }}
-                  onClick={() =>
-                    navigate("/dashboard/events/upload-event-data")
-                  }
-                >
-                  <Typography
-                    sx={{
-                      borderRadius: 2,
-                      fontSize: 10,
-                      color: "#A8DF8E",
-                    }}
-                  >
-                    Upload
-                  </Typography>
-                  <CloudUploadIcon sx={{ color: "#A8DF8E" }} fontSize="10px" />
+                <Stack spacing={1} direction={"row"} justifyContent={"end"}>
+                  <Tooltip title="Delete Event">
+                    <Stack
+                      onClick={
+                        role === Role.VIEWER || role === Role.EDITOR
+                          ? null
+                          : handleEventDelete
+                      }
+                      sx={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: 25,
+                        height: 25,
+                        borderRadius: "50%",
+                        backgroundColor: "rgb(255,160,122, 0.5)",
+                        cursor: role === Role.VIEWER ? "default" : "pointer",
+                      }}
+                    >
+                      <DeleteForeverIcon
+                        sx={{ fontSize: 20, color: "crimson" }}
+                      />
+                    </Stack>
+                  </Tooltip>
+                  <Tooltip title="Edit Event">
+                    <Stack
+                      onClick={role === Role.VIEWER ? null : handleEventEdit}
+                      sx={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: 25,
+                        height: 25,
+                        borderRadius: "50%",
+                        backgroundColor: "rgb(199, 234, 70, 0.5)",
+                        cursor: role === Role.VIEWER ? "default" : "pointer",
+                      }}
+                    >
+                      <BrushIcon sx={{ fontSize: 20, color: "#0B6623" }} />
+                    </Stack>
+                  </Tooltip>
                 </Stack>
               </Stack>
             </Stack>
@@ -380,34 +500,52 @@ export default function DashboardEventCard({ event }) {
             <CustomPaper2
               variant="outlined"
               sx={{ backgroundColor: "#CBFFA9", cursor: "pointer" }}
-              onClick={() => navigate("/dashboard/events/manage-participant")}
+              onClick={() =>
+                navigate("/dashboard/events/manage-participant", {
+                  state: event,
+                })
+              }
             >
-              <Stack alignItems={"center"} justifyContent={"center"}>
-                <PageviewIcon sx={{ color: "#8EAC50" }} />
-                <Typography
-                  textAlign={"center"}
-                  color={"#8EAC50"}
-                  fontSize={10}
-                >
-                  Participants
-                </Typography>
-              </Stack>
+              <Tooltip title="View registered participant">
+                <Stack alignItems={"center"} justifyContent={"center"}>
+                  <PageviewIcon sx={{ color: "#8EAC50" }} />
+                  <Typography
+                    textAlign={"center"}
+                    color={"#8EAC50"}
+                    fontSize={10}
+                  >
+                    Participants
+                  </Typography>
+                </Stack>
+              </Tooltip>
             </CustomPaper2>
             <CustomPaper2
               variant="outlined"
-              sx={{ backgroundColor: "#A6F6FF", cursor: "pointer" }}
-              onClick={() => navigate("/dashboard/events/notify-participant")}
+              sx={{
+                backgroundColor: "#A6F6FF",
+                cursor: role === Role.VIEWER ? "default" : "pointer",
+              }}
+              onClick={
+                role === Role.VIEWER
+                  ? null
+                  : () =>
+                      navigate("/dashboard/events/notify-participant", {
+                        state: { event: event },
+                      })
+              }
             >
-              <Stack alignItems={"center"} justifyContent={"center"}>
-                <NotificationsActiveIcon sx={{ color: "#6499E9" }} />
-                <Typography
-                  textAlign={"center"}
-                  color={"#6499E9"}
-                  fontSize={10}
-                >
-                  Notify
-                </Typography>
-              </Stack>
+              <Tooltip title="Send reminder email to participants">
+                <Stack alignItems={"center"} justifyContent={"center"}>
+                  <NotificationsActiveIcon sx={{ color: "#6499E9" }} />
+                  <Typography
+                    textAlign={"center"}
+                    color={"#6499E9"}
+                    fontSize={10}
+                  >
+                    Notify
+                  </Typography>
+                </Stack>
+              </Tooltip>
             </CustomPaper2>
           </Stack>
         </Stack>

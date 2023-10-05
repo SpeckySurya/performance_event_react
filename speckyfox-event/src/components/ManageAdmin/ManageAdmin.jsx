@@ -15,6 +15,7 @@ import PopupAlert from "../PopupAlert/PopupAlert";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
 import "./ManageAdmin.css";
 import MyContext from "../../context/MyContext";
+import Role from "../../utils/Role";
 export default function ManageAdmin() {
   const [admins, setAdmins] = useState([]);
   const [roles, setRoles] = useState([]);
@@ -192,23 +193,29 @@ export default function ManageAdmin() {
                         {admin.role}
                       </Button>
                     )
-                  ) : admin.role === "SUPER_ADMIN" || admin.role == "ADMIN" ? (
-                    <Button variant="outlined" disabled>
-                      {admin.role}
-                    </Button>
+                  ) : loggedInUserRole === Role.ADMIN ? (
+                    admin.role === "SUPER_ADMIN" || admin.role == "ADMIN" ? (
+                      <Button variant="outlined" disabled>
+                        {admin.role}
+                      </Button>
+                    ) : (
+                      <Select
+                        value={admin.role}
+                        onChange={(e) => roleHandler(e, admin.id)}
+                        name="role"
+                      >
+                        {roles
+                          .filter((role, index) => role !== "ADMIN")
+                          .map((role, index) => (
+                            <MenuItem key={index} value={role}>
+                              {role}
+                            </MenuItem>
+                          ))}
+                      </Select>
+                    )
                   ) : (
-                    <Select
-                      value={admin.role}
-                      onChange={(e) => roleHandler(e, admin.id)}
-                      name="role"
-                    >
-                      {roles
-                        .filter((role, index) => role !== "ADMIN")
-                        .map((role, index) => (
-                          <MenuItem key={index} value={role}>
-                            {role}
-                          </MenuItem>
-                        ))}
+                    <Select value={admin.role} disabled>
+                      <MenuItem value={admin.role}>{admin.role}</MenuItem>
                     </Select>
                   )}
                 </TableCell>
@@ -233,22 +240,28 @@ export default function ManageAdmin() {
                         Delete
                       </Button>
                     )
-                  ) : admin.role === "SUPER_ADMIN" || admin.role === "ADMIN" ? (
-                    <Button variant="outlined" disabled>
-                      Delete
-                    </Button>
+                  ) : loggedInUserRole === Role.ADMIN ? (
+                    admin.role === "SUPER_ADMIN" || admin.role === "ADMIN" ? (
+                      <Button variant="outlined" disabled>
+                        Delete
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() =>
+                          setDialog({
+                            ...dialog,
+                            open: true,
+                            data: { adminId: admin.id },
+                          })
+                        }
+                        variant="contained"
+                        color="error"
+                      >
+                        Delete
+                      </Button>
+                    )
                   ) : (
-                    <Button
-                      onClick={() =>
-                        setDialog({
-                          ...dialog,
-                          open: true,
-                          data: { adminId: admin.id },
-                        })
-                      }
-                      variant="contained"
-                      color="error"
-                    >
+                    <Button variant="outlined" disabled>
                       Delete
                     </Button>
                   )}

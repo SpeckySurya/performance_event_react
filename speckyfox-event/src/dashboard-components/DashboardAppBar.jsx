@@ -13,7 +13,10 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
+import PersonIcon from "@mui/icons-material/Person";
 import { useNavigate } from "react-router-dom";
+import { Stack } from "@mui/material";
+import { findEmailFromToken, findRoleFromToken } from "../utils/TokenDecoder";
 
 export default function DashboardAppBar({ setOpen, open }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -23,7 +26,7 @@ export default function DashboardAppBar({ setOpen, open }) {
   const settings = [
     {
       title: "Change Password",
-      action: () => alert("Change Password"),
+      action: () => navigate("/dashboard/change-password"),
     },
     {
       title: "Logout",
@@ -113,11 +116,11 @@ export default function DashboardAppBar({ setOpen, open }) {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar>{findRoleFromToken().charAt(0)}</Avatar>
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: "45px", zIndex: 99999 }}
+              sx={{ mt: "45px", zIndex: 99999, maxWidth: 300 }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
@@ -132,9 +135,30 @@ export default function DashboardAppBar({ setOpen, open }) {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
+              <Stack
+                sx={{ justifyContent: "center", alignItems: "center", p: 1 }}
+              >
+                <Typography>Hello</Typography>
+                <Typography
+                  color={"black"}
+                  fontSize={12}
+                  sx={{
+                    wordBreak: "break-word",
+                  }}
+                >
+                  {findEmailFromToken()}
+                </Typography>
+              </Stack>
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center" onClick={setting.action}>
+                  <Typography
+                    fontSize={14}
+                    border={"1px solid whitesmoke"}
+                    padding={"5px 30px 5px 5px"}
+                    borderRadius={2}
+                    width={"100%"}
+                    onClick={setting.action}
+                  >
                     {setting.title}
                   </Typography>
                 </MenuItem>

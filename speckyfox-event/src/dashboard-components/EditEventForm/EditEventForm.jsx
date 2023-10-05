@@ -1,13 +1,43 @@
 import { Alert, Box, CircularProgress, Typography } from "@mui/material";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import EventService from "../../services/EventService";
-import { toDDMMYYYY } from "../../utils/DateFormatter";
-import Duration from "../Duration/Duration";
-import "./EventForm.css";
+import dateFormatter, { toDDMMYYYY } from "../../utils/DateFormatter";
+import Duration from "../../components/Duration/Duration";
+import SpeakerService from "../../services/SpeakerService";
+import SnackbarComponent from "../../components/SnackbarComponent/SnackbarComponent";
+import MyContext from "../../context/MyContext";
 
-const EventForm = (props) => {
-  const [formData, setFormData] = useState(props.formDataDefault);
+export default function EditEventForm() {
+  const location = useLocation();
+
+  function getDate() {
+    const dateObj = dateFormatter(location.state.event.events.date);
+    return `${dateObj.year}-${Number(dateObj.month) + 1 < 10 ? "0" : ""}${
+      Number(dateObj.month) + 1
+    }-${dateObj.day}`;
+  }
+
+  const formDataDefault = {
+    eventId: location.state.event.events.id,
+    title: location.state.event.events.title,
+    description: location.state.event.events.description,
+    date: getDate(),
+    time: location.state.event.events.time.split(" ")[0],
+    speakerId: location.state.event.events.speaker.id,
+    meetingUrl: location.state.event.events.meetingUrl,
+    location: location.state.event.events.location,
+    active: location.state.event.events.active,
+    banner: location.state.event.events.eventBanner,
+    duration: {
+      hours: Number(location.state.event.events.duration.split(":")[0]),
+      minutes: Number(location.state.event.events.duration.split(":")[1]),
+    },
+    contactTo: location.state.event.events.contactTo,
+    acceptRegistration: location.state.event.events.acceptRegistration,
+  };
+
+  const [formData, setFormData] = useState(formDataDefault);
   const [selectedFile, setSelectedFile] = useState(null);
   const [speakerSelect, setSpeakerSelect] = useState("");
   const [isAlertVisible, setIsAlertVisible] = useState(false);
@@ -15,7 +45,9 @@ const EventForm = (props) => {
   const [snackbar, setSnackbar] = useState(null);
   const [currentSpeaker, setCurrentSpeaker] = useState("Select Speaker");
   const [loading, setLoading] = useState(false);
-  const [duration, setDuration] = useState(props.formDataDefault.duration);
+  const [duration, setDuration] = useState(formDataDefault.duration);
+  const [speakers, setSpeakers] = useState([]);
+
   const handleChange = (event) => {
     if (event.target.name === "speakerId") {
       setSpeakerSelect(event.target.value);
@@ -23,6 +55,25 @@ const EventForm = (props) => {
     let { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+  const { context } = useContext(MyContext);
+
+  function initialSetup() {
+    const speakerService = new SpeakerService();
+    speakerService.getAllSpeakers().then((response) => {
+      setSpeakers(response.data);
+    });
+  }
+
+  useEffect(() => {
+    initialSetup();
+    context.breadCrumb.updatePages([
+      { name: "Events", route: () => navigate("/dashboard/events") },
+      {
+        name: "Edit Event",
+        route: () => navigate("/dashboard/events/edit-event"),
+      },
+    ]);
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -39,41 +90,24 @@ const EventForm = (props) => {
     request.append("date", toDDMMYYYY(formData.date));
 
     const eventService = new EventService();
-    if (props.formTitle === "Update") {
-      eventService
-        .updateEvent(formData.eventId, request)
-        .then((response) => {
-          setIsAlertVisible(true);
-          setLoading(false);
-          setTimeout(() => props.handleBackButton(), 1000);
-        })
-        .catch((error) => {
-          setLoading(false);
-          setSnackbar(
-            <SnackbarComponent
-              message="Something went wrong"
-              severity="error"
-            />
-          );
-        });
-    } else {
-      eventService
-        .saveEvent(request)
-        .then((response) => {
-          setIsAlertVisible(true);
-          setLoading(false);
-          setTimeout(() => props.setSelected("show"), 1000);
-        })
-        .catch((error) => {
-          setLoading(false);
-          setSnackbar(
-            <SnackbarComponent
-              message="Something went wrong"
-              severity="success"
-            />
-          );
-        });
-    }
+    eventService
+      .updateEvent(formData.eventId, request)
+      .then((response) => {
+        setIsAlertVisible(true);
+        setLoading(false);
+        setTimeout(() => {
+          navigate("/dashboard/events");
+        }, 1500);
+      })
+      .catch((error) => {
+        setLoading(false);
+        setSnackbar(
+          <SnackbarComponent
+            message="Something went wrong"
+            severity="success"
+          />
+        );
+      });
   };
 
   const handleAlertClose = () => {
@@ -87,7 +121,7 @@ const EventForm = (props) => {
 
   return (
     <div className="event-form-container">
-      <h1>{props.formTitle} an Event</h1>
+      <h1>Edit Event</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="title">Title</label>
@@ -200,12 +234,10 @@ const EventForm = (props) => {
             onChange={handleFileChange}
             required
           />
-          {props.formTitle === "Update" ? (
-            <img
-              style={{ width: "100px", margin: "10px" }}
-              src={props.formDataDefault.banner}
-            />
-          ) : null}
+          <img
+            style={{ width: "100px", margin: "10px" }}
+            src={formDataDefault.banner}
+          />
         </div>
         <div className="form-group">
           <label htmlFor="speakerId">Speaker</label>
@@ -213,15 +245,13 @@ const EventForm = (props) => {
             name="speakerId"
             id="speakerId"
             onChange={handleChange}
-            value={
-              props.formTitle === "Update" ? formData.speakerId : speakerSelect
-            }
+            value={formDataDefault.speakerId}
             required
           >
             <option disabled value="">
               Select speaker
             </option>
-            {props.speakers.map((speaker) => (
+            {speakers.map((speaker) => (
               <option key={speaker.id} value={speaker.id}>
                 {speaker.name}
               </option>
@@ -243,7 +273,7 @@ const EventForm = (props) => {
           {loading ? (
             <CircularProgress size={20} color={"error"} />
           ) : (
-            props.formTitle + " Event"
+            "Update Event"
           )}
         </button>
       </form>
@@ -254,13 +284,11 @@ const EventForm = (props) => {
               handleAlertClose();
             }}
           >
-            Event {props.formTitle}d Successfully !
+            Event Updated Successfully !
           </Alert>
         )}
       </Box>
       {snackbar}
     </div>
   );
-};
-
-export default EventForm;
+}

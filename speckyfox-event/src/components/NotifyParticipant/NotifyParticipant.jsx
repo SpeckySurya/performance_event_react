@@ -9,76 +9,66 @@ import {
   MenuItem,
   Select,
   Typography,
+  darken,
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import EventService from "../../services/EventService";
 import MyContext from "../../context/MyContext";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const NotifyParticipant = () => {
   const [selectedEvent, setSelectedEvent] = useState("");
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [selectAll, setSelectAll] = useState(true);
   const [events, setEvents] = useState([]);
-  const [btnDisabled, setBtnDisabled] = useState(true);
+  const [btnDisabled, setBtnDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const { context } = useContext(MyContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     context.breadCrumb.updatePages([
       { name: "Events", route: () => navigate("/dashboard/events") },
       {
         name: "Notify Participant",
-        route: () => navigate("/dashboard/events/notify-participant"),
       },
     ]);
   }, []);
 
   useEffect(() => {
-    const eventService = new EventService();
-    eventService.getAllEvents().then((response) => {
-      const currentDate = new Date();
-      const upcomingEvents = response.data.filter((event) => {
-        const eventDate = new Date(event.events.date);
-        return eventDate > currentDate;
-      });
-      setEvents(upcomingEvents);
-    });
-  }, []);
-
-  const handleEventChange = (e) => {
-    const eventId = e.target.value;
-    if (eventId === -1) {
-      setSelectedEvent(eventId);
-      setSelectedUsers([]);
-      setBtnDisabled(true);
-      return;
-    }
-    setSelectedEvent(eventId);
-    const obj = events.filter((event) => event.events.id === eventId)[0];
-    const userList = obj.events.users.map(
+    const userList = location.state.event.events.users.map(
       (user) => `${user.firstName} ${user.lastName}`
     );
     setSelectedUsers(userList);
-    setBtnDisabled(false);
-  };
+  }, []);
 
   const handleUserSelectAll = () => {
     if (selectAll) {
       setSelectedUsers([]);
     } else {
-      const obj = events.filter(
-        (event) => event.events.id === selectedEvent
-      )[0];
-      const userList = obj.events.users.map(
+      const userList = location.state.event.events.users.map(
         (user) => `${user.firstName} ${user.lastName}`
       );
       setSelectedUsers(userList);
     }
     setSelectAll(!selectAll);
   };
+
+  useEffect(() => {
+    const len = location.state.event.events.users.length;
+    if (selectedUsers.length === 0) {
+      setBtnDisabled(true);
+    } else {
+      setBtnDisabled(false);
+    }
+    if (selectedUsers.length === len && selectedUsers.length !== 0) {
+      setSelectAll(true);
+    } else {
+      setSelectAll(false);
+    }
+  }, [selectedUsers]);
 
   const handleAlertClose = () => {
     setIsAlertVisible(false);
@@ -94,6 +84,7 @@ const NotifyParticipant = () => {
         setIsAlertVisible(true);
       })
       .catch((error) => {
+        setLoading(false);
         alert("Something went wrong on our end.");
       });
   };
@@ -108,31 +99,42 @@ const NotifyParticipant = () => {
         <Select
           labelId="select-event-label"
           label="Select Event"
-          value={selectedEvent}
-          onChange={handleEventChange}
+          value={location.state.event.events.id}
         >
-          <MenuItem value={-1}>
-            <Typography fontStyle={"italic"}>None</Typography>
+          <MenuItem value={location.state.event.events.id}>
+            {location.state.event.events.title}
           </MenuItem>
-          {events.map((event) => (
-            <MenuItem key={event.events.id} value={event.events.id}>
-              {event.events.title}
-            </MenuItem>
-          ))}
         </Select>
       </FormControl>
 
       <Box textAlign={"end"}>
         <Button
-          variant={btnDisabled ? "outlined" : "contained"}
-          disabled={btnDisabled}
+          variant={"contained"}
           onClick={handleUserSelectAll}
-          sx={{ ml: 2, mt: 3 }}
+          sx={{
+            height: "40px",
+            ml: 2,
+            mt: 3,
+            background: "#947f2b",
+            color: "white",
+            ":hover": {
+              background: darken("#947f2b", 0.2),
+            },
+          }}
         >
           {selectAll ? "Deselect All" : "Select All"}
         </Button>
         <Button
-          sx={{ ml: 2, mt: 3 }}
+          sx={{
+            height: "40px",
+            ml: 2,
+            mt: 3,
+            background: "#947f2b",
+            color: "white",
+            ":hover": {
+              background: darken("#947f2b", 0.2),
+            },
+          }}
           variant={btnDisabled ? "outlined" : "contained"}
           disabled={btnDisabled}
           onClick={handleNotify}
