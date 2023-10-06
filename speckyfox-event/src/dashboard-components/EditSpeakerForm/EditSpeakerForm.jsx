@@ -48,8 +48,7 @@ function EditSpeakerForm() {
     context.breadCrumb.updatePages([
       { name: "Speakers", route: () => navigate("/dashboard/speakers") },
       {
-        name: "Create Speaker",
-        route: () => navigate("/dashboard/speakers/create-speaker"),
+        name: "Edit Speaker",
       },
     ]);
   }, []);

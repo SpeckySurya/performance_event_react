@@ -56,7 +56,6 @@ export default function CreateEventForm() {
       { name: "Events", route: () => navigate("/dashboard/events") },
       {
         name: "Create Event",
-        route: () => navigate("/dashboard/events/create-event"),
       },
     ]);
   }, []);

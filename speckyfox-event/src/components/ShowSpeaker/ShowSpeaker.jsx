@@ -8,6 +8,7 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -37,6 +38,7 @@ const ShowSpeaker = () => {
   const [popUpMsg, setPopUpmsg] = useState("");
   const { context } = useContext(MyContext);
   const [snackbar, setSnackbar] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const handleClose = () => {
@@ -45,9 +47,17 @@ const ShowSpeaker = () => {
   const [speakerId, setSpeakerId] = useState(-1);
 
   function intialSetup() {
-    speakerService.getAllSpeakers().then((response) => {
-      setSpeakers(response.data);
-    });
+    speakerService
+      .getAllSpeakers()
+      .then((response) => {
+        setSpeakers(response.data);
+      })
+      .catch((error) => {
+        alert(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }
 
   useEffect(() => {
@@ -111,52 +121,56 @@ const ShowSpeaker = () => {
           action={{ first: "Yes", second: "No" }}
         />
         <Stack flexWrap={"wrap"} direction={"row"} justifyContent={"center"}>
-          {speakers.map((speaker) => {
-            return (
-              <>
-                <Card key={speaker.id} sx={{ width: 310, m: 1 }}>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={speaker.picture}
-                    alt={speaker.name}
-                  />
-                  <CardContent>
-                    <Typography variant="h6" component="div">
-                      {speaker.name}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {speaker.designation}
-                    </Typography>
-                  </CardContent>
-                  {role !== Role.VIEWER && (
-                    <CardActions>
-                      {role !== Role.EDITOR && (
+          {loading ? (
+            <CircularProgress sx={{ color: "lightgray" }} />
+          ) : (
+            speakers.map((speaker) => {
+              return (
+                <>
+                  <Card key={speaker.id} sx={{ width: 310, m: 1 }}>
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      image={speaker.picture}
+                      alt={speaker.name}
+                    />
+                    <CardContent>
+                      <Typography variant="h6" component="div">
+                        {speaker.name}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {speaker.designation}
+                      </Typography>
+                    </CardContent>
+                    {role !== Role.VIEWER && (
+                      <CardActions>
+                        {role !== Role.EDITOR && (
+                          <Button
+                            variant="contained"
+                            color="error"
+                            style={{ width: "50%" }}
+                            startIcon={<DeleteIcon />}
+                            onClick={() => onDelete(speaker.id)}
+                          >
+                            Delete
+                          </Button>
+                        )}
                         <Button
                           variant="contained"
-                          color="error"
+                          color="success"
                           style={{ width: "50%" }}
-                          startIcon={<DeleteIcon />}
-                          onClick={() => onDelete(speaker.id)}
+                          startIcon={<EditIcon />}
+                          onClick={() => editspeakerfunction(speaker)}
                         >
-                          Delete
+                          Edit
                         </Button>
-                      )}
-                      <Button
-                        variant="contained"
-                        color="success"
-                        style={{ width: "50%" }}
-                        startIcon={<EditIcon />}
-                        onClick={() => editspeakerfunction(speaker)}
-                      >
-                        Edit
-                      </Button>
-                    </CardActions>
-                  )}
-                </Card>
-              </>
-            );
-          })}
+                      </CardActions>
+                    )}
+                  </Card>
+                </>
+              );
+            })
+          )}
         </Stack>
       </div>
     </>

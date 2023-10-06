@@ -100,6 +100,7 @@ const NotifyParticipant = () => {
           labelId="select-event-label"
           label="Select Event"
           value={location.state.event.events.id}
+          disabled
         >
           <MenuItem value={location.state.event.events.id}>
             {location.state.event.events.title}
@@ -150,7 +151,7 @@ const NotifyParticipant = () => {
         {selectedUsers.length === 0 ? (
           <Typography>No participants belong to the selected event.</Typography>
         ) : (
-          <Box maxHeight={300} overflow={"scroll"}>
+          <Box maxHeight={280} overflow={"auto"}>
             {selectedUsers.map((user, index) => (
               <Box key={index} display="flex" alignItems="center" mb={1}>
                 <Checkbox

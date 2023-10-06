@@ -35,10 +35,11 @@ import TermsAndConditionsPage from "./pages/TermsAndConditionsPage/TermsAndCondi
 import PrivacyPage from "./pages/PrivacyPage/PrivacyPage";
 import AuthRoutes from "./routes/AuthRoutes";
 import UnAuthRoutes from "./routes/UnauthRoutes";
+import { SnackbarProvider } from "material-ui-snackbar-provider";
 function App() {
   const { context } = useContext(MyContext);
   return (
-    <>
+    <SnackbarProvider SnackbarProps={{ autoHideDuration: 4000 }}>
       <Box
         className={"pop-up-background"}
         display={context.popUpBackground.popUpBackgroundVisible}
@@ -47,7 +48,7 @@ function App() {
         {AuthRoutes}
         {UnAuthRoutes}
       </Routes>
-    </>
+    </SnackbarProvider>
   );
 }
 

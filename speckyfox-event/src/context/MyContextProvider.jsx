@@ -8,6 +8,7 @@ function MyContextProvider({ children }) {
     { name: "Home", icon: <HomeIcon fontSize="small" /> },
   ]);
   const [popUpBackgroundVisible, setPopUpBackgroundVisible] = useState("none");
+  const [eventFilter, setEventFilter] = useState("all");
   const navigate = useNavigate();
 
   const updatePages = (newValue) => {
@@ -29,6 +30,10 @@ function MyContextProvider({ children }) {
           popUpBackground: {
             popUpBackgroundVisible,
             setPopUpBackgroundVisible,
+          },
+          eventFilter: {
+            eventFilter,
+            setEventFilter,
           },
         },
       }}
