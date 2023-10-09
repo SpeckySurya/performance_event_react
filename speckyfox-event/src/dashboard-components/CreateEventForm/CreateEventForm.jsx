@@ -162,6 +162,7 @@ export default function CreateEventForm() {
             placeholder="Meeting URL"
             value={formData.meetingUrl}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="form-group">

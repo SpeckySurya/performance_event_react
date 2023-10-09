@@ -77,8 +77,9 @@ const NotifyParticipant = () => {
   const handleNotify = () => {
     setLoading(true);
     const eventService = new EventService();
+
     eventService
-      .notifyUsers(selectedEvent)
+      .notifyUsers(location.state.event.events.id)
       .then((response) => {
         setLoading(false);
         setIsAlertVisible(true);
