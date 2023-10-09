@@ -9,6 +9,7 @@ function MyContextProvider({ children }) {
   ]);
   const [popUpBackgroundVisible, setPopUpBackgroundVisible] = useState("none");
   const [eventFilter, setEventFilter] = useState("all");
+  const [events, setEvents] = useState([]);
   const navigate = useNavigate();
 
   const updatePages = (newValue) => {
@@ -34,6 +35,10 @@ function MyContextProvider({ children }) {
           eventFilter: {
             eventFilter,
             setEventFilter,
+          },
+          events: {
+            events,
+            setEvents,
           },
         },
       }}

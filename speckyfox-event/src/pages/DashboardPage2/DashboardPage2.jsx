@@ -138,7 +138,10 @@ export default function DashboardPage2() {
     if (sessionStorage.getItem("token") === null) {
       navigate("/login");
     }
-    if (redirectToEvent.includes(location.pathname)) {
+    if (
+      redirectToEvent.includes(location.pathname) ||
+      location.pathname.includes("/dashboard")
+    ) {
       navigate("/dashboard/events");
     } else if (redirectToSpeaker.includes(location.pathname)) {
       navigate("/dashboard/speakers");

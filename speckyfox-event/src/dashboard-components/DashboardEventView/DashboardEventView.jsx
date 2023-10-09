@@ -1,4 +1,4 @@
-import { CircularProgress, Stack } from "@mui/material";
+import { CircularProgress, Stack, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MyContext from "../../context/MyContext";
@@ -8,8 +8,8 @@ import "./DashboardEventView.css";
 import dateFormatter, { isPastDateTime } from "../../utils/DateFormatter";
 
 export default function DashboardEventView() {
-  const [events, setEvents] = useState([]);
   const { context } = useContext(MyContext);
+  const [events, setEvents] = useState([]);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
@@ -34,10 +34,12 @@ export default function DashboardEventView() {
   }
 
   const initialSetup = () => {
+    setLoading(true);
     const eventService = new EventService();
     eventService
       .getAllEvents()
       .then((response) => {
+        context.events.setEvents(response.data);
         filterEvents(response.data);
       })
       .catch((error) => {
@@ -49,17 +51,21 @@ export default function DashboardEventView() {
   };
 
   useEffect(() => {
+    initialSetup();
+  }, []);
+
+  useEffect(() => {
     context.breadCrumb.updatePages([
       { name: "Events", route: () => navigate("/dashboard/events") },
     ]);
-    initialSetup();
+    filterEvents(context.events.events);
   }, [context.eventFilter.eventFilter]);
 
   return (
     <Stack direction="row" flexWrap={"wrap"} justifyContent={"center"}>
       {loading ? (
         <CircularProgress sx={{ color: "lightgray" }} />
-      ) : (
+      ) : events.length > 0 ? (
         events.map((event, index) => (
           <DashboardEventCard
             key={index}
@@ -67,6 +73,8 @@ export default function DashboardEventView() {
             initialSetup={initialSetup}
           />
         ))
+      ) : (
+        <Typography color="gray">No Events</Typography>
       )}
     </Stack>
   );
