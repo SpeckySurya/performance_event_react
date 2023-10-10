@@ -40,7 +40,7 @@ export default function ManageAdmin() {
 
   useEffect(() => {
     context.breadCrumb.updatePages([{ name: "Users" }]);
-  });
+  }, []);
 
   function dateConversion(isoDate) {
     const date = new Date(isoDate);

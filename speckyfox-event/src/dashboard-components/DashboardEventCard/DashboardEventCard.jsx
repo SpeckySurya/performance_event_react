@@ -58,7 +58,7 @@ const CustomPaper2 = styled(Paper)(() => ({
   width: 100,
 }));
 
-const snackbarMsg = "Not allowed !";
+const snackbarMsg = "You do not have permission to make this change !";
 
 export default function DashboardEventCard({ event, initialSetup }) {
   const role = findRoleFromToken();
@@ -564,12 +564,18 @@ export default function DashboardEventCard({ event, initialSetup }) {
             borderRadius={2}
             direction={"row"}
             spacing={2}
+            onClick={() =>
+              navigate("/dashboard/events/manage-participant", {
+                state: event,
+              })
+            }
           >
             <Stack
               justifyContent={"center"}
               direction={"row"}
               sx={{
                 width: "50%",
+                cursor: "pointer",
               }}
             >
               <Stack

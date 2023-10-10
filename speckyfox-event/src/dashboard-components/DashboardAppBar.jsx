@@ -55,7 +55,7 @@ export default function DashboardAppBar({ setOpen, open }) {
 
   return (
     <AppBar position="fixed" sx={{ zIndex: 9999, backgroundColor: "#735F32" }}>
-      <Container maxWidth="xl">
+      <Stack px={2}>
         <Toolbar disableGutters>
           <SpaceDashboardIcon
             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
@@ -166,7 +166,7 @@ export default function DashboardAppBar({ setOpen, open }) {
             </Menu>
           </Box>
         </Toolbar>
-      </Container>
+      </Stack>
     </AppBar>
   );
 }

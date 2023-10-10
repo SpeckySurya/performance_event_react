@@ -194,6 +194,7 @@ function EditSpeakerForm() {
                     onChange={handleFileChange}
                     onBlur={handleBlur}
                     fullWidth
+                    required
                   />
                   <img
                     style={{ width: "100px", margin: "10px" }}

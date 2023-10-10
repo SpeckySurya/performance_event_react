@@ -1,10 +1,10 @@
-import { CircularProgress, Stack } from "@mui/material";
+import { Button, CircularProgress, Stack } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import RegistrationService from "../../services/RegistrationService";
 import "./RegistrationForm.css";
 
-const RegistrationForm = () => {
+const RegistrationForm = ({ isOutdated }) => {
   const params = useParams();
   const [formData, setFormData] = useState({
     firstName: "",
@@ -180,13 +180,19 @@ const RegistrationForm = () => {
           Note : All <span className="marks"> * </span> field are required
         </p>
       </span>
-      <button type="submit" className="flex-jcc-aic">
-        {loading ? (
-          <CircularProgress size={24.5} style={{ color: "white" }} />
-        ) : (
-          "Submit"
-        )}
-      </button>
+      {isOutdated ? (
+        <Button style={{ backgroundColor: "lightgray" }} disabled>
+          Register
+        </Button>
+      ) : (
+        <button type="submit" className="flex-jcc-aic">
+          {loading ? (
+            <CircularProgress size={24.5} style={{ color: "white" }} />
+          ) : (
+            "Submit"
+          )}
+        </button>
+      )}
     </form>
   );
 };

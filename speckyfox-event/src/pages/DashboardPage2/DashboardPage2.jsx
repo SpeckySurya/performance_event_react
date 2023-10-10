@@ -161,6 +161,9 @@ export default function DashboardPage2() {
       case "/dashboard/speakers": {
         return "Add new speaker";
       }
+      default: {
+        return "";
+      }
     }
   };
 
@@ -248,7 +251,7 @@ export default function DashboardPage2() {
                 justifyContent={"center"}
               >
                 <Box>{/* <CustomSearchField /> */}</Box>
-                {location.pathname.includes("/dashboard/events") && (
+                {location.pathname === "/dashboard/events" && (
                   <StyledToggleButtonGroup
                     value={alignment}
                     exclusive
@@ -281,22 +284,24 @@ export default function DashboardPage2() {
                     </ToggleButton>
                   </StyledToggleButtonGroup>
                 )}
-                <Tooltip
-                  title={addButtonTitle()}
-                  sx={{
-                    cursor:
-                      role === Role.VIEWER || role === Role.EDITOR
-                        ? "default"
-                        : "pointer",
-                  }}
-                >
-                  <Box
-                    className={"add-icon-style"}
-                    onClick={handleAddIconClick}
+                {addButtonTitle() && (
+                  <Tooltip
+                    title={addButtonTitle()}
+                    sx={{
+                      cursor:
+                        role === Role.VIEWER || role === Role.EDITOR
+                          ? "default"
+                          : "pointer",
+                    }}
                   >
-                    <AddIcon />
-                  </Box>
-                </Tooltip>
+                    <Box
+                      className={"add-icon-style"}
+                      onClick={handleAddIconClick}
+                    >
+                      <AddIcon />
+                    </Box>
+                  </Tooltip>
+                )}
               </Stack>
             </Stack>
             <Box p={1} className={"custom-scroll"} height={"74vh"}>

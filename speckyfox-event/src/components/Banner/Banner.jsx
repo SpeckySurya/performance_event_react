@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import dateFormatter, {
   addTime,
   convertTo12HourFormat,
+  isPastDateTime,
 } from "../../utils/DateFormatter";
 import RegistrationForm from "../RegistrationForm/RegistrationForm";
 import "./Banner.css";
@@ -131,7 +132,9 @@ export const Banner = (props) => {
         </div>
       ) : null}
       <section className="right" ref={registrationFormRef}>
-        <RegistrationForm />
+        <RegistrationForm
+          isOutdated={isPastDateTime(formattedDate, props.event.time)}
+        />
       </section>
     </div>
   );
