@@ -27,6 +27,7 @@ export default function HomeConfig() {
   const [snackbar, setSnackbar] = useState(null);
   const [pageLoading, setPageLoading] = useState(true);
   const { context } = useContext(MyContext);
+  const [homeConfigFormTitle, setHomeConfigFormTitle] = useState("Create");
   const homeConfigService = new HomeConfigService();
   const navigate = useNavigate();
 
@@ -43,6 +44,7 @@ export default function HomeConfig() {
     homeConfigService
       .getHomeConfigById()
       .then((response) => {
+        setHomeConfigFormTitle("Update");
         setHomepageConfig(response.data);
         console.log(response.data);
         setFormData({
@@ -119,7 +121,7 @@ export default function HomeConfig() {
         </Stack>
       ) : (
         <div className="event-form-container">
-          <h1>Home Configuration</h1>
+          <h1>{homeConfigFormTitle} Home Configuration</h1>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="eventBanner">Event Banner</label>

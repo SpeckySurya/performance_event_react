@@ -58,7 +58,7 @@ const CustomPaper2 = styled(Paper)(() => ({
   width: 100,
 }));
 
-const snackbarMsg = "You do not have permission to make this change !";
+const snackbarMsg = "You are not authorized to perform this action !";
 
 export default function DashboardEventCard({ event, initialSetup }) {
   const role = findRoleFromToken();
@@ -110,7 +110,7 @@ export default function DashboardEventCard({ event, initialSetup }) {
   function handleEventStatus(event) {
     if (role === Role.VIEWER) {
       SnackbarProvider.showMessage(snackbarMsg);
-      return;
+      SnackbarProvider.return;
     }
     const eventService = new EventService();
     eventService
@@ -564,11 +564,6 @@ export default function DashboardEventCard({ event, initialSetup }) {
             borderRadius={2}
             direction={"row"}
             spacing={2}
-            onClick={() =>
-              navigate("/dashboard/events/manage-participant", {
-                state: event,
-              })
-            }
           >
             <Stack
               justifyContent={"center"}
@@ -577,6 +572,11 @@ export default function DashboardEventCard({ event, initialSetup }) {
                 width: "50%",
                 cursor: "pointer",
               }}
+              onClick={() =>
+                navigate("/dashboard/events/manage-participant", {
+                  state: event,
+                })
+              }
             >
               <Stack
                 justifyContent={"center"}

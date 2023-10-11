@@ -9,6 +9,29 @@ import {
 } from "@mui/material";
 import React from "react";
 
+/**
+ * 
+ * const [customDialog, setCustomDialog] = useState({
+    open: false,
+    action: null,
+    title: "",
+    content: "",
+  });
+
+    function handleDownloadPPt() {
+    setCustomDialog({
+      open: true,
+      title: "Alert",
+      content:
+        'PPT will send to your registered email. Press "Yes" to continue !',
+      action: ()=> {},
+    });
+  }
+
+
+ * 
+ */
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });

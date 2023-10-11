@@ -38,6 +38,8 @@ import { useSnackbar } from "material-ui-snackbar-provider";
 
 const drawerWidth = 240;
 
+const snackbarMsg = "You are not authorized to perform this action !";
+
 const redirectToEvent = [
   "/dashboard",
   "/dashboard/events/manage-participant",
@@ -169,7 +171,7 @@ export default function DashboardPage2() {
 
   function handleAddIconClick(e) {
     if (role === Role.VIEWER || role === Role.EDITOR) {
-      SnackbarProvider.showMessage("Not allowed !");
+      SnackbarProvider.showMessage(snackbarMsg);
       return;
     }
     if (location.pathname.includes("/dashboard/events")) {

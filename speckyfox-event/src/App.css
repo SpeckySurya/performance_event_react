@@ -67,3 +67,7 @@
 .custom-scroll::-webkit-scrollbar-thumb:active {
   background: rgba(0, 0, 0, 0.9);
 }
+
+div.MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation6.MuiSnackbarContent-root.css-1eqdgzv-MuiPaper-root-MuiSnackbarContent-root {
+  background-color: crimson;
+}
