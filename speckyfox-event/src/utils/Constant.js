@@ -1,6 +1,8 @@
 // const serviceUrl = () => `https://eventbackend.speckyfox.com`;
+// const host = () => "https://event.speckyfox.com";
 // const serviceUrl = () => `  http://localhost:8096`;
 const serviceUrl = () => `http://34.218.92.121:8096`;
+export const host = () => "http://localhost:5173";
 
 let timerId = null;
 export const stopTimer = () => clearInterval(timerId);

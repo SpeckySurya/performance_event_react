@@ -33,6 +33,8 @@ export default function DashboardEventView() {
     }
   }
 
+  console.log(events);
+
   const initialSetup = () => {
     setLoading(true);
     const eventService = new EventService();

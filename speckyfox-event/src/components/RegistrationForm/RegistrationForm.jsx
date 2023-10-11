@@ -112,30 +112,18 @@ const RegistrationForm = ({ isOutdated }) => {
           required
         />
       </div>
+      <div className="form-group">
+        <label htmlFor="companyName">
+          Organization<span className="mark">*</span>
+        </label>
 
-      <div className="form-group">
-        <label htmlFor="mobileNumber">Phone</label>
-        <input
-          id="mobileNumber"
-          name="mobileNumber"
-          value={formData.mobileNumber}
-          onChange={handlePhoneChange}
-          type="number"
-        />
-        {mobNo && (
-          <span style={{ fontSize: "10px" }}>
-            Phone should atleast of 8 digits
-          </span>
-        )}
-      </div>
-      <div className="form-group">
-        <label htmlFor="companyName">Company</label>
         <input
           type="text"
           id="companyName"
           name="companyName"
           value={formData.company}
           onChange={handleChange}
+          required
         />
       </div>
 

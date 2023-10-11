@@ -1,22 +1,21 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import MenuIcon from "@mui/icons-material/Menu";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
-import PersonIcon from "@mui/icons-material/Person";
-import { useNavigate } from "react-router-dom";
 import { Stack } from "@mui/material";
+import AppBar from "@mui/material/AppBar";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Toolbar from "@mui/material/Toolbar";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import { findEmailFromToken, findRoleFromToken } from "../utils/TokenDecoder";
+import NotificationCenter from "./NotificationCenter/NotificationCenter";
+import Role from "../utils/Role";
 
 export default function DashboardAppBar({ setOpen, open }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -113,7 +112,8 @@ export default function DashboardAppBar({ setOpen, open }) {
             &nbsp;
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Stack direction={"row"} sx={{ flexGrow: 0 }}>
+            {findRoleFromToken() === Role.SUPER_ADMIN && <NotificationCenter />}
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar>{findRoleFromToken().charAt(0)}</Avatar>
@@ -164,7 +164,7 @@ export default function DashboardAppBar({ setOpen, open }) {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Stack>
         </Toolbar>
       </Stack>
     </AppBar>

@@ -22,7 +22,7 @@ import dateFormatter, {
 import "./DashboardEventCard.css";
 import EventService from "../../services/EventService";
 import SnackbarComponent from "../../components/SnackbarComponent/SnackbarComponent";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReactPlayer from "react-player";
 import ContentService from "../../services/ContentService";
 import MyContext from "../../context/MyContext";
@@ -35,6 +35,7 @@ import { useSnackbar } from "material-ui-snackbar-provider";
 import upcomingGif from "../../assets/upcoming.gif";
 import Role from "../../utils/Role";
 import CustomDialog from "../CustomDialogBox/CustomDialog";
+import serviceUrl, { host } from "../../utils/Constant";
 
 const EventPaper = styled(Paper)(() => ({
   width: 400,
@@ -370,7 +371,16 @@ export default function DashboardEventCard({ event, initialSetup }) {
           <Stack spacing={1} direction={"row"} justifyContent={"space-between"}>
             <Stack spacing={2} width={"50%"}>
               <Stack>
-                <Typography fontWeight={600}>{event.events.title}</Typography>
+                <Link
+                  to={`${host()}/${event.events.id}`}
+                  target="_blank"
+                  sx={{ cursor: "pointer" }}
+                  className="no-anchor-style"
+                >
+                  <Typography fontSize={"1rem"} fontWeight={600}>
+                    {event.events.title}
+                  </Typography>
+                </Link>
                 <Stack
                   sx={{ cursor: "pointer" }}
                   spacing={"4px"}
@@ -406,12 +416,9 @@ export default function DashboardEventCard({ event, initialSetup }) {
                       cursor: role === Role.VIEWER ? "default" : "cursor",
                     }}
                     active={active}
+                    onClick={() => handleEventStatus(event.events)}
                   >
-                    <Stack
-                      spacing={1}
-                      direction={"row"}
-                      onClick={() => handleEventStatus(event.events)}
-                    >
+                    <Stack spacing={1} direction={"row"}>
                       <Typography fontSize={10}>
                         {active ? "Active" : "Inactive"}
                       </Typography>
@@ -624,7 +631,7 @@ export default function DashboardEventCard({ event, initialSetup }) {
                   </Stack>
                 </Tooltip>
               </CustomPaper2>
-              {isOutdated && (
+              {!isOutdated && (
                 <CustomPaper2
                   variant="outlined"
                   sx={{
