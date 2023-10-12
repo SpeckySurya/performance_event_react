@@ -14,6 +14,7 @@ import EditSpeakerForm from "../dashboard-components/EditSpeakerForm/EditSpeaker
 import AdminRegistration from "../components/AdminRegistation/AdminRegistation";
 import AdminUpdatePassword from "../components/AdminUpdatePassword/AdminUpdatePassword";
 import HomePageConfiguration from "../components/HomePageConfiguration/HomePageConfiguration";
+import HomeConfig from "../dashboard-components/HomeConfig/HomeConfig";
 
 const AuthRoutes = [
   <Route
@@ -33,7 +34,7 @@ const AuthRoutes = [
     <Route path="speakers/edit-speaker" element={<EditSpeakerForm />} />
     <Route path="users/user-registration" element={<AdminRegistration />} />
     <Route path="change-password" element={<AdminUpdatePassword />} />
-    <Route path="home-configuration" element={<HomePageConfiguration />} />
+    <Route path="home-configuration" element={<HomeConfig />} />
   </Route>,
 ];
 

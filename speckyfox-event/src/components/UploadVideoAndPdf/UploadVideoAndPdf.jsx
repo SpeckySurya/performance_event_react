@@ -5,11 +5,6 @@ import {
   Card,
   CardContent,
   CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   Grid,
   Input,
   InputLabel,
@@ -21,41 +16,32 @@ import InputAdornment from "@mui/material/InputAdornment";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import React, { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import MyContext from "../../context/MyContext";
 import ContentService from "../../services/ContentService";
 import EventService from "../../services/EventService";
-import "./UploadVideoAndPdf.css";
-import MyContext from "../../context/MyContext";
-import { useNavigate } from "react-router-dom";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
+import "./UploadVideoAndPdf.css";
 
 function UploadVideoAndPdf() {
   const [uploadFile, setUploadFile] = useState("");
   const [loading, setLoading] = useState(false);
   const [uploadVideo, setUploadVideo] = useState("");
-  const [events, setEvents] = useState([]);
-  const [pastEvents, setPastEvents] = useState([]);
-  const [selectedEvent, setSelectedEvent] = useState(-1);
-  const [selectedUsers, setSelectedUsers] = useState([]);
-  const [open, setOpen] = useState(false);
   const [uploadAction, setUploadAction] = useState("Upload");
   const { context } = useContext(MyContext);
   const navigate = useNavigate();
   const [snackbar, setSnackbar] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
     context.breadCrumb.updatePages([
       { name: "Events", route: () => navigate("/dashboard/events") },
       {
         name: "Upload Event Data",
-        route: () => navigate("/dashboard/events/upload-event-data"),
       },
     ]);
   }, []);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const BootstrapButtonDisabled = styled(Button)({
     backgroundColor: "gray",
@@ -77,32 +63,27 @@ function UploadVideoAndPdf() {
   });
 
   useEffect(() => {
-    const eventService = new EventService();
-    eventService
-      .getAllEvents()
+    const contentService = new ContentService();
+    contentService
+      .getEventDataInfo(location?.state?.event?.events.id)
       .then((response) => {
-        setEvents(response.data);
-        const currentDate = new Date();
-        const pastEvents = response.data.filter((event) => {
-          const eventDate = new Date(event.events.date);
-          return eventDate < currentDate;
-        });
-        setPastEvents(pastEvents);
+        setUploadAction("Update");
       })
-      .catch((error) => alert(error));
+      .catch((error) => {
+        if (error.code === "ERR_BAD_RESPONSE") {
+          setUploadAction("Upload");
+        }
+      });
   }, []);
 
   const fundisplayfileandvideo = (e) => {
     e.preventDefault();
-    if (uploadFile && uploadVideo && selectedEvent !== -1) {
+    if (uploadFile && uploadVideo) {
       setLoading(true);
-      const event = pastEvents.find(
-        (event) => event.events.id === selectedEvent
-      );
       const formData = new FormData();
 
-      formData.append("title", event.events.title);
-      formData.append("eventId", event.events.id);
+      formData.append("title", location.state.event.events.title);
+      formData.append("eventId", location.state.event.events.id);
       formData.append("eventVideo", uploadVideo);
       formData.append("eventPPT", uploadFile);
 
@@ -111,8 +92,6 @@ function UploadVideoAndPdf() {
         .uploadPastEventData(formData)
         .then((response) => {
           setLoading(false);
-          setLoading(false);
-          setSelectedEvent(-1);
           setSnackbar(
             <SnackbarComponent message="Data uploaded" severity="success" />
           );
@@ -123,43 +102,17 @@ function UploadVideoAndPdf() {
         .catch((error) => {
           alert(error);
           setLoading(false);
-          setSelectedEvent(-1);
         });
     }
   };
 
-  const handleEventChange = (e) => {
-    const name = e.target.name;
-    if (name === "ppt-File") {
-      setUploadFile(e.target.files[0]);
-    } else if (name === "video-file") {
-      setUploadVideo(e.target.files[0]);
-    } else {
-      const eventId = e.target.value;
-      if (eventId === -1) {
-        setSelectedEvent(eventId);
-        setSelectedUsers([]);
-        return;
-      }
-      setSelectedEvent(eventId);
-      const contentService = new ContentService();
-      contentService
-        .getEventDataInfo(eventId)
-        .then((response) => {
-          setUploadAction("Update");
-        })
-        .catch((error) => {
-          if (error.code === "ERR_BAD_RESPONSE") {
-            setUploadAction("Upload");
-          }
-        });
-      const obj = pastEvents.find((event) => event.events.id === eventId);
-      const userList = obj.events.users.map(
-        (user) => `${user.firstName} ${user.lastName}`
-      );
-      setSelectedUsers(userList);
-    }
-  };
+  function handleUploadPPT(e) {
+    setUploadFile(e.target.files[0]);
+  }
+
+  function handleUploadVideo(e) {
+    setUploadVideo(e.target.files[0]);
+  }
 
   return (
     <>
@@ -183,18 +136,15 @@ function UploadVideoAndPdf() {
               <Select
                 labelId="select-event-label"
                 label="Select Event"
-                value={selectedEvent}
-                onChange={handleEventChange}
+                value={location?.state?.event?.events.id}
                 required
+                disabled
               >
-                <MenuItem value={-1}>
-                  <Typography fontStyle={"italic"}>None</Typography>
+                <MenuItem value={location?.state?.event?.events.id}>
+                  <Typography fontStyle={"italic"}>
+                    {location?.state?.event?.events.title}
+                  </Typography>
                 </MenuItem>
-                {pastEvents.map((event) => (
-                  <MenuItem key={event.events.id} value={event.events.id}>
-                    {event.events.title}
-                  </MenuItem>
-                ))}
               </Select>
               <Typography p={1} color={"crimson"}>
                 {uploadAction === "Update"
@@ -216,7 +166,7 @@ function UploadVideoAndPdf() {
                   name="ppt-File"
                   id="ppt-File"
                   variant="outlined"
-                  onChange={handleEventChange}
+                  onChange={handleUploadPPT}
                   fullWidth
                   required
                   endAdornment={
@@ -241,7 +191,7 @@ function UploadVideoAndPdf() {
                   inputProps={{ accept: "video/mp4,video/x-m4v,video/*" }}
                   name="video-file"
                   id="video-file"
-                  onChange={handleEventChange}
+                  onChange={handleUploadVideo}
                   variant="outlined"
                   fullWidth
                   required
@@ -256,12 +206,12 @@ function UploadVideoAndPdf() {
                 />
               </Grid>
               <Grid xs={12} sm={12} marginY={2} item>
-                {uploadFile && uploadVideo && selectedEvent !== -1 ? (
+                {uploadFile && uploadVideo ? (
                   <BootstrapButton onClick={fundisplayfileandvideo}>
                     {loading ? (
                       <CircularProgress size={20} color={"error"} />
                     ) : (
-                      "Submit"
+                      uploadAction
                     )}
                   </BootstrapButton>
                 ) : (

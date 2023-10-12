@@ -48,7 +48,6 @@ function CreateSpeakerForm() {
       { name: "Speakers", route: () => navigate("/dashboard/speakers") },
       {
         name: "Create Speaker",
-        route: () => navigate("/dashboard/speakers/create-speaker"),
       },
     ]);
   }, []);
@@ -83,7 +82,7 @@ function CreateSpeakerForm() {
             setOpen(true);
             setLoading(false);
             setSnackbar(
-              <SnackbarComponent message="Event created" severity="success" />
+              <SnackbarComponent message="Speaker created" severity="success" />
             );
             setTimeout(() => {
               navigate("/dashboard/speakers");

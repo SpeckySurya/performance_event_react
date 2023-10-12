@@ -11,52 +11,6 @@ import MyContext from "../../context/MyContext";
 export default function EditEventForm() {
   const location = useLocation();
 
-  function getDate() {
-    const dateObj = dateFormatter(location.state.event.events.date);
-    return `${dateObj.year}-${Number(dateObj.month) + 1 < 10 ? "0" : ""}${
-      Number(dateObj.month) + 1
-    }-${dateObj.day}`;
-  }
-
-  const formDataDefault = {
-    eventId: location.state.event.events.id,
-    title: location.state.event.events.title,
-    description: location.state.event.events.description,
-    date: getDate(),
-    time: location.state.event.events.time.split(" ")[0],
-    speakerId: location.state.event.events.speaker.id,
-    meetingUrl: location.state.event.events.meetingUrl,
-    location: location.state.event.events.location,
-    active: location.state.event.events.active,
-    banner: location.state.event.events.eventBanner,
-    duration: {
-      hours: Number(location.state.event.events.duration.split(":")[0]),
-      minutes: Number(location.state.event.events.duration.split(":")[1]),
-    },
-    contactTo: location.state.event.events.contactTo,
-    acceptRegistration: location.state.event.events.acceptRegistration,
-  };
-
-  const [formData, setFormData] = useState(formDataDefault);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [speakerSelect, setSpeakerSelect] = useState("");
-  const [isAlertVisible, setIsAlertVisible] = useState(false);
-  const navigate = useNavigate();
-  const [snackbar, setSnackbar] = useState(null);
-  const [currentSpeaker, setCurrentSpeaker] = useState("Select Speaker");
-  const [loading, setLoading] = useState(false);
-  const [duration, setDuration] = useState(formDataDefault.duration);
-  const [speakers, setSpeakers] = useState([]);
-
-  const handleChange = (event) => {
-    if (event.target.name === "speakerId") {
-      setSpeakerSelect(event.target.value);
-    }
-    let { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
-  };
-  const { context } = useContext(MyContext);
-
   function initialSetup() {
     const speakerService = new SpeakerService();
     speakerService.getAllSpeakers().then((response) => {
@@ -70,10 +24,54 @@ export default function EditEventForm() {
       { name: "Events", route: () => navigate("/dashboard/events") },
       {
         name: "Edit Event",
-        route: () => navigate("/dashboard/events/edit-event"),
       },
     ]);
   }, []);
+
+  function getDate() {
+    const dateObj = dateFormatter(location?.state?.event?.events?.date);
+    return `${dateObj.year}-${Number(dateObj.month) + 1 < 10 ? "0" : ""}${
+      Number(dateObj.month) + 1
+    }-${dateObj.day}`;
+  }
+
+  const formDataDefault = {
+    eventId: location?.state?.event?.events?.id,
+    title: location?.state?.event?.events?.title,
+    description: location?.state?.event?.events?.description,
+    date: getDate(),
+    time: location?.state?.event?.events?.time?.split(" ")[0],
+    speakerId: location?.state?.event?.events?.speaker?.id,
+    meetingUrl: location?.state?.event?.events?.meetingUrl,
+    location: location?.state?.event?.events?.location,
+    active: location?.state?.event?.events?.active,
+    banner: location?.state?.event?.events?.eventBanner,
+    duration: {
+      hours: Number(location?.state?.event?.events?.duration?.split(":")[0]),
+      minutes: Number(location?.state?.event?.events?.duration?.split(":")[1]),
+    },
+    contactTo: location?.state?.event?.events?.contactTo,
+    acceptRegistration: location?.state?.event?.events?.acceptRegistration,
+  };
+
+  const [formData, setFormData] = useState(formDataDefault);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [speakerSelect, setSpeakerSelect] = useState("");
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const navigate = useNavigate();
+  const [snackbar, setSnackbar] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [duration, setDuration] = useState(formDataDefault.duration);
+  const [speakers, setSpeakers] = useState([]);
+
+  const handleChange = (event) => {
+    if (event.target.name === "speakerId") {
+      setSpeakerSelect(event.target.value);
+    }
+    let { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
+  const { context } = useContext(MyContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();

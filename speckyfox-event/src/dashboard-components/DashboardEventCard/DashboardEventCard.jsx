@@ -22,13 +22,20 @@ import dateFormatter, {
 import "./DashboardEventCard.css";
 import EventService from "../../services/EventService";
 import SnackbarComponent from "../../components/SnackbarComponent/SnackbarComponent";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReactPlayer from "react-player";
 import ContentService from "../../services/ContentService";
 import MyContext from "../../context/MyContext";
 import PopupAlert from "../../components/PopupAlert/PopupAlert";
-import { findRoleFromToken } from "../../utils/TokenDecoder";
+import {
+  findEmailFromToken,
+  findRoleFromToken,
+} from "../../utils/TokenDecoder";
+import { useSnackbar } from "material-ui-snackbar-provider";
+import upcomingGif from "../../assets/upcoming.gif";
 import Role from "../../utils/Role";
+import CustomDialog from "../CustomDialogBox/CustomDialog";
+import serviceUrl, { host } from "../../utils/Constant";
 
 const EventPaper = styled(Paper)(() => ({
   width: 400,
@@ -52,6 +59,8 @@ const CustomPaper2 = styled(Paper)(() => ({
   width: 100,
 }));
 
+const snackbarMsg = "You are not authorized to perform this action !";
+
 export default function DashboardEventCard({ event, initialSetup }) {
   const role = findRoleFromToken();
 
@@ -59,7 +68,12 @@ export default function DashboardEventCard({ event, initialSetup }) {
   const isOutdated = isPastDateTime(formattedDate, event.events.time);
   const startTime = convertTo12HourFormat(event.events.time);
   const endTime = addTime(startTime, event.events.duration);
-  const [dialog, setDialog] = useState({ open: false, action: null });
+  const [dialog, setDialog] = useState({
+    open: false,
+    action: null,
+    title: "",
+    content: "",
+  });
 
   const formattedTime = `${
     startTime[1] === ":" ? "0" + startTime : startTime
@@ -72,6 +86,13 @@ export default function DashboardEventCard({ event, initialSetup }) {
   const navigate = useNavigate();
   const videoPlayerRef = useRef(null);
   const { context } = useContext(MyContext);
+  const SnackbarProvider = useSnackbar();
+  const [customDialog, setCustomDialog] = useState({
+    open: false,
+    action: null,
+    title: "",
+    content: "",
+  });
 
   function handleViewDescriptionClick(e) {
     e.stopPropagation();
@@ -88,6 +109,10 @@ export default function DashboardEventCard({ event, initialSetup }) {
   }
 
   function handleEventStatus(event) {
+    if (role === Role.VIEWER) {
+      SnackbarProvider.showMessage(snackbarMsg);
+      SnackbarProvider.return;
+    }
     const eventService = new EventService();
     eventService
       .setActiveOrInactive(event.id, { active: !active })
@@ -95,9 +120,7 @@ export default function DashboardEventCard({ event, initialSetup }) {
         setActive(!active);
       })
       .catch((error) => {
-        setSnackbar(
-          <SnackbarComponent message="Action Restricted !" severity={"error"} />
-        );
+        alert(error);
       });
   }
 
@@ -141,12 +164,78 @@ export default function DashboardEventCard({ event, initialSetup }) {
   }, [play]);
 
   const handleEventEdit = () => {
+    if (role === Role.VIEWER) {
+      SnackbarProvider.showMessage(snackbarMsg);
+      return;
+    }
     navigate("/dashboard/events/edit-event", { state: { event: event } });
   };
 
   const handleEventDelete = () => {
-    setDialog({ ...dialog, open: true });
+    if (role === Role.VIEWER || role === Role.EDITOR) {
+      SnackbarProvider.showMessage(snackbarMsg);
+      return;
+    }
+    setDialog({
+      ...dialog,
+      open: true,
+      title: "Alert",
+      content: "Do you really want to delete ?",
+    });
   };
+
+  const handleUploadClick = () => {
+    if (role === Role.VIEWER || role === Role.EDITOR) {
+      SnackbarProvider.showMessage(snackbarMsg);
+      return;
+    }
+    navigate("/dashboard/events/upload-event-data", {
+      state: { event: event },
+    });
+  };
+
+  function handleDownloadPPt() {
+    setCustomDialog({
+      open: true,
+      title: "Alert",
+      content:
+        'PPT will send to your registered email. Press "Yes" to continue !',
+      action: sentPPT,
+    });
+  }
+
+  const handleNotifyParticipant = () => {
+    if (role === Role.VIEWER) {
+      SnackbarProvider.showMessage(snackbarMsg);
+      return;
+    }
+    navigate("/dashboard/events/notify-participant", {
+      state: { event: event },
+    });
+  };
+
+  function sentPPT() {
+    const data = {
+      email: findEmailFromToken(),
+      eventId: event.events.id,
+    };
+    const contentService = new ContentService();
+    contentService
+      .downloadPpt(data)
+      .then((res) =>
+        setSnackbar(
+          <SnackbarComponent
+            message="You will quickly receive the PPT"
+            severity={"success"}
+          />
+        )
+      )
+      .catch((err) =>
+        setSnackbar(
+          <SnackbarComponent message="PPT not available." severity={"error"} />
+        )
+      );
+  }
 
   useEffect(() => {
     if (dialog.action === "Yes") {
@@ -179,13 +268,17 @@ export default function DashboardEventCard({ event, initialSetup }) {
   return (
     <Box m={1}>
       {snackbar}
+      <CustomDialog
+        customDialog={customDialog}
+        setCustomDialog={setCustomDialog}
+      />
       <PopupAlert
         control={{
           dialog: dialog,
           setDialog: (dialog) => setDialog({ ...dialog, open: false }),
         }}
-        title="Alert"
-        content={"Do you really want to delete ?"}
+        title={dialog.title}
+        content={dialog.content}
         action={{ first: "Yes", second: "No" }}
       />
       {play && (
@@ -278,7 +371,16 @@ export default function DashboardEventCard({ event, initialSetup }) {
           <Stack spacing={1} direction={"row"} justifyContent={"space-between"}>
             <Stack spacing={2} width={"50%"}>
               <Stack>
-                <Typography fontWeight={600}>{event.events.title}</Typography>
+                <Link
+                  to={`${host()}/${event.events.id}`}
+                  target="_blank"
+                  sx={{ cursor: "pointer" }}
+                  className="no-anchor-style"
+                >
+                  <Typography fontSize={"1rem"} fontWeight={600}>
+                    {event.events.title}
+                  </Typography>
+                </Link>
                 <Stack
                   sx={{ cursor: "pointer" }}
                   spacing={"4px"}
@@ -314,16 +416,9 @@ export default function DashboardEventCard({ event, initialSetup }) {
                       cursor: role === Role.VIEWER ? "default" : "cursor",
                     }}
                     active={active}
+                    onClick={() => handleEventStatus(event.events)}
                   >
-                    <Stack
-                      spacing={1}
-                      direction={"row"}
-                      onClick={
-                        role === Role.VIEWER
-                          ? null
-                          : () => handleEventStatus(event.events)
-                      }
-                    >
+                    <Stack spacing={1} direction={"row"}>
                       <Typography fontSize={10}>
                         {active ? "Active" : "Inactive"}
                       </Typography>
@@ -346,92 +441,93 @@ export default function DashboardEventCard({ event, initialSetup }) {
                   alt="banner"
                 />
               </Box>
-              <Stack spacing={2}>
-                <Stack spacing="5px">
-                  <Tooltip title="Play recorded video">
-                    <Stack
-                      direction={"row"}
-                      alignItems={"center"}
-                      justifyContent={"end"}
-                      spacing={1}
-                      sx={{ cursor: "pointer" }}
-                      onClick={() => handlePlayVideo()}
-                    >
-                      <Typography
-                        sx={{
-                          borderRadius: 2,
-                          fontSize: 10,
-                          color: "#D80032",
-                        }}
+              <Stack spacing={2} justifyContent={"end"} height={"100px"}>
+                {!isOutdated ? (
+                  <Stack spacing={"5px"} alignItems={"center"} height={"85%"}>
+                    <img style={{ width: "80%" }} src={upcomingGif} />
+                  </Stack>
+                ) : (
+                  <Stack spacing="5px">
+                    <Tooltip title="Play recorded video">
+                      <Stack
+                        direction={"row"}
+                        alignItems={"center"}
+                        justifyContent={"end"}
+                        spacing={1}
+                        sx={{ cursor: "pointer" }}
+                        onClick={() => handlePlayVideo()}
                       >
-                        Watch Video
-                      </Typography>
-                      <PlayCircleFilledWhiteIcon
-                        sx={{ color: "#D80032" }}
-                        fontSize="10px"
-                      />
-                    </Stack>
-                  </Tooltip>
-                  <Tooltip title="Download event PPT">
-                    <Stack
-                      direction={"row"}
-                      alignItems={"center"}
-                      justifyContent={"end"}
-                      spacing={1}
-                      sx={{ cursor: "pointer" }}
-                    >
-                      <Typography
-                        sx={{
-                          borderRadius: 2,
-                          fontSize: 10,
-                          color: "#219C90",
-                        }}
+                        <Typography
+                          sx={{
+                            borderRadius: 2,
+                            fontSize: 10,
+                            color: "#D80032",
+                          }}
+                        >
+                          Watch Video
+                        </Typography>
+                        <PlayCircleFilledWhiteIcon
+                          sx={{ color: "#D80032" }}
+                          fontSize="10px"
+                        />
+                      </Stack>
+                    </Tooltip>
+                    <Tooltip title="Download event PPT">
+                      <Stack
+                        direction={"row"}
+                        alignItems={"center"}
+                        justifyContent={"end"}
+                        spacing={1}
+                        sx={{ cursor: "pointer" }}
+                        onClick={handleDownloadPPt}
                       >
-                        Download PPT
-                      </Typography>
-                      <DownloadIcon sx={{ color: "#219C90" }} fontSize="10px" />
-                    </Stack>
-                  </Tooltip>
-                  <Tooltip title="Upload recorded video and PPT of event">
-                    <Stack
-                      direction={"row"}
-                      alignItems={"center"}
-                      justifyContent={"end"}
-                      spacing={1}
-                      sx={{
-                        cursor: role === Role.VIEWER ? "default" : "cursor",
-                      }}
-                      onClick={
-                        role === Role.VIEWER
-                          ? null
-                          : () =>
-                              navigate("/dashboard/events/upload-event-data")
-                      }
-                    >
-                      <Typography
+                        <Typography
+                          sx={{
+                            borderRadius: 2,
+                            fontSize: 10,
+                            color: "#219C90",
+                          }}
+                        >
+                          Download PPT
+                        </Typography>
+                        <DownloadIcon
+                          sx={{ color: "#219C90" }}
+                          fontSize="10px"
+                        />
+                      </Stack>
+                    </Tooltip>
+                    <Tooltip title="Upload recorded video and PPT of event">
+                      <Stack
+                        direction={"row"}
+                        alignItems={"center"}
+                        justifyContent={"end"}
+                        spacing={1}
                         sx={{
-                          borderRadius: 2,
-                          fontSize: 10,
-                          color: "#A8DF8E",
+                          cursor: role === Role.VIEWER ? "default" : "pointer",
                         }}
+                        onClick={handleUploadClick}
                       >
-                        Upload
-                      </Typography>
-                      <CloudUploadIcon
-                        sx={{ color: "#A8DF8E" }}
-                        fontSize="10px"
-                      />
-                    </Stack>
-                  </Tooltip>
-                </Stack>
+                        <Typography
+                          sx={{
+                            borderRadius: 2,
+                            fontSize: 10,
+                            color: "#A8DF8E",
+                          }}
+                        >
+                          Upload
+                        </Typography>
+                        <CloudUploadIcon
+                          sx={{ color: "#A8DF8E" }}
+                          fontSize="10px"
+                        />
+                      </Stack>
+                    </Tooltip>
+                  </Stack>
+                )}
                 <Stack spacing={1} direction={"row"} justifyContent={"end"}>
                   <Tooltip title="Delete Event">
                     <Stack
-                      onClick={
-                        role === Role.VIEWER || role === Role.EDITOR
-                          ? null
-                          : handleEventDelete
-                      }
+                      onClick={handleEventDelete}
                       sx={{
                         justifyContent: "center",
                         alignItems: "center",
@@ -439,7 +535,10 @@ export default function DashboardEventCard({ event, initialSetup }) {
                         height: 25,
                         borderRadius: "50%",
                         backgroundColor: "rgb(255,160,122, 0.5)",
-                        cursor: role === Role.VIEWER ? "default" : "pointer",
+                        cursor:
+                          role === Role.VIEWER || role === Role.EDITOR
+                            ? "default"
+                            : "pointer",
                       }}
                     >
                       <DeleteForeverIcon
@@ -449,7 +548,7 @@ export default function DashboardEventCard({ event, initialSetup }) {
                   </Tooltip>
                   <Tooltip title="Edit Event">
                     <Stack
-                      onClick={role === Role.VIEWER ? null : handleEventEdit}
+                      onClick={handleEventEdit}
                       sx={{
                         justifyContent: "center",
                         alignItems: "center",
@@ -478,7 +577,13 @@ export default function DashboardEventCard({ event, initialSetup }) {
               direction={"row"}
               sx={{
                 width: "50%",
+                cursor: "pointer",
               }}
+              onClick={() =>
+                navigate("/dashboard/events/manage-participant", {
+                  state: event,
+                })
+              }
             >
               <Stack
                 justifyContent={"center"}
@@ -497,56 +602,59 @@ export default function DashboardEventCard({ event, initialSetup }) {
                 </Typography>
               </Stack>
             </Stack>
-            <CustomPaper2
-              variant="outlined"
-              sx={{ backgroundColor: "#CBFFA9", cursor: "pointer" }}
-              onClick={() =>
-                navigate("/dashboard/events/manage-participant", {
-                  state: event,
-                })
-              }
+            <Stack
+              justifyContent={"end"}
+              alignItems={"center"}
+              width={"50%"}
+              spacing={1}
+              direction={"row"}
             >
-              <Tooltip title="View registered participant">
-                <Stack alignItems={"center"} justifyContent={"center"}>
-                  <PageviewIcon sx={{ color: "#8EAC50" }} />
-                  <Typography
-                    textAlign={"center"}
-                    color={"#8EAC50"}
-                    fontSize={10}
-                  >
-                    Participants
-                  </Typography>
-                </Stack>
-              </Tooltip>
-            </CustomPaper2>
-            <CustomPaper2
-              variant="outlined"
-              sx={{
-                backgroundColor: "#A6F6FF",
-                cursor: role === Role.VIEWER ? "default" : "pointer",
-              }}
-              onClick={
-                role === Role.VIEWER
-                  ? null
-                  : () =>
-                      navigate("/dashboard/events/notify-participant", {
-                        state: { event: event },
-                      })
-              }
-            >
-              <Tooltip title="Send reminder email to participants">
-                <Stack alignItems={"center"} justifyContent={"center"}>
-                  <NotificationsActiveIcon sx={{ color: "#6499E9" }} />
-                  <Typography
-                    textAlign={"center"}
-                    color={"#6499E9"}
-                    fontSize={10}
-                  >
-                    Notify
-                  </Typography>
-                </Stack>
-              </Tooltip>
-            </CustomPaper2>
+              <CustomPaper2
+                variant="outlined"
+                sx={{ backgroundColor: "#CBFFA9", cursor: "pointer" }}
+                onClick={() =>
+                  navigate("/dashboard/events/manage-participant", {
+                    state: event,
+                  })
+                }
+              >
+                <Tooltip title="View registered participant">
+                  <Stack alignItems={"center"} justifyContent={"center"}>
+                    <PageviewIcon sx={{ color: "#8EAC50" }} />
+                    <Typography
+                      textAlign={"center"}
+                      color={"#8EAC50"}
+                      fontSize={10}
+                    >
+                      Participants
+                    </Typography>
+                  </Stack>
+                </Tooltip>
+              </CustomPaper2>
+              {!isOutdated && (
+                <CustomPaper2
+                  variant="outlined"
+                  sx={{
+                    backgroundColor: "#A6F6FF",
+                    cursor: role === Role.VIEWER ? "default" : "pointer",
+                  }}
+                  onClick={handleNotifyParticipant}
+                >
+                  <Tooltip title="Send reminder email to participants">
+                    <Stack alignItems={"center"} justifyContent={"center"}>
+                      <NotificationsActiveIcon sx={{ color: "#6499E9" }} />
+                      <Typography
+                        textAlign={"center"}
+                        color={"#6499E9"}
+                        fontSize={10}
+                      >
+                        Notify
+                      </Typography>
+                    </Stack>
+                  </Tooltip>
+                </CustomPaper2>
+              )}
+            </Stack>
           </Stack>
         </Stack>
       </EventPaper>

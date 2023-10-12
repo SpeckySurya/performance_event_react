@@ -12,6 +12,7 @@ import {
   Grid,
   InputLabel,
   TextField,
+  Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
 import "./HomePageConfiguration.css";
@@ -23,15 +24,6 @@ import MyContext from "../../context/MyContext";
 const homeConfigService = new HomeConfigService();
 
 function HomePageConfiguration(props) {
-  const [initialValues, setInitialValues] = useState({
-    linkedinUrl: "",
-    twitterUrl: "",
-    facebookUrl: "",
-    websiteUrl: "",
-    contactUrl: "",
-    youtubeUrl: "",
-    footerText: "",
-  });
   const [loading, setLoading] = useState(false);
   const { context } = useContext(MyContext);
 
@@ -44,30 +36,23 @@ function HomePageConfiguration(props) {
     ]);
   }, []);
 
-  useEffect(() => {
-    homeConfigService
-      .getHomeConfigById()
-      .then((data) => {
-        const apiData = data.data;
-        setInitialValues({
-          linkedinUrl: apiData.linkdinUrl,
-          twitterUrl: apiData.twitterUrl,
-          facebookUrl: apiData.facebookUrl,
-          websiteUrl: apiData.websiteUrl,
-          contactUrl: apiData.contactUrl,
-          youtubeUrl: apiData.youtubeUrl,
-          footerText: apiData.footerText,
-        });
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  }, []);
-
   const [banner, setBanner] = useState(null);
   const [logo, setLogo] = useState(null);
   const [open, setOpen] = useState(false);
   const [popUpMsg, setPopUpmsg] = useState("");
+  const [homepageConfig, setHomepageConfig] = useState(null);
+
+  const [initialValues, setInitialValues] = useState({
+    banner: "",
+    linkdinUrl: "",
+    twitterUrl: "",
+    facebookUrl: "",
+    websiteUrl: "",
+    contactUrl: "",
+    youtubeUrl: "",
+    footerText: "",
+  });
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -80,11 +65,28 @@ function HomePageConfiguration(props) {
     setLogo(file);
   };
 
+  function findHomeConfig() {
+    homeConfigService
+      .getHomeConfigById()
+      .then((response) => {
+        setHomepageConfig(response.data);
+        setInitialValues({
+          ...response.data,
+        });
+      })
+      .catch((error) => {
+        setHomepageConfig(null);
+      });
+  }
+
+  useEffect(() => {
+    findHomeConfig();
+  }, []);
+
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useFormik({
-      initialValues: initialValues,
+      values: initialValues,
       validationSchema: HomePageConfigationSchema,
-
       onSubmit: (values) => {
         setLoading(true);
         const request = new FormData();
@@ -94,40 +96,33 @@ function HomePageConfiguration(props) {
         request.append("banner", banner);
         request.append("logo", logo);
 
-        homeConfigService
-          .getHomeConfigById()
-          .then((response) => {
-            homeConfigService
-              .updateHomeConfig(request)
-              .then((response) => {
-                setOpen(true);
-                setLoading(false);
-                setPopUpmsg("Homepage details updated");
-              })
-              .catch((error) => {
-                alert(error);
-              });
-          })
-          .catch((error) => {
-            if (
-              "HomepageConfigurationService.notFound" ===
-              error.response.data.message
-            ) {
-              homeConfigService
-                .saveHomeConfig(request)
-                .then((response) => {
-                  setOpen(true);
-                  setLoading(false);
-                  setPopUpmsg("Homepage details saved");
-                })
-                .catch((error) => {
-                  alert(error);
-                });
-            } else {
-              alert("Something went wrong");
+        if (homepageConfig) {
+          alert("Updating");
+          homeConfigService
+            .updateHomeConfig(request)
+            .then((response) => {
+              setOpen(true);
               setLoading(false);
-            }
-          });
+              setPopUpmsg("Homepage details updated");
+            })
+            .catch((error) => {
+              alert(error);
+              setLoading(false);
+            });
+        } else {
+          alert("Saving");
+          homeConfigService
+            .saveHomeConfig(request)
+            .then((response) => {
+              setOpen(true);
+              setLoading(false);
+              setPopUpmsg("Homepage details saved");
+            })
+            .catch((error) => {
+              alert(error);
+              setLoading(false);
+            });
+        }
       },
     });
 
@@ -164,7 +159,9 @@ function HomePageConfiguration(props) {
           }}
         >
           <CardContent>
-            <h3 className="HomePageConfigurationh3">Home Page Configuration</h3>
+            <Typography variant="h5" pb={2} className="HomePageConfigurationh3">
+              Home Page Configuration
+            </Typography>
             <form onSubmit={handleSubmit}>
               <Grid container spacing={1}>
                 <Grid xs={12} sm={12} item>
@@ -179,6 +176,14 @@ function HomePageConfiguration(props) {
                     onBlur={handleBlur}
                     fullWidth
                   />
+                  {homepageConfig && (
+                    <Box width={"100px"} py={1}>
+                      <img
+                        style={{ width: "100%", height: "100%" }}
+                        src={values.logo}
+                      />
+                    </Box>
+                  )}
                 </Grid>
                 <Grid xs={12} sm={12} item>
                   <InputLabel>Upload Banner</InputLabel>
@@ -192,23 +197,31 @@ function HomePageConfiguration(props) {
                     onBlur={handleBlur}
                     fullWidth
                   />
+                  {homepageConfig && (
+                    <Box width={"100px"} py={1}>
+                      <img
+                        style={{ width: "100%", height: "100%" }}
+                        src={values.banner}
+                      />
+                    </Box>
+                  )}
                 </Grid>
                 <Grid xs={12} sm={12} item>
                   <InputLabel>LinkedIn url</InputLabel>
                   <TextField
                     type="text"
-                    name="linkedinUrl"
-                    id="linkedinUrl"
+                    name="linkdinUrl"
+                    id="linkdinUrl"
                     placeholder="Upload LinkedIn url"
                     variant="outlined"
                     fullWidth
-                    value={values?.linkedinUrl}
+                    value={values?.linkdinUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
 
-                  {errors.linkedinUrl && touched.linkedinUrl ? (
-                    <p className="configationformerro">{errors.linkedinUrl}</p>
+                  {errors.linkdinUrl && touched.linkdinUrl ? (
+                    <p className="configationformerro">{errors.linkdinUrl}</p>
                   ) : null}
                 </Grid>
                 <Grid xs={12} sm={12} item>

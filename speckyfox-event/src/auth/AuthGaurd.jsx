@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PasswordService from "../services/PasswordService";
+import Skeleton from "@mui/material/Skeleton";
 import Login from "../pages/Login/Login";
 
 const AuthGaurd = ({ component }) => {
@@ -39,9 +40,7 @@ const AuthGaurd = ({ component }) => {
   return status ? (
     <React.Fragment>{component}</React.Fragment>
   ) : (
-    <React.Fragment>
-      <Login />
-    </React.Fragment>
+    <React.Fragment></React.Fragment>
   );
 };
 
