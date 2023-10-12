@@ -1,7 +1,6 @@
 .nav-container {
   position: relative;
 }
-
 .navbar {
   color: #333;
   background-color: #fff;
@@ -9,42 +8,34 @@
   justify-content: space-between;
   align-items: center;
   padding: 7px;
-  /* box-shadow: 2px 5px 8px rgba(0, 0, 0, 0.03); */
   box-shadow: rgba(10, 10, 10, 0.3) 0px 3px 10px 0px;
   z-index: 1;
 }
-
 .logo img {
   font-size: 24px;
   height: 60px;
   font-weight: bold;
   margin-left: 60px;
 }
-
 .nav-links {
   list-style: none;
   display: flex;
   margin-right: 100px;
 }
-
 .nav-links li {
   margin-right: 50px;
 }
-
 .nav-links li:last-child {
   margin-right: 0;
 }
-
 .nav-links li a {
   color: #000;
   text-decoration: none;
   transition: color 0.3s ease;
 }
-
 .nav-links li a:hover {
   color: #f8a63e;
 }
-
 .Manageicon {
   color: white;
   position: absolute;

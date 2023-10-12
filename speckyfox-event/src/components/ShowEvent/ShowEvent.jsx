@@ -9,9 +9,6 @@ import {
 import React, { useEffect, useState } from "react";
 import "../../responsive.css";
 import "./ShowEvent.css";
-import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
-import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
-
 import { Link } from "react-router-dom";
 import dateFormatter, { isPastDateTime } from "../../utils/DateFormatter";
 import EventCard from "../EventCard/EventCard";
@@ -40,7 +37,7 @@ const ShowEvent = (props) => {
     setUpcomingEvents(upcomingEventsFilter);
 
     if (props.isEventPage) {
-      setRenderEvents(upcomingEventsFilter);
+      setRenderEvents(upcomingEvents);
     } else {
       setRenderEvents(props.events);
     }
@@ -63,65 +60,98 @@ const ShowEvent = (props) => {
           setEventEditing={setEventEditing}
         />
       ) : (
-        <div>
-          <Stack
-            direction={"row"}
-            spacing={0}
-            alignItems={"center"}
-            justifyContent={"center"}
-            marginY={1}
-          >
-            {props.isEventPage ? (
-              <ToggleButtonGroup
-                color="primary"
-                value={alignment}
-                exclusive
-                aria-label="Platform"
-                onChange={handleAlignment}
-              >
-                <ToggleButton
-                  value="web"
-                  onClick={() => setRenderEvents(upcomingEvents)}
-                  sx={{ width: 120, backgroundColor: "white" }}
-                  className="togglebtnstyle"
+        <>
+          <div>
+            <h2 className="upcomingblock">
+              {" "}
+              Upcoming <b className="eventscolur">Events</b>
+            </h2>
+            <div className="calenderwithline">
+              <hr className="hrline" />
+              <i className="bx bxs-calendar calenderstyle"></i>
+              <hr className="hrline" />
+            </div>
+            <Box
+              display="flex"
+              justifyContent={"center"}
+              flexWrap="wrap"
+              float={"left"}
+              padding={3}
+            >
+              {upcomingEvents.length === 0 ? (
+                <Typography
+                  sx={{
+                    margin: "8% 2%",
+                    opacity: "0.4",
+                  }}
+                  variant="h5"
                 >
-                  Upcoming
-                </ToggleButton>
-                <ToggleButton
-                  className="togglebtnstyle"
-                  value="android"
-                  onClick={() => setRenderEvents(pastEvents)}
-                  sx={{ width: 120 }}
+                  No Upcoming Events
+                </Typography>
+              ) : (
+                <>
+                  <>
+                    {upcomingEvents.map((event) => (
+                      <EventCard
+                        key={event?.events?.id}
+                        event={event}
+                        isEventPage={props.isEventPage}
+                        setLoading={props.setLoading}
+                        setEventEditing={setEventEditing}
+                        setEditEvent={setEditEvent}
+                        setUpdateBread={props?.setUpdateBread}
+                      />
+                    ))}
+                  </>
+                </>
+              )}
+            </Box>
+          </div>
+
+          <div>
+            <h2 className="pasteventblock">
+              Past <b className="eventscolur">Events</b>
+            </h2>{" "}
+            <div className="calenderwithline">
+              <hr className="hrline" />
+              <i className="bx bxs-calendar calenderstyle"></i>
+              <hr className="hrline" />
+            </div>
+            <Box
+              display="flex"
+              justifyContent={"center"}
+              flexWrap="wrap"
+              float={"left"}
+              padding={3}
+            >
+              {pastEvents.length === 0 ? (
+                <Typography
+                  sx={{
+                    margin: "12% 2%",
+                    opacity: "0.4",
+                  }}
+                  variant="h4"
                 >
-                  Past
-                </ToggleButton>
-              </ToggleButtonGroup>
-            ) : null}
-          </Stack>
-          <Box
-            display="flex"
-            justifyContent={"center"}
-            flexWrap="wrap"
-            float={"left"}
-            padding={3}
-          >
-            {renderEvents.length === 0 ? (
-              <Typography variant="h4">No Events</Typography>
-            ) : (
-              renderEvents.map((event) => (
-                <EventCard
-                  key={event.events.id}
-                  event={event}
-                  isEventPage={props.isEventPage}
-                  setLoading={props.setLoading}
-                  setEventEditing={setEventEditing}
-                  setEditEvent={setEditEvent}
-                  setUpdateBread={props?.setUpdateBread}
-                />
-              ))
-            )}
-          </Box>
-        </div>
+                  No Past Events
+                </Typography>
+              ) : (
+                <>
+                  {pastEvents.map((event) => (
+                    <EventCard
+                      key={event?.events?.id}
+                      event={event}
+                      isEventPage={props.isEventPage}
+                      setLoading={props.setLoading}
+                      setEventEditing={setEventEditing}
+                      setEditEvent={setEditEvent}
+                      setUpdateBread={props?.setUpdateBread}
+                    />
+                  ))}
+                </>
+              )}
+            </Box>
+          </div>
+        </>
       )}
     </div>
   );

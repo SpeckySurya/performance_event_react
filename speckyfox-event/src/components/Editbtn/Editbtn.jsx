@@ -7,9 +7,7 @@ import EventService from "../../services/EventService";
 import { findRoleFromToken } from "../../utils/TokenDecoder";
 import PopupAlert from "../PopupAlert/PopupAlert";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
-
 const ITEM_HEIGHT = 40;
-
 export default function Editbtn(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [dialog, setDialog] = useState({ open: false, action: null });
@@ -90,8 +88,6 @@ export default function Editbtn(props) {
       />
       <IconButton
         sx={{
-          // color: "white",
-          // top: "-167px",
           float: "right",
           "& svg": {
             fontSize: "35px",
