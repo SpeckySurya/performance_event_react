@@ -127,12 +127,28 @@ const ShowSpeaker = () => {
             speakers.map((speaker) => {
               return (
                 <>
-                  <Card key={speaker.id} sx={{ width: 310, m: 1 }}>
+                  <Card
+                    key={speaker.id}
+                    sx={{
+                      width: 310,
+                      m: 1,
+                      position: "relative",
+                      overflow: "visible",
+                      paddingTop: "50px",
+                      marginTop: "120px",
+                    }}
+                  >
                     <CardMedia
                       component="img"
-                      height="140"
+                      height="155"
                       image={speaker.picture}
                       alt={speaker.name}
+                      sx={{
+                        position: "absolute",
+                        width: "50%",
+                        borderRadius: "50%",
+                        top: -100,
+                      }}
                     />
                     <CardContent>
                       <Typography variant="h6" component="div">
@@ -146,7 +162,7 @@ const ShowSpeaker = () => {
                       <CardActions>
                         {role !== Role.EDITOR && (
                           <Button
-                            variant="contained"
+                            variant="outlined"
                             color="error"
                             style={{ width: "50%" }}
                             startIcon={<DeleteIcon />}
@@ -156,7 +172,7 @@ const ShowSpeaker = () => {
                           </Button>
                         )}
                         <Button
-                          variant="contained"
+                          variant="outlined"
                           color="success"
                           style={{ width: "50%" }}
                           startIcon={<EditIcon />}

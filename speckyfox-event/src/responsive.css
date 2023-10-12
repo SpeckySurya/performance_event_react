@@ -22,7 +22,7 @@
   }
 
   .nav-hamburger {
-    display: block;
+    display: block !important;
   }
 
   .navbar .nav-links {
