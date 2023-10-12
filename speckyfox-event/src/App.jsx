@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Login from "./pages/Login/Login";
@@ -35,10 +35,15 @@ import TermsAndConditionsPage from "./pages/TermsAndConditionsPage/TermsAndCondi
 import PrivacyPage from "./pages/PrivacyPage/PrivacyPage";
 import AuthRoutes from "./routes/AuthRoutes";
 import UnAuthRoutes from "./routes/UnauthRoutes";
+import { SnackbarProvider } from "material-ui-snackbar-provider";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/ReactToastify.min.css";
+import EventService from "./services/EventService";
 function App() {
   const { context } = useContext(MyContext);
+
   return (
-    <>
+    <SnackbarProvider SnackbarProps={{ autoHideDuration: 4000 }}>
       <Box
         className={"pop-up-background"}
         display={context.popUpBackground.popUpBackgroundVisible}
@@ -47,7 +52,8 @@ function App() {
         {AuthRoutes}
         {UnAuthRoutes}
       </Routes>
-    </>
+      <ToastContainer position="bottom-right" newestOnTop />
+    </SnackbarProvider>
   );
 }
 

@@ -1,4 +1,11 @@
-import { AlertTitle, Button, MenuItem, Select } from "@mui/material";
+import {
+  AlertTitle,
+  Button,
+  CircularProgress,
+  MenuItem,
+  Select,
+  Stack,
+} from "@mui/material";
 import Alert from "@mui/material/Alert";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -28,11 +35,12 @@ export default function ManageAdmin() {
   const [showAlert, setShowAlert] = useState(false);
   const { context } = useContext(MyContext);
   const adminService = new AdminService();
+  const [loading, setLoading] = useState(true);
   const loggedInUserRole = findRoleFromToken();
 
   useEffect(() => {
     context.breadCrumb.updatePages([{ name: "Users" }]);
-  });
+  }, []);
 
   function dateConversion(isoDate) {
     const date = new Date(isoDate);
@@ -60,6 +68,9 @@ export default function ManageAdmin() {
       })
       .catch((error) => {
         alert(error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }
 
@@ -134,143 +145,151 @@ export default function ManageAdmin() {
         content={"Do you really want to delete ?"}
         action={{ first: "Yes", second: "No" }}
       />
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }}>
-          <TableHead>
-            <TableRow>
-              <TableCell sx={{ fontWeight: 600 }} align="left">
-                Admin Email
-              </TableCell>
-              <TableCell sx={{ fontWeight: 600 }} align="center">
-                Created At
-              </TableCell>
-              <TableCell sx={{ fontWeight: 600 }} align="center">
-                Updated At
-              </TableCell>
-              <TableCell sx={{ fontWeight: 600 }} align="center">
-                Created By
-              </TableCell>
-              <TableCell sx={{ fontWeight: 600 }} align="center">
-                Role
-              </TableCell>
-              <TableCell sx={{ fontWeight: 600 }} align="center">
-                Action
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {admins.map((admin) => (
-              <TableRow
-                key={admin.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {admin.email}
-                </TableCell>
-                <TableCell align="center">
-                  {dateConversion(admin.createdAt)}
-                </TableCell>
-                <TableCell align="center">
-                  {dateConversion(admin.updatedAt)}
-                </TableCell>
-                <TableCell align="center">{admin.createdBy}</TableCell>
-                <TableCell align="center">
-                  {loggedInUserRole === "SUPER_ADMIN" ? (
-                    admin.role !== "SUPER_ADMIN" ? (
-                      <Select
-                        value={admin.role}
-                        onChange={(e) => roleHandler(e, admin.id)}
-                        name="role"
-                      >
-                        {roles.map((role, index) => (
-                          <MenuItem key={index} value={role}>
-                            {role}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    ) : (
-                      <Button variant="outlined" disabled>
-                        {admin.role}
-                      </Button>
-                    )
-                  ) : loggedInUserRole === Role.ADMIN ? (
-                    admin.role === "SUPER_ADMIN" || admin.role == "ADMIN" ? (
-                      <Button variant="outlined" disabled>
-                        {admin.role}
-                      </Button>
-                    ) : (
-                      <Select
-                        value={admin.role}
-                        onChange={(e) => roleHandler(e, admin.id)}
-                        name="role"
-                      >
-                        {roles
-                          .filter((role, index) => role !== "ADMIN")
-                          .map((role, index) => (
-                            <MenuItem key={index} value={role}>
-                              {role}
-                            </MenuItem>
-                          ))}
-                      </Select>
-                    )
-                  ) : (
-                    <Select value={admin.role} disabled>
-                      <MenuItem value={admin.role}>{admin.role}</MenuItem>
-                    </Select>
-                  )}
-                </TableCell>
-                <TableCell align="center">
-                  {loggedInUserRole === "SUPER_ADMIN" ? (
-                    admin.role === "SUPER_ADMIN" ? (
-                      <Button variant="outlined" disabled>
-                        Delete
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() =>
-                          setDialog({
-                            ...dialog,
-                            open: true,
-                            data: { adminId: admin.id },
-                          })
-                        }
-                        variant="contained"
-                        color="error"
-                      >
-                        Delete
-                      </Button>
-                    )
-                  ) : loggedInUserRole === Role.ADMIN ? (
-                    admin.role === "SUPER_ADMIN" || admin.role === "ADMIN" ? (
-                      <Button variant="outlined" disabled>
-                        Delete
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() =>
-                          setDialog({
-                            ...dialog,
-                            open: true,
-                            data: { adminId: admin.id },
-                          })
-                        }
-                        variant="contained"
-                        color="error"
-                      >
-                        Delete
-                      </Button>
-                    )
-                  ) : (
-                    <Button variant="outlined" disabled>
-                      Delete
-                    </Button>
-                  )}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Stack alignItems={"center"}>
+        {loading ? (
+          <CircularProgress sx={{ color: "lightgray" }} />
+        ) : (
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }}>
+              <TableHead>
+                <TableRow>
+                  <TableCell sx={{ fontWeight: 600 }} align="left">
+                    Admin Email
+                  </TableCell>
+                  <TableCell sx={{ fontWeight: 600 }} align="center">
+                    Created At
+                  </TableCell>
+                  <TableCell sx={{ fontWeight: 600 }} align="center">
+                    Updated At
+                  </TableCell>
+                  <TableCell sx={{ fontWeight: 600 }} align="center">
+                    Created By
+                  </TableCell>
+                  <TableCell sx={{ fontWeight: 600 }} align="center">
+                    Role
+                  </TableCell>
+                  <TableCell sx={{ fontWeight: 600 }} align="center">
+                    Action
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {admins.map((admin) => (
+                  <TableRow
+                    key={admin.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {admin.email}
+                    </TableCell>
+                    <TableCell align="center">
+                      {dateConversion(admin.createdAt)}
+                    </TableCell>
+                    <TableCell align="center">
+                      {dateConversion(admin.updatedAt)}
+                    </TableCell>
+                    <TableCell align="center">{admin.createdBy}</TableCell>
+                    <TableCell align="center">
+                      {loggedInUserRole === "SUPER_ADMIN" ? (
+                        admin.role !== "SUPER_ADMIN" ? (
+                          <Select
+                            value={admin.role}
+                            onChange={(e) => roleHandler(e, admin.id)}
+                            name="role"
+                          >
+                            {roles.map((role, index) => (
+                              <MenuItem key={index} value={role}>
+                                {role}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        ) : (
+                          <Button variant="outlined" disabled>
+                            {admin.role}
+                          </Button>
+                        )
+                      ) : loggedInUserRole === Role.ADMIN ? (
+                        admin.role === "SUPER_ADMIN" ||
+                        admin.role == "ADMIN" ? (
+                          <Button variant="outlined" disabled>
+                            {admin.role}
+                          </Button>
+                        ) : (
+                          <Select
+                            value={admin.role}
+                            onChange={(e) => roleHandler(e, admin.id)}
+                            name="role"
+                          >
+                            {roles
+                              .filter((role, index) => role !== "ADMIN")
+                              .map((role, index) => (
+                                <MenuItem key={index} value={role}>
+                                  {role}
+                                </MenuItem>
+                              ))}
+                          </Select>
+                        )
+                      ) : (
+                        <Select value={admin.role} disabled>
+                          <MenuItem value={admin.role}>{admin.role}</MenuItem>
+                        </Select>
+                      )}
+                    </TableCell>
+                    <TableCell align="center">
+                      {loggedInUserRole === "SUPER_ADMIN" ? (
+                        admin.role === "SUPER_ADMIN" ? (
+                          <Button variant="outlined" disabled>
+                            Delete
+                          </Button>
+                        ) : (
+                          <Button
+                            onClick={() =>
+                              setDialog({
+                                ...dialog,
+                                open: true,
+                                data: { adminId: admin.id },
+                              })
+                            }
+                            variant="contained"
+                            color="error"
+                          >
+                            Delete
+                          </Button>
+                        )
+                      ) : loggedInUserRole === Role.ADMIN ? (
+                        admin.role === "SUPER_ADMIN" ||
+                        admin.role === "ADMIN" ? (
+                          <Button variant="outlined" disabled>
+                            Delete
+                          </Button>
+                        ) : (
+                          <Button
+                            onClick={() =>
+                              setDialog({
+                                ...dialog,
+                                open: true,
+                                data: { adminId: admin.id },
+                              })
+                            }
+                            variant="contained"
+                            color="error"
+                          >
+                            Delete
+                          </Button>
+                        )
+                      ) : (
+                        <Button variant="outlined" disabled>
+                          Delete
+                        </Button>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
+      </Stack>
     </>
   );
 }

@@ -26,6 +26,7 @@ const UnAuthRoutes = [
   <Route path="/link-expired" element={<LinkExpired />} />,
   <Route path="/t-and-c" element={<TermsAndConditionsPage />} />,
   <Route path="/privacy" element={<PrivacyPage />} />,
+  <Route path="/*" element={<PageNotFound />} />,
 ];
 
 export default UnAuthRoutes;

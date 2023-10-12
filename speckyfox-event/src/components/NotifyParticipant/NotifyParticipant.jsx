@@ -15,6 +15,7 @@ import React, { useContext, useEffect, useState } from "react";
 import EventService from "../../services/EventService";
 import MyContext from "../../context/MyContext";
 import { useLocation, useNavigate } from "react-router-dom";
+import CustomDialog from "../../dashboard-components/CustomDialogBox/CustomDialog";
 
 const NotifyParticipant = () => {
   const [selectedEvent, setSelectedEvent] = useState("");
@@ -27,6 +28,12 @@ const NotifyParticipant = () => {
   const { context } = useContext(MyContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const [customDialog, setCustomDialog] = useState({
+    open: false,
+    action: null,
+    title: "",
+    content: "",
+  });
 
   useEffect(() => {
     context.breadCrumb.updatePages([
@@ -74,23 +81,35 @@ const NotifyParticipant = () => {
     setIsAlertVisible(false);
   };
 
-  const handleNotify = () => {
-    setLoading(true);
-    const eventService = new EventService();
-    eventService
-      .notifyUsers(selectedEvent)
-      .then((response) => {
-        setLoading(false);
-        setIsAlertVisible(true);
-      })
-      .catch((error) => {
-        setLoading(false);
-        alert("Something went wrong on our end.");
-      });
-  };
+  function handleNotify() {
+    setCustomDialog({
+      open: true,
+      title: "Alert",
+      content:
+        'A reminder email will be send to every participant. Press "Yes" to continue !',
+      action: () => {
+        setLoading(true);
+        const eventService = new EventService();
+        eventService
+          .notifyUsers(location.state.event.events.id)
+          .then((response) => {
+            setLoading(false);
+            setIsAlertVisible(true);
+          })
+          .catch((error) => {
+            setLoading(false);
+            alert("Something went wrong on our end.");
+          });
+      },
+    });
+  }
 
   return (
     <Box p={3} maxWidth={600} margin="auto">
+      <CustomDialog
+        customDialog={customDialog}
+        setCustomDialog={setCustomDialog}
+      />
       <Typography variant="h5" py={2}>
         Notify Participants
       </Typography>
@@ -100,6 +119,7 @@ const NotifyParticipant = () => {
           labelId="select-event-label"
           label="Select Event"
           value={location.state.event.events.id}
+          disabled
         >
           <MenuItem value={location.state.event.events.id}>
             {location.state.event.events.title}
@@ -108,7 +128,7 @@ const NotifyParticipant = () => {
       </FormControl>
 
       <Box textAlign={"end"}>
-        <Button
+        {/* <Button
           variant={"contained"}
           onClick={handleUserSelectAll}
           sx={{
@@ -123,7 +143,7 @@ const NotifyParticipant = () => {
           }}
         >
           {selectAll ? "Deselect All" : "Select All"}
-        </Button>
+        </Button> */}
         <Button
           sx={{
             height: "40px",
@@ -142,7 +162,7 @@ const NotifyParticipant = () => {
           {loading ? (
             <CircularProgress style={{ color: "whitesmoke" }} size={24.5} />
           ) : (
-            "Notify"
+            "Notify All"
           )}
         </Button>
       </Box>
@@ -150,10 +170,10 @@ const NotifyParticipant = () => {
         {selectedUsers.length === 0 ? (
           <Typography>No participants belong to the selected event.</Typography>
         ) : (
-          <Box maxHeight={300} overflow={"scroll"}>
+          <Box maxHeight={280} overflow={"auto"}>
             {selectedUsers.map((user, index) => (
               <Box key={index} display="flex" alignItems="center" mb={1}>
-                <Checkbox
+                {/* <Checkbox
                   checked={selectedUsers.includes(user)}
                   onChange={() => {
                     setSelectedUsers((prevUsers) =>
@@ -163,8 +183,10 @@ const NotifyParticipant = () => {
                     );
                   }}
                   sx={{ mr: 1 }}
-                />
-                <Typography>{user}</Typography>
+                /> */}
+                <Typography>
+                  <strong>{index + 1}.</strong> &nbsp;{user}
+                </Typography>
               </Box>
             ))}
           </Box>

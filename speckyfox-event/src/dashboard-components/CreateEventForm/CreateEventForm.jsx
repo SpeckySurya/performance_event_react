@@ -56,7 +56,6 @@ export default function CreateEventForm() {
       { name: "Events", route: () => navigate("/dashboard/events") },
       {
         name: "Create Event",
-        route: () => navigate("/dashboard/events/create-event"),
       },
     ]);
   }, []);
@@ -163,6 +162,7 @@ export default function CreateEventForm() {
             placeholder="Meeting URL"
             value={formData.meetingUrl}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="form-group">

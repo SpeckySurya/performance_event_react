@@ -4,7 +4,13 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import HeadsetMicIcon from "@mui/icons-material/HeadsetMic";
 import OtherHousesIcon from "@mui/icons-material/OtherHouses";
-import { Stack, Tooltip } from "@mui/material";
+import {
+  Stack,
+  ToggleButton,
+  ToggleButtonGroup,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
@@ -28,8 +34,37 @@ import AddIcon from "@mui/icons-material/Add";
 import "./DashboardPage2.css";
 import Role from "../../utils/Role";
 import { findRoleFromToken } from "../../utils/TokenDecoder";
+import { useSnackbar } from "material-ui-snackbar-provider";
 
 const drawerWidth = 240;
+
+const snackbarMsg = "You are not authorized to perform this action !";
+
+const redirectToEvent = [
+  "/dashboard",
+  "/dashboard/events/manage-participant",
+  "/dashboard/events/notify-participant",
+  "/dashboard/events/edit-event",
+  "/dashboard/events/upload-event-data",
+];
+
+const redirectToSpeaker = ["/dashboard/speakers/edit-speaker"];
+
+const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
+  "& .MuiToggleButtonGroup-grouped": {
+    margin: theme.spacing(0.5),
+    border: 0,
+    "&.Mui-disabled": {
+      border: 0,
+    },
+    "&:not(:first-of-type)": {
+      borderRadius: theme.shape.borderRadius,
+    },
+    "&:first-of-type": {
+      borderRadius: theme.shape.borderRadius,
+    },
+  },
+}));
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
@@ -63,14 +98,15 @@ export default function DashboardPage2() {
 
   const theme = useTheme();
   const [open, setOpen] = useState(true);
-  const [events, setEvents] = useState([]);
-  const [speakers, setSpeakers] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
   const { context } = useContext(MyContext);
+  const SnackbarProvider = useSnackbar();
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const [alignment, setAlignment] = useState("all");
+
+  const handleChange = (event, newAlignment) => {
+    setAlignment(newAlignment);
   };
 
   const handleDrawerClose = () => {
@@ -104,24 +140,17 @@ export default function DashboardPage2() {
     if (sessionStorage.getItem("token") === null) {
       navigate("/login");
     }
-    console.log(location.pathname);
-    if (location.pathname === "/dashboard") {
+    if (
+      redirectToEvent.includes(location.pathname) ||
+      location.pathname.includes("/dashboard")
+    ) {
       navigate("/dashboard/events");
+    } else if (redirectToSpeaker.includes(location.pathname)) {
+      navigate("/dashboard/speakers");
     } else {
       navigate(location.pathname);
     }
   }, []);
-
-  const initialSetup = () => {
-    const eventService = new EventService();
-    eventService.getAllEvents().then((response) => {
-      setEvents(response.data);
-    });
-    const speakerService = new SpeakerService();
-    speakerService.getAllSpeakers().then((response) => {
-      setSpeakers(response.data);
-    });
-  };
 
   const addButtonTitle = () => {
     switch (location.pathname) {
@@ -134,28 +163,28 @@ export default function DashboardPage2() {
       case "/dashboard/speakers": {
         return "Add new speaker";
       }
+      default: {
+        return "";
+      }
     }
   };
 
-  useEffect(() => {
-    initialSetup();
-  }, []);
-
   function handleAddIconClick(e) {
-    switch (location.pathname) {
-      case "/dashboard/events": {
-        navigate("/dashboard/events/create-event");
-        break;
-      }
-      case "/dashboard/users": {
-        navigate("/dashboard/users/user-registration");
-        break;
-      }
-      case "/dashboard/speakers": {
-        navigate("/dashboard/speakers/create-speaker");
-        break;
-      }
+    if (role === Role.VIEWER || role === Role.EDITOR) {
+      SnackbarProvider.showMessage(snackbarMsg);
+      return;
     }
+    if (location.pathname.includes("/dashboard/events")) {
+      navigate("/dashboard/events/create-event");
+    } else if (location.pathname.includes("/dashboard/users")) {
+      navigate("/dashboard/users/user-registration");
+    } else if (location.pathname.includes("/dashboard/speakers")) {
+      navigate("/dashboard/speakers/create-speaker");
+    }
+  }
+
+  function handleEventFilter(filter) {
+    context.eventFilter.setEventFilter(filter);
   }
 
   return (
@@ -224,26 +253,57 @@ export default function DashboardPage2() {
                 justifyContent={"center"}
               >
                 <Box>{/* <CustomSearchField /> */}</Box>
-                <Tooltip
-                  title={addButtonTitle()}
-                  sx={{
-                    cursor:
-                      role === Role.VIEWER || role === Role.EDITOR
-                        ? "default"
-                        : "pointer",
-                  }}
-                >
-                  <Box
-                    className={"add-icon-style"}
-                    onClick={
-                      role === Role.VIEWER || role === Role.EDITOR
-                        ? null
-                        : handleAddIconClick
-                    }
+                {location.pathname === "/dashboard/events" && (
+                  <StyledToggleButtonGroup
+                    value={alignment}
+                    exclusive
+                    onChange={handleChange}
+                    aria-label="Platform"
                   >
-                    <AddIcon />
-                  </Box>
-                </Tooltip>
+                    <ToggleButton
+                      value="all"
+                      onClick={() => handleEventFilter("all")}
+                    >
+                      <Typography fontSize={13} color={"rgb(148,127,43)"}>
+                        All
+                      </Typography>
+                    </ToggleButton>
+                    <ToggleButton
+                      value="past"
+                      onClick={() => handleEventFilter("past")}
+                    >
+                      <Typography fontSize={13} color={"rgb(148,127,43)"}>
+                        Past
+                      </Typography>
+                    </ToggleButton>
+                    <ToggleButton
+                      value="upcoming"
+                      onClick={() => handleEventFilter("upcoming")}
+                    >
+                      <Typography fontSize={13} color={"rgb(148,127,43)"}>
+                        Upcoming
+                      </Typography>
+                    </ToggleButton>
+                  </StyledToggleButtonGroup>
+                )}
+                {addButtonTitle() && (
+                  <Tooltip
+                    title={addButtonTitle()}
+                    sx={{
+                      cursor:
+                        role === Role.VIEWER || role === Role.EDITOR
+                          ? "default"
+                          : "pointer",
+                    }}
+                  >
+                    <Box
+                      className={"add-icon-style"}
+                      onClick={handleAddIconClick}
+                    >
+                      <AddIcon />
+                    </Box>
+                  </Tooltip>
+                )}
               </Stack>
             </Stack>
             <Box p={1} className={"custom-scroll"} height={"74vh"}>
