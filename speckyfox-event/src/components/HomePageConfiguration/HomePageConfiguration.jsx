@@ -70,15 +70,12 @@ function HomePageConfiguration(props) {
       .getHomeConfigById()
       .then((response) => {
         setHomepageConfig(response.data);
-        console.log(response.data);
         setInitialValues({
           ...response.data,
         });
-        console.log(initialValues);
       })
       .catch((error) => {
         setHomepageConfig(null);
-        console.log(error);
       });
   }
 

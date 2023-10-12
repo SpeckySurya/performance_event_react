@@ -46,15 +46,12 @@ export default function HomeConfig() {
       .then((response) => {
         setHomeConfigFormTitle("Update");
         setHomepageConfig(response.data);
-        console.log(response.data);
         setFormData({
           ...response.data,
         });
-        console.log(formDataDefault);
       })
       .catch((error) => {
         setHomepageConfig(null);
-        console.log(error);
       })
       .finally(() => setPageLoading(false));
   }
