@@ -36,8 +36,12 @@ export default function NotificationCenter() {
     eventService
       .getUpcomingEvent()
       .then((response) => {
-        setEvent(response.data);
-        setBadgeCounter(1);
+        if (response.data) {
+          setBadgeCounter(1);
+          setEvent(response.data);
+        } else {
+          setBadgeCounter(0);
+        }
       })
       .catch((error) => {
         alert(error);
@@ -48,10 +52,12 @@ export default function NotificationCenter() {
     upcomingEvent();
   }, []);
 
-  const toggleNotificationCenter = (event) => {
-    setBadgeCounter(0);
-    setAnchorEl(event.currentTarget);
-    setIsOpen(!isOpen);
+  const toggleNotificationCenter = (e) => {
+    if (JSON.stringify(event) !== "{}") {
+      setBadgeCounter(0);
+      setAnchorEl(e.currentTarget);
+      setIsOpen(!isOpen);
+    }
   };
 
   const handleOutsideClick = (e) => {
