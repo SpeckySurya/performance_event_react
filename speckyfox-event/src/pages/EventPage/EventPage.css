@@ -1,18 +1,69 @@
 .event-page-container {
-  background: linear-gradient(-45deg, #ea750f, #f6d5f2, #c5d7ee, #3ec4f1);
-  background-size: 700% 700%;
-  animation: gradient 10s ease infinite;
-  height: 100%;
+  opacity: 2;
+  background-color: #ffffff;
+}
+.userdashboardimage {
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+}
+.imagecuntaner {
+  position: relative;
 }
 
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
+.recentBannerImage {
+  height: 90vh;
+  width: 100%;
+}
+.recentImagecuntaner {
+  position: relative;
+}
+.recentSpeckyfoxText {
+  font-family: Poppins;
+  font-size: 300%;
+  margin: 1% 0px;
+  color: rgb(6, 6, 6);
+  position: absolute;
+  top: 5%;
+  left: 10%;
+  right: 10%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.recentwebinar {
+  color: #ffbd06;
+  margin: 0%;
+  text-shadow: 2px 2px 2px rgb(114, 112, 112);
+}
+.recentSpeckyfoxTech {
+  text-shadow: 1.5px 1.5px 1.5px rgb(131, 129, 129);
+  color: #080808;
+}
+.recentSpeckyfoxTech2 {
+  text-shadow: 1.5px 1.5px 1.5px rgb(131, 129, 129);
+  color: white;
+}
+.recentdataitem1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.iconwithdata {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 2%;
+}
+.iconcolor {
+  color: #080808;
+}
+.textdate {
+  color: #e77817;
+}
+@media screen and (max-width: 500px) {
+  .recentSpeckyfoxText {
+    font-size: 30px;
+    top: 20%;
+    margin: 0% 0%;
   }
 }
