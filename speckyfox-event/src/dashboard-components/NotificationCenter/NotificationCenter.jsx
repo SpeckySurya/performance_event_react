@@ -12,7 +12,6 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import EventService from "../../services/EventService";
-import { host } from "../../utils/Constant";
 import CustomDialog from "../CustomDialogBox/CustomDialog";
 import { toast } from "react-toastify";
 
@@ -159,7 +158,7 @@ export default function NotificationCenter() {
                   Hii Admin,{" "}
                   <Link
                     className="no-anchor-style"
-                    to={`${host()}/${event?.id}`}
+                    to={`/${event?.id}`}
                     target="_blank"
                   >
                     <strong>

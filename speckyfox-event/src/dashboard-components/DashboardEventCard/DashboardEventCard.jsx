@@ -1,6 +1,8 @@
+import BrushIcon from "@mui/icons-material/Brush";
 import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DownloadIcon from "@mui/icons-material/Download";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
@@ -10,32 +12,29 @@ import { Box, ToggleButton, Tooltip, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
+import { useSnackbar } from "material-ui-snackbar-provider";
 import { useContext, useEffect, useRef, useState } from "react";
 import { TbTargetArrow } from "react-icons/tb";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import BrushIcon from "@mui/icons-material/Brush";
+import ReactPlayer from "react-player";
+import { Link, useNavigate } from "react-router-dom";
+import upcomingGif from "../../assets/upcoming.gif";
+import PopupAlert from "../../components/PopupAlert/PopupAlert";
+import SnackbarComponent from "../../components/SnackbarComponent/SnackbarComponent";
+import MyContext from "../../context/MyContext";
+import ContentService from "../../services/ContentService";
+import EventService from "../../services/EventService";
 import dateFormatter, {
   addTime,
   convertTo12HourFormat,
   isPastDateTime,
 } from "../../utils/DateFormatter";
-import "./DashboardEventCard.css";
-import EventService from "../../services/EventService";
-import SnackbarComponent from "../../components/SnackbarComponent/SnackbarComponent";
-import { Link, useNavigate } from "react-router-dom";
-import ReactPlayer from "react-player";
-import ContentService from "../../services/ContentService";
-import MyContext from "../../context/MyContext";
-import PopupAlert from "../../components/PopupAlert/PopupAlert";
+import Role from "../../utils/Role";
 import {
   findEmailFromToken,
   findRoleFromToken,
 } from "../../utils/TokenDecoder";
-import { useSnackbar } from "material-ui-snackbar-provider";
-import upcomingGif from "../../assets/upcoming.gif";
-import Role from "../../utils/Role";
 import CustomDialog from "../CustomDialogBox/CustomDialog";
-import serviceUrl, { host } from "../../utils/Constant";
+import "./DashboardEventCard.css";
 
 const EventPaper = styled(Paper)(() => ({
   width: 400,
@@ -372,7 +371,7 @@ export default function DashboardEventCard({ event, initialSetup }) {
             <Stack spacing={2} width={"50%"}>
               <Stack>
                 <Link
-                  to={`${host()}/${event.events.id}`}
+                  to={`/${event.events.id}`}
                   target="_blank"
                   sx={{ cursor: "pointer" }}
                   className="no-anchor-style"
