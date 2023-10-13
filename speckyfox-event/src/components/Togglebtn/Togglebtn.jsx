@@ -5,7 +5,12 @@ import EventService from "../../services/EventService";
 import EventCard from "../EventCard/EventCard";
 import VideoCart from "../VideoCart/VideoCart";
 import "./Togglebtn.css";
-
+/**
+ *
+ * This component is a Togglebtn . it will show past event as well as Upcoming event.
+ *
+ * @returns Togglebtn
+ */
 export default function Togglebtn() {
   const [opentogle, setopentogle] = useState(true);
   const [events, setEvents] = useState([]);

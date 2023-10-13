@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import "./Readmore.css";
-
+/**
+ *
+ * This component is a Readmore . it will short the paragraph related to about speaker and give option to read more.
+ *
+ * @returns Readmore
+ */
 function Readmore(props) {
   const [check, setcheck] = useState(true);
 

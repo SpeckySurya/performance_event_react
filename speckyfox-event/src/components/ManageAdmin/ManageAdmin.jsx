@@ -23,6 +23,12 @@ import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
 import "./ManageAdmin.css";
 import MyContext from "../../context/MyContext";
 import Role from "../../utils/Role";
+/**
+ *
+ * This component is a ManageAdmin . Admin role can be changed .
+ *
+ * @returns ManageAdmin
+ */
 export default function ManageAdmin() {
   const [admins, setAdmins] = useState([]);
   const [roles, setRoles] = useState([]);
