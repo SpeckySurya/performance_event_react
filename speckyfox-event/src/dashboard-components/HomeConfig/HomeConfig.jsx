@@ -17,6 +17,13 @@ const formDataDefault = {
   footerText: "",
 };
 
+/**
+ *
+ * This component display a form to create or update the Home configuration settings.
+ *
+ * @returns Home Configuration Component
+ */
+
 export default function HomeConfig() {
   const [formData, setFormData] = useState(formDataDefault);
   const [loading, setLoading] = useState(false);

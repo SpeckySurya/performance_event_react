@@ -17,6 +17,14 @@ import { findEmailFromToken, findRoleFromToken } from "../utils/TokenDecoder";
 import NotificationCenter from "./NotificationCenter/NotificationCenter";
 import Role from "../utils/Role";
 
+/**
+ *
+ * This component is used to show a sidebar with some items
+ *
+ * @param {setOpen is a callback funtion to handle visibility of this component, open is variable contains state of this component} param0
+ * @returns Sidebar Component
+ */
+
 export default function DashboardAppBar({ setOpen, open }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);

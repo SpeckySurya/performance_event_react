@@ -34,6 +34,13 @@ const speakerInitialValue = {
   youtubeUrl: "",
 };
 
+/**
+ *
+ * This component is used to render create speaker form componet
+ *
+ * @returns Create Speaker Form Componet
+ */
+
 function CreateSpeakerForm() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [open, setOpen] = useState(false);

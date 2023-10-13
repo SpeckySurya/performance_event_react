@@ -29,6 +29,14 @@ function handleClick(event, page) {
   page?.route();
 }
 
+/**
+ *
+ * This component shows the heirarchy of pages in the form of clickable items
+ *
+ * @param {Array of object to breadcrumb items} param0
+ * @returns Breakcrumb Componenet
+ */
+
 export default function Breadcrumb({ pages }) {
   return (
     <div role="presentation">
@@ -42,11 +50,6 @@ export default function Breadcrumb({ pages }) {
             onClick={(e) => handleClick(e, page)}
           />
         ))}
-        {/* <StyledBreadcrumb
-          label="Accessories"
-          deleteIcon={<ExpandMoreIcon />}
-          onDelete={handleClick}
-        /> */}
       </Breadcrumbs>
     </div>
   );

@@ -60,6 +60,14 @@ const CustomPaper2 = styled(Paper)(() => ({
 
 const snackbarMsg = "You are not authorized to perform this action !";
 
+/**
+ *
+ * This component is use to display event details in a Card template
+ *
+ * @param {event is the event object which we want to utilize in event card, initialSetup is a function to recall the API} param0
+ * @returns
+ */
+
 export default function DashboardEventCard({ event, initialSetup }) {
   const role = findRoleFromToken();
 

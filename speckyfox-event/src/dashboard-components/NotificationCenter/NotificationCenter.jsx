@@ -17,6 +17,13 @@ import { toast } from "react-toastify";
 
 const types = ["success", "info", "warning", "error"];
 
+/**
+ *
+ * This component is used to return UI of Notificatio centers
+ *
+ * @returns Notification Center Component
+ */
+
 export default function NotificationCenter() {
   const [isOpen, setIsOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);

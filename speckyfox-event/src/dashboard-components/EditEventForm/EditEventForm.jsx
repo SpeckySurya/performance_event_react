@@ -8,6 +8,13 @@ import SpeakerService from "../../services/SpeakerService";
 import SnackbarComponent from "../../components/SnackbarComponent/SnackbarComponent";
 import MyContext from "../../context/MyContext";
 
+/**
+ *
+ * Used to display a form to edit event.
+ *
+ * @returns Edit event Form Component
+ */
+
 export default function EditEventForm() {
   const location = useLocation();
 

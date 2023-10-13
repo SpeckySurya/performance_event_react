@@ -31,6 +31,14 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     padding: theme.spacing(1),
   },
 }));
+
+/**
+ *
+ * This page use to show all the active upcoming and past events
+ *
+ * @returns Event page component
+ */
+
 const EventPage = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);

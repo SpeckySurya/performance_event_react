@@ -7,6 +7,13 @@ import DashboardEventCard from "../DashboardEventCard/DashboardEventCard";
 import "./DashboardEventView.css";
 import dateFormatter, { isPastDateTime } from "../../utils/DateFormatter";
 
+/**
+ *
+ * This component is meant for display event cards
+ *
+ * @returns Component that reders Event Card Component
+ */
+
 export default function DashboardEventView() {
   const { context } = useContext(MyContext);
   const [events, setEvents] = useState([]);
