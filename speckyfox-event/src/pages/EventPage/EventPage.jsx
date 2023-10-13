@@ -114,11 +114,21 @@ const EventPage = () => {
             <Typography
               // p={1}
               pt={1}
-              color={"blue"}
               onClick={handleRegisterButtonClick}
-              fontSize={25}
             >
-              <KeyboardDoubleArrowDownIcon className="iconclass" />
+              <KeyboardDoubleArrowDownIcon
+                className="iconclass"
+                style={{ fontSize: 40 }}
+              />
+              <Typography
+                sx={{
+                  letterSpacing: 2,
+                  padding: 2,
+                  color: "rgb(255, 255, 255, 0.4)",
+                }}
+              >
+                Scroll To Events
+              </Typography>
             </Typography>
           </div>
         ) : null}
