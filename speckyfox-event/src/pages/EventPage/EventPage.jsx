@@ -22,6 +22,8 @@ import "./EventPage.css";
 import CookieConsent from "../../components/CookieConsent/CookieConsent";
 import { useContext, useRef } from "react";
 import MyContext from "../../context/MyContext";
+import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
+
 //
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -98,20 +100,18 @@ const EventPage = () => {
             style={{
               textAlign: "center",
 
-              transform: "rotate(15deg)",
+              // transform: "rotate(15deg)",
             }}
-            className={"BannerRegisterButtonatTop"}
+            className={"BannerButtonatDown"}
           >
             <Typography
-              p={1}
+              // p={1}
+              pt={1}
               color={"blue"}
               onClick={handleRegisterButtonClick}
-              fontSize={15}
+              fontSize={25}
             >
-              Upcoming Event
-              <Typography fontSize={10} color={"white"}>
-                Click me
-              </Typography>
+              <KeyboardDoubleArrowDownIcon className="iconclass" />
             </Typography>
           </div>
         ) : null}
