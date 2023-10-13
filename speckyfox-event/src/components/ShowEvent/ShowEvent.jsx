@@ -13,7 +13,12 @@ import { Link } from "react-router-dom";
 import dateFormatter, { isPastDateTime } from "../../utils/DateFormatter";
 import EventCard from "../EventCard/EventCard";
 import UpdateEvent from "../UpdateEvent/UpdateEvent";
-
+/**
+ *
+ * This component is a ShowEvent it will show event Both Upcoming and Past.
+ *
+ * @returns ShowEvent
+ */
 const ShowEvent = (props) => {
   const [eventEditing, setEventEditing] = useState(false);
   const [editEvent, setEditEvent] = useState(null);

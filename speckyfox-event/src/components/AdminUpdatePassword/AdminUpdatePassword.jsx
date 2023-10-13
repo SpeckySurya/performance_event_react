@@ -4,7 +4,12 @@ import { useNavigate } from "react-router-dom";
 import PasswordService from "../../services/PasswordService";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
 import MyContext from "../../context/MyContext";
-
+/**
+ *
+ * This components AdminUpdatePassword Component it is used for Update the Password .
+ *
+ * @returns AdminUpdatePassword
+ */
 function AdminUpdatePassword() {
   const [loading, setLoading] = useState(false);
   const [snackbar, setSnackbar] = useState(null);

@@ -6,7 +6,12 @@ import {
   Stack,
 } from "@mui/material";
 import React from "react";
-
+/**
+ *
+ * This component Duration Component related to work hour and minutes
+ *
+ * @returns Duration
+ */
 const Duration = (props) => {
   const hours = [0, 1, 2, 3, 4, 5, 6];
   const minutes = [0, 15, 30, 45];

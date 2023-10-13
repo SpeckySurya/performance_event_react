@@ -7,7 +7,12 @@ import React, {
   useMemo,
   useRef,
 } from "react";
-
+/**
+ *
+ * This component is a TableComponent . it will genrate DateTable.
+ *
+ * @returns TableComponent
+ */
 const TableComponent = React.forwardRef(({ rowData }, ref) => {
   const gridRef = useRef();
 

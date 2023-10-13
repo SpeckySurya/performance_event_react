@@ -1,5 +1,10 @@
 import { Box } from "@mui/material";
-
+/**
+ *
+ * This component is a RegistrationFormHeaderComponent .
+ *
+ * @returns RegistrationFormHeaderComponent
+ */
 const RegistrationFormHeaderComponent = () => {
   return (
     <div>

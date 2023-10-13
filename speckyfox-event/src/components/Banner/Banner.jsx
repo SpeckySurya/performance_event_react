@@ -7,7 +7,12 @@ import dateFormatter, {
 } from "../../utils/DateFormatter";
 import RegistrationForm from "../RegistrationForm/RegistrationForm";
 import "./Banner.css";
-
+/**
+ *
+ * This component Banner Component it will contain Banner And Registation Form and how Event Date Over Banner.
+ *
+ * @returns Banner
+ */
 export const Banner = (props) => {
   const [formattedDate, setFormattedDate] = useState({});
   const [formattedTime, setFormattedTime] = useState("");

@@ -8,7 +8,12 @@ import {
   Slide,
 } from "@mui/material";
 import React from "react";
-
+/**
+ *
+ * This component is a PopupAlert . it will open a Popup alert.
+ *
+ * @returns PopupAlert
+ */
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });

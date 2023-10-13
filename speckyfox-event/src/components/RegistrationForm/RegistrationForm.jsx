@@ -3,7 +3,12 @@ import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import RegistrationService from "../../services/RegistrationService";
 import "./RegistrationForm.css";
-
+/**
+ *
+ * This component is a RegistrationForm . it will show a RegistrationForm form .
+ *
+ * @returns RegistrationForm
+ */
 const RegistrationForm = ({ isOutdated }) => {
   const params = useParams();
   const [formData, setFormData] = useState({

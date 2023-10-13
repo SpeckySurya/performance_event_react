@@ -23,7 +23,12 @@ import ContentService from "../../services/ContentService";
 import EventService from "../../services/EventService";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
 import "./UploadVideoAndPdf.css";
-
+/**
+ *
+ * This component is a UploadVideoAndPdf . it is used for uploaded video and ppt of the past event.
+ *
+ * @returns UploadVideoAndPdf
+ */
 function UploadVideoAndPdf() {
   const [uploadFile, setUploadFile] = useState("");
   const [loading, setLoading] = useState(false);

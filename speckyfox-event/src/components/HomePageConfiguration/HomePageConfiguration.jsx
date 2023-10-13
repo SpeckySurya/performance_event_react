@@ -21,8 +21,15 @@ import { useContext, useEffect, useState } from "react";
 import { HomePageConfigationSchema } from "../../schemas/Homepagevalidation";
 import HomeConfigService from "../../services/HomeConfigService";
 import MyContext from "../../context/MyContext";
-const homeConfigService = new HomeConfigService();
 
+/**
+ *
+ * This component is a HomePageConfiguration it is used for can changed Configuration details
+ *
+ * @returns HomePageConfiguration
+ */
+
+const homeConfigService = new HomeConfigService();
 function HomePageConfiguration(props) {
   const [loading, setLoading] = useState(false);
   const { context } = useContext(MyContext);

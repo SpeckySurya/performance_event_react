@@ -1,5 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-
+/**
+ *
+ * This component is a HamburgerMenu Component used for genrate Hamburger in mobile view .
+ *
+ * @returns HamburgerMenu
+ */
 const HamburgerMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
