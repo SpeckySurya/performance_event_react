@@ -16,7 +16,12 @@ import EventService from "../../services/EventService";
 import MyContext from "../../context/MyContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import CustomDialog from "../../dashboard-components/CustomDialogBox/CustomDialog";
-
+/**
+ *
+ * This component is a NotifyParticipant . it will send notification to participants.
+ *
+ * @returns NotifyParticipant
+ */
 const NotifyParticipant = () => {
   const [selectedEvent, setSelectedEvent] = useState("");
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -128,22 +133,6 @@ const NotifyParticipant = () => {
       </FormControl>
 
       <Box textAlign={"end"}>
-        {/* <Button
-          variant={"contained"}
-          onClick={handleUserSelectAll}
-          sx={{
-            height: "40px",
-            ml: 2,
-            mt: 3,
-            background: "#947f2b",
-            color: "white",
-            ":hover": {
-              background: darken("#947f2b", 0.2),
-            },
-          }}
-        >
-          {selectAll ? "Deselect All" : "Select All"}
-        </Button> */}
         <Button
           sx={{
             height: "40px",
@@ -173,17 +162,6 @@ const NotifyParticipant = () => {
           <Box maxHeight={280} overflow={"auto"}>
             {selectedUsers.map((user, index) => (
               <Box key={index} display="flex" alignItems="center" mb={1}>
-                {/* <Checkbox
-                  checked={selectedUsers.includes(user)}
-                  onChange={() => {
-                    setSelectedUsers((prevUsers) =>
-                      prevUsers.includes(user)
-                        ? prevUsers.filter((u) => u !== user)
-                        : [...prevUsers, user]
-                    );
-                  }}
-                  sx={{ mr: 1 }}
-                /> */}
                 <Typography>
                   <strong>{index + 1}.</strong> &nbsp;{user}
                 </Typography>

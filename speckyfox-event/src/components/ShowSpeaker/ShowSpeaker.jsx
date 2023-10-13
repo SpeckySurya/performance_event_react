@@ -26,7 +26,12 @@ import MyContext from "../../context/MyContext";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
 import { useNavigate } from "react-router-dom";
 import Role from "../../utils/Role";
-
+/**
+ *
+ * This component is a ShowSpeaker it will show the speaker.
+ *
+ * @returns ShowSpeaker
+ */
 const ShowSpeaker = () => {
   const role = findRoleFromToken();
 

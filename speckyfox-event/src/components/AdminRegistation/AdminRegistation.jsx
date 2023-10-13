@@ -13,7 +13,12 @@ import RegistrationService from "../../services/RegistrationService";
 import { findRoleFromToken } from "../../utils/TokenDecoder";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
 import MyContext from "../../context/MyContext";
-
+/**
+ *
+ * This components AdminRegistration Component it is used for Admin Registation .
+ *
+ * @returns AdminRegistration
+ */
 export default function AdminRegistration() {
   const [loading, setLoading] = useState(false);
   const data = { email: "", password: "", confirmPassword: "", role: "" };

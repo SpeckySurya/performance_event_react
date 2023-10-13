@@ -3,7 +3,12 @@ import React, { useContext, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import MyContext from "../../context/MyContext";
 import TableComponent from "../TableComponent/TableComponent";
-
+/**
+ *
+ * This component is a ManageUser . can view the participent and also downloaded the List of participent.
+ *
+ * @returns ManageUser
+ */
 const ManageUser = () => {
   const tableRef = useRef(null);
   const { context } = useContext(MyContext);

@@ -44,24 +44,13 @@ import EventService from "../../services/EventService";
 import { findRoleFromToken } from "../../utils/TokenDecoder";
 import Editbtn from "../Editbtn/Editbtn";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
-const responsive = {
-  superLargeDesktop: {
-    breakpoint: { max: 4000, min: 3000 },
-    items: 5,
-  },
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 2,
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 2,
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1,
-  },
-};
+/**
+ *
+ * This component EventCard Component Related to card Api data is placed over card is here .
+ *
+ * @returns EventCard
+ */
+
 const EventCard = (props) => {
   const [active, setActive] = useState(false);
   const [snackbar, setSnackbar] = useState(null);

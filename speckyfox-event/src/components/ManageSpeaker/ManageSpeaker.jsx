@@ -22,7 +22,12 @@ import { ManageSpeakerValidation } from "../../schemas/ManageSpeakerValidation";
 import SpeakerService from "../../services/SpeakerService";
 import MyContext from "../../context/MyContext";
 import { useNavigate } from "react-router-dom";
-
+/**
+ *
+ * This component is a ManageSpeaker . can create the speaker details and update the speaker details also.
+ *
+ * @returns ManageSpeaker
+ */
 function ManageSpeaker(props) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [open, setOpen] = useState(false);

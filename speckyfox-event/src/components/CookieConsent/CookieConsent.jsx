@@ -4,7 +4,12 @@ import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
-
+/**
+ *
+ * This component CookieConsent Component if someuser visit website first time it will genrated message related to Accept Cookies.
+ *
+ * @returns CookieConsent
+ */
 const CookieConsent = () => {
   const [open, setOpen] = useState("block");
 

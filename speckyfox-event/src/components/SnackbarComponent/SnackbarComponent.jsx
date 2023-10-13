@@ -1,7 +1,12 @@
 import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import React, { useState } from "react";
-
+/**
+ *
+ * This component is a SnackbarComponent . it will genrate s snackbar.
+ *
+ * @returns SnackbarComponent
+ */
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });

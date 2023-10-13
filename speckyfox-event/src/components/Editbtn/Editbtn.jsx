@@ -7,6 +7,12 @@ import EventService from "../../services/EventService";
 import { findRoleFromToken } from "../../utils/TokenDecoder";
 import PopupAlert from "../PopupAlert/PopupAlert";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
+/**
+ *
+ * This component Editbtn Component Related to Admin can Edit the Event .
+ *
+ * @returns Editbtn
+ */
 const ITEM_HEIGHT = 40;
 export default function Editbtn(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
