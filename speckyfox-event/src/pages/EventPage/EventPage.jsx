@@ -20,9 +20,11 @@ import HomeConfigService from "../../services/HomeConfigService";
 import RecentEventService from "../../services/RecentEventService";
 import "./EventPage.css";
 import CookieConsent from "../../components/CookieConsent/CookieConsent";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import MyContext from "../../context/MyContext";
+import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 
+//
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
@@ -46,21 +48,21 @@ const EventPage = () => {
   const [recentEvent, setRecentEvent] = useState([]);
   const recentEventService = new RecentEventService();
   const [open, setOpen] = React.useState(true);
+  const [showCrossWindow, setShowCrossWindow] = useState(true);
   const { context } = useContext(MyContext);
+  const [animateRegisterButton, setAnimateRegisterButton] = useState(true);
+  const registrationFormRef = useRef(null);
+  const handleRegisterButtonClick = () => {
+    if (registrationFormRef.current) {
+      registrationFormRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+    setAnimateRegisterButton(true);
+  };
 
   const handleClose = () => {
     setOpen(false);
   };
-  const responsive = {
-    desktop: {
-      breakpoint: { max: 40000, min: 900 },
-      items: 1,
-    },
-    mobile: {
-      breakpoint: { max: 900, min: 0 },
-      items: 1,
-    },
-  };
+
   useEffect(() => {
     recentEventService
       .getRecentEvent()
@@ -96,8 +98,33 @@ const EventPage = () => {
             <h3 className="recentSpeckyfoxTech2">SpeckyFox Technologies</h3>
           </div>
         </div>
-        <ShowEvent events={events} isEventPage={true} />
+
+        <section className="right" ref={registrationFormRef}>
+          <ShowEvent events={events} isEventPage={true} />
+        </section>
+        {showCrossWindow ? (
+          <div
+            style={{
+              textAlign: "center",
+
+              // transform: "rotate(15deg)",
+            }}
+            className={"BannerButtonatDown"}
+          >
+            <Typography
+              // p={1}
+              pt={1}
+              color={"blue"}
+              onClick={handleRegisterButtonClick}
+              fontSize={25}
+            >
+              <KeyboardDoubleArrowDownIcon className="iconclass" />
+            </Typography>
+          </div>
+        ) : null}
+
         {!context.cookie && <CookieConsent />}
+
         <Footer homeConfig={homeConfig} />
       </div>
     </>

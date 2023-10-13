@@ -12,7 +12,7 @@
 }
 
 .recentBannerImage {
-  height: 90vh;
+  height: 75vh;
   width: 100%;
 }
 .recentImagecuntaner {
@@ -65,5 +65,74 @@
     font-size: 30px;
     top: 20%;
     margin: 0% 0%;
+  }
+}
+.BannerButtonatDown {
+  position: absolute !important;
+  background: currentColor !important;
+  border-radius: 50px !important;
+  bottom: 20% !important;
+  right: 45% !important;
+  width: 10%;
+  height: 50px !important;
+  opacity: 0.8;
+  background-color: #ffbd06 !important;
+  box-shadow: 1px 1px 5px rgb(246, 243, 243);
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  padding: 5px !important;
+  /* animation-name: popup;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 4;
+  display: block !important; */
+}
+/* @keyframes popup {
+  100% {
+    transform: rotate(15deg);
+  }
+  50% {
+    transform: rotate(30deg);
+  }
+} */
+
+/* .BannerRegisterButtonatTopinside {
+  color: white !important;
+  margin: 10px 5px 43px 5px !important;
+  border-radius: 10px !important;
+  display: block !important;
+} */
+.iconclass {
+  /* animation-name: down; */
+  /*animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite; */
+  /* display: block !important; */
+  -webkit-animation: down 1s infinite alternate;
+  animation: down 1s infinite alternate;
+}
+
+@-webkit-keyframes down {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes down {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+@media screen and (min-width: 100px) {
+  .BannerRegisterButtonatTopinside {
+    display: block !important;
+  }
+  .BannerRegisterButtonatTop {
+    display: block !important;
   }
 }
