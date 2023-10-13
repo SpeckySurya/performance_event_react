@@ -23,6 +23,13 @@ const formDataDefault = {
   duration: { hours: 0, minutes: 0 },
 };
 
+/**
+ *
+ * This component is used to render create event form componet
+ *
+ * @returns Create event Form Componet
+ */
+
 export default function CreateEventForm() {
   const [formData, setFormData] = useState(formDataDefault);
   const [selectedFile, setSelectedFile] = useState(null);

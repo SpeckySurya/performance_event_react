@@ -10,6 +10,13 @@ import HomeConfigService from "../../services/HomeConfigService";
 import SpeakerService from "../../services/SpeakerService";
 import "./HomePage.css";
 
+/**
+ *
+ * This page show a event details with a registration form to register in event
+ *
+ * @returns Home page component
+ */
+
 const HomePage = () => {
   const [event, setEvent] = useState({});
   const [speaker, setSpeaker] = useState({});

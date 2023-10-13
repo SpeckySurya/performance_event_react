@@ -9,32 +9,32 @@ import {
 } from "@mui/material";
 import React from "react";
 
-/**
- * 
- * const [customDialog, setCustomDialog] = useState({
-    open: false,
-    action: null,
-    title: "",
-    content: "",
-  });
-
-    function handleDownloadPPt() {
-    setCustomDialog({
-      open: true,
-      title: "Alert",
-      content:
-        'PPT will send to your registered email. Press "Yes" to continue !',
-      action: ()=> {},
-    });
-  }
-
-
- * 
- */
-
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
+
+/**
+ * 
+ * This is custom dialog to use this follow the below steps :
+ * 
+ * Step 1 : Create a state
+ * const [customDialog, setCustomDialog] = useState({open: false, action: null, title: "", content: ""});
+ * 
+ * Step 2 : Click handler
+ * 
+ *  function handleDownloadPPt() {
+        setCustomDialog({
+          open: true,
+          title: "Alert",
+          content:
+            'PPT will send to your registered email. Press "Yes" to continue !',
+          action: ()=> {},
+        });
+    }
+ * 
+ * @param {customDialog is an object contains dialog title, description and action callback function} param0 
+ * @returns 
+ */
 
 const CustomDialog = ({ customDialog, setCustomDialog }) => {
   const handleClose = () => {

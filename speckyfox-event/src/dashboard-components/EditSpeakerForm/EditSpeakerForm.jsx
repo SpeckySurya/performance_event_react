@@ -24,6 +24,13 @@ import MyContext from "../../context/MyContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import SnackbarComponent from "../../components/SnackbarComponent/SnackbarComponent";
 
+/**
+ *
+ * Used to display a form to edit speaker.
+ *
+ * @returns Edit Speaker Form Component
+ */
+
 function EditSpeakerForm() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [open, setOpen] = useState(false);

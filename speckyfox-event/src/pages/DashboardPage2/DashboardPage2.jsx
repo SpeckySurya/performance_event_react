@@ -93,6 +93,13 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
+/**
+ *
+ * This component used to render admin dashboard view.
+ *
+ * @returns Dashboard Page Component
+ */
+
 export default function DashboardPage2() {
   const role = findRoleFromToken();
 
