@@ -92,7 +92,11 @@ const EventPage = () => {
       <div className="event-page-container">
         <Header homeConfig={homeConfig} />
         <div className="recentImagecuntaner">
-          <img className="recentBannerImage" src={banner22} alt="error" />
+          <img
+            className="recentBannerImage"
+            src={homeConfig.banner}
+            alt="error"
+          />
           <div className="recentSpeckyfoxText">
             <h1 className="recentwebinar">Webinar</h1>
             <h3 className="recentSpeckyfoxTech2">SpeckyFox Technologies</h3>

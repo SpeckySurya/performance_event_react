@@ -3,9 +3,9 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MyContext from "../../context/MyContext";
 import EventService from "../../services/EventService";
-import DashboardEventCard from "../DashboardEventCard/DashboardEventCard";
-import "./DashboardEventView.css";
 import dateFormatter, { isPastDateTime } from "../../utils/DateFormatter";
+import DashboardEventCard2 from "../DashboardEventCard2/DashboardEventCard2";
+import "./DashboardEventView.css";
 
 /**
  *
@@ -74,7 +74,7 @@ export default function DashboardEventView() {
         <CircularProgress sx={{ color: "lightgray" }} />
       ) : events.length > 0 ? (
         events.map((event, index) => (
-          <DashboardEventCard
+          <DashboardEventCard2
             key={index}
             event={event}
             initialSetup={initialSetup}

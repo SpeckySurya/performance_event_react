@@ -92,7 +92,9 @@ export default function HomeConfig() {
         .then((response) => {
           setIsAlertVisible(true);
           setLoading(false);
-          navigate("/dashboard");
+          setTimeout(() => {
+            navigate("/dashboard/events");
+          }, 3000);
         })
         .catch((error) => {
           alert(error);
