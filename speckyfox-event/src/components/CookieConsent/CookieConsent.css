@@ -25,3 +25,10 @@
   z-index: 120;
   border-radius: 3px;
 }
+.CookiesPrivacycolor {
+  color: deepskyblue !important;
+  text-decoration: none;
+}
+.CookiesPrivacycolor:hover {
+  text-decoration: underline;
+}
