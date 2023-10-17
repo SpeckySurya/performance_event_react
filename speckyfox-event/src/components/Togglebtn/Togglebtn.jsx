@@ -5,7 +5,12 @@ import EventService from "../../services/EventService";
 import EventCard from "../EventCard/EventCard";
 import VideoCart from "../VideoCart/VideoCart";
 import "./Togglebtn.css";
-
+/**
+ *
+ * This component is a Togglebtn . it will show past event as well as Upcoming event.
+ *
+ * @returns Togglebtn
+ */
 export default function Togglebtn() {
   const [opentogle, setopentogle] = useState(true);
   const [events, setEvents] = useState([]);
@@ -23,7 +28,7 @@ export default function Togglebtn() {
 
   return (
     <>
-      <div style={{ border: "1px solid black" }} className="togglebtnstyle">
+      <div style={{ border: "1px solid black" }}>
         <ToggleButtonGroup
           color="primary"
           value={alignment}
@@ -32,7 +37,11 @@ export default function Togglebtn() {
           aria-label="Platform"
         >
           <ToggleButton
-            sx={{ color: "red", fontSize: 10, width: 100 }}
+            sx={{
+              color: "red",
+              fontSize: 10,
+              width: 100,
+            }}
             value="web"
             onClick={() => setopentogle(true)}
           >

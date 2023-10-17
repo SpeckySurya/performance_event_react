@@ -12,18 +12,46 @@ import {
   Grid,
   InputLabel,
   TextField,
+  Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
 import "./HomePageConfiguration.css";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { HomePageConfigationSchema } from "../../schemas/Homepagevalidation";
 import HomeConfigService from "../../services/HomeConfigService";
-const homeConfigService = new HomeConfigService();
+import MyContext from "../../context/MyContext";
 
+/**
+ *
+ * This component is a HomePageConfiguration it is used for can changed Configuration details
+ *
+ * @returns HomePageConfiguration
+ */
+
+const homeConfigService = new HomeConfigService();
 function HomePageConfiguration(props) {
+  const [loading, setLoading] = useState(false);
+  const { context } = useContext(MyContext);
+
+  useEffect(() => {
+    context.breadCrumb.updatePages([
+      {
+        name: "Home Configuration",
+        route: () => navigate("/dashboard/home-configuration"),
+      },
+    ]);
+  }, []);
+
+  const [banner, setBanner] = useState(null);
+  const [logo, setLogo] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [popUpMsg, setPopUpmsg] = useState("");
+  const [homepageConfig, setHomepageConfig] = useState(null);
+
   const [initialValues, setInitialValues] = useState({
-    linkedinUrl: "",
+    banner: "",
+    linkdinUrl: "",
     twitterUrl: "",
     facebookUrl: "",
     websiteUrl: "",
@@ -31,31 +59,7 @@ function HomePageConfiguration(props) {
     youtubeUrl: "",
     footerText: "",
   });
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    homeConfigService
-      .getHomeConfigById()
-      .then((data) => {
-        const apiData = data.data;
-        setInitialValues({
-          linkedinUrl: apiData.linkdinUrl,
-          twitterUrl: apiData.twitterUrl,
-          facebookUrl: apiData.facebookUrl,
-          websiteUrl: apiData.websiteUrl,
-          contactUrl: apiData.contactUrl,
-          youtubeUrl: apiData.youtubeUrl,
-          footerText: apiData.footerText,
-        });
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  }, []);
 
-  const [banner, setBanner] = useState(null);
-  const [logo, setLogo] = useState(null);
-  const [open, setOpen] = useState(false);
-  const [popUpMsg, setPopUpmsg] = useState("");
   const handleClose = () => {
     setOpen(false);
   };
@@ -68,11 +72,28 @@ function HomePageConfiguration(props) {
     setLogo(file);
   };
 
+  function findHomeConfig() {
+    homeConfigService
+      .getHomeConfigById()
+      .then((response) => {
+        setHomepageConfig(response.data);
+        setInitialValues({
+          ...response.data,
+        });
+      })
+      .catch((error) => {
+        setHomepageConfig(null);
+      });
+  }
+
+  useEffect(() => {
+    findHomeConfig();
+  }, []);
+
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
     useFormik({
-      initialValues: initialValues,
+      values: initialValues,
       validationSchema: HomePageConfigationSchema,
-
       onSubmit: (values) => {
         setLoading(true);
         const request = new FormData();
@@ -82,40 +103,33 @@ function HomePageConfiguration(props) {
         request.append("banner", banner);
         request.append("logo", logo);
 
-        homeConfigService
-          .getHomeConfigById()
-          .then((response) => {
-            homeConfigService
-              .updateHomeConfig(request)
-              .then((response) => {
-                setOpen(true);
-                setLoading(false);
-                setPopUpmsg("Homepage details updated");
-              })
-              .catch((error) => {
-                alert(error);
-              });
-          })
-          .catch((error) => {
-            if (
-              "HomepageConfigurationService.notFound" ===
-              error.response.data.message
-            ) {
-              homeConfigService
-                .saveHomeConfig(request)
-                .then((response) => {
-                  setOpen(true);
-                  setLoading(false);
-                  setPopUpmsg("Homepage details saved");
-                })
-                .catch((error) => {
-                  alert(error);
-                });
-            } else {
-              alert("Something went wrong");
+        if (homepageConfig) {
+          alert("Updating");
+          homeConfigService
+            .updateHomeConfig(request)
+            .then((response) => {
+              setOpen(true);
               setLoading(false);
-            }
-          });
+              setPopUpmsg("Homepage details updated");
+            })
+            .catch((error) => {
+              alert(error);
+              setLoading(false);
+            });
+        } else {
+          alert("Saving");
+          homeConfigService
+            .saveHomeConfig(request)
+            .then((response) => {
+              setOpen(true);
+              setLoading(false);
+              setPopUpmsg("Homepage details saved");
+            })
+            .catch((error) => {
+              alert(error);
+              setLoading(false);
+            });
+        }
       },
     });
 
@@ -139,10 +153,10 @@ function HomePageConfiguration(props) {
           </Button>
         </DialogActions>
       </Dialog>
-      <Box px={2}>
+      <Box>
         <Card
           style={{
-            margin: "40px auto",
+            margin: "auto",
             padding: "40px",
             border: "1px solid #ccc",
             borderRadius: "5px",
@@ -152,7 +166,9 @@ function HomePageConfiguration(props) {
           }}
         >
           <CardContent>
-            <h3 className="HomePageConfigurationh3">Home Page Configuration</h3>
+            <Typography variant="h5" pb={2} className="HomePageConfigurationh3">
+              Home Page Configuration
+            </Typography>
             <form onSubmit={handleSubmit}>
               <Grid container spacing={1}>
                 <Grid xs={12} sm={12} item>
@@ -167,6 +183,14 @@ function HomePageConfiguration(props) {
                     onBlur={handleBlur}
                     fullWidth
                   />
+                  {homepageConfig && (
+                    <Box width={"100px"} py={1}>
+                      <img
+                        style={{ width: "100%", height: "100%" }}
+                        src={values.logo}
+                      />
+                    </Box>
+                  )}
                 </Grid>
                 <Grid xs={12} sm={12} item>
                   <InputLabel>Upload Banner</InputLabel>
@@ -180,23 +204,31 @@ function HomePageConfiguration(props) {
                     onBlur={handleBlur}
                     fullWidth
                   />
+                  {homepageConfig && (
+                    <Box width={"100px"} py={1}>
+                      <img
+                        style={{ width: "100%", height: "100%" }}
+                        src={values.banner}
+                      />
+                    </Box>
+                  )}
                 </Grid>
                 <Grid xs={12} sm={12} item>
                   <InputLabel>LinkedIn url</InputLabel>
                   <TextField
                     type="text"
-                    name="linkedinUrl"
-                    id="linkedinUrl"
+                    name="linkdinUrl"
+                    id="linkdinUrl"
                     placeholder="Upload LinkedIn url"
                     variant="outlined"
                     fullWidth
-                    value={values?.linkedinUrl}
+                    value={values?.linkdinUrl}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
 
-                  {errors.linkedinUrl && touched.linkedinUrl ? (
-                    <p className="configationformerro">{errors.linkedinUrl}</p>
+                  {errors.linkdinUrl && touched.linkdinUrl ? (
+                    <p className="configationformerro">{errors.linkdinUrl}</p>
                   ) : null}
                 </Grid>
                 <Grid xs={12} sm={12} item>

@@ -4,6 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { tokenExpireTimer } from "../../utils/Constant";
 import LoginService from "./../../services/LoginService";
 import "./login.css";
+
+/**
+ *
+ * This page show a login form to login in the admin dashboard
+ *
+ * @returns Login Component
+ */
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",

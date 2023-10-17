@@ -6,6 +6,12 @@ import { BsFacebook, BsLinkedin, BsTwitter, BsYoutube } from "react-icons/bs";
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+/**
+ *
+ * This component is a Navbar . it is used for genrate burger menu.
+ *
+ * @returns Navbar
+ */
 const Navbar = ({ homeConfig }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);

@@ -6,14 +6,20 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PasswordService from "../../services/PasswordService";
 import RegistrationService from "../../services/RegistrationService";
 import { findRoleFromToken } from "../../utils/TokenDecoder";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
-
-function AdminRegistration(props) {
+import MyContext from "../../context/MyContext";
+/**
+ *
+ * This components AdminRegistration Component it is used for Admin Registation .
+ *
+ * @returns AdminRegistration
+ */
+export default function AdminRegistration() {
   const [loading, setLoading] = useState(false);
   const data = { email: "", password: "", confirmPassword: "", role: "" };
   const [selectedRole, setSelectedRole] = useState("");
@@ -22,6 +28,7 @@ function AdminRegistration(props) {
   const passwordService = new PasswordService();
   const navigate = useNavigate();
   const loggedInUserRole = findRoleFromToken();
+  const { context } = useContext(MyContext);
 
   useEffect(() => {
     if (!sessionStorage.getItem("token")) {
@@ -73,16 +80,29 @@ function AdminRegistration(props) {
         setSnackbar(
           <SnackbarComponent message={response.data} severity={"success"} />
         );
-        props.setSelected("manageAdmin");
+        setTimeout(() => {
+          navigate("/dashboard/users");
+        }, 1500);
       })
       .catch((error) => {
+        setLoading(false);
         alert(error);
       });
   };
 
+  useEffect(() => {
+    context.breadCrumb.updatePages([
+      { name: "Users", route: () => navigate("/dashboard/users") },
+      {
+        name: "User Registration",
+        route: () => navigate("/dashboard/users/user-registration"),
+      },
+    ]);
+  }, []);
+
   return (
     <>
-      <div className="login-container">
+      <div className="login-container" style={{ margin: "auto" }}>
         {snackbar}
         <h1>Admin Registration</h1>
         <form onSubmit={handleSubmit}>
@@ -172,5 +192,3 @@ function AdminRegistration(props) {
     </>
   );
 }
-
-export default AdminRegistration;

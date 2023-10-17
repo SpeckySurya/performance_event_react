@@ -1,10 +1,15 @@
-import { CircularProgress, Stack } from "@mui/material";
+import { Button, CircularProgress, Stack } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import RegistrationService from "../../services/RegistrationService";
 import "./RegistrationForm.css";
-
-const RegistrationForm = () => {
+/**
+ *
+ * This component is a RegistrationForm . it will show a RegistrationForm form .
+ *
+ * @returns RegistrationForm
+ */
+const RegistrationForm = ({ isOutdated }) => {
   const params = useParams();
   const [formData, setFormData] = useState({
     firstName: "",
@@ -112,30 +117,18 @@ const RegistrationForm = () => {
           required
         />
       </div>
+      <div className="form-group">
+        <label htmlFor="companyName">
+          Organization<span className="mark">*</span>
+        </label>
 
-      <div className="form-group">
-        <label htmlFor="mobileNumber">Phone</label>
-        <input
-          id="mobileNumber"
-          name="mobileNumber"
-          value={formData.mobileNumber}
-          onChange={handlePhoneChange}
-          type="number"
-        />
-        {mobNo && (
-          <span style={{ fontSize: "10px" }}>
-            Phone should atleast of 8 digits
-          </span>
-        )}
-      </div>
-      <div className="form-group">
-        <label htmlFor="companyName">Company</label>
         <input
           type="text"
           id="companyName"
           name="companyName"
           value={formData.company}
           onChange={handleChange}
+          required
         />
       </div>
 
@@ -180,13 +173,19 @@ const RegistrationForm = () => {
           Note : All <span className="marks"> * </span> field are required
         </p>
       </span>
-      <button type="submit" className="flex-jcc-aic">
-        {loading ? (
-          <CircularProgress size={24.5} style={{ color: "white" }} />
-        ) : (
-          "Submit"
-        )}
-      </button>
+      {isOutdated ? (
+        <Button style={{ backgroundColor: "lightgray" }} disabled>
+          Register
+        </Button>
+      ) : (
+        <button type="submit" className="flex-jcc-aic">
+          {loading ? (
+            <CircularProgress size={24.5} style={{ color: "white" }} />
+          ) : (
+            "Submit"
+          )}
+        </button>
+      )}
     </form>
   );
 };

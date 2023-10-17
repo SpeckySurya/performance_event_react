@@ -13,6 +13,13 @@ import {
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+/**
+ *
+ * This page used to show privacy policy
+ *
+ * @returns Privacy Page Component
+ */
+
 const PrivacyPage = () => {
   const privacyData = [
     {

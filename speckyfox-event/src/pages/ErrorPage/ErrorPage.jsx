@@ -3,6 +3,14 @@ import err from "./../../assets/err.jpg";
 import "./ErrorPage.css";
 
 import { Link, useLocation } from "react-router-dom";
+
+/**
+ *
+ * This componet used to render Error page
+ *
+ * @returns Error Page Component
+ */
+
 export default function ErrorPage() {
   const location = useLocation();
   const data = location.state;
