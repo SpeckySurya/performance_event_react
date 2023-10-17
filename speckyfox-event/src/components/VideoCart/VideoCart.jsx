@@ -8,12 +8,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 
 import TextVideo from "../../assets/TextVideo.mp4";
-/**
- *
- * This component is a VideoCart . it is used for to play past event video.
- *
- * @returns VideoCart
- */
+
 export default function VideoCart() {
   return (
     <div className="VideoCartContainer">

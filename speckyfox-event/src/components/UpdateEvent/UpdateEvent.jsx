@@ -3,12 +3,7 @@ import SpeakerService from "../../services/SpeakerService";
 import dateFormatter from "../../utils/DateFormatter";
 import EventForm from "../EventForm/EventForm";
 import "./UpdateEvent.css";
-/**
- *
- * This component is a UpdateEvent . Event can be Updated throw this component.
- *
- * @returns UpdateEvent
- */
+
 const UpdateEvent = (props) => {
   const [speakers, setSpeakers] = useState([]);
   function getDate() {

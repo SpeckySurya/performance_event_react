@@ -4,13 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import SnackbarComponent from "../../components/SnackbarComponent/SnackbarComponent";
 import PasswordService from "../../services/PasswordService";
 
-/**
- *
- * This page shows a form to update password using forget password link.
- *
- * @returns Update Password Component
- */
-
 function UpdatePassword() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({

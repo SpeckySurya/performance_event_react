@@ -1,10 +1,5 @@
 import "./About.css";
-/**
- *
- * This components show About speaker section details . related to speaker
- *
- * @returns About component
- */
+
 export const About = (props) => {
   return (
     <div className="aboutpage-container">

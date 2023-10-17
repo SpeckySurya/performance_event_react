@@ -11,13 +11,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PasswordService from "../../services/PasswordService";
 
-/**
- *
- * This page show the forget password form
- *
- * @returns Forget password component
- */
-
 function Forgotpassword() {
   const [loading, setLoading] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);

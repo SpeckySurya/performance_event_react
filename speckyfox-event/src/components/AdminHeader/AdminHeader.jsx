@@ -28,12 +28,7 @@ import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsAc
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import { useNavigate } from "react-router-dom";
 import { findRoleFromToken } from "../../utils/TokenDecoder";
-/**
- *
- * This components AdminHeader Component it is basicley a sideBar when admin login in application
- *
- * @returns AdminHeader
- */
+
 const AdminHeader = (props) => {
   const [open, setOpen] = useState(false);
   const [menuItems, setMenuItems] = useState([]);

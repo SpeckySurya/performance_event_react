@@ -6,20 +6,14 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PasswordService from "../../services/PasswordService";
 import RegistrationService from "../../services/RegistrationService";
 import { findRoleFromToken } from "../../utils/TokenDecoder";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
-import MyContext from "../../context/MyContext";
-/**
- *
- * This components AdminRegistration Component it is used for Admin Registation .
- *
- * @returns AdminRegistration
- */
-export default function AdminRegistration() {
+
+function AdminRegistration(props) {
   const [loading, setLoading] = useState(false);
   const data = { email: "", password: "", confirmPassword: "", role: "" };
   const [selectedRole, setSelectedRole] = useState("");
@@ -28,7 +22,6 @@ export default function AdminRegistration() {
   const passwordService = new PasswordService();
   const navigate = useNavigate();
   const loggedInUserRole = findRoleFromToken();
-  const { context } = useContext(MyContext);
 
   useEffect(() => {
     if (!sessionStorage.getItem("token")) {
@@ -80,29 +73,16 @@ export default function AdminRegistration() {
         setSnackbar(
           <SnackbarComponent message={response.data} severity={"success"} />
         );
-        setTimeout(() => {
-          navigate("/dashboard/users");
-        }, 1500);
+        props.setSelected("manageAdmin");
       })
       .catch((error) => {
-        setLoading(false);
         alert(error);
       });
   };
 
-  useEffect(() => {
-    context.breadCrumb.updatePages([
-      { name: "Users", route: () => navigate("/dashboard/users") },
-      {
-        name: "User Registration",
-        route: () => navigate("/dashboard/users/user-registration"),
-      },
-    ]);
-  }, []);
-
   return (
     <>
-      <div className="login-container" style={{ margin: "auto" }}>
+      <div className="login-container">
         {snackbar}
         <h1>Admin Registration</h1>
         <form onSubmit={handleSubmit}>
@@ -192,3 +172,5 @@ export default function AdminRegistration() {
     </>
   );
 }
+
+export default AdminRegistration;

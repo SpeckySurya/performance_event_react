@@ -1,12 +1,6 @@
 import { Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./Footer.css";
-/**
- *
- * This component is a Footer Component it will show footer details like privary and Terms & Conditions.
- *
- * @returns Footer
- */
 function Footer({ homeConfig }) {
   return (
     <div className="footer">

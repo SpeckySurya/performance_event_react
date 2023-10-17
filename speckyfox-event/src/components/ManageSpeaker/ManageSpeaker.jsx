@@ -17,35 +17,15 @@ import {
 import { useFormik } from "formik";
 import "./ManageSpeaker.css";
 
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import { ManageSpeakerValidation } from "../../schemas/ManageSpeakerValidation";
 import SpeakerService from "../../services/SpeakerService";
-import MyContext from "../../context/MyContext";
-import { useNavigate } from "react-router-dom";
-/**
- *
- * This component is a ManageSpeaker . can create the speaker details and update the speaker details also.
- *
- * @returns ManageSpeaker
- */
+
 function ManageSpeaker(props) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [popUpMsg, setPopUpmsg] = useState("");
-  const { context } = useContext(MyContext);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    context.breadCrumb.updatePages([
-      { name: "Speakers", route: () => navigate("/dashboard/speakers") },
-      {
-        name: "Create Speaker",
-        route: () => navigate("/dashboard/speakers/create-speaker"),
-      },
-    ]);
-  }, []);
-
   const handleClose = () => {
     setOpen(false);
     props.setSelected("showSpeaker");
@@ -128,7 +108,7 @@ function ManageSpeaker(props) {
       <Box px={2}>
         <Card
           style={{
-            margin: "auto",
+            margin: "40px auto",
             padding: "40px",
             border: "1px solid #ccc",
             borderRadius: "5px",

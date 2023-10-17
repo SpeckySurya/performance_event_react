@@ -3,14 +3,14 @@
 }
 
 .navbar {
-  height: 12vh;
+  height: 100px;
   color: #333;
   background-color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 7px;
-  box-shadow: rgba(10, 10, 10, 0.3) 0px 3px 10px 0px;
+  box-shadow: 2px 5px 8px rgba(0, 0, 0, 0.03);
   z-index: 20;
 }
 
@@ -82,6 +82,7 @@
   font-size: 22px;
   position: absolute;
   background-color: white;
+
   transition: all ease 0.2s;
 }
 

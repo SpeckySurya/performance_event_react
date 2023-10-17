@@ -13,13 +13,6 @@ import {
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-/**
- *
- * This page used to show Terms and conditions
- *
- * @returns Terms and Conditions Page Component
- */
-
 const TermsAndConditionsPage = () => {
   const tcData = [
     {

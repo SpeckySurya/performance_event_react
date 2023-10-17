@@ -2,13 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./LinkExpired.css";
 
-/**
- *
- * This page show static content when a forget password link expired.
- *
- * @returns Link Expired Component
- */
-
 const LinkExpired = () => {
   return (
     <div class="expired">

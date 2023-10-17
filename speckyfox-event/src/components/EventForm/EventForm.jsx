@@ -5,12 +5,7 @@ import EventService from "../../services/EventService";
 import { toDDMMYYYY } from "../../utils/DateFormatter";
 import Duration from "../Duration/Duration";
 import "./EventForm.css";
-/**
- *
- * This component EventForm Component Admin can create new Event throw this component .
- *
- * @returns EventForm
- */
+
 const EventForm = (props) => {
   const [formData, setFormData] = useState(props.formDataDefault);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -57,7 +52,7 @@ const EventForm = (props) => {
           setSnackbar(
             <SnackbarComponent
               message="Something went wrong"
-              severity="error"
+              severity="success"
             />
           );
         });

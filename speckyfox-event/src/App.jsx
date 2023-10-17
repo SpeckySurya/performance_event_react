@@ -1,59 +1,54 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage/HomePage";
+import ThankYouPage from "./pages/ThanksYouPage/ThankYouPage";
 import "./App.css";
-import Login from "./pages/Login/Login";
 import "./responsive.css";
+import Login from "./pages/Login/Login";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
+import EventPage from "./pages/EventPage/EventPage";
+import { DashboardPage } from "./pages/DashboardPage/DashboardPage";
+import MyContext from "./context";
+import PageNotFound from "./pages/PageNotFound/PageNotFound";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import ManageAdmin from "./components/ManageAdmin/ManageAdmin";
-import DashboardPage2 from "./pages/DashboardPage2/DashboardPage2";
-import DashboardEventView from "./dashboard-components/DashboardEventView/DashboardEventView";
-import MyContextProvider from "./context/MyContextProvider";
-import NotifyParticipant from "./components/NotifyParticipant/NotifyParticipant";
-import ManageUser from "./components/ManageUser/ManageUser";
-import UploadVideoAndPdf from "./components/UploadVideoAndPdf/UploadVideoAndPdf";
-import { Box } from "@mui/material";
-import MyContext from "./context/MyContext";
-import CreateEventForm from "./dashboard-components/CreateEventForm/CreateEventForm";
-import AdminRegistration from "./components/AdminRegistation/AdminRegistation";
-import ShowSpeaker from "./components/ShowSpeaker/ShowSpeaker";
-import ManageSpeaker from "./components/ManageSpeaker/ManageSpeaker";
-import EditEventForm from "./dashboard-components/EditEventForm/EditEventForm";
-import AdminUpdatePassword from "./components/AdminUpdatePassword/AdminUpdatePassword";
-import HomePageConfiguration from "./components/HomePageConfiguration/HomePageConfiguration";
-import CreateSpeakerForm from "./dashboard-components/CreateSpeakerForm/CreateSpeakerForm";
-import EditSpeakerForm from "./dashboard-components/EditSpeakerForm/EditSpeakerForm";
-import EventPage from "./pages/EventPage/EventPage";
-import HomePage from "./pages/HomePage/HomePage";
-import ThankYouPage from "./pages/ThanksYouPage/ThankYouPage";
-import ErrorPage from "./pages/ErrorPage/ErrorPage";
-import PageNotFound from "./pages/PageNotFound/PageNotFound";
+import Forgotpassword from "./pages/Login/Forgotpassword";
 import UpdatePassword from "./pages/UpdatePassword/UpdatePassword";
+import AdminUpdatePassword from "./components/AdminUpdatePassword/AdminUpdatePassword";
+import AdminRegistration from "./components/AdminRegistation/AdminRegistation";
 import LinkExpired from "./pages/LinkExpired/LinkExpired";
 import TermsAndConditionsPage from "./pages/TermsAndConditionsPage/TermsAndConditionsPage";
 import PrivacyPage from "./pages/PrivacyPage/PrivacyPage";
-import AuthRoutes from "./routes/AuthRoutes";
-import UnAuthRoutes from "./routes/UnauthRoutes";
-import { SnackbarProvider } from "material-ui-snackbar-provider";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/ReactToastify.min.css";
-import EventService from "./services/EventService";
 function App() {
-  const { context } = useContext(MyContext);
+  const [sharedState, setSharedState] = useState({
+    admin: false,
+  });
 
   return (
-    <SnackbarProvider SnackbarProps={{ autoHideDuration: 4000 }}>
-      <Box
-        className={"pop-up-background"}
-        display={context.popUpBackground.popUpBackgroundVisible}
-      ></Box>
+    <MyContext.Provider value={{ sharedState, setSharedState }}>
       <Routes>
-        {AuthRoutes}
-        {UnAuthRoutes}
+        <Route exact path="/" element={<EventPage />} />
+        <Route path="/:param" element={<HomePage />} />
+        <Route path="/thankyou" element={<ThankYouPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/error" element={<ErrorPage />} />
+        <Route path="/forgot-password" element={<Forgotpassword />} />
+        <Route path="/pagenotfound" element={<PageNotFound />} />
+
+        <Route path="/admin-registation" element={<AdminRegistration />} />
+        <Route
+          path="/admin-update-password"
+          element={<AdminUpdatePassword />}
+        />
+
+        <Route path="/forgot-password/:token" element={<UpdatePassword />} />
+        <Route path="/link-expired" element={<LinkExpired />} />
+        <Route path="/t-and-c" element={<TermsAndConditionsPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
       </Routes>
-      <ToastContainer position="bottom-right" newestOnTop />
-    </SnackbarProvider>
+    </MyContext.Provider>
   );
 }
 

@@ -1,11 +1,5 @@
 import { Box, Button, Modal, Typography } from "@mui/material";
 import { useState } from "react";
-/**
- *
- * This component is a OpenModel . it will open a popup model
- *
- * @returns OpenModel
- */
 const style = {
   position: "absolute",
   top: "50%",

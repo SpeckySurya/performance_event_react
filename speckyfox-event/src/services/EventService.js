@@ -9,7 +9,6 @@ export default class EventService {
   getEvent(eventId) {
     return axios.get(`${this.baseUrl}/app/event/${eventId}`);
   }
-
   getAllActiveEvents() {
     return axios.get(`${this.baseUrl}/app/getAllEvents`, {
       headers: this.headers.basicHeader(),
@@ -57,8 +56,5 @@ export default class EventService {
       data,
       headers
     );
-  }
-  getUpcomingEvent() {
-    return axios.get(`${this.baseUrl}/app/get-upcoming-event`);
   }
 }

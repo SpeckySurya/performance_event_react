@@ -2,14 +2,6 @@ import { Button, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import Thanksimg from "../../assets/Thanksimg.jpg";
 import "./style.css";
-
-/**
- *
- * Shows a thank message
- *
- * @returns Thank You Page Component
- */
-
 export default function ThankYouPage() {
   return (
     <div className="tahnkyoucartctr">
