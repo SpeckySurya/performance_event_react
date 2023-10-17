@@ -1,18 +1,11 @@
-import {
-  Box,
-  Stack,
-  ToggleButton,
-  ToggleButtonGroup,
-  Typography,
-  styled,
-} from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import "../../responsive.css";
-import "./ShowEvent.css";
 import { Link } from "react-router-dom";
+import "../../responsive.css";
 import dateFormatter, { isPastDateTime } from "../../utils/DateFormatter";
 import EventCard from "../EventCard/EventCard";
 import UpdateEvent from "../UpdateEvent/UpdateEvent";
+import "./ShowEvent.css";
 /**
  *
  * This component is a ShowEvent it will show event Both Upcoming and Past.

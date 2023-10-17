@@ -1,18 +1,15 @@
 import { Route } from "react-router-dom";
-import AuthGaurd from "../auth/AuthGaurd";
-import DashboardPage2 from "../pages/DashboardPage2/DashboardPage2";
-import DashboardEventView from "../dashboard-components/DashboardEventView/DashboardEventView";
-import Login from "../pages/Login/Login";
-import EventPage from "../pages/EventPage/EventPage";
-import HomePage from "../pages/HomePage/HomePage";
-import ThankYouPage from "../pages/ThanksYouPage/ThankYouPage";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
-import PageNotFound from "../pages/PageNotFound/PageNotFound";
-import UpdatePassword from "../pages/UpdatePassword/UpdatePassword";
-import LinkExpired from "../pages/LinkExpired/LinkExpired";
-import TermsAndConditionsPage from "../pages/TermsAndConditionsPage/TermsAndConditionsPage";
-import PrivacyPage from "../pages/PrivacyPage/PrivacyPage";
+import EventPage from "../pages/EventPage/EventPage";
 import Forgotpassword from "../pages/ForgetPassword/Forgotpassword";
+import HomePage from "../pages/HomePage/HomePage";
+import LinkExpired from "../pages/LinkExpired/LinkExpired";
+import Login from "../pages/Login/Login";
+import PageNotFound from "../pages/PageNotFound/PageNotFound";
+import PrivacyPage from "../pages/PrivacyPage/PrivacyPage";
+import TermsAndConditionsPage from "../pages/TermsAndConditionsPage/TermsAndConditionsPage";
+import ThankYouPage from "../pages/ThanksYouPage/ThankYouPage";
+import UpdatePassword from "../pages/UpdatePassword/UpdatePassword";
 
 const UnAuthRoutes = [
   <Route path="login" element={<Login />} />,

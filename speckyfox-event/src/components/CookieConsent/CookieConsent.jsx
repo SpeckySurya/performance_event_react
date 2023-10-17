@@ -1,9 +1,7 @@
-import React from "react";
-import "./CookieConsent.css";
 import { Box } from "@mui/material";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
-import { useState } from "react";
+import "./CookieConsent.css";
 /**
  *
  * This component CookieConsent Component if someuser visit website first time it will genrated message related to Accept Cookies.

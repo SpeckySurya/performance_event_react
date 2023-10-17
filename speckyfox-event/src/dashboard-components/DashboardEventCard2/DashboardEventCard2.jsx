@@ -2,12 +2,10 @@ import BrushIcon from "@mui/icons-material/Brush";
 import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import DownloadIcon from "@mui/icons-material/Download";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-import PageviewIcon from "@mui/icons-material/Pageview";
 import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
-import { Box, Button, ToggleButton, Tooltip, Typography } from "@mui/material";
+import { Box, ToggleButton, Tooltip, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
@@ -16,7 +14,6 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { TbTargetArrow } from "react-icons/tb";
 import ReactPlayer from "react-player";
 import { Link, useNavigate } from "react-router-dom";
-import upcomingGif from "../../assets/upcoming.gif";
 import PopupAlert from "../../components/PopupAlert/PopupAlert";
 import SnackbarComponent from "../../components/SnackbarComponent/SnackbarComponent";
 import MyContext from "../../context/MyContext";
@@ -102,7 +99,11 @@ export default function DashboardEventCard2({ event, initialSetup }) {
 
   function handleViewDescriptionClick(e) {
     e.stopPropagation();
-    setAgendaVisible("0");
+    if (agendaVisible === "0") {
+      setAgendaVisible("-65%");
+    } else {
+      setAgendaVisible("0");
+    }
   }
 
   function handleEventPaperClick(e) {
@@ -328,7 +329,12 @@ export default function DashboardEventCard2({ event, initialSetup }) {
           </Box>
         </Box>
         <Stack p={"20px"} spacing={1}>
-          <Stack spacing={1} direction={"row"} justifyContent={"space-between"}>
+          <Stack
+            spacing={1}
+            direction={"row"}
+            justifyContent={"space-between"}
+            height={180}
+          >
             <Stack spacing={2} width={"50%"}>
               <Stack>
                 <Link
@@ -406,33 +412,44 @@ export default function DashboardEventCard2({ event, initialSetup }) {
                 <Tooltip title="Edit Event">
                   <Stack
                     onClick={handleEventEdit}
+                    direction={"row"}
+                    spacing={1}
                     sx={{
-                      justifyContent: "center",
+                      justifyContent: "end",
                       alignItems: "center",
-                      width: 25,
-                      height: 25,
-                      borderRadius: "50%",
-                      backgroundColor: "rgb(199, 234, 70, 0.5)",
+                      width: "100%",
+                      borderRadius: 2,
+                      p: "2px",
                       cursor: role === Role.VIEWER ? "default" : "pointer",
                     }}
                   >
+                    <Typography>Edit</Typography>
                     <BrushIcon sx={{ fontSize: 20, color: "#0B6623" }} />
                   </Stack>
                 </Tooltip>
-                <Tooltip title="Upload recorded video and PPT of event">
-                  <Stack
-                    direction={"row"}
-                    alignItems={"center"}
-                    justifyContent={"end"}
-                    spacing={1}
-                    sx={{
-                      cursor: role === Role.VIEWER ? "default" : "pointer",
-                    }}
-                    onClick={handleUploadClick}
-                  >
-                    <CloudUploadIcon sx={{ color: "#A8DF8E", fontSize: 30 }} />
-                  </Stack>
-                </Tooltip>
+                {isOutdated && (
+                  <Tooltip title="Upload recorded video and PPT of event">
+                    <Stack
+                      direction={"row"}
+                      spacing={1}
+                      sx={{
+                        justifyContent: "end",
+                        alignItems: "center",
+                        width: "100%",
+                        borderRadius: 2,
+                        p: "2px",
+
+                        cursor: role === Role.VIEWER ? "default" : "pointer",
+                      }}
+                      onClick={handleUploadClick}
+                    >
+                      <Typography>Upload</Typography>
+                      <CloudUploadIcon
+                        sx={{ color: "#A8DF8E", fontSize: 20 }}
+                      />
+                    </Stack>
+                  </Tooltip>
+                )}
               </Stack>
             </Stack>
           </Stack>

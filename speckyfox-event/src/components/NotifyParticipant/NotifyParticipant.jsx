@@ -2,7 +2,6 @@ import {
   Alert,
   Box,
   Button,
-  Checkbox,
   CircularProgress,
   FormControl,
   InputLabel,
@@ -12,10 +11,10 @@ import {
   darken,
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
-import EventService from "../../services/EventService";
-import MyContext from "../../context/MyContext";
 import { useLocation, useNavigate } from "react-router-dom";
+import MyContext from "../../context/MyContext";
 import CustomDialog from "../../dashboard-components/CustomDialogBox/CustomDialog";
+import EventService from "../../services/EventService";
 /**
  *
  * This component is a NotifyParticipant . it will send notification to participants.
