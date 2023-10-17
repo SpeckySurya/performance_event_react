@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import MyContext from "../../context/MyContext";
 import EventService from "../../services/EventService";
 import dateFormatter, { isPastDateTime } from "../../utils/DateFormatter";
-import DashboardEventCard2 from "../DashboardEventCard2/DashboardEventCard2";
 import "./DashboardEventView.css";
+import DashboardEventCard from "../DashboardEventCard/DashboardEventCard";
+import DashboardEventCard2 from "../DashboardEventCard2/DashboardEventCard2";
 
 /**
  *
