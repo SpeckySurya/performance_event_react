@@ -22,7 +22,7 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+
 import { TbTargetArrow } from "react-icons/tb";
 import "react-multi-carousel/lib/styles.css";
 import ReactPlayer from "react-player";
@@ -46,10 +46,6 @@ import { findRoleFromToken } from "../../utils/TokenDecoder";
 import Editbtn from "../Editbtn/Editbtn";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
 
-import ShortDateFormatter from "../../utils/ShortDataFormatter";
-import { findRoleFromToken } from "../../utils/TokenDecoder";
-import Editbtn from "../Editbtn/Editbtn";
-import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
 import "./EventCard.css";
 /**
  *

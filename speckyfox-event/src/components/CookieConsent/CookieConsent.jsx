@@ -19,11 +19,7 @@ const CookieConsent = () => {
     <Box className="cookie-consent" sx={{ display: open }}>
       <span>
         This site uses cookies to enhance user experience. see{" "}
-        <Link
-          className="CookiesPrivacycolor"
-          to={"/privacy"}
-          // style={{ color: "deepskyblue", textDecoration: "none" }}
-        >
+        <Link className="CookiesPrivacycolor" to={"/privacy"}>
           Privacy Policy
         </Link>
       </span>

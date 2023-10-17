@@ -72,48 +72,6 @@
   justify-content: space-between;
 }
 
-/* .downloadedPPTBox {
-  height: 30px !important;
-  margin-top: 10px !important;
-  cursor: pointer;
-  margin: auto;
-  border-radius: 20px;
-  background-color: #ffbe0a;
-  border: none;
-  width: 100%;
-}
-.downloadbutton {
-  background-color: transparent;
-  color: white;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-}
-.watchvideobutton {
-  height: 30px !important;
-  margin-top: 10px !important;
-  width: 90%;
-  cursor: pointer;
-  margin: auto;
-  background-color: #fe6149;
-  border-radius: 20px;
-}
-.downloadedWatchVideoButton {
-  background-color: transparent;
-  color: white !important;
-  border-radius: none;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-}
-.downloadedWatchVideoButtonNOresp {
-  background-color: gray !important;
-  width: 100%;
-  height: 30px;
-  border-radius: 20px;
-  border: none;
-} */
-
 .downloadPPTbutton {
   background-color: #ffbe0a;
   border: 1px solid white;
