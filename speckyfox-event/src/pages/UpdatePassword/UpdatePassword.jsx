@@ -58,8 +58,10 @@ function UpdatePassword() {
       return;
     }
 
+    const realToken = token.replaceAll("-dot-", ".");
+
     passwordService
-      .resetPassword(formData, token.replaceAll("-dot-", "."))
+      .resetPassword(formData, realToken)
       .then((response) => {
         setSnackbar(
           <SnackbarComponent

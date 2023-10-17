@@ -158,7 +158,6 @@ const EventCard = (props) => {
       .getEventDataInfo(props.event.events.id)
       .then((response) => {
         setEventData(response.data);
-        console.log(response.data);
         setPlay(true);
         setWatchVideo(true);
       })
@@ -182,8 +181,6 @@ const EventCard = (props) => {
   } to ${endTime}`;
 
   const isOutdated = isPastDateTime(formattedDate, props.event.events.time);
-
-  console.log(eventData.video);
 
   return (
     <>
