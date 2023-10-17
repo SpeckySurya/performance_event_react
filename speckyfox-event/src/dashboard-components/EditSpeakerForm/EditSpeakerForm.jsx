@@ -1,15 +1,9 @@
-import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import {
   Box,
   Button,
   Card,
   CardContent,
   CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   Grid,
   InputLabel,
   TextField,
@@ -18,11 +12,11 @@ import { useFormik } from "formik";
 import "./EditSpeakerForm.css";
 
 import { useContext, useEffect, useState } from "react";
-import { ManageSpeakerValidation } from "../../schemas/ManageSpeakerValidation";
-import SpeakerService from "../../services/SpeakerService";
-import MyContext from "../../context/MyContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import SnackbarComponent from "../../components/SnackbarComponent/SnackbarComponent";
+import MyContext from "../../context/MyContext";
+import { ManageSpeakerValidation } from "../../schemas/ManageSpeakerValidation";
+import SpeakerService from "../../services/SpeakerService";
 
 /**
  *

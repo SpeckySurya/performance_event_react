@@ -1,3 +1,4 @@
+import AddIcon from "@mui/icons-material/Add";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -22,19 +23,15 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { styled, useTheme } from "@mui/material/styles";
+import { useSnackbar } from "material-ui-snackbar-provider";
 import { useContext, useEffect, useState } from "react";
-import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
-import Breadcrumb from "../../dashboard-components/BreadCrumb";
-import CustomSearchField from "../../dashboard-components/CustomSearchField/CustomSearchField";
-import DashboardAppBar from "../../dashboard-components/DashboardAppBar";
-import EventService from "../../services/EventService";
-import SpeakerService from "../../services/SpeakerService";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import MyContext from "../../context/MyContext";
-import AddIcon from "@mui/icons-material/Add";
-import "./DashboardPage2.css";
+import Breadcrumb from "../../dashboard-components/BreadCrumb";
+import DashboardAppBar from "../../dashboard-components/DashboardAppBar";
 import Role from "../../utils/Role";
 import { findRoleFromToken } from "../../utils/TokenDecoder";
-import { useSnackbar } from "material-ui-snackbar-provider";
+import "./DashboardPage2.css";
 
 const drawerWidth = 240;
 

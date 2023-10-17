@@ -1,20 +1,19 @@
 import { Route } from "react-router-dom";
 import AuthGaurd from "../auth/AuthGaurd";
-import DashboardPage2 from "../pages/DashboardPage2/DashboardPage2";
-import DashboardEventView from "../dashboard-components/DashboardEventView/DashboardEventView";
-import ManageAdmin from "../components/ManageAdmin/ManageAdmin";
-import ShowSpeaker from "../components/ShowSpeaker/ShowSpeaker";
-import CreateSpeakerForm from "../dashboard-components/CreateSpeakerForm/CreateSpeakerForm";
-import NotifyParticipant from "../components/NotifyParticipant/NotifyParticipant";
-import ManageUser from "../components/ManageUser/ManageUser";
-import UploadVideoAndPdf from "../components/UploadVideoAndPdf/UploadVideoAndPdf";
-import CreateEventForm from "../dashboard-components/CreateEventForm/CreateEventForm";
-import EditEventForm from "../dashboard-components/EditEventForm/EditEventForm";
-import EditSpeakerForm from "../dashboard-components/EditSpeakerForm/EditSpeakerForm";
 import AdminRegistration from "../components/AdminRegistation/AdminRegistation";
 import AdminUpdatePassword from "../components/AdminUpdatePassword/AdminUpdatePassword";
-import HomePageConfiguration from "../components/HomePageConfiguration/HomePageConfiguration";
+import ManageAdmin from "../components/ManageAdmin/ManageAdmin";
+import ManageUser from "../components/ManageUser/ManageUser";
+import NotifyParticipant from "../components/NotifyParticipant/NotifyParticipant";
+import ShowSpeaker from "../components/ShowSpeaker/ShowSpeaker";
+import UploadVideoAndPdf from "../components/UploadVideoAndPdf/UploadVideoAndPdf";
+import CreateEventForm from "../dashboard-components/CreateEventForm/CreateEventForm";
+import CreateSpeakerForm from "../dashboard-components/CreateSpeakerForm/CreateSpeakerForm";
+import DashboardEventView from "../dashboard-components/DashboardEventView/DashboardEventView";
+import EditEventForm from "../dashboard-components/EditEventForm/EditEventForm";
+import EditSpeakerForm from "../dashboard-components/EditSpeakerForm/EditSpeakerForm";
 import HomeConfig from "../dashboard-components/HomeConfig/HomeConfig";
+import DashboardPage2 from "../pages/DashboardPage2/DashboardPage2";
 
 const AuthRoutes = [
   <Route

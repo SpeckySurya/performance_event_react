@@ -1,31 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import "react-multi-carousel/lib/styles.css";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import "../../responsive.css";
-import "./EventCard.css";
 import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
-import ToggleOffOutlinedIcon from "@mui/icons-material/ToggleOffOutlined";
-import ToggleOnOutlinedIcon from "@mui/icons-material/ToggleOnOutlined";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
-import "../../assets/banner.png";
-import dateFormatter, {
-  addTime,
-  convertTo12HourFormat,
-  isPastDateTime,
-} from "../../utils/DateFormatter";
-import ShortDateFormatter, {
-  addTimes,
-  convertTo12HourFormats,
-  isPastDateTimes,
-} from "../../utils/ShortDataFormatter";
 import {
   Box,
   Button,
-  Card,
   CardActions,
-  CardContent,
-  CardMedia,
   Dialog,
   DialogActions,
   DialogContent,
@@ -36,14 +13,25 @@ import {
   Typography,
   styled,
 } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
 import { TbTargetArrow } from "react-icons/tb";
+import "react-multi-carousel/lib/styles.css";
 import ReactPlayer from "react-player";
 import { Link } from "react-router-dom";
+import "../../assets/banner.png";
+import "../../responsive.css";
 import ContentService from "../../services/ContentService";
 import EventService from "../../services/EventService";
+import dateFormatter, {
+  addTime,
+  convertTo12HourFormat,
+  isPastDateTime,
+} from "../../utils/DateFormatter";
+import ShortDateFormatter from "../../utils/ShortDataFormatter";
 import { findRoleFromToken } from "../../utils/TokenDecoder";
 import Editbtn from "../Editbtn/Editbtn";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
+import "./EventCard.css";
 /**
  *
  * This component EventCard Component Related to card Api data is placed over card is here .
