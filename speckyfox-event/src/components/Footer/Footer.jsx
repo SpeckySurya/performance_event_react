@@ -13,13 +13,19 @@ function Footer({ homeConfig }) {
       <Typography color={"white"}>{homeConfig.footerText}</Typography>
       <Stack p={1} spacing={2} direction={"row"}>
         <Typography>
-          <Link className="no-anchor-style-white" to={"/privacy"}>
+          <Link
+            className="no-anchor-style-white footerPrivacyText"
+            to={"/PrivacyPolicy"}
+          >
             Privacy
           </Link>
         </Typography>
         <Typography>|</Typography>
         <Typography>
-          <Link className="no-anchor-style-white" to={"/t-and-c"}>
+          <Link
+            className="no-anchor-style-white footerPrivacyText"
+            to={"Terms&Conditions"}
+          >
             Terms & Conditions
           </Link>
         </Typography>

@@ -39,6 +39,7 @@ import { SnackbarProvider } from "material-ui-snackbar-provider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/ReactToastify.min.css";
 import EventService from "./services/EventService";
+import ReactPlayer from "react-player";
 function App() {
   const { context } = useContext(MyContext);
 

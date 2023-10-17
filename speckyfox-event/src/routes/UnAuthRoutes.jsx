@@ -24,8 +24,8 @@ const UnAuthRoutes = [
   <Route path="/forgot-password/:token" element={<UpdatePassword />} />,
   <Route path="/forgot-password" element={<Forgotpassword />} />,
   <Route path="/link-expired" element={<LinkExpired />} />,
-  <Route path="/t-and-c" element={<TermsAndConditionsPage />} />,
-  <Route path="/privacy" element={<PrivacyPage />} />,
+  <Route path="Terms&Conditions" element={<TermsAndConditionsPage />} />,
+  <Route path="/PrivacyPolicy" element={<PrivacyPage />} />,
   <Route path="/*" element={<PageNotFound />} />,
 ];
 
