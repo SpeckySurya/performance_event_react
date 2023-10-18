@@ -1,8 +1,10 @@
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
   Box,
   Collapse,
+  Button,
   List,
   ListItemButton,
   ListItemIcon,
@@ -12,7 +14,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import "./TermsAndConditionspage.css";
 /**
  *
  * This page used to show Terms and conditions
@@ -162,83 +164,90 @@ const TermsAndConditionsPage = () => {
   ];
 
   return (
-    <Box margin="auto" maxWidth={"50%"} minWidth={"320px"}>
-      <Typography m={2} variant="h2" fontWeight="bold">
-        Terms and Conditions
-      </Typography>
-      <Typography m={2} variant="h4">
-        Welcome to Speckyfox Event
-      </Typography>
-      <Typography m={2}>
-        A website owned and operated by Speckyfox Technologies Pvt. Ltd. These
-        Terms and Conditions ("Terms") govern your use of our website. By
-        accessing or using Speckyfox Event, you agree to comply with and be
-        bound by these Terms. If you do not agree to these Terms, please do not
-        use our website.
-      </Typography>
-      <List
-        sx={{ width: "100%", bgcolor: "background.paper" }}
-        component="nav"
-        subheader={
-          <ListSubheader
-            sx={{ textAlign: "end" }}
-            component="div"
-            id="nested-list-subheader"
-          >
-            Last Updated: 27 September 2023
-          </ListSubheader>
-        }
-      >
-        {tcData.map((item, index) => {
-          const [open, setOpen] = useState(false);
-          return (
-            <>
-              <ListItemButton onClick={() => setOpen(!open)}>
-                <ListItemIcon>{index + 1}</ListItemIcon>
-                <ListItemText primary={item.heading.title} />
-                {open ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-              <Collapse in={open} timeout="auto" unmountOnExit>
-                {item?.subHeading?.map((e) => {
-                  const [open2, setOpen2] = useState(false);
-                  return (
-                    <List component="div" disablePadding>
-                      <ListItemButton
-                        sx={{ pl: 4 }}
-                        onClick={() => setOpen2(!open2)}
-                      >
-                        <ListItemIcon>
-                          <CheckCircleOutlineIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={e.title} />
-                        {open2 ? <ExpandLess /> : <ExpandMore />}
-                      </ListItemButton>
-                      <Collapse in={open2} timeout={"auto"} unmountOnExit>
-                        <ListItemText sx={{ pl: 4 }} primary={e.content} />
-                      </Collapse>
-                    </List>
-                  );
-                })}
-              </Collapse>
-            </>
-          );
-        })}
-      </List>
-      <Box>
-        <Typography variant="h4" py={2}>
-          Contact Us
+    <>
+      <Link to={"/"}>
+        <Button className="privacyPolicybackButton">
+          <ArrowBackIcon />
+        </Button>
+      </Link>
+      <Box margin="auto" maxWidth={"50%"} minWidth={"320px"}>
+        <Typography m={2} variant="h2" fontWeight="bold">
+          Terms and Conditions
         </Typography>
-        <Typography>
-          If you have any questions or concerns about this Terms and Conditions,
-          please contact us by
-          <Link to={"https://speckyfox.com/contact-us"}> click here</Link>
+        <Typography m={2} variant="h4">
+          Welcome to Speckyfox Event
         </Typography>
-        <Typography py={2}>
-          Thank you for using Speckyfox Event. We hope you find our website
-          informative and useful.
+        <Typography m={2}>
+          A website owned and operated by Speckyfox Technologies Pvt. Ltd. These
+          Terms and Conditions ("Terms") govern your use of our website. By
+          accessing or using Speckyfox Event, you agree to comply with and be
+          bound by these Terms. If you do not agree to these Terms, please do
+          not use our website.
         </Typography>
+        <List
+          sx={{ width: "100%", bgcolor: "background.paper" }}
+          component="nav"
+          subheader={
+            <ListSubheader
+              sx={{ textAlign: "end" }}
+              component="div"
+              id="nested-list-subheader"
+            >
+              Last Updated: 27 September 2023
+            </ListSubheader>
+          }
+        >
+          {tcData.map((item, index) => {
+            const [open, setOpen] = useState(false);
+            return (
+              <>
+                <ListItemButton onClick={() => setOpen(!open)}>
+                  <ListItemIcon>{index + 1}</ListItemIcon>
+                  <ListItemText primary={item.heading.title} />
+                  {open ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                  {item?.subHeading?.map((e) => {
+                    const [open2, setOpen2] = useState(false);
+                    return (
+                      <List component="div" disablePadding>
+                        <ListItemButton
+                          sx={{ pl: 4 }}
+                          onClick={() => setOpen2(!open2)}
+                        >
+                          <ListItemIcon>
+                            <CheckCircleOutlineIcon />
+                          </ListItemIcon>
+                          <ListItemText primary={e.title} />
+                          {open2 ? <ExpandLess /> : <ExpandMore />}
+                        </ListItemButton>
+                        <Collapse in={open2} timeout={"auto"} unmountOnExit>
+                          <ListItemText sx={{ pl: 4 }} primary={e.content} />
+                        </Collapse>
+                      </List>
+                    );
+                  })}
+                </Collapse>
+              </>
+            );
+          })}
+        </List>
+        <Box>
+          <Typography variant="h4" py={2}>
+            Contact Us
+          </Typography>
+          <Typography>
+            If you have any questions or concerns about this Terms and
+            Conditions, please contact us by
+            <Link to={"https://speckyfox.com/contact-us"}> click here</Link>
+          </Typography>
+          <Typography py={2}>
+            Thank you for using Speckyfox Event. We hope you find our website
+            informative and useful.
+          </Typography>
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 

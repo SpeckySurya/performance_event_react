@@ -1,4 +1,13 @@
+import { useEffect, useRef, useState } from "react";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import "../../responsive.css";
+
+import "./EventCard.css";
 import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
+import ToggleOffOutlinedIcon from "@mui/icons-material/ToggleOffOutlined";
+import ToggleOnOutlinedIcon from "@mui/icons-material/ToggleOnOutlined";
+import "../../assets/banner.png";
+
 import {
   Box,
   Button,
@@ -13,7 +22,6 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
 import { TbTargetArrow } from "react-icons/tb";
 import "react-multi-carousel/lib/styles.css";
 import ReactPlayer from "react-player";
@@ -27,10 +35,15 @@ import dateFormatter, {
   convertTo12HourFormat,
   isPastDateTime,
 } from "../../utils/DateFormatter";
-import ShortDateFormatter from "../../utils/ShortDataFormatter";
+import ShortDateFormatter, {
+  addTimes,
+  convertTo12HourFormats,
+  isPastDateTimes,
+} from "../../utils/ShortDataFormatter";
 import { findRoleFromToken } from "../../utils/TokenDecoder";
 import Editbtn from "../Editbtn/Editbtn";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
+
 import "./EventCard.css";
 /**
  *
@@ -47,16 +60,19 @@ const EventCard = (props) => {
   const [play, setPlay] = useState(false);
   const [eventData, setEventData] = useState({});
   const [countdown, setCountdown] = useState("");
+  const [watchedvideo, setWatchVideo] = useState(false);
   const videoPlayerRef = useRef(null);
+
   const handleOutsideClick = (e) => {
     if (videoPlayerRef.current && !videoPlayerRef.current.contains(e.target)) {
       setPlay(false);
     }
   };
-  const latestEvent = {};
   useEffect(() => {
+    handlePlayVideo();
     setActive(props.event.events.active);
   }, [props.event]);
+
   useEffect(() => {
     window.addEventListener("click", handleOutsideClick);
     return () => {
@@ -79,6 +95,7 @@ const EventCard = (props) => {
       backgroundColor: "#f7542b",
     },
   });
+
   const CustomLink = styled(Link)(({ theme }) => ({
     color: "#ffffff",
     textDecoration: "none",
@@ -86,6 +103,7 @@ const EventCard = (props) => {
       textDecoration: "none",
     },
   }));
+
   function downloadedPpt() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!userMail.trim() || !emailRegex.test(userMail)) {
@@ -119,6 +137,7 @@ const EventCard = (props) => {
       );
     setOpen(false);
   }
+
   function handleEventStatus(event) {
     const eventService = new EventService();
     eventService
@@ -132,26 +151,18 @@ const EventCard = (props) => {
         );
       });
   }
+
   function handlePlayVideo() {
     const contentService = new ContentService();
-    contentService
-      .getEventDataInfo(props.event.events.id)
-      .then((response) => {
-        setEventData(response.data);
-        setPlay(true);
-      })
-      .catch((error) => {
-        setSnackbar(
-          <SnackbarComponent
-            message="Video not available !"
-            severity={"error"}
-          />
-        );
-      });
+    contentService.getEventDataInfo(props.event.events.id).then((response) => {
+      setEventData(response.data);
+      setWatchVideo(true);
+    });
   }
 
   const formattedDate = dateFormatter(props.event.events.date);
   const shortdata = ShortDateFormatter(props.event.events.date);
+
   const startTime = convertTo12HourFormat(props.event.events.time);
   const endTime = addTime(startTime, props.event.events.duration);
   const formattedTime = `${
@@ -159,56 +170,9 @@ const EventCard = (props) => {
   } to ${endTime}`;
 
   const isOutdated = isPastDateTime(formattedDate, props.event.events.time);
-  const EventDate = props.event.events.date;
-  const parsedDate = new Date(EventDate);
-  const year = parsedDate.getFullYear();
-  const month = parsedDate.getMonth();
-  const day = parsedDate.getDate();
-  const EventTime = props.event.events.time;
-  const timeComponents = EventTime.split(":");
-  if (timeComponents.length >= 3) {
-    const hours = parseInt(timeComponents[0]);
-    const minutes = parseInt(timeComponents[1]);
-    const seconds = parseFloat(timeComponents[2]);
-    parsedDate.setHours(hours);
-    parsedDate.setMinutes(minutes);
-    parsedDate.setSeconds(seconds);
-  }
-  const currentDateTime = new Date();
-  const currentTime = new Date();
-  const timeDifference = parsedDate - currentTime;
-  const eventDate = new Date(props.event.events.date);
-  const eventTime = props.event.events.time;
-  const eventDateTime = new Date(
-    eventDate.getFullYear(),
-    eventDate.getMonth(),
-    eventDate.getDate(),
-    parseInt(eventTime.split(":")[0], 10),
-    parseInt(eventTime.split(":")[1], 10),
-    0
-  );
-  function updateCountdown() {
-    const timeDifference = eventDateTime - new Date();
-    if (timeDifference <= 0) {
-      setCountdown("Event has started.");
-      clearInterval(countdownInterval);
-    } else {
-      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      const minutes = Math.floor(
-        (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
-      );
-      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-      const countdownText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-      setCountdown(countdownText);
-    }
-  }
-  useEffect(() => {
-    updateCountdown();
-  }, []);
-  const countdownInterval = setInterval(updateCountdown, 1000);
+
+  console.log(eventData.video);
+
   return (
     <>
       {snackbar}
@@ -217,7 +181,13 @@ const EventCard = (props) => {
           ref={videoPlayerRef}
           sx={{
             position: "fixed",
-            zIndex: 5,
+            top: "20%",
+            zIndex: "100",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+
+            width: "100%",
           }}
         >
           <ReactPlayer url={eventData.video} controls />
@@ -327,47 +297,10 @@ const EventCard = (props) => {
                   {formattedDate.year}
                 </Typography>
               </Stack>
-              {props.isEventPage && isOutdated ? (
-                <div className="downloadedPPTBox">
-                  <Button
-                    title="Download PPT"
-                    className="downloadbutton"
-                    onClick={() => setOpen(true)}
-                  >
-                    <Typography
-                      sx={{
-                        marginY: 1,
-                        marginX: 1,
-                        fontSize: 12,
-                        color: "white",
-                      }}
-                    >
-                      Download PPT
-                    </Typography>
-                  </Button>
-                </div>
-              ) : null}
-              {isOutdated && (
-                <div className="watchvideo">
-                  <Box title="Play recorded video" onClick={handlePlayVideo}>
-                    <PlayCircleFilledIcon
-                      sx={{
-                        opacity: "1",
-                        fontSize: "35px",
-                        color: "red",
-                        cursor: "pointer",
-                      }}
-                    />
-                  </Box>
-                  <Typography sx={{ marginY: 1, marginX: 1, fontSize: 15 }}>
-                    Watch Video
-                  </Typography>
-                </div>
-              )}
             </div>
           </div>
           <div className="discruption">
-            <Typography fontWeight={600} py={1} mt={-1}>
+            <Typography fontWeight={600} py={0} mt={-1}>
               Agenda -
             </Typography>
             <Box fontSize={"5px"} marginBottom={3}>
@@ -390,26 +323,78 @@ const EventCard = (props) => {
             </Box>
           </div>
           <div className="bottomdiv">
-            <Box
-              className="margintopforui"
-              sx={{ mt: "100 ", justifyContent: "space-between" }}
-            >
-              <Stack direction="row" alignItems="center">
-                <Typography color="#FFBE0A" marginX={1} fontSize={18}>
-                  <i className="bx bx-time"></i>
-                </Typography>
-                <Typography fontSize={12}>{formattedTime}</Typography>
-              </Stack>
-              <Stack direction="row" alignItems="center">
-                <Typography color="#FFBE0A" marginX={1} fontSize={18}>
-                  <i className="bx bx-microphone"></i>
-                </Typography>
-                <Typography fontSize={12}>
-                  {props.event?.events.speaker?.name},{" "}
-                  {props.event?.events.speaker?.designation}
-                </Typography>
-              </Stack>
-            </Box>
+            <>
+              <Box
+                className="margintopforui"
+                sx={{ mt: "100 ", justifyContent: "space-between" }}
+              >
+                <Stack direction="row" alignItems="center">
+                  <Typography color="#FFBE0A" marginX={1} fontSize={18}>
+                    <i className="bx bx-time"></i>
+                  </Typography>
+                  <Typography fontSize={12}>{formattedTime}</Typography>
+                </Stack>
+
+                <Stack direction="row" alignItems="center">
+                  <Typography color="#FFBE0A" marginX={1} fontSize={18}>
+                    <i className="bx bx-microphone"></i>
+                  </Typography>
+                  <Typography fontSize={12}>
+                    {props.event?.events.speaker?.name},{" "}
+                    {props.event?.events.speaker?.designation}
+                  </Typography>
+                </Stack>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  py: "3%",
+                  px: "3%",
+                }}
+              >
+                {isOutdated && (
+                  <div className="watchvideobutton">
+                    {watchedvideo ? (
+                      <button
+                        className="AvalablevideoButton"
+                        title="Play recorded video"
+                        onClick={() => setPlay(true)}
+                      >
+                        Watch Video
+                      </button>
+                    ) : (
+                      <button
+                        className="PastVideoButton"
+                        title="Play recorded video"
+                        onClick={() =>
+                          setSnackbar(
+                            <SnackbarComponent
+                              message="Video not available !"
+                              severity={"error"}
+                            />
+                          )
+                        }
+                      >
+                        Watch Video
+                      </button>
+                    )}
+                  </div>
+                )}
+
+                {props.isEventPage && isOutdated ? (
+                  <div className="downloadedPPTBox">
+                    <button
+                      title="Download PPT"
+                      className="downloadPPTbutton"
+                      onClick={() => setOpen(true)}
+                    >
+                      Download PDF
+                    </button>
+                  </div>
+                ) : null}
+              </Box>
+            </>
           </div>
         </div>
       </div>
