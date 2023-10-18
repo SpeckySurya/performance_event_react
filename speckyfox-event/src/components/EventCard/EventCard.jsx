@@ -22,7 +22,6 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-
 import { TbTargetArrow } from "react-icons/tb";
 import "react-multi-carousel/lib/styles.css";
 import ReactPlayer from "react-player";
@@ -36,7 +35,6 @@ import dateFormatter, {
   convertTo12HourFormat,
   isPastDateTime,
 } from "../../utils/DateFormatter";
-
 import ShortDateFormatter, {
   addTimes,
   convertTo12HourFormats,
@@ -71,8 +69,10 @@ const EventCard = (props) => {
     }
   };
   useEffect(() => {
+    handlePlayVideo();
     setActive(props.event.events.active);
   }, [props.event]);
+
   useEffect(() => {
     window.addEventListener("click", handleOutsideClick);
     return () => {
@@ -154,22 +154,10 @@ const EventCard = (props) => {
 
   function handlePlayVideo() {
     const contentService = new ContentService();
-    contentService
-      .getEventDataInfo(props.event.events.id)
-      .then((response) => {
-        setEventData(response.data);
-        console.log(response.data);
-        setPlay(true);
-        setWatchVideo(true);
-      })
-      .catch((error) => {
-        setSnackbar(
-          <SnackbarComponent
-            message="Video not available !"
-            severity={"error"}
-          />
-        );
-      });
+    contentService.getEventDataInfo(props.event.events.id).then((response) => {
+      setEventData(response.data);
+      setWatchVideo(true);
+    });
   }
 
   const formattedDate = dateFormatter(props.event.events.date);
@@ -371,7 +359,7 @@ const EventCard = (props) => {
                       <button
                         className="AvalablevideoButton"
                         title="Play recorded video"
-                        onClick={handlePlayVideo}
+                        onClick={() => setPlay(true)}
                       >
                         Watch Video
                       </button>
@@ -379,7 +367,14 @@ const EventCard = (props) => {
                       <button
                         className="PastVideoButton"
                         title="Play recorded video"
-                        onClick={handlePlayVideo}
+                        onClick={() =>
+                          setSnackbar(
+                            <SnackbarComponent
+                              message="Video not available !"
+                              severity={"error"}
+                            />
+                          )
+                        }
                       >
                         Watch Video
                       </button>
