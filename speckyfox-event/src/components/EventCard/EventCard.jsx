@@ -79,6 +79,7 @@ const EventCard = (props) => {
       window.removeEventListener("click", handleOutsideClick);
     };
   }, [play]);
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -171,8 +172,6 @@ const EventCard = (props) => {
 
   const isOutdated = isPastDateTime(formattedDate, props.event.events.time);
 
-  console.log(eventData.video);
-
   return (
     <>
       {snackbar}
@@ -183,11 +182,6 @@ const EventCard = (props) => {
             position: "fixed",
             top: "20%",
             zIndex: "100",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-
-            width: "100%",
           }}
         >
           <ReactPlayer url={eventData.video} controls />
@@ -359,7 +353,10 @@ const EventCard = (props) => {
                       <button
                         className="AvalablevideoButton"
                         title="Play recorded video"
-                        onClick={() => setPlay(true)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setPlay(true);
+                        }}
                       >
                         Watch Video
                       </button>
