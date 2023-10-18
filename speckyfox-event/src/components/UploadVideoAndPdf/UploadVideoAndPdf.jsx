@@ -159,14 +159,13 @@ function UploadVideoAndPdf() {
             </FormControl>
             <Grid spacing={2}>
               <Grid xs={12} sm={6} item>
-                <InputLabel className="uploadvideotext">Upload PPT</InputLabel>
+                <InputLabel className="uploadvideotext">Upload PDF</InputLabel>
                 <Input
                   style={{ paddingLeft: "10px" }}
                   className="uploadpdf"
                   type="file"
                   inputProps={{
-                    accept:
-                      "application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                    accept: "application/pdf",
                   }}
                   name="ppt-File"
                   id="ppt-File"

@@ -21,6 +21,10 @@ export default class PasswordService {
       headers
     );
   }
+  validateToken(token) {
+    const headers = this.headers.textType();
+    return axios.post(`${this.baseUrl}/admin/validate-token`, token, headers);
+  }
   resetPassword(data, token) {
     const headers = this.headers.basicHeader();
     return axios.post(

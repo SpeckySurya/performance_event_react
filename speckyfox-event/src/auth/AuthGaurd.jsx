@@ -18,7 +18,7 @@ const AuthGaurd = ({ component }) => {
       if (token) {
         const passwordService = new PasswordService();
         passwordService
-          .validateResetPwdLink(token)
+          .validateToken(token)
           .then((response) => {
             if (response.data) {
               setStatus(true);
