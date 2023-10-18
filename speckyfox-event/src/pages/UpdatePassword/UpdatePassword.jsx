@@ -1,4 +1,4 @@
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, LinearProgress } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import SnackbarComponent from "../../components/SnackbarComponent/SnackbarComponent";
@@ -13,6 +13,7 @@ import PasswordService from "../../services/PasswordService";
 
 function UpdatePassword() {
   const [loading, setLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
   const [formData, setFormData] = useState({
     newPassword: "",
     confirmPassword: "",
@@ -32,7 +33,8 @@ function UpdatePassword() {
       })
       .catch((error) => {
         navigate("/error");
-      });
+      })
+      .finally(() => setPageLoading(false));
   }, []);
 
   useEffect(() => {
@@ -83,50 +85,54 @@ function UpdatePassword() {
   return (
     <>
       {snackbar}
-      <form onSubmit={(e) => handleResetPwdClick(e)}>
-        <div className="login-container">
-          <h1>Update Password</h1>
-          <div className="form-group">
-            <label htmlFor="password">
-              New Password<span className="mandatory-field">*</span>
-            </label>
-            <input
-              type="password"
-              value={formData.newPassword}
-              id="newPassword"
-              name="newPassword"
-              placeholder="Enter new password"
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">
-              Confirm Password<span className="mandatory-field">*</span>
-            </label>
-            <input
-              type="password"
-              value={formData.confirmPassword}
-              id="confirmPassword"
-              name="confirmPassword"
-              placeholder="Confirm your password"
-              onChange={handleChange}
-              required
-              style={{
-                borderColor: !passwordsMatch ? "red" : "",
-              }}
-            />
-          </div>
+      {pageLoading ? (
+        <LinearProgress />
+      ) : (
+        <form onSubmit={(e) => handleResetPwdClick(e)}>
+          <div className="login-container">
+            <h1>Update Password</h1>
+            <div className="form-group">
+              <label htmlFor="password">
+                New Password<span className="mandatory-field">*</span>
+              </label>
+              <input
+                type="password"
+                value={formData.newPassword}
+                id="newPassword"
+                name="newPassword"
+                placeholder="Enter new password"
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">
+                Confirm Password<span className="mandatory-field">*</span>
+              </label>
+              <input
+                type="password"
+                value={formData.confirmPassword}
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="Confirm your password"
+                onChange={handleChange}
+                required
+                style={{
+                  borderColor: !passwordsMatch ? "red" : "",
+                }}
+              />
+            </div>
 
-          <button type="submit" className="flex-jcc-aic">
-            {loading ? (
-              <CircularProgress size={20} color={"error"} />
-            ) : (
-              "Update Password"
-            )}
-          </button>
-        </div>
-      </form>
+            <button type="submit" className="flex-jcc-aic">
+              {loading ? (
+                <CircularProgress size={20} color={"error"} />
+              ) : (
+                "Update Password"
+              )}
+            </button>
+          </div>
+        </form>
+      )}
     </>
   );
 }
