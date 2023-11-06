@@ -1,8 +1,7 @@
 .banner {
-  padding-top: 50px;
   background-size: cover;
   background-repeat: no-repeat;
-  padding: 5%;
+  padding: 50px 5% 5% 5%;
   background-image: url("./../../assets/banner.png");
 }
 
@@ -128,7 +127,6 @@ html {
 .BannerRegisterButtonatTop {
   position: absolute !important;
   background: currentColor !important;
-  border-radius: 10px !important;
   top: 123px !important;
   right: 10px !important;
   height: 70px !important;

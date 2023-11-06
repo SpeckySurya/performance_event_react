@@ -3,9 +3,7 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import "../../responsive.css";
 
 import "./EventCard.css";
-import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
-import ToggleOffOutlinedIcon from "@mui/icons-material/ToggleOffOutlined";
-import ToggleOnOutlinedIcon from "@mui/icons-material/ToggleOnOutlined";
+
 import "../../assets/banner.png";
 
 import {
@@ -22,12 +20,11 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-
 import { TbTargetArrow } from "react-icons/tb";
 import "react-multi-carousel/lib/styles.css";
 import ReactPlayer from "react-player";
 import { Link } from "react-router-dom";
-import "../../assets/banner.png";
+
 import "../../responsive.css";
 import ContentService from "../../services/ContentService";
 import EventService from "../../services/EventService";
@@ -36,17 +33,11 @@ import dateFormatter, {
   convertTo12HourFormat,
   isPastDateTime,
 } from "../../utils/DateFormatter";
-
-import ShortDateFormatter, {
-  addTimes,
-  convertTo12HourFormats,
-  isPastDateTimes,
-} from "../../utils/ShortDataFormatter";
+import ShortDateFormatter from "../../utils/ShortDataFormatter";
 import { findRoleFromToken } from "../../utils/TokenDecoder";
 import Editbtn from "../Editbtn/Editbtn";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
 
-import "./EventCard.css";
 /**
  *
  * This component EventCard Component Related to card Api data is placed over card is here .
@@ -61,7 +52,7 @@ const EventCard = (props) => {
   const [userMail, setUserMail] = useState("");
   const [play, setPlay] = useState(false);
   const [eventData, setEventData] = useState({});
-  const [countdown, setCountdown] = useState("");
+
   const [watchedvideo, setWatchVideo] = useState(false);
   const videoPlayerRef = useRef(null);
 
@@ -71,14 +62,17 @@ const EventCard = (props) => {
     }
   };
   useEffect(() => {
+    handlePlayVideo();
     setActive(props.event.events.active);
   }, [props.event]);
+
   useEffect(() => {
     window.addEventListener("click", handleOutsideClick);
     return () => {
       window.removeEventListener("click", handleOutsideClick);
     };
   }, [play]);
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -154,21 +148,10 @@ const EventCard = (props) => {
 
   function handlePlayVideo() {
     const contentService = new ContentService();
-    contentService
-      .getEventDataInfo(props.event.events.id)
-      .then((response) => {
-        setEventData(response.data);
-        setPlay(true);
-        setWatchVideo(true);
-      })
-      .catch((error) => {
-        setSnackbar(
-          <SnackbarComponent
-            message="Video not available !"
-            severity={"error"}
-          />
-        );
-      });
+    contentService.getEventDataInfo(props.event.events.id).then((response) => {
+      setEventData(response.data);
+      setWatchVideo(true);
+    });
   }
 
   const formattedDate = dateFormatter(props.event.events.date);
@@ -192,11 +175,6 @@ const EventCard = (props) => {
             position: "fixed",
             top: "20%",
             zIndex: "100",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-
-            width: "100%",
           }}
         >
           <ReactPlayer url={eventData.video} controls />
@@ -368,7 +346,10 @@ const EventCard = (props) => {
                       <button
                         className="AvalablevideoButton"
                         title="Play recorded video"
-                        onClick={handlePlayVideo}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setPlay(true);
+                        }}
                       >
                         Watch Video
                       </button>
@@ -376,7 +357,14 @@ const EventCard = (props) => {
                       <button
                         className="PastVideoButton"
                         title="Play recorded video"
-                        onClick={handlePlayVideo}
+                        onClick={() =>
+                          setSnackbar(
+                            <SnackbarComponent
+                              message="Video not available !"
+                              severity={"error"}
+                            />
+                          )
+                        }
                       >
                         Watch Video
                       </button>

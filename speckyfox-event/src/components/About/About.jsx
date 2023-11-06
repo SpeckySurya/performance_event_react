@@ -9,6 +9,7 @@ export const About = (props) => {
   return (
     <div className="aboutpage-container">
       <div className="about-header">ABOUT SPEAKER</div>
+
       <div className="top">
         <div className="speaker-photo">
           <div className="backshape"></div>

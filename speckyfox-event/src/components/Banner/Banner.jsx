@@ -16,8 +16,8 @@ import "./Banner.css";
 export const Banner = (props) => {
   const [formattedDate, setFormattedDate] = useState({});
   const [formattedTime, setFormattedTime] = useState("");
-  const [showCrossWindow, setShowCrossWindow] = useState(true);
-  const [animateRegisterButton, setAnimateRegisterButton] = useState(true);
+  const [showCrossWindow] = useState(true);
+  const [, setAnimateRegisterButton] = useState(true);
   const registrationFormRef = useRef(null);
 
   const handleRegisterButtonClick = () => {
