@@ -37,7 +37,7 @@ import { findRoleFromToken } from "../../utils/TokenDecoder";
 const AdminHeader = (props) => {
   const [open, setOpen] = useState(false);
   const [menuItems, setMenuItems] = useState([]);
-  const [menuItem, setMenuItem] = useState("Show Events");
+  const [, setMenuItem] = useState("Show Events");
   const navigate = useNavigate();
 
   useEffect(() => {

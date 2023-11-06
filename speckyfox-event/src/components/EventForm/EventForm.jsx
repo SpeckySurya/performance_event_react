@@ -1,6 +1,6 @@
 import { Alert, Box, CircularProgress, Typography } from "@mui/material";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+
 import EventService from "../../services/EventService";
 import { toDDMMYYYY } from "../../utils/DateFormatter";
 import Duration from "../Duration/Duration";
@@ -16,9 +16,9 @@ const EventForm = (props) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [speakerSelect, setSpeakerSelect] = useState("");
   const [isAlertVisible, setIsAlertVisible] = useState(false);
-  const navigate = useNavigate();
+
   const [snackbar, setSnackbar] = useState(null);
-  const [currentSpeaker, setCurrentSpeaker] = useState("Select Speaker");
+
   const [loading, setLoading] = useState(false);
   const [duration, setDuration] = useState(props.formDataDefault.duration);
   const handleChange = (event) => {

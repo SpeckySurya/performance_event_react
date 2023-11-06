@@ -101,94 +101,92 @@ export default function AdminRegistration() {
   }, []);
 
   return (
-    <>
-      <div className="login-container" style={{ margin: "auto" }}>
-        {snackbar}
-        <h1>Admin Registration</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="email">
-              Email<span className="mandatory-field">*</span>
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Email"
-              value={inputData.email}
-              onChange={handleData}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">
-              Password<span className="mandatory-field">*</span>
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Enter password"
-              value={inputData.password}
-              onChange={handleData}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="confirmPassword">
-              Confirm Password<span className="mandatory-field">*</span>
-            </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              placeholder="Confirm password"
-              value={inputData.confirmPassword}
-              onChange={handleData}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="confirmPassword">
-              Role<span className="mandatory-field">*</span>
-            </label>
-            <Box>
-              <FormControl fullWidth>
-                <InputLabel id="role">Role</InputLabel>
-                <Select
-                  labelId="role"
-                  label="Role"
-                  id="demo-simple-select"
-                  value={selectedRole}
-                  name="role"
-                  onChange={handleData}
-                >
-                  {loggedInUserRole === "ADMIN"
-                    ? roles
-                        .filter((role, index) => role !== "ADMIN")
-                        .map((role, index) => (
-                          <MenuItem key={index} value={role}>
-                            {role}
-                          </MenuItem>
-                        ))
-                    : roles.map((role, index) => (
+    <div className="login-container" style={{ margin: "auto" }}>
+      {snackbar}
+      <h1>Admin Registration</h1>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="email">
+            Email<span className="mandatory-field">*</span>
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email"
+            value={inputData.email}
+            onChange={handleData}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">
+            Password<span className="mandatory-field">*</span>
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter password"
+            value={inputData.password}
+            onChange={handleData}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="confirmPassword">
+            Confirm Password<span className="mandatory-field">*</span>
+          </label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            placeholder="Confirm password"
+            value={inputData.confirmPassword}
+            onChange={handleData}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="confirmPassword">
+            Role<span className="mandatory-field">*</span>
+          </label>
+          <Box>
+            <FormControl fullWidth>
+              <InputLabel id="role">Role</InputLabel>
+              <Select
+                labelId="role"
+                label="Role"
+                id="demo-simple-select"
+                value={selectedRole}
+                name="role"
+                onChange={handleData}
+              >
+                {loggedInUserRole === "ADMIN"
+                  ? roles
+                      .filter((role) => role !== "ADMIN")
+                      .map((role, index) => (
                         <MenuItem key={index} value={role}>
                           {role}
                         </MenuItem>
-                      ))}
-                </Select>
-              </FormControl>
-            </Box>
-          </div>
-          <button type="submit" className="flex-jcc-aic">
-            {loading ? (
-              <CircularProgress size={20} color={"error"} />
-            ) : (
-              "Register"
-            )}
-          </button>
-        </form>
-      </div>
-    </>
+                      ))
+                  : roles.map((role, index) => (
+                      <MenuItem key={index} value={role}>
+                        {role}
+                      </MenuItem>
+                    ))}
+              </Select>
+            </FormControl>
+          </Box>
+        </div>
+        <button type="submit" className="flex-jcc-aic">
+          {loading ? (
+            <CircularProgress size={20} color={"error"} />
+          ) : (
+            "Register"
+          )}
+        </button>
+      </form>
+    </div>
   );
 }

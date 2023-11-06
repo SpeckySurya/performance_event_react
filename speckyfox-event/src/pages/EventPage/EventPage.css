@@ -69,15 +69,15 @@
 }
 .BannerButtonatDown {
   position: absolute;
-  bottom: 13%;
+  bottom: 12%;
   width: 100%;
   cursor: pointer !important;
   padding: 5px !important;
-  background: linear-gradient(
+  /* background: linear-gradient(
     0deg,
     rgba(0, 0, 0, 0.5) 0%,
     rgba(0, 0, 0, 0) 100%
-  );
+  ); */
 }
 
 .iconclass {
